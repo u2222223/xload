@@ -2,9 +2,15 @@
 """
 xload — add a program to the catalog.
 
-One command that scaffolds a full program page and registers it in
-scripts-data.json. Other sessions (or humans) can add programs without
+One command that scaffolds a full program page (inside a category folder),
+optionally stores the actual program file(s) inside the site, and registers the
+entry in scripts-data.json. Other sessions (or humans) can add programs without
 touching HTML by hand.
+
+Layout inside website/scripts:
+    scripts/<category>/<id>/
+        <id>.html          the detail page
+        <id>.user.js       the actual program file (generated stub or your --file)
 
 USAGE (run from anywhere):
   python tools/add_program.py \
@@ -13,27 +19,34 @@ USAGE (run from anywhere):
       --type script \
       --category Productivity \
       --github https://github.com/you/repo \
-      --install "https://github.com/you/repo/releases/latest" \
       --short "One-line card summary." \
       --desc "Longer description paragraph."
       --tags "keyword1,keyword2" \
+      --file "path/to/real.user.js" \
       --license MIT \
       --apply
 
-  --apply        also insert the entry into scripts-data.json (idempotent by id)
-  --check        validate only (no write)
-  --print-json   only print the JSON entry (no page write)
+  --file PATH[,PATH]   copy real program files into the folder; the install
+                       button points at the first one. If omitted and type is
+                       "script", a stub <id>.user.js is generated instead.
+  --install URL        force the download/install link (e.g. a GitHub release);
+                       overrides pointing at the local file.
+  --apply              insert the entry into scripts-data.json (idempotent by id)
+  --check              validate only (no write)
+  --print-json         only print the JSON entry (no write)
 
 KNOWN TYPES: script | extension | app | other   (must exist in "types")
-CATEGORIES:   must exist in "categories"
+CATEGORIES:  must exist in "categories"
 
 Exit code 0 = ok, 1 = error/validation failed.
 """
 
 import argparse
+import datetime
 import json
 import os
 import re
+import shutil
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +59,9 @@ TYPE_LABEL = {
     "app": "App",
     "other": "Other",
 }
+
+# markers that are intentionally left for go-live / authoring, not an error
+IGNORE_MARKERS = ("REPLACE-WITH-YOUR-DOMAIN.com", "REPLACE_", "REPLACE_HORIZONTAL_SLOT")
 
 
 def die(msg):
@@ -68,10 +84,58 @@ def valid_categories(data):
     return set(data.get("categories", []))
 
 
+def slugify(s):
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-") or "misc"
+
+
 def meta_desc(desc, short):
     text = (desc or short or "").strip().replace("\n", " ")
     text = re.sub(r"\s+", " ", text)
     return text[:155]
+
+
+def userjs_stub(args):
+    namespace = args.github or "https://xload/"
+    desc = (args.short or args.title or "").replace('"', "'")
+    return (
+        "// ==UserScript==\n"
+        "// @name        %s\n"
+        "// @version     0.1.0\n"
+        "// @description %s\n"
+        "// @namespace   %s\n"
+        "// @author      xload\n"
+        "// @match       https://example.com/*\n"
+        "// @grant       none\n"
+        "// ==/UserScript==\n"
+        "\n"
+        "(function () {\n"
+        "    'use strict';\n"
+        "    // TODO: implement %s\n"
+        "})();\n" % (args.title, desc, namespace, args.id)
+    )
+
+
+def copy_program_files(args, dir_abs, cat_slug):
+    """Copy --file files in, or generate a stub for scripts. Returns web paths."""
+    web_paths = []
+    files = [f.strip() for f in (args.file or "").split(",") if f.strip()]
+    if files:
+        for src in files:
+            if not os.path.exists(src):
+                die("program file not found: %s" % src)
+            name = os.path.basename(src)
+            shutil.copyfile(src, os.path.join(dir_abs, name))
+            web_paths.append("/scripts/%s/%s/%s" % (cat_slug, args.id, name))
+    elif args.type == "script":
+        name = args.id + ".user.js"
+        with open(os.path.join(dir_abs, name), "w", encoding="utf-8") as f:
+            f.write(userjs_stub(args))
+        web_paths.append("/scripts/%s/%s/%s" % (cat_slug, args.id, name))
+    return web_paths
+
+
+def build_page_rel(cat_slug, program_id):
+    return "scripts/%s/%s/%s.html" % (cat_slug, program_id, program_id)
 
 
 def fill_page(args, data):
@@ -94,10 +158,12 @@ def fill_page(args, data):
         "REPLACE_CATEGORY": args.category,
         "REPLACE_LICENSE (e.g. MIT)": args.license or "MIT",
         "REPLACE_DATE": args.updated,
+        "USERCRIPT": type_label,
         "Usercript": type_label,
+        "REPLACE_CANONICAL": args.page,
     }
 
-    # full-text feature bullets
+    # feature bullets
     if args.features:
         feats = [f.strip() for f in args.features.split(";") if f.strip()]
         num = ["one", "two", "three", "four", "five"]
@@ -106,14 +172,11 @@ def fill_page(args, data):
             if key in html:
                 html = html.replace(key, f)
 
-    # long prose blocks
-    prose_map = {
-        "REPLACE: a clear paragraph describing what this tool does and who it helps.": (desc or ""),
-        "REPLACE: feature one": (feats[0] if args.features and feats else "REPLACE feature one"),
-    }
-    for k, v in prose_map.items():
-        if k in html:
-            html = html.replace(k, v)
+    # overview paragraph
+    overview = desc
+    if overview and "REPLACE: a clear paragraph describing what this tool does and who it helps." in html:
+        html = html.replace(
+            "REPLACE: a clear paragraph describing what this tool does and who it helps.", overview)
 
     for k, v in repl.items():
         html = html.replace(k, v)
@@ -121,12 +184,14 @@ def fill_page(args, data):
     html = html.replace("REPLACE_COUNT", str(args.downloads), 1)
     html = html.replace("REPLACE_COUNT", str(args.stars), 1)
 
-    # any remaining markers
-    leftover = sorted(set(re.findall(r"REPLACE[^<\"]*", html)))
+    # any remaining authoring markers (ignore known go-live ones)
+    leftover = sorted({m for m in re.findall(r"REPLACE[^<\"]*", html)
+                       if not any(m.startswith(ig) for ig in IGNORE_MARKERS)})
     if leftover:
         print("WARNING: unfilled markers remain in page: %s" % ", ".join(leftover))
 
-    page_path = os.path.join(ROOT, "scripts", args.id + ".html")
+    page_path = os.path.join(ROOT, args.page)
+    os.makedirs(os.path.dirname(page_path), exist_ok=True)
     with open(page_path, "w", encoding="utf-8") as f:
         f.write(html)
     return page_path
@@ -140,8 +205,9 @@ def build_json_entry(args, data):
         "short": args.short or args.title,
         "description": args.desc or args.short or "",
         "github": args.github,
-        "page": "/scripts/%s.html" % args.id,
+        "page": "/" + args.page,
         "installUrl": args.install or args.github,
+        "files": [os.path.basename(p) for p in (args.local_files or [])],
         "tags": [t.strip() for t in args.tags.split(",") if t.strip()] if args.tags else [],
         "categories": [args.category] if args.category else [],
         "rating": args.rating,
@@ -166,14 +232,14 @@ def apply_json(args):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Add a program to the xload catalog", add_help=True)
-    p.add_argument("--id", default="",
-                   help="unique slug, lowercase-hyphens, e.g. my-tool")
+    p = argparse.ArgumentParser(description="Add a program to the xload catalog")
+    p.add_argument("--id", default="", help="unique slug, lowercase-hyphens, e.g. my-tool")
     p.add_argument("--title", default="")
     p.add_argument("--type", default="script", help="script|extension|app|other")
     p.add_argument("--category", default="", help="a valid category from scripts-data.json")
-    p.add_argument("--github", default="", help="GitHub repo URL")
-    p.add_argument("--install", default="", help="install/releases URL (defaults to --github)")
+    p.add_argument("--github", default="", help="GitHub repo URL (view source)")
+    p.add_argument("--install", default="", help="force download/install URL; else points at local file")
+    p.add_argument("--file", default="", help="comma-separated paths of real program file(s) to copy in")
     p.add_argument("--short", default="", help="one-line card summary")
     p.add_argument("--desc", default="", help="longer description paragraph")
     p.add_argument("--tags", default="", help="comma-separated keywords")
@@ -191,8 +257,7 @@ def main():
     args = p.parse_args()
 
     if args.check:
-        ok = validate()
-        sys.exit(0 if ok else 1)
+        sys.exit(0 if validate() else 1)
 
     if not args.id or not args.title:
         die("--id and --title are required unless --check is used")
@@ -206,20 +271,44 @@ def main():
         die("--type %r not valid. Use one of: %s" % (args.type, ", ".join(sorted(vtypes))))
     if args.category and args.category not in vcats:
         die("--category %r not valid. Use one of: %s" % (args.category, ", ".join(sorted(vcats))))
-    if not args.github and not args.install:
-        die("you must provide --github and/or --install")
-    if not args.updated:
-        import datetime
-        args.updated = datetime.date.today().isoformat()
 
-    entry = build_json_entry(args, data)
+    cat_slug = slugify(args.category) if args.category else "misc"
+    args.page = build_page_rel(cat_slug, args.id)
+    args.local_files = []
 
     if args.print_json:
+        if not (args.install or args.github):
+            die("you must provide --install and/or --github (or --file) for an install target")
+        entry = build_json_entry(args, data)
         print(json.dumps(entry, ensure_ascii=False, indent=2))
         return
 
+    if not args.updated:
+        args.updated = datetime.date.today().isoformat()
+
+    dir_abs = os.path.join(ROOT, "scripts", cat_slug, args.id)
+    os.makedirs(dir_abs, exist_ok=True)
+
+    # copy / generate the actual program file(s) into the folder
+    web_paths = copy_program_files(args, dir_abs, cat_slug)
+    args.local_files = web_paths
+
+    # resolve install target
+    if not args.install:
+        if web_paths:
+            args.install = web_paths[0]
+        elif args.github:
+            args.install = args.github
+        else:
+            die("no install target: pass --install / --github / --file")
+
+    entry = build_json_entry(args, data)
     page_path = fill_page(args, data)
-    print("created page: scripts/%s.html" % args.id)
+    print("created folder: scripts/%s/%s/" % (cat_slug, args.id))
+    print("created page:   %s" % os.path.relpath(page_path, ROOT).replace("\\", "/"))
+    for w in web_paths:
+        print("program file:   %s" % w)
+    print("install link:   %s" % args.install)
     print("JSON entry to add (or rerun with --apply):")
     print(json.dumps(entry, ensure_ascii=False, indent=2))
 
@@ -256,6 +345,10 @@ def validate():
             errors.append("%s: page does not exist: %s" % (s.get("id"), s.get("page")))
         if not re.match(r"^[a-z0-9\-]+$", s.get("id", "")):
             errors.append("%s: invalid id format" % s.get("id"))
+        for fn in s.get("files", []):
+            fp = os.path.join(os.path.dirname(pg), fn)
+            if not os.path.exists(fp):
+                errors.append("%s: program file missing: %s" % (s.get("id"), os.path.basename(fp)))
     if errors:
         print("VALIDATION FAILED:")
         for e in errors:

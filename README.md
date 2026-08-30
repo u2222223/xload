@@ -57,18 +57,20 @@ replaced** before production (search the whole folder for `REPLACE`):
 cd website
 python tools/add_program.py --id my-tool --title "My Tool" --type script \
     --category Productivity --github https://github.com/you/my-tool \
-    --install "https://github.com/you/my-tool/releases/latest" \
     --short "One-line card summary." --desc "Longer description." \
-    --tags "k1,k2" --features "A;B;C" --license MIT --apply
+    --tags "k1,k2" --features "A;B;C" \
+    --file "path/to/real.user.js" --license MIT --apply
 python tools/add_program.py --check      # must exit 0 before you finish
 ```
 
-Creates `scripts/<id>.html`, registers the row in `scripts-data.json`, and
-`--check` verifies consistency. Run `python tools/add_program.py --help` for all
-flags (`--apply`, `--print-json`, `--featured`, `--type`, etc.).
+Creates `scripts/<category>/<id>/<id>.html` **and** stores the program file
+(`--file`, or an auto-generated `.user.js`) in the same folder, registered in
+`scripts-data.json`. `--check` verifies consistency. Run `python
+tools/add_program.py --help` for all flags (`--apply`, `--file`, `--install`,
+`--print-json`, `--featured`, `--type`, etc.).
 
 ### Manual route (same contract)
-Two files must be created/updated if you edit by hand:
+Three files must be present if you edit by hand (page + program file + JSON row):
 
 1. **Create the detail page** — copy `scripts/_template.html` to `scripts/<slug>.html`,
    fill in the `REPLACE_*` values (title, meta, GitHub URLs, description, features,
@@ -127,7 +129,9 @@ website/
 │  └─ js/main.js              Renders listings, search, chrome + cookie consent
 ├─ scripts/
 │  ├─ _template.html          Copy this per new program
-│  └─ example-userscript.html Reference example
+│  └─ <category>/<id>/        One folder per program
+│       ├─ <id>.html          Detail page
+│       └─ <id>.user.js       The actual program file (hosted here)
 └─ tools/
    └─ add_program.py          Scaffolder + validator for adding programs
 ```
