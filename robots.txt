@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Google AdSense and Google Ads crawlers
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Sitemap: https://REPLACE-WITH-YOUR-DOMAIN.com/sitemap.xml

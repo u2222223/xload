@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Userscript — xload</title>
+  <meta name="description" content="A reference userscript page showing exactly how every tool page is structured. Replace this content with real tool data.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://REPLACE-WITH-YOUR-DOMAIN.com/scripts/example-userscript.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/">Home</a> &rsaquo; <a href="/listing.html">Tools</a> &rsaquo; <span>Example Userscript</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M8 6l-6 6 6 6 1.4-1.4L4.8 12l4.6-4.6L8 6zm8 0l6 6-6 6-1.4-1.4L19.2 12l-4.6-4.6L16 6z"/></svg>
+            </span>
+            <div>
+              <h1>Example Userscript</h1>
+              <p class="lead">A reference entry showing how a script is listed before real content is added.</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2>Overview</h2>
+            <p>This page is included <strong>for demonstration only</strong>. It shows how a fully-structured userscript page should look when you fill in the template. The matching entry lives in <code>scripts-data.json</code> so this tool also appears in the homepage, listing grid and search index.</p>
+
+            <h2>Key features</h2>
+            <ul>
+              <li>Automatic listing and search via <code>scripts-data.json</code></li>
+              <li>Shared header, footer and cookie banner via <code>main.js</code></li>
+              <li>Built-in ad slots and SEO meta tags</li>
+            </ul>
+
+            <h2>How to install &amp; use</h2>
+            <ol>
+              <li>Install a userscript manager such as Tampermonkey or Violentmonkey.</li>
+              <li>Open the "Install / download" button in the sidebar.</li>
+              <li>Confirm the dialog in your manager and it will be installed.</li>
+            </ol>
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/your-org/example-repo/releases/latest" target="_blank" rel="noopener">Install / download</a>
+            <a class="btn btn-block btn-ghost" href="https://github.com/your-org/example-repo" target="_blank" rel="noopener">View source on GitHub</a>
+          </div>
+          <div class="sidebar-card">
+            <h3>Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k">Type</span><span class="v">Usercript</span></div>
+              <div class="row"><span class="k">Category</span><span class="v">Productivity</span></div>
+              <div class="row"><span class="k">License</span><span class="v">MIT</span></div>
+              <div class="row"><span class="k">Last updated</span><span class="v">2026-08-30</span></div>
+              <div class="row"><span class="k">Downloads</span><span class="v">0</span></div>
+              <div class="row"><span class="k">GitHub stars</span><span class="v">0</span></div>
+            </div>
+          </div>
+          <div class="ad-card">Advertisement: replace by enabling a real ad unit.</div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

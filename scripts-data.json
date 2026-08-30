@@ -1,0 +1,79 @@
+{
+  "site": {
+    "name": "xload",
+    "tagline": "Fast, free and safe downloads for browser userscripts",
+    "url": "https://REPLACE-WITH-YOUR-DOMAIN.com",
+    "adsense": {
+      "publisherId": "pub-XXXXXXXXXXXXXXXX",
+      "enabled": true,
+      "autoAds": true
+    },
+    "contactEmail": "contact@REPLACE-WITH-YOUR-DOMAIN.com",
+    "phone": "",
+    "address": "",
+    "lastUpdated": "2026-08-30"
+  },
+  "enabledTypes": [
+    "script"
+  ],
+  "types": [
+    {
+      "id": "script",
+      "label": "Usercripts",
+      "icon": "puzzle"
+    },
+    {
+      "id": "extension",
+      "label": "Browser Extensions",
+      "icon": "extension"
+    },
+    {
+      "id": "app",
+      "label": "Desktop & Mobile Apps",
+      "icon": "app"
+    },
+    {
+      "id": "other",
+      "label": "Other",
+      "icon": "box"
+    }
+  ],
+  "categories": [
+    "Productivity",
+    "Social & Communication",
+    "Media & Entertainment",
+    "Shopping",
+    "Search & Navigation",
+    "Security & Privacy",
+    "Web & Developers",
+    "UI & Appearance",
+    "Gaming",
+    "Utilities"
+  ],
+  "scripts": [
+    {
+      "id": "example-userscript",
+      "type": "script",
+      "title": "Example Userscript",
+      "short": "A reference entry showing how a script is listed before real content is added.",
+      "description": "This is a placeholder record included so you can see exactly how listings, the search index and detail pages are wired together. Replace the contents here with data for your real scripts.",
+      "github": "https://github.com/your-org/example-repo",
+      "page": "/scripts/example-userscript.html",
+      "installUrl": "https://github.com/your-org/example-repo/releases/latest",
+      "tags": [
+        "example",
+        "documentation"
+      ],
+      "categories": [
+        "Productivity"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-08-30",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    }
+  ]
+}

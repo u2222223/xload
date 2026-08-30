@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tools — xload</title>
+  <meta name="description" content="Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://REPLACE-WITH-YOUR-DOMAIN.com/listing.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Google AdSense consent + auto ads (replace ID below) -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", {
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      ad_storage: "denied",
+      analytics_storage: "denied"
+    }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/">Home</a> &rsaquo; <span>All tools</span></nav>
+      <div class="page-header">
+        <h1>All tools</h1>
+        <p>Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="toolbar">
+        <select id="ff-type" aria-label="Filter by type">
+          <option value="all">All types</option>
+        </select>
+        <input class="f-search" id="filter-q" type="text" placeholder="Filter results by keyword&hellip;" aria-label="Keyword filter">
+        <select id="ff-sort" aria-label="Sort order">
+          <option value="popular">Most popular</option>
+          <option value="newest">Newest</option>
+          <option value="name">Name A&ndash;Z</option>
+        </select>
+      </div>
+
+      <div class="chips" id="chips">
+        <span class="chip active" data-cat="all">All categories</span>
+      </div>
+
+      <p class="count-line" id="count-line"></p>
+      <div class="card-grid" id="listing"></div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

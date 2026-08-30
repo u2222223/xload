@@ -1,0 +1,349 @@
+﻿(function () {
+  "use strict";
+
+  var data = null;
+  var isListing = !!document.getElementById("listing");
+  var isHome = !!document.getElementById("types-grid");
+
+  /* ---------------- icons ---------------- */
+  function icon(name) {
+    var svgs = {
+      puzzle: '<path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/>',
+      extension: '<path d="M3 3h18v18H3zM5 5v14h14V5H5zm3 3h8v2H8V8zm0 4h8v2H8v-2zm0 4h5v2H8v-2z"/>',
+      app: '<path d="M5 3h6v6H5zm8 0h6v6h-6zM5 15h6v6H5zm8 0h6v6h-6z"/>',
+      box: '<path d="M3 7l9-4 9 4v10l-9 4-9-4V7zm2 2.5V16l7 3V12L5 9.5zm9 3V19l7-3V9.5L14 12.5zM4.6 6.5l7.4 3.3 7.4-3.3L12 3.2 4.6 6.5z"/>',
+      download: '<path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/>',
+      star: '<path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/>',
+      search: '<path d="M10 2a8 8 0 105.3 14l4.3 4.3 1.4-1.4-4.3-4.3A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>',
+      clock: '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 110 16 8 8 0 010-16zm-1 3v6l4.5 2.7.8-1.3-3.3-2V7h-2z"/>',
+      code: '<path d="M8 6l-6 6 6 6 1.4-1.4L4.8 12l4.6-4.6L8 6zm8 0l6 6-6 6-1.4-1.4L19.2 12l-4.6-4.6L16 6z"/>',
+      shield: '<path d="M12 3l8 3v6c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3zm0 2.3L6 7.6V12c0 3.7 2.3 6.4 6 7.7 3.7-1.3 6-4 6-7.7V7.6l-6-2.3z"/>'
+    };
+    var d = svgs[name] || svgs.box;
+    return '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">' + d + "</svg>";
+  }
+
+  /* ---------------- utils ---------------- */
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function fmt(n) {
+    n = Number(n) || 0;
+    if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+    return String(n);
+  }
+  function param(name) {
+    return new URLSearchParams(window.location.search).get(name) || "";
+  }
+
+  /* ---------------- chrome (header / footer) ---------------- */
+  function enabledTypes() {
+    if (!data) return ["script"];
+    var list = data.enabledTypes && data.enabledTypes.length ? data.enabledTypes : ["script"];
+    return list;
+  }
+  function typeById(id) {
+    var t = (data.types || []).filter(function (x) { return x.id === id; })[0];
+    return t || { id: id, label: id, icon: "box" };
+  }
+
+  function buildHeader() {
+    var active = document.body.getAttribute("data-nav") || "";
+    var nav = "";
+    nav += navLink("/", "Home", active === "home");
+    enabledTypes().forEach(function (t) {
+      nav += navLink("/listing.html?type=" + encodeURIComponent(t), typeById(t).label, active === t);
+    });
+    nav += navLink("/about.html", "About", active === "about");
+    var name = data ? esc(data.site.name) : "xload";
+    return (
+      '<header class="site-header"><div class="nav-wrap">' +
+      '<a class="logo" href="/"><span class="logo-mark">XL</span><span>' + name + "</span></a>" +
+      '<nav class="main-nav" id="main-nav">' + nav + "</nav>" +
+      '<form class="header-search" role="search">' +
+      icon("search") +
+      '<input type="search" name="q" placeholder="Search&hellip;" aria-label="Search the catalog">' +
+      "</form>" +
+      '<button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button>' +
+      "</div></header>"
+    );
+    function navLink(href, label, isActive) {
+      return '<a href="' + href + '"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
+    }
+  }
+
+  function buildFooter() {
+    if (!data) return "";
+    var en = enabledTypes();
+    var cats = (data.categories || []).slice(0, 6).map(function (c) {
+      return '<li><a href="/listing.html?cat=' + encodeURIComponent(c) + '">' + esc(c) + "</a></li>";
+    }).join("");
+    var typesCol = en.map(function (id) {
+      var t = typeById(id);
+      return '<li><a href="/listing.html?type=' + encodeURIComponent(id) + '">' + esc(t.label) + "</a></li>";
+    }).join("");
+    return (
+      '<footer class="site-footer"><div class="container">' +
+      '<div class="footer-grid">' +
+      "<div class=\"footer-col\"><h4>" + esc(data.site.name) + "</h4><ul>" +
+      "<li>" + esc(data.site.tagline) + "</li>" +
+      '<li><a href="/about.html">About us</a></li>' +
+      '<li><a href="/contact.html">Contact</a></li>' +
+      "</ul></div>" +
+      "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
+      "<div class=\"footer-col\"><h4>Categories</h4><ul>" + cats + "</ul></div>" +
+      "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
+      '<li><a href="/privacy-policy.html">Privacy Policy</a></li>' +
+      '<li><a href="/terms-of-service.html">Terms of Service</a></li>' +
+      '<li><a href="/cookie-policy.html">Cookie Policy</a></li>' +
+      "</ul></div>" +
+      "</div>" +
+      '<div class="footer-bottom"><span>&copy; ' + new Date().getFullYear() + " " + esc(data.site.name) + ". All rights reserved.</span>" +
+      '<span>Downloads are linked to our GitHub releases &mdash; we never host files directly.</span></div>' +
+      "</div></footer>"
+    );
+  }
+
+  function buildCookieBanner() {
+    var banner = document.createElement("div");
+    banner.className = "cookie-banner hidden";
+    banner.id = "cookie-banner";
+    banner.setAttribute("role", "dialog");
+    banner.innerHTML =
+      "<p>We use cookies to personalise content, provide analytics and show ads tailored to you. See our " +
+      '<a href="/cookie-policy.html">Cookie Policy</a> for details.</p>' +
+      '<div class="actions">' +
+      '<button class="btn btn-ghost" data-ck="essential">Essential only</button>' +
+      '<button class="btn" data-ck="all">Accept all</button>' +
+      "</div>";
+    document.body.appendChild(banner);
+    var state = localStorage.getItem("xload_consent");
+    if (!state) {
+      setTimeout(function () { banner.classList.remove("hidden"); }, 1200);
+    } else {
+      applyConsent(state);
+    }
+    banner.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-ck]");
+      if (!b) return;
+      applyConsent(b.getAttribute("data-ck"));
+      localStorage.setItem("xload_consent", b.getAttribute("data-ck"));
+      banner.classList.add("hidden");
+    });
+  }
+
+  /* Google Consent Mode (see cookie-policy.html) */
+  function applyConsent(mode) {
+    if (typeof window.googleToken === "undefined") return;
+    var ad_storage = mode === "all" ? "granted" : "denied";
+    var analytics_storage = mode === "all" ? "granted" : "denied";
+    window[window.googleToken].push(["consent", "update", {
+      ad_user_data: ad_storage,
+      ad_personalization: ad_storage,
+      ad_storage: ad_storage,
+      analytics_storage: analytics_storage
+    }]);
+  }
+
+  function wireChrome() {
+    var h = document.getElementById("chrome-header");
+    if (h) h.innerHTML = buildHeader();
+    var f = document.getElementById("chrome-footer");
+    if (f) f.innerHTML = buildFooter();
+
+    var toggle = document.querySelector(".nav-toggle");
+    var nav = document.getElementById("main-nav");
+    if (toggle && nav) {
+      toggle.addEventListener("click", function () { nav.classList.toggle("open"); });
+    }
+    var form = document.querySelector(".header-search");
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var q = form.querySelector("input").value.trim();
+        window.location.href = "/listing.html" + (q ? "?q=" + encodeURIComponent(q) : "");
+      });
+    }
+    var hero = document.querySelector(".hero-search");
+    if (hero) {
+      hero.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var q = hero.querySelector("input").value.trim();
+        window.location.href = "/listing.html" + (q ? "?q=" + encodeURIComponent(q) : "");
+      });
+    }
+  }
+
+  function populateChips() {
+    var wrap = document.getElementById("chips");
+    if (!wrap) return;
+    (data.categories || []).forEach(function (c) {
+      var el = document.createElement("span");
+      el.className = "chip";
+      el.setAttribute("data-cat", c);
+      el.textContent = c;
+      wrap.appendChild(el);
+    });
+  }
+
+  /* ---------------- listing & search ---------------- */
+  var TYPE_META = {
+    script: { label: "Script", icon: "puzzle" },
+    extension: { label: "Extension", icon: "extension" },
+    app: { label: "App", icon: "app" }
+  };
+
+  function cardHTML(item) {
+    var tm = TYPE_META[item.type] || { label: "Item", icon: "box" };
+    var tags = (item.tags || []).slice(0, 3).map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("");
+    var gh = icon("download");
+    return (
+      '<a class="script-card" href="' + esc(item.page) + '">' +
+      '<div class="card-top"><span class="card-badge">' + icon(tm.icon) + "</span>" +
+      "<h3>" + esc(item.title) + "</h3></div>" +
+      '<p class="desc">' + esc(item.short || item.description) + "</p>" +
+      '<div class="tags">' + tags + "</div>" +
+      '<div class="card-meta">' +
+      '<span class="dl">' + icon("download") + " " + fmt(item.downloads) + "</span>" +
+      '<span>' + icon("star") + " " + (item.rating ? Number(item.rating).toFixed(1) : "&ndash;") + "</span>" +
+      "</div></a>"
+    );
+  }
+
+  function renderListing() {
+    var grid = document.getElementById("listing");
+    if (!grid) return;
+    var storeAll = (data.scripts || []).concat();
+    var activeType = param("type") || "all";
+    var activeCat = param("cat") || "all";
+    var q = param("q").toLowerCase().trim();
+    var sort = param("sort") || "popular";
+
+    var typeSel = document.getElementById("ff-type");
+    if (typeSel) {
+      typeSel.innerHTML = '<option value="all">All types</option>' + enabledTypes().map(function (id) {
+        return '<option value="' + esc(id) + '">' + esc(typeById(id).label) + "</option>";
+      }).join("");
+      typeSel.value = activeType;
+    }
+    if (activeCat !== "all") {
+      var prev = document.getElementById("chips");
+      if (prev) { var chips = prev.querySelectorAll(".chip"); chips.forEach(function (c) { if (c.getAttribute("data-cat") === activeCat) c.classList.add("active"); }); }
+    }
+    if (q) { var fi = document.getElementById("filter-q"); if (fi) fi.value = param("q"); }
+
+    function apply() {
+      var t = document.getElementById("ff-type").value;
+      var c = (document.getElementById("chips") ? document.querySelector("#chips .chip.active") : null);
+      c = c ? c.getAttribute("data-cat") : "all";
+      var k = document.getElementById("filter-q").value.toLowerCase().trim();
+      var s = document.getElementById("ff-sort").value;
+
+      var list = storeAll.filter(function (it) {
+        if (t !== "all" && it.type !== t) return false;
+        if (c !== "all" && (it.categories || []).indexOf(c) < 0) return false;
+        if (k) {
+          var hay = (it.title + " " + (it.description || "") + " " + (it.tags || []).join(" ") + " " + (it.categories || []).join(" ")).toLowerCase();
+          if (hay.indexOf(k) < 0) return false;
+        }
+        return true;
+      });
+
+      if (s === "newest") list.sort(function (a, b) { return (b.lastUpdated || "").localeCompare(a.lastUpdated || ""); });
+      else if (s === "name") list.sort(function (a, b) { return a.title.localeCompare(b.title); });
+      else list.sort(function (a, b) { return (Number(b.downloads) || 0) - (Number(a.downloads) || 0); });
+
+      var out = list.length
+        ? list.map(cardHTML).join("")
+        : '<div class="empty">No results found. Try a different search or filter.</div>';
+      grid.innerHTML = out;
+      var cl = document.getElementById("count-line");
+      if (cl) cl.textContent = list.length + (list.length === 1 ? " item" : " items");
+    }
+
+    document.getElementById("ff-type").addEventListener("change", apply);
+    if (document.getElementById("ff-sort")) document.getElementById("ff-sort").addEventListener("change", apply);
+    document.getElementById("filter-q").addEventListener("input", apply);
+    var chips = document.querySelectorAll("#chips .chip");
+    chips.forEach(function (ch) {
+      ch.addEventListener("click", function () {
+        chips.forEach(function (x) { x.classList.remove("active"); });
+        ch.classList.add("active");
+        apply();
+      });
+    });
+    apply();
+  }
+
+  /* ---------------- homepage ---------------- */
+  function renderHome() {
+    if (!isHome) return;
+    var all = data.scripts || [];
+    var featured = all.filter(function (s) { return s.featured; });
+    if (!featured.length) featured = all.slice();
+    featured = featured.slice(0, 3);
+    var latest = all.slice().sort(function (a, b) { return (b.lastUpdated || "").localeCompare(a.lastUpdated || ""); }).slice(0, 3);
+
+    var fg = document.getElementById("featured-grid");
+    if (fg) fg.innerHTML = featured.length ? featured.map(cardHTML).join("") : '<div class="empty">Featured tools will appear here soon.</div>';
+
+    var lg = document.getElementById("latest-grid");
+    if (lg) lg.innerHTML = latest.length ? latest.map(cardHTML).join("") : '<div class="empty">New releases will appear here soon.</div>';
+
+    var tgrid = document.getElementById("types-grid");
+    if (tgrid) {
+      tgrid.innerHTML = enabledTypes().map(function (id) {
+        var t = typeById(id);
+        var count = all.filter(function (s) { return s.type === id; }).length;
+        return (
+          '<a class="type-card" href="/listing.html?type=' + esc(id) + '">' +
+          '<span class="icon">' + icon(t.icon) + "</span>" +
+          "<h3>" + esc(t.label) + "</h3>" +
+          "<p>" + count + " " + (count === 1 ? "item" : "items") + "</p></a>"
+        );
+      }).join("");
+    }
+
+    var cgrid = document.getElementById("categories-grid");
+    if (cgrid) {
+      cgrid.innerHTML = data.categories.map(function (c) {
+        return '<a class="chip" href="/listing.html?cat=' + encodeURIComponent(c) + '">' + esc(c) + "</a>";
+      }).join(" ");
+    }
+
+    var stats = document.querySelectorAll("[data-stat]");
+    if (stats.length) {
+      var map = {
+        total: all.length,
+        downloads: all.reduce(function (s, x) { return s + (Number(x.downloads) || 0); }, 0),
+        scripts: all.filter(function (x) { return x.type === "script"; }).length
+      };
+      stats.forEach(function (el) { var k = el.getAttribute("data-stat"); if (k in map) el.textContent = fmt(map[k]); });
+    }
+  }
+
+  /* ---------------- init ---------------- */
+  function init() {
+    fetch("/scripts-data.json")
+      .then(function (r) { if (!r.ok) throw new Error("data"); return r.json(); })
+      .then(function (d) {
+        data = d;
+        if (data && typeof window.googleToken === "undefined") {
+          window.googleToken = d.site.adsense ? "xload_consent_token" : "";
+        }
+        wireChrome();
+        populateChips();
+        renderHome();
+        renderListing();
+      })
+      .catch(function () {
+        wireChrome();
+      });
+    buildCookieBanner();
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();

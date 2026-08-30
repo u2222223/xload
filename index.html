@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xload — Free Browser Userscripts</title>
+  <meta name="description" content="xload is the trusted place to find fast, free and safe browser userscripts. All files hosted on GitHub. 100% free and open source.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://REPLACE-WITH-YOUR-DOMAIN.com/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="xload — Free Browser Userscripts">
+  <meta property="og:description" content="Fast, free and safe downloads. All tools hosted and versioned on GitHub.">
+  <meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN.com/">
+  <meta property="og:site_name" content="xload">
+
+  <!-- Google AdSense consent + auto ads (replace ID below) -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", {
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      ad_storage: "denied",
+      analytics_storage: "denied"
+    }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-nav="home">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <section class="hero">
+      <div class="container">
+        <h1>Find the best <span class="grad">tools for the web</span>, all free and open&nbsp;source.</h1>
+        <p>Browse a carefully curated catalog of browser userscripts. Every download is linked to our GitHub releases — we never host files ourselves.</p>
+        <form class="hero-search" role="search">
+          <input type="search" name="q" placeholder="Search scripts&hellip;" aria-label="Search the catalog">
+          <button type="submit">Search</button>
+        </form>
+        <div class="hero-stats">
+          <div class="stat" data-stat="total"><b>0</b><span>Tools</span></div>
+          <div class="stat" data-stat="downloads"><b>0</b><span>Downloads</span></div>
+          <div class="stat" data-stat="scripts"><b>0</b><span>Usercripts</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Types ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Explore by type</h2>
+        </div>
+        <div class="type-grid" id="types-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Featured ===== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured tools</h2>
+          <a class="link" href="/listing.html">View all &rarr;</a>
+        </div>
+        <div class="card-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Ad slot (optional) ===== -->
+    <section class="container">
+      <div class="adslot"><div class="adslot-label">Sponsored</div>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="REPLACE_HORIZONTAL_SLOT" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+    </section>
+
+    <!-- ===== Latest ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Latest &amp; updated</h2>
+          <a class="link" href="/listing.html?sort=newest">Most recent &rarr;</a>
+        </div>
+        <div class="card-grid" id="latest-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Categories ===== -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <h2>Browse by category</h2>
+        </div>
+        <div class="chips" id="categories-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===== Why trust us ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head"><h2>Why download from xload</h2></div>
+        <div class="card-grid">
+          <div class="script-card"><div class="card-top"><span class="card-badge" style="background:#059669;">&#9998;</span><h3>Open source</h3></div><p class="desc">Every tool is backed by a public GitHub repository you can review, fork and verify line by line.</p></div>
+          <div class="script-card"><div class="card-top"><span class="card-badge" style="background:#4f7cff;">&#128274;</span><h3>We never host files</h3></div><p class="desc">Downloads point directly to official GitHub releases, so you always get the genuine, latest build.</p></div>
+          <div class="script-card"><div class="card-top"><span class="card-badge" style="background:#f59e0b;">&#9881;</span><h3>Free forever</h3></div><p class="desc">No paywalls, no bundles, no shady installers. Supported by respectful advertising.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
