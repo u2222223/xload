@@ -138,8 +138,32 @@
   var TASK_ID = 'scriptcat-2534-2';
   var LS_KEY = 'xload-dy-player-settings';
   var LS_MEMORY_KEY = 'xload-dy-player-quality-memory';
+  var LOG_KEY = 'xload-dy-player-logs';
   // 面板入口（上线时站点域名以实际部署为准；协议仅 http/https）
   var PANEL_URL = 'https://xload.net/scripts/userscripts/scriptcat-2534-2/panel.html';
+
+  // ---- 日志系统 -----------------------------------------------------
+  // 内存环形缓冲 + localStorage 持久化 + console；面板内可查看/复制，便于排错。
+  var LOG_RING = [];
+  function log(tag, data) {
+    var entry = { t: new Date().toISOString(), tag: tag, data: data == null ? null : data };
+    LOG_RING.push(entry);
+    if (LOG_RING.length > 300) LOG_RING.shift();
+    try { console.log('[xload:scriptcat-2534-2]', tag, data == null ? '' : data); } catch (e) { /* ignore */ }
+    try { window.localStorage.setItem(LOG_KEY, JSON.stringify(LOG_RING.slice(-60))); } catch (e) { /* ignore */ }
+    return entry;
+  }
+  function logText() {
+    return LOG_RING.map(function (e) {
+      return '[' + e.t + '] ' + e.tag + (e.data != null ? ' ' + JSON.stringify(e.data) : '');
+    }).join('\n');
+  }
+  function restoreLogs() {
+    try {
+      var raw = JSON.parse(window.localStorage.getItem(LOG_KEY));
+      if (Array.isArray(raw)) LOG_RING = raw.slice(-60);
+    } catch (e) { /* ignore */ }
+  }
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -229,6 +253,7 @@
   function registerChannelHandlers() {
     channel.on('command', function (data, msg) {
       var action = (data && data.action) || '';
+      log('channel.command', { action: action, fromMessage: !!msg });
       var resp;
       if (action === 'querySettings') {
         resp = { ok: true, settings: settings };
@@ -423,6 +448,7 @@
     fsTriggered = false;
 
     applyQualityGear();
+    log('video.changed', { src: video.currentSrc || video.src || '', paused: video.paused });
 
     var cleanups = [noop];
     if (settings.disableAutoplay) cleanups.push(bindAutoplayBlock(video));
@@ -463,21 +489,325 @@
     applyAll();
   }
 
-  // ---- 面板入口（悬浮按钮）-------------------------------------------
+  // ---- 面板入口（页面内居中模态浮层，不开新窗口 / 不用 iframe）----
   function openPanel() {
-    if (!isSafeUrl(PANEL_URL)) return false;
-    try {
-      // 居中弹窗：width/height 定位在当前页面中间；不用 noopener，跨源通信依赖 window.opener + postMessage
-      var W = Math.min(860, Math.max(420, window.screen.availWidth - 120));
-      var H = Math.min(720, Math.max(480, window.screen.availHeight - 140));
-      var L = Math.max(0, Math.round((window.screen.availWidth - W) / 2));
-      var T = Math.max(0, Math.round((window.screen.availHeight - H) / 2));
-      var features = 'width=' + W + ',height=' + H + ',left=' + L + ',top=' + T +
-        ',menubar=no,toolbar=no,location=yes,status=yes,resizable=yes,scrollbars=yes';
-      var w = window.open(PANEL_URL, '_blank', features);
-      if (w) channel.setPanelWin(w);
-      return true;
-    } catch (e) { return false; }
+    if (document.getElementById('xload-dy-modal')) return true; // 已打开
+    restoreLogs();
+    log('panel.open', { url: location.href });
+
+    var overlay = document.createElement('div');
+    overlay.id = 'xload-dy-modal';
+    overlay.setAttribute('data-xload-modal', TASK_ID);
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(15,17,23,.55);' +
+      'display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,sans-serif;';
+
+    var box = document.createElement('div');
+    box.style.cssText = 'background:#fff;color:#111827;width:min(640px,92vw);max-height:86vh;overflow:auto;' +
+      'border-radius:14px;box-shadow:0 18px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-label', '抖音播放器增强 - 设置面板');
+
+    var header = document.createElement('div');
+    header.style.cssText = 'padding:16px 20px;border-bottom:1px solid #eef0f3;display:flex;align-items:center;justify-content:space-between;';
+    var title = document.createElement('div');
+    var h1 = document.createElement('h2');
+    h1.textContent = '抖音播放器增强';
+    h1.style.cssText = 'margin:0;font-size:17px;color:#111827;';
+    var sub = document.createElement('p');
+    sub.textContent = '画质记忆、禁止自动播放、自定义全屏与背景色';
+    sub.style.cssText = 'margin:3px 0 0;font-size:12px;color:#6b7280;';
+    title.appendChild(h1);
+    title.appendChild(sub);
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.textContent = '×';
+    closeBtn.setAttribute('aria-label', '关闭');
+    closeBtn.style.cssText = 'border:0;background:none;font-size:24px;line-height:1;cursor:pointer;color:#6b7280;padding:4px 8px;';
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    var body = document.createElement('div');
+    body.style.cssText = 'padding:18px 20px;flex:1;overflow:auto;';
+
+    var status = document.createElement('div');
+    status.id = 'xload-dy-modal-status';
+    status.style.cssText = 'padding:9px 12px;border-radius:8px;background:#eef2ff;color:#3730a3;font-size:13px;margin-bottom:16px;';
+    status.textContent = '设置将直接应用到当前页面';
+    body.appendChild(status);
+
+    function group(titleText) {
+      var g = document.createElement('section');
+      g.style.cssText = 'margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid #eef0f3;';
+      var h = document.createElement('h3');
+      h.textContent = titleText;
+      h.style.cssText = 'margin:0 0 10px;font-size:15px;color:#111827;';
+      g.appendChild(h);
+      body.appendChild(g);
+      return g;
+    }
+    function row(parent) {
+      var r = document.createElement('div');
+      r.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;';
+      parent.appendChild(r);
+      return r;
+    }
+    function field(parent, labelText, control, check) {
+      var f = document.createElement('div');
+      f.style.cssText = check
+        ? 'display:flex;align-items:center;gap:7px;min-width:0;'
+        : 'display:flex;flex-direction:column;gap:5px;min-width:150px;';
+      if (!check) {
+        var lb = document.createElement('label');
+        lb.textContent = labelText;
+        lb.style.cssText = 'font-size:13px;color:#4b5563;';
+        f.appendChild(lb);
+        f.appendChild(control);
+      } else {
+        var chk = document.createElement('label');
+        chk.style.cssText = 'font-size:14px;color:#1f2328;cursor:pointer;display:inline-flex;align-items:center;gap:6px;';
+        chk.appendChild(control);
+        chk.appendChild(document.createTextNode(labelText));
+        f.appendChild(chk);
+      }
+      parent.appendChild(f);
+      return f;
+    }
+
+    var gQuality = group('画质设置');
+    var rQuality = row(gQuality);
+    var sel = document.createElement('select');
+    sel.style.cssText = 'padding:6px 8px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;';
+    [
+      { v: 0, label: '智能（自动）' },
+      { v: -2, label: '超清 4K' },
+      { v: -1, label: '超清 2K' },
+      { v: 1, label: '高清 1080P' },
+      { v: 2, label: '高清 720P' },
+      { v: 3, label: '标清 540P' },
+      { v: 4, label: '极速' }
+    ].forEach(function (o) {
+      var opt = document.createElement('option');
+      opt.value = String(o.v);
+      opt.textContent = o.label;
+      sel.appendChild(opt);
+    });
+    field(rQuality, '默认画质', sel, false);
+    var chkMemory = document.createElement('input');
+    chkMemory.type = 'checkbox';
+    field(rQuality, '记忆上次选择的画质', chkMemory, true);
+    var hint = document.createElement('p');
+    hint.textContent = '画质档位取决于抖音平台实际提供的分辨率；本脚本不解锁平台未开放的画质。';
+    hint.style.cssText = 'margin:8px 0 0;font-size:12px;color:#9ca3af;';
+    gQuality.appendChild(hint);
+
+    var gPlay = group('播放控制');
+    var rPlay = row(gPlay);
+    function mkCheck(labelText) {
+      var c = document.createElement('input');
+      c.type = 'checkbox';
+      field(rPlay, labelText, c, true);
+      return c;
+    }
+    var chkNoAutoplay = mkCheck('禁止自动播放');
+    var chkAutoFs = mkCheck('自动进入全屏');
+    var chkDbl = mkCheck('双击进入全屏');
+    var chkClickArea = mkCheck('单击视频区进入全屏');
+    var rMode = document.createElement('div');
+    rMode.style.cssText = 'display:flex;gap:16px;margin-top:10px;';
+    ['element', 'website'].forEach(function (v) {
+      var lb = document.createElement('label');
+      lb.style.cssText = 'font-size:14px;color:#1f2328;cursor:pointer;display:inline-flex;align-items:center;gap:6px;';
+      var radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'xload-dy-fsmode';
+      radio.value = v;
+      lb.appendChild(radio);
+      lb.appendChild(document.createTextNode(v === 'element' ? '元素全屏（真实全屏）' : '网页全屏'));
+      rMode.appendChild(lb);
+    });
+    gPlay.appendChild(rMode);
+
+    var gUi = group('界面定制');
+    var chkBg = document.createElement('input');
+    chkBg.type = 'checkbox';
+    field(gUi, '自定义视频区背景色', chkBg, true);
+    var rBg = row(gUi);
+    var colorInput = document.createElement('input');
+    colorInput.type = 'color';
+    colorInput.value = '#000000';
+    colorInput.style.cssText = 'padding:2px;border:1px solid #d1d5db;border-radius:8px;';
+    field(rBg, '颜色', colorInput, false);
+    var alphaField = document.createElement('div');
+    alphaField.style.cssText = 'display:flex;flex-direction:column;gap:5px;flex:1;min-width:200px;';
+    var alphaLabel = document.createElement('label');
+    alphaLabel.style.cssText = 'font-size:13px;color:#4b5563;';
+    var alphaSpan = document.createElement('span');
+    alphaSpan.id = 'xload-dy-alpha-val';
+    alphaSpan.textContent = '60';
+    alphaLabel.appendChild(document.createTextNode('不透明度 '));
+    alphaLabel.appendChild(alphaSpan);
+    alphaLabel.appendChild(document.createTextNode('%'));
+    var alphaInput = document.createElement('input');
+    alphaInput.type = 'range';
+    alphaInput.min = '0';
+    alphaInput.max = '100';
+    alphaInput.step = '1';
+    alphaInput.value = '60';
+    alphaInput.style.cssText = 'width:100%;';
+    alphaField.appendChild(alphaLabel);
+    alphaField.appendChild(alphaInput);
+    rBg.appendChild(alphaField);
+
+    var gMob = group('移动端优化');
+    var rMob = row(gMob);
+    function mkCheck2(labelText) {
+      var c = document.createElement('input');
+      c.type = 'checkbox';
+      field(rMob, labelText, c, true);
+      return c;
+    }
+    var chkProgress = mkCheck2('进度条拖拽修复');
+    var chkTouch = mkCheck2('触控区域放大');
+
+    var actions = document.createElement('div');
+    actions.style.cssText = 'display:flex;gap:10px;justify-content:flex-end;margin-top:6px;';
+    function mkBtn(text, kind) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = text;
+      b.style.cssText = 'border:0;border-radius:8px;padding:8px 16px;font-size:14px;cursor:pointer;' +
+        (kind === 'primary' ? 'background:#2563eb;color:#fff;' : kind === 'danger' ? 'background:#fee2e2;color:#b91c1c;' : 'background:#eef0f3;color:#1f2328;');
+      return b;
+    }
+    var btnLog = mkBtn('查看日志', 'default');
+    var btnReset = mkBtn('恢复默认设置', 'danger');
+    var btnApply = mkBtn('应用到原页面', 'primary');
+    actions.appendChild(btnLog);
+    actions.appendChild(btnReset);
+    actions.appendChild(btnApply);
+    body.appendChild(actions);
+
+    var footer = document.createElement('div');
+    footer.style.cssText = 'padding:10px 20px;border-top:1px solid #eef0f3;display:flex;justify-content:space-between;align-items:center;';
+    var footerLink = document.createElement('a');
+    footerLink.href = PANEL_URL;
+    footerLink.target = '_blank';
+    footerLink.textContent = '打开独立面板页 →';
+    footerLink.style.cssText = 'font-size:12px;color:#2563eb;text-decoration:none;';
+    footer.appendChild(footerLink);
+    var logCount = document.createElement('span');
+    logCount.id = 'xload-dy-log-count';
+    logCount.textContent = '日志 ' + LOG_RING.length + ' 条';
+    logCount.style.cssText = 'font-size:12px;color:#9ca3af;';
+    footer.appendChild(logCount);
+
+    box.appendChild(header);
+    box.appendChild(body);
+    box.appendChild(footer);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    function read() {
+      var fsMode = 'element';
+      var radios = document.getElementsByName('xload-dy-fsmode');
+      for (var i = 0; i < radios.length; i++) if (radios[i].checked) fsMode = radios[i].value;
+      return {
+        qualityMode: Number(sel.value),
+        qualityMemory: chkMemory.checked,
+        disableAutoplay: chkNoAutoplay.checked,
+        autoFullscreen: chkAutoFs.checked,
+        doubleClickFullscreen: chkDbl.checked,
+        clickAreaFullscreen: chkClickArea.checked,
+        fullscreenMode: fsMode,
+        bgEnabled: chkBg.checked,
+        bgColor: colorInput.value,
+        bgAlpha: Number(alphaInput.value),
+        progressDragFix: chkProgress.checked,
+        touchAreaEnlarge: chkTouch.checked
+      };
+    }
+    function render(s) {
+      s = mergeSettings(DEFAULT_SETTINGS, s || {});
+      sel.value = String(s.qualityMode);
+      chkMemory.checked = Boolean(s.qualityMemory);
+      chkNoAutoplay.checked = Boolean(s.disableAutoplay);
+      chkAutoFs.checked = Boolean(s.autoFullscreen);
+      chkDbl.checked = Boolean(s.doubleClickFullscreen);
+      chkClickArea.checked = Boolean(s.clickAreaFullscreen);
+      var radios = document.getElementsByName('xload-dy-fsmode');
+      for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === s.fullscreenMode);
+      chkBg.checked = Boolean(s.bgEnabled);
+      colorInput.value = (typeof s.bgColor === 'string' && /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(s.bgColor)) ? s.bgColor : '#000000';
+      var alpha = Math.max(0, Math.min(100, Number(s.bgAlpha) || 0));
+      alphaInput.value = String(alpha);
+      alphaSpan.textContent = String(alpha);
+      chkProgress.checked = Boolean(s.progressDragFix);
+      chkTouch.checked = Boolean(s.touchAreaEnlarge);
+    }
+    function applyLocal() {
+      var s = read();
+      persist(s);
+      applyAll();
+      log('panel.apply', s);
+      status.textContent = '已应用到当前页面（' + new Date().toLocaleTimeString() + '）';
+      status.style.background = '#ecfdf5';
+      status.style.color = '#047857';
+    }
+
+    closeBtn.addEventListener('click', function () {
+      log('panel.close', {});
+      if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) {
+        log('panel.close', { by: 'mask' });
+        overlay.parentNode.removeChild(overlay);
+      }
+    });
+    btnApply.addEventListener('click', applyLocal);
+    btnReset.addEventListener('click', function () {
+      persist(DEFAULT_SETTINGS);
+      try { window.localStorage.removeItem(LS_MEMORY_KEY); } catch (e) { /* ignore */ }
+      render(DEFAULT_SETTINGS);
+      applyAll();
+      log('panel.reset', {});
+      status.textContent = '已恢复默认设置';
+      status.style.background = '#fef3c7';
+      status.style.color = '#92400e';
+    });
+    btnLog.addEventListener('click', function () {
+      var s = status.textContent;
+      status.textContent = logText() || '（暂无日志）';
+      status.style.background = '#f9fafb';
+      status.style.color = '#1f2328';
+      status.style.whiteSpace = 'pre-wrap';
+      status.style.wordBreak = 'break-all';
+      status.style.maxHeight = '40vh';
+      status.style.overflow = 'auto';
+      status.addEventListener('click', function copyLog() {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(status.textContent).then(function () {
+              PUI && PUI.toast ? PUI.toast('日志已复制', 'success') : alert('日志已复制');
+            });
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = status.textContent;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert('日志已复制');
+          }
+        } catch (e) { alert('复制失败：' + e.message); }
+        status.removeEventListener('click', copyLog);
+      });
+      status.title = '点击复制日志';
+    });
+
+    render(settings);
+    log('panel.rendered', { settings: settings });
+    return true;
   }
 
   function injectFab() {
@@ -502,8 +832,9 @@
   }
 
   function init() {
+    log('init.start', { ua: navigator.userAgent.slice(0, 80), readyState: document.readyState });
     // 全量应用一次，并持续监测活动视频
-    applyAll();
+    try { applyAll(); } catch (e) { log('init.applyAll.error', { message: String(e && e.message || e) }); }
     rememberQualityLoop();
     registerChannelHandlers();
 
@@ -513,8 +844,9 @@
     setInterval(tick, 800);
 
     whenReady(function () {
-      try { injectFab(); } catch (e) { /* ignore */ }
+      try { injectFab(); log('init.fab.ok', {}); } catch (e) { log('init.fab.error', { message: String(e && e.message || e) }); }
     });
+    log('init.done', { settings: settings });
   }
 
   whenReady(init);
