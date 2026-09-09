@@ -2,8 +2,6 @@
   "use strict";
 
   var data = null;
-  var isListing = !!document.getElementById("listing");
-  var isHome = !!document.getElementById("types-grid");
 
   /* ---------------- icons ---------------- */
   function icon(name) {
@@ -64,10 +62,6 @@
       '<header class="site-header"><div class="nav-wrap">' +
       '<a class="logo" href="/"><span class="logo-mark">XL</span><span>' + name + "</span></a>" +
       '<nav class="main-nav" id="main-nav">' + nav + "</nav>" +
-      '<form class="header-search" role="search">' +
-      icon("search") +
-      '<input type="search" name="q" placeholder="Search&hellip;" aria-label="Search the catalog">' +
-      "</form>" +
       '<button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button>' +
       "</div></header>"
     );
@@ -79,9 +73,6 @@
   function buildFooter() {
     if (!data) return "";
     var en = enabledTypes();
-    var cats = (data.categories || []).slice(0, 6).map(function (c) {
-      return '<li><a href="/listing.html?cat=' + encodeURIComponent(c) + '">' + esc(c) + "</a></li>";
-    }).join("");
     var typesCol = en.map(function (id) {
       var t = typeById(id);
       return '<li><a href="/listing.html?type=' + encodeURIComponent(id) + '">' + esc(t.label) + "</a></li>";
@@ -95,7 +86,6 @@
       '<li><a href="/contact.html">Contact</a></li>' +
       "</ul></div>" +
       "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
-      "<div class=\"footer-col\"><h4>Categories</h4><ul>" + cats + "</ul></div>" +
       "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
       '<li><a href="/privacy-policy.html">Privacy Policy</a></li>' +
       '<li><a href="/terms-of-service.html">Terms of Service</a></li>' +
@@ -160,34 +150,6 @@
     if (toggle && nav) {
       toggle.addEventListener("click", function () { nav.classList.toggle("open"); });
     }
-    var form = document.querySelector(".header-search");
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var q = form.querySelector("input").value.trim();
-        window.location.href = "/listing.html" + (q ? "?q=" + encodeURIComponent(q) : "");
-      });
-    }
-    var hero = document.querySelector(".hero-search");
-    if (hero) {
-      hero.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var q = hero.querySelector("input").value.trim();
-        window.location.href = "/listing.html" + (q ? "?q=" + encodeURIComponent(q) : "");
-      });
-    }
-  }
-
-  function populateChips() {
-    var wrap = document.getElementById("chips");
-    if (!wrap) return;
-    (data.categories || []).forEach(function (c) {
-      var el = document.createElement("span");
-      el.className = "chip";
-      el.setAttribute("data-cat", c);
-      el.textContent = c;
-      wrap.appendChild(el);
-    });
   }
 
   /* ---------------- listing & search ---------------- */
@@ -219,7 +181,6 @@
     if (!grid) return;
     var storeAll = (data.scripts || []).concat();
     var activeType = param("type") || "all";
-    var activeCat = param("cat") || "all";
     var q = param("q").toLowerCase().trim();
     var sort = param("sort") || "popular";
 
@@ -230,22 +191,15 @@
       }).join("");
       typeSel.value = activeType;
     }
-    if (activeCat !== "all") {
-      var prev = document.getElementById("chips");
-      if (prev) { var chips = prev.querySelectorAll(".chip"); chips.forEach(function (c) { if (c.getAttribute("data-cat") === activeCat) c.classList.add("active"); }); }
-    }
     if (q) { var fi = document.getElementById("filter-q"); if (fi) fi.value = param("q"); }
 
     function apply() {
       var t = document.getElementById("ff-type").value;
-      var c = (document.getElementById("chips") ? document.querySelector("#chips .chip.active") : null);
-      c = c ? c.getAttribute("data-cat") : "all";
       var k = document.getElementById("filter-q").value.toLowerCase().trim();
       var s = document.getElementById("ff-sort").value;
 
       var list = storeAll.filter(function (it) {
         if (t !== "all" && it.type !== t) return false;
-        if (c !== "all" && (it.categories || []).indexOf(c) < 0) return false;
         if (k) {
           var hay = (it.title + " " + (it.description || "") + " " + (it.tags || []).join(" ") + " " + (it.categories || []).join(" ")).toLowerCase();
           if (hay.indexOf(k) < 0) return false;
@@ -268,62 +222,7 @@
     document.getElementById("ff-type").addEventListener("change", apply);
     if (document.getElementById("ff-sort")) document.getElementById("ff-sort").addEventListener("change", apply);
     document.getElementById("filter-q").addEventListener("input", apply);
-    var chips = document.querySelectorAll("#chips .chip");
-    chips.forEach(function (ch) {
-      ch.addEventListener("click", function () {
-        chips.forEach(function (x) { x.classList.remove("active"); });
-        ch.classList.add("active");
-        apply();
-      });
-    });
     apply();
-  }
-
-  /* ---------------- homepage ---------------- */
-  function renderHome() {
-    if (!isHome) return;
-    var all = data.scripts || [];
-    var featured = all.filter(function (s) { return s.featured; });
-    if (!featured.length) featured = all.slice();
-    featured = featured.slice(0, 3);
-    var latest = all.slice().sort(function (a, b) { return (b.lastUpdated || "").localeCompare(a.lastUpdated || ""); }).slice(0, 3);
-
-    var fg = document.getElementById("featured-grid");
-    if (fg) fg.innerHTML = featured.length ? featured.map(cardHTML).join("") : '<div class="empty">Featured tools will appear here soon.</div>';
-
-    var lg = document.getElementById("latest-grid");
-    if (lg) lg.innerHTML = latest.length ? latest.map(cardHTML).join("") : '<div class="empty">New releases will appear here soon.</div>';
-
-    var tgrid = document.getElementById("types-grid");
-    if (tgrid) {
-      tgrid.innerHTML = enabledTypes().map(function (id) {
-        var t = typeById(id);
-        var count = all.filter(function (s) { return s.type === id; }).length;
-        return (
-          '<a class="type-card" href="/listing.html?type=' + esc(id) + '">' +
-          '<span class="icon">' + icon(t.icon) + "</span>" +
-          "<h3>" + esc(t.label) + "</h3>" +
-          "<p>" + count + " " + (count === 1 ? "item" : "items") + "</p></a>"
-        );
-      }).join("");
-    }
-
-    var cgrid = document.getElementById("categories-grid");
-    if (cgrid) {
-      cgrid.innerHTML = data.categories.map(function (c) {
-        return '<a class="chip" href="/listing.html?cat=' + encodeURIComponent(c) + '">' + esc(c) + "</a>";
-      }).join(" ");
-    }
-
-    var stats = document.querySelectorAll("[data-stat]");
-    if (stats.length) {
-      var map = {
-        total: all.length,
-        downloads: all.reduce(function (s, x) { return s + (Number(x.downloads) || 0); }, 0),
-        scripts: all.filter(function (x) { return x.type === "script"; }).length
-      };
-      stats.forEach(function (el) { var k = el.getAttribute("data-stat"); if (k in map) el.textContent = fmt(map[k]); });
-    }
   }
 
   /* ---------------- init ---------------- */
@@ -336,8 +235,6 @@
           window.googleToken = d.site.adsense ? "xload_consent_token" : "";
         }
         wireChrome();
-        populateChips();
-        renderHome();
         renderListing();
       })
       .catch(function () {

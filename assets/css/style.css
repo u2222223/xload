@@ -92,22 +92,6 @@ ul { list-style: none; }
 .main-nav a:hover { color: var(--text); background: var(--bg-soft); text-decoration: none; }
 .main-nav a.active { color: #fff; background: var(--bg-input); }
 
-.header-search {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 8px 14px;
-  color: var(--text-muted);
-}
-.header-search input {
-  border: none; background: transparent; outline: none;
-  color: var(--text); font: inherit; width: 150px; font-size: 0.9rem;
-}
-.header-search input::placeholder { color: var(--text-muted); opacity: .7; }
-
 .nav-toggle {
   display: none;
   background: none; border: 1px solid var(--border); color: var(--text);
@@ -144,20 +128,6 @@ main { flex: 1; }
 }
 .hero h1 .grad { background: var(--accent-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero p { color: var(--text-muted); font-size: 1.15rem; max-width: 640px; margin: 0 auto 30px; }
-.hero-search { display: flex; max-width: 520px; margin: 0 auto; }
-.hero-search input {
-  flex: 1; padding: 14px 18px; font: inherit; font-size: 1rem;
-  border: 1px solid var(--border); border-right: none;
-  background: var(--bg-card); color: var(--text);
-  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-  outline: none;
-}
-.hero-search input:focus { border-color: var(--accent); }
-.hero-search button {
-  padding: 14px 24px; font: inherit; font-weight: 600; color: #fff;
-  background: var(--accent-grad); border: none; cursor: pointer;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
 .hero-stats { margin-top: 30px; display: flex; gap: 36px; justify-content: center; flex-wrap: wrap; }
 .hero-stats .stat { color: var(--text-muted); }
 .hero-stats .stat b { display: block; font-size: 1.5rem; color: var(--text); }
@@ -230,17 +200,6 @@ main { flex: 1; }
   border: 1px solid var(--border);
 }
 .btn-block { width: 100%; justify-content: center; }
-
-/* ============ Category chips ============ */
-.chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
-.chip {
-  padding: 8px 16px; border-radius: 999px; cursor: pointer;
-  border: 1px solid var(--border); background: var(--bg-card);
-  color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
-  transition: all .15s;
-}
-.chip:hover { border-color: var(--accent); color: var(--text); }
-.chip.active { background: var(--accent-grad); color: #fff; border-color: transparent; }
 
 .toolbar {
   display: flex; gap: 12px; align-items: center;
@@ -359,9 +318,5 @@ main { flex: 1; }
   }
   .main-nav.open { display: flex; }
   .nav-toggle { display: block; }
-  .header-search { display: none; }
-  .hero-search { flex-direction: column; }
-  .hero-search input { border-radius: var(--radius-sm); border-right: 1px solid var(--border); }
-  .hero-search button { border-radius: var(--radius-sm); }
   .cookie-banner { flex-direction: column; align-items: stretch; }
 }
