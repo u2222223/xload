@@ -37,7 +37,7 @@
     zoom: 1.0,                   // 字号缩放 0.8~2.5
     fontRewrite: true,           // 字体重写（把常见网页字体映射到所选字体）
     filterMode: 'blacklist',     // blacklist 排除模式 | whitelist 白名单模式
-    excludeSites: ['127.0.0.1', 'localhost'], // 排除站点（黑名单；支持 *.domain.com）
+    excludeSites: ['127.0.0.1', 'localhost', 'xload.net', 'u2222223.github.io'], // 排除站点（黑名单；支持 *.domain.com；含宿主站点）
     includeSites: [],            // 白名单站点（白名单模式生效）
     excludePaths: [],            // 路径规则（每项：/regex/ 表示正则，否则前缀匹配）
     includeSelectors: "html, body, p, div, span, a, li, td, th, label, h1, h2, h3, h4, h5, h6, blockquote, article, section, button, input, select, textarea",
@@ -81,6 +81,20 @@
     'tool.lu', 'vscode.dev', 'weread.qq.com', 'wolai.com',
     'wqxuetang.com', 'xiezuocat.com', 'youtube.com', 'yuque.com'
   ];
+
+  // 宿主站点：脚本不在自己的网站上注入按钮/样式（避免污染 xload 官网页面）
+  var SELF_HOSTS = ['xload.net', 'u2222223.github.io'];
+
+  // 判断当前站点是否为本脚本宿主站点（纯函数，不读 location）
+  function isSelfHost(host) {
+    host = String(host || '').toLowerCase();
+    if (!host) return false;
+    for (var i = 0; i < SELF_HOSTS.length; i++) {
+      var h = SELF_HOSTS[i];
+      if (host === h || host.endsWith('.' + h)) return true;
+    }
+    return false;
+  }
 
   // ---- 纯工具 ----
   function clamp(num, min, max) {
@@ -683,6 +697,8 @@
 
   function init() {
     log('init.start', { ua: navigator.userAgent.slice(0, 80), readyState: document.readyState });
+    var host = window.location.hostname || '';
+    if (isSelfHost(host)) { log('init.self.skip', { host: host }); return; }
     try {
       injectStyleWhenReady();
       registerChannelHandlers();
