@@ -146,6 +146,38 @@
       "license": "MIT",
       "featured": true,
       "status": "stable"
+    },
+    {
+      "id": "greasyfork-406070-1",
+      "type": "script",
+      "title": "通用小说下载器",
+      "short": "一键下载全网小说，支持百站解析",
+      "description": "一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT 与 EPUB 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html",
+      "installUrl": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js",
+      "files": [
+        "greasyfork-406070-1.user.js",
+        "panel.html"
+      ],
+      "tags": [
+        "小说下载",
+        "EPUB",
+        "TXT",
+        "笔趣阁",
+        "起点",
+        "晋江"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-09",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }

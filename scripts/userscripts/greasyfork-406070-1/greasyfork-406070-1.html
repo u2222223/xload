@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通用小说下载器 — xload</title>
+  <meta name="description" content="一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT 与 EPUB 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a target="_blank" rel="noopener" href="/listing.html">Home</a> &rsaquo; <span>通用小说下载器</span></nav>
+
+      <div class="detail-grid">
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <div>
+          <div class="detail-hero">
+            <!-- Swap the SVG below for your tool's icon if you have one -->
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>通用小说下载器</h1>
+              <p class="lead">一键下载全网小说，支持百站解析</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2>Overview</h2>
+            <p>一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT 与 EPUB 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。</p>
+
+            <h2>Key features</h2>
+            <ul>
+              <li>支持百余家小说站点一键下载</li>
+              <li>自动生成 TXT 与 EPUB 双格式</li>
+              <li>章节筛选与自定义保存参数</li>
+            </ul>
+
+            <h2>How to install &amp; use</h2>
+            <ol>
+              <li>Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li>Click the "Download / install" button above and confirm in the manager.</li>
+              <li>Open the target site and use the script as documented below.</li>
+            </ol>
+
+            <h2>Configuration</h2>
+            <p>All options are configured graphically in the script's floating panel (open it from the <code>≡ xload</code> button) and are stored locally in your browser. You can toggle:</p>
+            <ul>
+              <li><strong>Output formats</strong> — TXT, EPUB and HTML(ZIP) for the finished novel.</li>
+              <li><strong>Chapter range &amp; filter</strong> — download only chapters 1–100, specific indexes (1,3,5), or skip chapters whose titles match a keyword.</li>
+              <li><strong>Download speed</strong> — concurrency (1–10 threads), base/max interval between requests, and automatic retry on failed chapters.</li>
+              <li><strong>File layout</strong> — chapter title template (<code>{index} {title}</code>), TXT paragraph indent and EPUB author metadata.</li>
+              <li><strong>Site tokens</strong> — optional login cookies/tokens for sites that require them (stored per-site, only used to fetch the current page's content).</li>
+              <li><strong>Excluded sites</strong> — hostnames where the script stays inactive.</li>
+            </ul>
+            <pre><code>// Example: download only chapters 1–50 of the current book as TXT + EPUB,
+// using 4 parallel requests with automatic retry.
+Chapter range : 1-50
+Output formats: TXT ✓, EPUB ✓, HTML(ZIP) ✗
+Concurrency  : 4
+Auto retry   : on</code></pre>
+
+            <h2>Privacy &amp; permissions</h2>
+            <p>When you open a novel's table-of-contents page and start a download, the script fetches the directory and chapter pages in your own browser to extract the text; it does not upload any content to any server. All settings and download history live in your browser's <code>localStorage</code> and never leave your device. The script matches all sites but stays completely inert on excluded hosts (including <code>xload.net</code>) and only acts on pages you explicitly ask it to process.</p>
+
+            <h2>Changelog</h2>
+            <p>See the releases page on GitHub for the full history of changes.</p>
+          </div>
+        </div>
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js" target="_blank" rel="noopener" data-internal-download>
+              Download / install
+            </a>
+            <a class="btn btn-block btn-ghost" href="https://github.com/u2222223/xload" target="_blank" rel="noopener">
+              View source on GitHub
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k">Type</span><span class="v">Userscript</span></div>
+              <div class="row"><span class="k">Category</span><span class="v">Userscripts</span></div>
+              <div class="row"><span class="k">License</span><span class="v">MIT</span></div>
+              <div class="row"><span class="k">Last updated</span><span class="v">2026-09-09</span></div>
+              <div class="row"><span class="k">Downloads</span><span class="v">0</span></div>
+              <div class="row"><span class="k">GitHub stars</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

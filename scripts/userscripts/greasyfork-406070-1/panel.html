@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通用小说下载器 - 功能面板</title>
+  <meta name="description" content="一键下载全网小说，支持百站解析">
+  <meta name="keywords" content="小说下载,EPUB,TXT,笔趣阁,起点,晋江">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>通用小说下载器</h1>
+        <p class="panel-subtitle">一键下载全网小说，支持百站解析</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .nf-wrap { font-size: 14px; color: #1f2328; }
+          .nf-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 14px; }
+          .nf-book { border: 1px solid #eef0f3; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; background: #fafbfc; }
+          .nf-book h2 { margin: 0 0 6px; font-size: 17px; color: #111827; }
+          .nf-book .meta { font-size: 12px; color: #6b7280; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+          .nf-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; border-bottom: 1px solid #eef0f3; padding-bottom: 10px; }
+          .nf-tabs button { padding: 7px 14px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; color: #374151; font-size: 13px; cursor: pointer; }
+          .nf-tabs button.on { background: #2563eb; color: #fff; border-color: #2563eb; }
+          .nf-pane { display: none; }
+          .nf-pane.on { display: block; }
+          .nf-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-bottom: 10px; }
+          .nf-field { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+          .nf-field > label { font-size: 12px; color: #4b5563; }
+          .nf-field input[type="text"], .nf-field input[type="number"], .nf-field textarea, .nf-field select { padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+          .nf-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .nf-check input { width: 16px; height: 16px; }
+          .nf-check label { font-size: 14px; cursor: pointer; }
+          .nf-btn { padding: 8px 16px; border: 0; border-radius: 8px; cursor: pointer; font-size: 14px; }
+          .nf-btn:disabled { opacity: .45; cursor: not-allowed; }
+          .nf-btn-primary { background: #2563eb; color: #fff; }
+          .nf-btn-danger { background: #ef4444; color: #fff; }
+          .nf-btn-ghost { background: #f3f4f6; color: #374151; border: 1px solid #e5e7eb; }
+          .nf-btn-sm { padding: 5px 10px; font-size: 12px; }
+          .nf-chapters { max-height: 320px; overflow: auto; border: 1px solid #eef0f3; border-radius: 8px; padding: 8px 10px; background: #fff; }
+          .nf-chapters .grp-title { font-weight: 700; color: #111827; margin: 8px 0 4px; }
+          .nf-chapters .ch { display: flex; align-items: center; gap: 8px; padding: 3px 0; }
+          .nf-chapters .ch label { cursor: pointer; font-size: 13px; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+          .nf-chapters .ch.vip label { color: #d97706; }
+          .nf-progress { margin-top: 14px; border-top: 1px solid #eef0f3; padding-top: 12px; }
+          .nf-progress .bar { height: 8px; background: #e5e7eb; border-radius: 6px; overflow: hidden; }
+          .nf-progress .bar .fill { height: 100%; background: linear-gradient(90deg,#3b82f6,#22c55e); width: 0; transition: width .2s ease; }
+          .nf-progress .info { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: #6b7280; margin-top: 6px; }
+          .nf-logpre { background: #111827; color: #e5e7eb; border-radius: 8px; padding: 12px; font-size: 11px; max-height: 300px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+          .nf-hist { display: flex; flex-direction: column; gap: 8px; }
+          .nf-hist .item { border: 1px solid #eef0f3; border-radius: 8px; padding: 8px 10px; background: #fff; font-size: 13px; }
+          .nf-hint { font-size: 12px; color: #9ca3af; margin: 4px 0 10px; }
+        </style>
+
+        <div class="nf-wrap">
+          <div class="nf-status" id="nfStatus">等待原页面连接…</div>
+
+          <div class="nf-book" id="nfBook" style="display:none;">
+            <h2 id="nfBookTitle">-</h2>
+            <div class="meta" id="nfBookMeta"></div>
+          </div>
+
+          <div class="nf-tabs">
+            <button type="button" data-pane="down" class="on">下载控制</button>
+            <button type="button" data-pane="output">输出设置</button>
+            <button type="button" data-pane="adv">高级设置</button>
+            <button type="button" data-pane="account">站点账号</button>
+            <button type="button" data-pane="hist">任务历史</button>
+            <button type="button" data-pane="log">日志</button>
+          </div>
+
+          <!-- 下载控制 -->
+          <section class="nf-pane on" data-pane="down">
+            <div class="nf-row">
+              <button type="button" id="btnFetch" class="nf-btn nf-btn-primary">抓取目录</button>
+              <button type="button" id="btnSelectAll" class="nf-btn nf-btn-ghost nf-btn-sm">全选</button>
+              <button type="button" id="btnSelectNone" class="nf-btn nf-btn-ghost nf-btn-sm">清空</button>
+              <button type="button" id="btnSelectInvert" class="nf-btn nf-btn-ghost nf-btn-sm">反选</button>
+              <div class="nf-field" style="flex:1;min-width:180px;">
+                <label>章节标题关键词筛选</label>
+                <input type="text" id="fKeyword" placeholder="如：第一章 / 大结局（留空=全部）">
+              </div>
+            </div>
+            <div class="nf-row">
+              <div class="nf-field" style="flex:1;min-width:200px;">
+                <label>章节范围（可选，如 1-100 或 1,3,5）</label>
+                <input type="text" id="fRange" placeholder="留空 = 全部章节">
+              </div>
+            </div>
+            <div class="nf-chapters" id="nfChapters"><div class="nf-hint">点击「抓取目录」载入章节列表。</div></div>
+            <div class="nf-row" style="margin-top:12px;">
+              <button type="button" id="btnStart" class="nf-btn nf-btn-primary">开始下载</button>
+              <button type="button" id="btnPause" class="nf-btn nf-btn-ghost" disabled>暂停</button>
+              <button type="button" id="btnResume" class="nf-btn nf-btn-ghost" disabled>继续</button>
+              <button type="button" id="btnStop" class="nf-btn nf-btn-danger" disabled>停止</button>
+            </div>
+          </section>
+
+          <!-- 输出设置 -->
+          <section class="nf-pane" data-pane="output">
+            <div class="nf-row">
+              <div class="nf-field nf-check"><input type="checkbox" id="fTxt"><label for="fTxt">TXT 纯文本</label></div>
+              <div class="nf-field nf-check"><input type="checkbox" id="fEpub"><label for="fEpub">EPUB 电子书</label></div>
+              <div class="nf-field nf-check"><input type="checkbox" id="fZip"><label for="fZip">HTML（ZIP）</label></div>
+            </div>
+            <div class="nf-row">
+              <div class="nf-field" style="flex:1;min-width:220px;">
+                <label>章节命名模板（{index} {title} {book}）</label>
+                <input type="text" id="fTemplate">
+              </div>
+            </div>
+            <div class="nf-row">
+              <div class="nf-field" style="flex:1;min-width:160px;">
+                <label>TXT 段落缩进（留空=无缩进）</label>
+                <input type="text" id="fIndent">
+              </div>
+              <div class="nf-field" style="flex:1;min-width:160px;">
+                <label>EPUB 作者（留空取站点作者）</label>
+                <input type="text" id="fEpubAuthor">
+              </div>
+            </div>
+            <p class="nf-hint">格式至少选择一种；EPUB/HTML 会自动带章节目录导航。</p>
+          </section>
+
+          <!-- 高级设置 -->
+          <section class="nf-pane" data-pane="adv">
+            <div class="nf-row">
+              <div class="nf-field" style="flex:1;min-width:220px;">
+                <label>并发线程数：<span id="fConcVal">3</span></label>
+                <input type="range" id="fConc" min="1" max="10" step="1" value="3">
+              </div>
+            </div>
+            <div class="nf-row">
+              <div class="nf-field">
+                <label>下载间隔基数（毫秒）</label>
+                <input type="number" id="fInterval" min="0" step="50">
+              </div>
+              <div class="nf-field">
+                <label>下载间隔最大值（毫秒）</label>
+                <input type="number" id="fMaxInterval" min="0" step="50">
+              </div>
+              <div class="nf-field">
+                <label>失败重试次数</label>
+                <input type="number" id="fRetry" min="0" max="10" step="1">
+              </div>
+            </div>
+            <div class="nf-row">
+              <div class="nf-field nf-check"><input type="checkbox" id="fAutoRetry"><label for="fAutoRetry">失败章节自动重试</label></div>
+            </div>
+            <div class="nf-row">
+              <button type="button" id="btnApply" class="nf-btn nf-btn-primary">保存设置</button>
+              <button type="button" id="btnReset" class="nf-btn nf-btn-danger">恢复默认设置</button>
+            </div>
+            <p class="nf-hint">并发过高可能触发站点反爬，建议综合使用合理并发与间隔。</p>
+          </section>
+
+          <!-- 站点账号 -->
+          <section class="nf-pane" data-pane="account">
+            <p class="nf-hint">用于付费/VIP 章节：在同源站点已登录时浏览器 Cookie 会自动携带；跨域 API 需站点提供对应 token（以 JSON 形式，按站点域名键存储）。</p>
+            <div class="nf-field" style="margin-bottom:10px;">
+              <label>站点 token / Cookie（JSON，键 = 站点域名）</label>
+              <textarea id="fTokens" rows="6" style="font-family:ui-monospace,monospace;font-size:12px;"></textarea>
+            </div>
+            <div class="nf-row">
+              <button type="button" id="btnSaveTokens" class="nf-btn nf-btn-primary">保存 token 配置</button>
+            </div>
+          </section>
+
+          <!-- 任务历史 -->
+          <section class="nf-pane" data-pane="hist">
+            <div class="nf-row">
+              <button type="button" id="btnRefreshHist" class="nf-btn nf-btn-ghost nf-btn-sm">刷新</button>
+              <button type="button" id="btnClearHist" class="nf-btn nf-btn-danger nf-btn-sm">清空历史</button>
+            </div>
+            <div class="nf-hist" id="nfHist"><div class="nf-hint">暂无下载记录。</div></div>
+          </section>
+
+          <!-- 日志 -->
+          <section class="nf-pane" data-pane="log">
+            <div class="nf-row">
+              <button type="button" id="btnRefreshLog" class="nf-btn nf-btn-ghost nf-btn-sm">刷新日志</button>
+              <button type="button" id="btnCopyLog" class="nf-btn nf-btn-ghost nf-btn-sm">复制日志</button>
+            </div>
+            <div class="nf-logpre" id="nfLog">日志加载中…</div>
+          </section>
+
+          <!-- 底部进度 -->
+          <div class="nf-progress" id="nfProgress" style="display:none;">
+            <div class="bar"><div class="fill" id="nfFill"></div></div>
+            <div class="info">
+              <span id="nfProgressText">0 / 0</span>
+              <span id="nfSpeed">速度 --</span>
+              <span id="nfRemain">剩余 --</span>
+              <span id="nfCount">成功 0 · 失败 0</span>
+            </div>
+          </div>
+        </div>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('greasyfork-406070-1');
+
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-novelfetch-panel-ui';
+      var DEFAULTS = {
+        formats: { txt: true, epub: true, htmlzip: false },
+        chapterTitleTemplate: '{index} {title}',
+        txtIndent: '　',
+        epubAuthor: '',
+        concurrency: 3,
+        interval: 200,
+        maxInterval: 2000,
+        retry: 2,
+        autoRetry: true,
+        chapterRange: '',
+        keywordFilter: '',
+        tokenOptions: {}
+      };
+      var state = {
+        settings: null,
+        book: null,
+        groups: [],
+        total: 0,
+        selected: {},       // index -> true
+        downloading: false
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function norm(s) {
+        var m = merge(DEFAULTS, s || {});
+        if (!m.formats || typeof m.formats !== 'object') m.formats = { txt: true, epub: true, htmlzip: false };
+        m.chapterRange = typeof m.chapterRange === 'string' ? m.chapterRange : '';
+        m.keywordFilter = typeof m.keywordFilter === 'string' ? m.keywordFilter : '';
+        return m;
+      }
+      function currentSettings() {
+        var s = norm(state.settings);
+        s.formats = { txt: $('fTxt').checked, epub: $('fEpub').checked, htmlzip: $('fZip').checked };
+        s.chapterTitleTemplate = $('fTemplate').value || DEFAULT_FORMAT.tpl;
+        s.txtIndent = $('fIndent').value;
+        s.epubAuthor = $('fEpubAuthor').value;
+        s.concurrency = Number($('fConc').value) || 3;
+        s.interval = Number($('fInterval').value) || 0;
+        s.maxInterval = Number($('fMaxInterval').value) || 0;
+        s.retry = Number($('fRetry').value) || 0;
+        s.autoRetry = $('fAutoRetry').checked;
+        s.chapterRange = $('fRange').value;
+        s.keywordFilter = $('fKeyword').value;
+        try {
+          var t = JSON.parse($('fTokens').value || '{}');
+          if (t && typeof t === 'object') s.tokenOptions = t;
+        } catch (e) { /* ignore */ }
+        return s;
+      }
+      var DEFAULT_FORMAT = { tpl: '{index} {title}' };
+
+      function fillForm(s) {
+        s = norm(s);
+        $('fTxt').checked = !!s.formats.txt;
+        $('fEpub').checked = !!s.formats.epub;
+        $('fZip').checked = !!s.formats.htmlzip;
+        $('fTemplate').value = s.chapterTitleTemplate || DEFAULT_FORMAT.tpl;
+        $('fIndent').value = s.txtIndent;
+        $('fEpubAuthor').value = s.epubAuthor;
+        $('fConc').value = String(s.concurrency);
+        $('fConcVal').textContent = String(s.concurrency);
+        $('fInterval').value = String(s.interval);
+        $('fMaxInterval').value = String(s.maxInterval);
+        $('fRetry').value = String(s.retry);
+        $('fAutoRetry').checked = !!s.autoRetry;
+        $('fRange').value = s.chapterRange || '';
+        $('fKeyword').value = '';
+        try { $('fTokens').value = JSON.stringify(s.tokenOptions || {}, null, 2); } catch (e) { $('fTokens').value = '{}'; }
+      }
+
+      // Tab 切换
+      var tabs = document.querySelectorAll('.nf-tabs button');
+      var panes = document.querySelectorAll('.nf-pane[data-pane]');
+      tabs.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var p = b.getAttribute('data-pane');
+          tabs.forEach(function (x) { x.classList.remove('on'); });
+          panes.forEach(function (y) { y.classList.remove('on'); });
+          b.classList.add('on');
+          var target = document.querySelector('.nf-pane[data-pane="' + p + '"]');
+          if (target) target.classList.add('on');
+        });
+      });
+
+      function setStatus(text) { $('nfStatus').textContent = text; }
+
+      function renderBook(book) {
+        if (!book) return;
+        state.book = book;
+        $('nfBook').style.display = 'block';
+        $('nfBookTitle').textContent = book.title || '-';
+        var meta = [];
+        if (book.author) meta.push('作者：' + book.author);
+        if (book.site) meta.push('站点：' + book.site);
+        if (state.adapterName) meta.push('解析器：' + state.adapterName);
+        $('nfBookMeta').textContent = meta.join('　');
+      }
+
+      function renderGroups(groups, total) {
+        state.groups = groups || [];
+        state.total = total || 0;
+        var box = $('nfChapters');
+        box.innerHTML = '';
+        if (!state.total) { box.innerHTML = '<div class="nf-hint">未识别到章节，请确认当前是小说目录页。</div>'; return; }
+        var frag = document.createDocumentFragment();
+        (groups || []).forEach(function (g) {
+          if (g.name) {
+            var gt = document.createElement('div');
+            gt.className = 'grp-title';
+            gt.textContent = g.name;
+            frag.appendChild(gt);
+          }
+          g.chapters.forEach(function (c) {
+            var row = document.createElement('div');
+            row.className = 'ch' + (c.isVip ? ' vip' : '');
+            var cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.checked = !!state.selected[c.index];
+            cb.setAttribute('data-idx', String(c.index));
+            cb.addEventListener('change', function () { state.selected[c.index] = cb.checked; });
+            var lb = document.createElement('label');
+            lb.textContent = c.index + '. ' + c.title + (c.isVip ? '（VIP）' : '');
+            row.appendChild(cb);
+            row.appendChild(lb);
+            frag.appendChild(row);
+          });
+        });
+        box.appendChild(frag);
+      }
+
+      function selectAll(sel) {
+        var box = $('nfChapters');
+        var cbs = box.querySelectorAll('input[type="checkbox"]');
+        cbs.forEach(function (cb) {
+          cb.checked = sel;
+          state.selected[Number(cb.getAttribute('data-idx'))] = sel;
+        });
+      }
+      function applyKeywordFilter() {
+        var kw = $('fKeyword').value.trim();
+        var box = $('nfChapters');
+        var rows = box.querySelectorAll('.ch');
+        rows.forEach(function (row) {
+          var cb = row.querySelector('input[type="checkbox"]');
+          var lb = row.querySelector('label');
+          var text = (lb ? lb.textContent : '');
+          if (!kw || text.toLowerCase().indexOf(kw.toLowerCase()) >= 0) { row.style.display = ''; }
+          else { row.style.display = 'none'; cb.checked = false; if (cb.getAttribute('data-idx')) delete state.selected[Number(cb.getAttribute('data-idx'))]; }
+        });
+      }
+      function selectedIndexes() {
+        var out = [];
+        for (var k in state.selected) if (state.selected[k]) out.push(Number(k));
+        return out;
+      }
+
+      function setProgress(p) {
+        p = p || {};
+        $('nfProgress').style.display = 'block';
+        var total = p.total || state.total || 0;
+        var done = p.done || 0;
+        var pct = total ? Math.round(done / total * 1000) / 10 : 0;
+        $('nfFill').style.width = pct + '%';
+        $('nfProgressText').textContent = done + ' / ' + total + '（' + pct + '%）';
+        if (p.current) $('nfProgressText').textContent += ' · ' + p.current;
+        if (p.speed != null) $('nfSpeed').textContent = '速度 ' + (Math.round(p.speed * 10) / 10) + ' 章/秒';
+        if (p.remaining != null) $('nfRemain').textContent = '剩余 ' + p.remaining + ' 章';
+        $('nfCount').textContent = '成功 ' + Math.max(0, done - (p.fails || 0)) + ' · 失败 ' + (p.fails || 0);
+      }
+
+      // 按钮
+      $('btnFetch').addEventListener('click', function () {
+        setStatus('正在抓取目录…');
+        channel.request('command', { action: 'getCatalog' }, 15000)
+          .then(function (d) {
+            if (d && d.ok) {
+              state.adapterName = d.adapterName;
+              renderBook(d.book);
+              // 默认选中所有章节（尊重范围/关键词）
+              d.groups.forEach(function (g) { g.chapters.forEach(function (c) { state.selected[c.index] = true; }); });
+              renderGroups(d.groups, d.total);
+              // 应用范围筛选
+              var range = $('fRange').value;
+              if (range) {
+                var idxs = parseRangePanel(range, d.total);
+                var newSel = {};
+                if (idxs) idxs.forEach(function (n) { newSel[n] = true; });
+                state.selected = newSel;
+                var box = $('nfChapters');
+                box.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+                  cb.checked = !!newSel[Number(cb.getAttribute('data-idx'))];
+                });
+              }
+              setStatus('目录抓取成功：共 ' + d.total + ' 章 · 已选 ' + selectedIndexes().length + ' 章');
+            } else {
+              setStatus('抓取失败：' + ((d && d.error) || '未知错误'));
+            }
+          })
+          .catch(function (e) { setStatus('原页面未响应：' + (e && e.message ? e.message : e)); });
+      });
+
+      function parseRangePanel(text, max) {
+        if (!text || !text.trim()) return null;
+        var parts = text.split(','), out = [], seen = {};
+        for (var i = 0; i < parts.length; i++) {
+          var p = parts[i].trim(); if (!p) continue;
+          var m = p.match(/^(\d+)\s*-\s*(\d+)$/), s, e;
+          if (m) { s = parseInt(m[1], 10); e = parseInt(m[2], 10); }
+          else if (/^\d+$/.test(p)) { s = e = parseInt(p, 10); }
+          else continue;
+          if (e < s) { var t = s; s = e; e = t; }
+          if (max > 0) { s = Math.max(1, s); e = Math.min(max, e); }
+          for (var k = s; k <= e; k++) if (!seen[k]) { seen[k] = 1; out.push(k); }
+        }
+        return out.length ? out : null;
+      }
+
+      $('fRange').addEventListener('change', function () {
+        if (!state.total) return;
+        var idxs = parseRangePanel($('fRange').value, state.total);
+        var newSel = {};
+        if (idxs) idxs.forEach(function (n) { newSel[n] = true; });
+        else { for (var k in state.selected) newSel[k] = true; }
+        state.selected = newSel;
+        var box = $('nfChapters');
+        box.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.checked = !!newSel[Number(cb.getAttribute('data-idx'))]; });
+      });
+      $('fKeyword').addEventListener('input', applyKeywordFilter);
+      $('btnSelectAll').addEventListener('click', function () { selectAll(true); });
+      $('btnSelectNone').addEventListener('click', function () { selectAll(false); });
+      $('btnSelectInvert').addEventListener('click', function () {
+        var box = $('nfChapters');
+        box.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+          var idx = Number(cb.getAttribute('data-idx'));
+          state.selected[idx] = !state.selected[idx];
+          cb.checked = state.selected[idx];
+        });
+      });
+
+      $('btnStart').addEventListener('click', function () {
+        var idxs = selectedIndexes();
+        if (!idxs.length) { PUI.toast('请先选择章节', 'warn'); return; }
+        var settings = currentSettings();
+        if (!settings.formats.txt && !settings.formats.epub && !settings.formats.htmlzip) { PUI.toast('请至少选择一种输出格式', 'warn'); return; }
+        state.downloading = true;
+        setProgress({ done: 0, total: idxs.length });
+        setStatus('下载中…');
+        $('btnStart').disabled = true; $('btnPause').disabled = false; $('btnResume').disabled = true; $('btnStop').disabled = false;
+        channel.request('command', { action: 'startDownload', settings: settings, selectedIndexes: idxs }, 30000)
+          .catch(function () { /* setTimeout 到点未回仅提示 */ $('btnStart').disabled = false; });
+      });
+      $('btnPause').addEventListener('click', function () {
+        channel.request('command', { action: 'pause' }, 4000).then(function () {
+          $('btnPause').disabled = true; $('btnResume').disabled = false;
+          setStatus('已暂停（会等待当前章节完成后停止）');
+        }).catch(function () {});
+      });
+      $('btnResume').addEventListener('click', function () {
+        channel.request('command', { action: 'resume' }, 4000).then(function () {
+          $('btnPause').disabled = false; $('btnResume').disabled = true;
+          setStatus('已继续下载');
+        }).catch(function () {});
+      });
+      $('btnStop').addEventListener('click', function () {
+        channel.request('command', { action: 'stop' }, 4000).then(function () {
+          setStatus('正在停止…');
+        }).catch(function () {});
+      });
+
+      $('btnApply').addEventListener('click', function () {
+        var s = currentSettings();
+        channel.request('command', { action: 'applySettings', settings: s }, 4000)
+          .then(function (d) { if (d && d.ok) PUI.toast('设置已保存', 'success'); else PUI.toast('保存异常', 'warn'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      });
+      $('btnReset').addEventListener('click', function () {
+        fillForm(DEFAULTS);
+        channel.request('command', { action: 'resetSettings' }, 4000)
+          .then(function () { PUI.toast('已恢复默认', 'success'); })
+          .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+      });
+      $('btnSaveTokens').addEventListener('click', function () {
+        var s = currentSettings();
+        channel.request('command', { action: 'applySettings', settings: { tokenOptions: s.tokenOptions } }, 4000)
+          .then(function (d) { if (d && d.ok) PUI.toast('token 配置已保存', 'success'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      });
+
+      $('btnRefreshHist').addEventListener('click', loadHistory);
+      $('btnClearHist').addEventListener('click', function () {
+        channel.request('command', { action: 'clearHistory' }, 4000).then(function (d) {
+          if (d && d.ok) { $('nfHist').innerHTML = '<div class="nf-hint">暂无下载记录。</div>'; PUI.toast('已清空历史', 'success'); }
+        }).catch(function () {});
+      });
+      function loadHistory() {
+        channel.request('command', { action: 'getHistory' }, 4000).then(function (d) {
+          var box = $('nfHist');
+          box.innerHTML = '';
+          var h = (d && d.history) || [];
+          if (!h.length) { box.innerHTML = '<div class="nf-hint">暂无下载记录。</div>'; return; }
+          h.forEach(function (it) {
+            var el = document.createElement('div');
+            el.className = 'item';
+            var when = it.time ? new Date(it.time).toLocaleString() : '';
+            el.textContent = (it.title || '未知') + ' · ' + (it.site || '') + ' · ' + (it.chapters || 0) + '章' +
+              ' · ' + (it.formats || '') + ' · ' + formatSize(it.size) + (when ? ' · ' + when : '');
+            box.appendChild(el);
+          });
+        }).catch(function () {});
+      }
+      function formatSize(n) {
+        n = Number(n) || 0;
+        if (n < 1024) return n + 'B';
+        if (n < 1024 * 1024) return (Math.round(n / 1024)) + 'KB';
+        return (Math.round(n / 1024 / 1024 * 10) / 10) + 'MB';
+      }
+
+      function loadLogs() {
+        channel.request('command', { action: 'getLogs' }, 4000).then(function (d) {
+          $('nfLog').textContent = (d && d.logs) ? d.logs : '(无日志)';
+        }).catch(function () { $('nfLog').textContent = '无法获取日志（原页面未连接）。'; });
+      }
+      $('btnRefreshLog').addEventListener('click', loadLogs);
+      $('btnCopyLog').addEventListener('click', function () {
+        var t = $('nfLog').textContent;
+        function doneCpy() { PUI.toast('日志已复制', 'success'); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(t).then(doneCpy).catch(function () { fallbackCpy(t); doneCpy(); });
+        } else { fallbackCpy(t); doneCpy(); }
+      });
+      function fallbackCpy(t) {
+        var ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) { /* ignore */ }
+        ta.remove();
+      }
+
+      // 监听脚本推送
+      channel.on('progress', function (data) {
+        data = data || {};
+        if (data.phase === 'start') { setProgress({ done: 0, total: data.total }); }
+        else { setProgress(data); }
+      });
+      channel.on('done', function (data) {
+        data = data || {};
+        state.downloading = false;
+        $('btnStart').disabled = false; $('btnPause').disabled = true; $('btnResume').disabled = true; $('btnStop').disabled = true;
+        var r = data.result || {};
+        setStatus('下载完成：成功 ' + r.done + ' 章，失败 ' + (r.fails ? r.fails.length : 0) + ' 章，格式 ' + (r.formats ? r.formats.join(',') : ''));
+        PUI.toast('下载完成', 'success');
+      });
+      channel.on('state', function () { /* 备用 */ });
+
+      // 初始化：从原页面同步状态与设置
+      fillForm(DEFAULTS);
+      channel.request('command', { action: 'getState' }, 4000)
+        .then(function (d) {
+          if (d && d.ok) {
+            state.adapterName = d.adapterName;
+            state.settings = d.settings || {};
+            fillForm(state.settings);
+            if (d.excluded) setStatus('当前站点已被排除（请在设置中移除后刷新）');
+            else if (d.adapterId) setStatus('已连接原页面 · 识别到「' + d.adapterName + '」；点击「抓取目录」开始');
+            else setStatus('已连接原页面 · 当前不是受支持的小说目录页');
+            if (d.hasCatalog && d.chapterCount) {
+              // 已缓存目录，主动渲染
+              channel.request('command', { action: 'getCatalog' }, 15000).then(function (c) {
+                if (c && c.ok) {
+                  renderBook(c.book);
+                  c.groups.forEach(function (g) { g.chapters.forEach(function (ch) { state.selected[ch.index] = true; }); });
+                  renderGroups(c.groups, c.total);
+                  setStatus('目录已载入：共 ' + c.total + ' 章');
+                }
+              }).catch(function () {});
+            }
+          } else {
+            setStatus('未连接原页面（面板独立模式）');
+          }
+        })
+        .catch(function () {
+          setStatus('未连接原页面（面板独立模式，仅可查看设置）');
+        });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>
