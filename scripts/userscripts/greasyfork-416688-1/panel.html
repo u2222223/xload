@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全局字体渲染增强 - 功能面板</title>
+  <meta name="description" content="无需 MacType，享受细腻网页字体阅读体验">
+  <meta name="keywords" content="字体渲染,字体重写,抗锯齿,微软雅黑,阅读优化,美化">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>全局字体渲染增强</h1>
+        <p class="panel-subtitle">无需 MacType，享受细腻网页字体阅读体验</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .fr-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; }
+          .fr-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .fr-group:last-of-type { border-bottom: 0; }
+          .fr-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .fr-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+          .fr-field { display: flex; flex-direction: column; gap: 6px; min-width: 170px; }
+          .fr-field > label { font-size: 13px; color: #4b5563; }
+          .fr-field input[type="text"], .fr-field input:not([type]), .fr-field select, .fr-field textarea {
+            padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; width: 100%; box-sizing: border-box;
+          }
+          .fr-field input[type="color"] { padding: 2px; width: 56px; height: 34px; border: 1px solid #d1d5db; border-radius: 8px; }
+          .fr-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .fr-check input { width: 16px; height: 16px; }
+          .fr-check label { font-size: 14px; color: #1f2328; cursor: pointer; }
+          .fr-radio { display: flex; gap: 16px; }
+          .fr-radio label { font-size: 14px; color: #1f2328; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+          .fr-hint { margin: 8px 0 0; font-size: 12px; color: #9ca3af; }
+          .fr-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; margin-top: 6px; }
+          .fr-preview { margin-top: 10px; padding: 14px 16px; border: 1px dashed #c7d2fe; border-radius: 10px; background: #fafbff; font-size: 15px; line-height: 1.7; color: #111827; }
+          .fr-preview code { background: #eef0f3; padding: 1px 6px; border-radius: 4px; }
+          input[type="range"] { width: 100%; }
+          .fr-slot { display: flex; gap: 10px; align-items: flex-end; width: 100%; }
+          .fr-modal-layer { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+          .fr-modal { background: #fff; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,.2); width: min(560px, 92vw); max-height: 80vh; display: flex; flex-direction: column; overflow: hidden; }
+          .fr-modal-head { padding: 14px 18px; border-bottom: 1px solid #eef0f3; font-weight: 600; color: #111827; }
+          .fr-modal-body { padding: 14px 18px; overflow: auto; }
+          .fr-modal-foot { padding: 12px 18px; border-top: 1px solid #eef0f3; display: flex; justify-content: flex-end; gap: 10px; }
+          .fr-modal textarea { width: 100%; min-height: 160px; box-sizing: border-box; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; font-family: monospace; font-size: 12px; }
+          .fr-logs { white-space: pre-wrap; font-family: monospace; font-size: 12px; color: #374151; background: #f9fafb; padding: 10px; border-radius: 8px; max-height: 320px; overflow: auto; }
+        </style>
+
+        <div class="fr-status" id="frStatus">等待原页面连接…</div>
+
+        <section class="fr-group">
+          <h2>总控制</h2>
+          <div class="fr-row">
+            <div class="fr-field fr-check">
+              <input type="checkbox" id="f-enabled">
+              <label for="f-enabled">启用字体渲染</label>
+            </div>
+            <div class="fr-field">
+              <label for="f-preset">预设方案</label>
+              <select id="f-preset">
+                <option value="balanced">均衡（默认）</option>
+                <option value="delicate">极致细腻</option>
+                <option value="performance">性能优先</option>
+                <option value="custom">自定义</option>
+              </select>
+            </div>
+            <div class="fr-field">
+              <label>&nbsp;</label>
+              <button type="button" id="btn-exclude-site" class="pui-btn">将当前站点加入排除</button>
+            </div>
+          </div>
+          <p class="fr-hint">快速排除会在「过滤规则」的黑名单中加入当前站点；改网络字体时请保留「性能优先」预设以获得最低开销。</p>
+        </section>
+
+        <section class="fr-group">
+          <h2>字体设置</h2>
+          <div class="fr-row">
+            <div class="fr-field">
+              <label for="f-fontzh">中文字体（可搜索 / 手动输入）</label>
+              <input type="text" id="f-fontzh" list="fontlist-zh" placeholder="例如 Microsoft YaHei UI">
+            </div>
+            <div class="fr-field">
+              <label for="f-fonten">英文字体</label>
+              <input type="text" id="f-fonten" list="fontlist-en" placeholder="例如 Segoe UI">
+            </div>
+            <div class="fr-field">
+              <label for="f-mono">等宽字体</label>
+              <input type="text" id="f-mono" list="fontlist-mono" placeholder="ui-monospace, Consolas, Menlo">
+            </div>
+          </div>
+          <datalist id="fontlist-zh"></datalist>
+          <datalist id="fontlist-en"></datalist>
+          <datalist id="fontlist-mono"></datalist>
+          <div class="fr-row" style="margin-top:12px;">
+            <div class="fr-field" style="flex:1;min-width:220px;">
+              <label for="f-zoom">字号缩放 <span id="f-zoom-val">100</span>%</label>
+              <input type="range" id="f-zoom" min="80" max="250" step="5" value="100">
+            </div>
+            <div class="fr-field fr-check">
+              <input type="checkbox" id="f-rewrite">
+              <label for="f-rewrite">字体重写（映射常见网页字体）</label>
+            </div>
+          </div>
+          <p class="fr-hint">字体效果依赖系统已安装字体；检测不到时可手动输入字体名。编辑器类站点（GitHub / Notion 等）自动关闭字体重写。</p>
+        </section>
+
+        <section class="fr-group">
+          <h2>渲染效果</h2>
+          <div class="fr-row">
+            <div class="fr-field fr-check">
+              <input type="checkbox" id="f-aa">
+              <label for="f-aa">抗锯齿平滑</label>
+            </div>
+          </div>
+          <div class="fr-row" style="margin-top:12px;">
+            <div class="fr-field fr-check">
+              <input type="checkbox" id="f-sh-on">
+              <label for="f-sh-on">文字阴影</label>
+            </div>
+            <div class="fr-field" style="flex:1;min-width:180px;">
+              <label for="f-sh-size">阴影模糊 <span id="f-sh-size-val">0</span>px</label>
+              <input type="range" id="f-sh-size" min="0" max="40" step="1" value="0">
+            </div>
+            <div class="fr-field" style="flex:1;min-width:160px;">
+              <label for="f-sh-alpha">阴影透明度 <span id="f-sh-alpha-val">60</span>%</label>
+              <input type="range" id="f-sh-alpha" min="0" max="100" step="1" value="60">
+            </div>
+            <div class="fr-field">
+              <label for="f-sh-color">阴影颜色</label>
+              <input type="color" id="f-sh-color" value="#7c7c7c">
+            </div>
+          </div>
+          <div class="fr-row" style="margin-top:12px;">
+            <div class="fr-field fr-check">
+              <input type="checkbox" id="f-st-on">
+              <label for="f-st-on">文字描边</label>
+            </div>
+            <div class="fr-field" style="flex:1;min-width:180px;">
+              <label for="f-st-width">描边粗细 <span id="f-st-width-val">0.00</span>px</label>
+              <input type="range" id="f-st-width" min="0" max="200" step="1" value="0">
+            </div>
+            <div class="fr-field">
+              <label for="f-st-color">描边颜色</label>
+              <input type="color" id="f-st-color" value="#000000">
+            </div>
+          </div>
+          <p class="fr-hint">描边/阴影仅作用于正文文本层，图标字体、代码块、SVG、水印等自动豁免，避免破坏特殊元素。</p>
+        </section>
+
+        <section class="fr-group">
+          <h2>过滤规则</h2>
+          <div class="fr-field">
+            <label>匹配模式</label>
+            <div class="fr-radio">
+              <label><input type="radio" name="filtermode" value="blacklist"> 黑名单（排除下列站点/路径）</label>
+              <label><input type="radio" name="filtermode" value="whitelist"> 白名单（仅渲染下列站点/路径）</label>
+            </div>
+          </div>
+          <div class="fr-row" style="margin-top:12px;">
+            <div class="fr-field" style="flex:1;min-width:220px;">
+              <label for="f-exsites">站点列表（每行一条，支持 *.domain.com）</label>
+              <textarea id="f-exsites" rows="4"></textarea>
+            </div>
+            <div class="fr-field" style="flex:1;min-width:220px;">
+              <label for="f-expaths">路径规则（每行一条；/regex/ 为正则，否则前缀匹配）</label>
+              <textarea id="f-expaths" rows="4"></textarea>
+            </div>
+          </div>
+          <p class="fr-hint">站点级排除作用于整个域名；路径级规则作用于单页 URL，可实现「只排除某个播放页」的细粒度控制。</p>
+        </section>
+
+        <section class="fr-group">
+          <h2>实时预览</h2>
+          <div class="fr-preview" id="frPreview">
+            中文字体渲染示例：字型、粗细、平滑、<strong>加粗</strong>与<em>斜体</em>。<br>
+            English font rendering sample: 0123456789 abcXYZ。<br>
+            <code>等宽字体示例：const x = ['Monospace', 123];</code>
+          </div>
+        </section>
+
+        <div class="fr-actions">
+          <button type="button" id="btn-logs" class="pui-btn">查看日志</button>
+          <button type="button" id="btn-import" class="pui-btn">导入配置</button>
+          <button type="button" id="btn-export" class="pui-btn">导出配置</button>
+          <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认</button>
+          <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+        </div>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/">xload</a>
+      <a href="/listing.html">工具列表</a>
+      <a href="/privacy-policy.html">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('greasyfork-416688-1');
+
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-font-enhancer-settings';
+
+      // 与油猴侧 DEFAULT_CONFIG 保持一致
+      var DEFAULTS = {
+        enabled: true,
+        preset: 'balanced',
+        fontZh: 'Microsoft YaHei UI',
+        fontEn: 'Segoe UI',
+        monospace: 'ui-monospace, Consolas, Menlo, Monaco, monospace',
+        antiAlias: true,
+        strokeEnabled: false,
+        strokeWidth: 0.02,
+        strokeColor: '#000000',
+        shadowEnabled: false,
+        shadowSize: 0.6,
+        shadowColor: '#7c7c7c',
+        shadowAlpha: 0.6,
+        zoom: 1.0,
+        fontRewrite: true,
+        filterMode: 'blacklist',
+        excludeSites: ['127.0.0.1', 'localhost'],
+        includeSites: [],
+        excludePaths: [],
+        includeSelectors: "html, body, p, div, span, a, li, td, th, label, h1, h2, h3, h4, h5, h6, blockquote, article, section, button, input, select, textarea",
+        excludeSelectors: "[class*='icon' i], [class*='symbol' i], [class*='glyph'], [class*='fa-'], i, svg, [class*='vjs-'], [class*='watermark' i], .textLayer *, pre, pre *, code, code *"
+      };
+
+      var PRESETS = {
+        balanced: { antiAlias: true, strokeEnabled: false, shadowEnabled: false, zoom: 1.0, fontRewrite: true },
+        delicate: { antiAlias: true, strokeEnabled: true, strokeWidth: 0.025, shadowEnabled: true, shadowSize: 0.75, shadowAlpha: 0.6, zoom: 1.0, fontRewrite: true },
+        performance: { antiAlias: true, strokeEnabled: false, shadowEnabled: false, zoom: 1.0, fontRewrite: false }
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function activeRadio(name) {
+        var r = document.getElementsByName(name);
+        for (var i = 0; i < r.length; i++) if (r[i].checked) return r[i].value;
+        return null;
+      }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function deepClone(v) {
+        if (Array.isArray(v)) return v.map(deepClone);
+        if (v && typeof v === 'object') {
+          var o = {}, k; for (k in v) if (Object.prototype.hasOwnProperty.call(v, k)) o[k] = deepClone(v[k]); return o;
+        }
+        return v;
+      }
+      function splitLines(s) {
+        if (typeof s !== 'string') return [];
+        return s.split('\n').map(function (l) { return l.trim(); }).filter(function (l) { return !!l; });
+      }
+
+      function loadLocal() {
+        try { var r = JSON.parse(localStorage.getItem(LS_KEY)); return (r && typeof r === 'object') ? r : {}; }
+        catch (e) { return {}; }
+      }
+      function saveLocal(s) { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+
+      var state = merge(DEFAULTS, loadLocal());
+
+      function showConfig(cfg) {
+        var s = merge(DEFAULTS, cfg || {});
+        state = deepClone(s);
+        $('f-enabled').checked = Boolean(s.enabled);
+        $('f-preset').value = (s.preset && PRESETS[s.preset]) ? s.preset : 'custom';
+        $('f-fontzh').value = String(s.fontZh);
+        $('f-fonten').value = String(s.fontEn);
+        $('f-mono').value = String(s.monospace);
+        $('f-aa').checked = Boolean(s.antiAlias);
+        var z = Math.round(Number(s.zoom) * 100);
+        $('f-zoom').value = String(z); $('f-zoom-val').textContent = String(z);
+        $('f-rewrite').checked = Boolean(s.fontRewrite);
+        // 阴影
+        $('f-sh-on').checked = Boolean(s.shadowEnabled);
+        var sz = Math.round((Number(s.shadowSize) || 0) * 10);
+        $('f-sh-size').value = String(sz); $('f-sh-size-val').textContent = (Number(s.shadowSize) || 0).toFixed(1);
+        var aa = Math.round((Number(s.shadowAlpha) || 0) * 100);
+        $('f-sh-alpha').value = String(aa); $('f-sh-alpha-val').textContent = String(aa);
+        $('f-sh-color').value = /^#[0-9a-f]{6}$/i.test(s.shadowColor) ? s.shadowColor : '#7c7c7c';
+        // 描边
+        $('f-st-on').checked = Boolean(s.strokeEnabled);
+        var sw = Math.round((Number(s.strokeWidth) || 0) * 1000);
+        $('f-st-width').value = String(sw); $('f-st-width-val').textContent = (Number(s.strokeWidth) || 0).toFixed(3);
+        $('f-st-color').value = /^#[0-9a-f]{6}$/i.test(s.strokeColor) ? s.strokeColor : '#000000';
+        // 模式 + 列表
+        var radios = document.getElementsByName('filtermode');
+        for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === s.filterMode);
+        $('f-exsites').value = (s.filterMode === 'whitelist' ? s.includeSites : s.excludeSites).join('\n');
+        $('f-expaths').value = (s.excludePaths || []).join('\n');
+        renderPreview(s);
+      }
+
+      function collect() {
+        var mode = activeRadio('filtermode') || 'blacklist';
+        var sites = splitLines($('f-exsites').value);
+        var paths = splitLines($('f-expaths').value);
+        var cfg = {
+          enabled: $('f-enabled').checked,
+          preset: $('f-preset').value === 'custom' ? 'custom' : $('f-preset').value,
+          fontZh: ($('f-fontzh').value || '').trim(),
+          fontEn: ($('f-fonten').value || '').trim(),
+          monospace: ($('f-mono').value || '').trim(),
+          antiAlias: $('f-aa').checked,
+          strokeEnabled: $('f-st-on').checked,
+          strokeWidth: Number($('f-st-width').value) / 1000,
+          strokeColor: $('f-st-color').value,
+          shadowEnabled: $('f-sh-on').checked,
+          shadowSize: Number($('f-sh-size').value) / 10,
+          shadowColor: $('f-sh-color').value,
+          shadowAlpha: Number($('f-sh-alpha').value) / 100,
+          zoom: Number($('f-zoom').value) / 100,
+          fontRewrite: $('f-rewrite').checked,
+          filterMode: mode,
+          excludeSites: [],
+          includeSites: [],
+          excludePaths: paths,
+          includeSelectors: DEFAULTS.includeSelectors,
+          excludeSelectors: DEFAULTS.excludeSelectors
+        };
+        if (mode === 'whitelist') cfg.includeSites = sites;
+        else cfg.excludeSites = sites;
+        return cfg;
+      }
+
+      function normalizeColor(h) { return /^#[0-9a-f]{3}([0-9a-f]{3})?([0-9a-f]{2})?$/i.test(String(h)) ? String(h).slice(0, 7) : '#7c7c7c'; }
+      function fontStack(zh, en) {
+        var parts = [en, zh].filter(function (x) { return x; }).map(function (x) {
+          return (x.indexOf(' ') >= 0 && x.charAt(0) !== '"') ? '"' + x + '"' : x;
+        });
+        if (!parts.length) parts = ['system-ui'];
+        return parts.join(', ') + ', sans-serif';
+      }
+      function renderPreview(cfg) {
+        var p = $('frPreview');
+        var shadow = cfg.shadowEnabled && cfg.shadowSize > 0
+          ? ('0 0 ' + cfg.shadowSize + 'px ' + normalizeColor(cfg.shadowColor)) : 'none';
+        var stroke = cfg.strokeEnabled && cfg.strokeWidth > 0
+          ? (cfg.strokeWidth + 'px ' + normalizeColor(cfg.strokeColor)) : '0px transparent';
+        p.style.fontFamily = fontStack(cfg.fontZh, cfg.fontEn);
+        if (cfg.antiAlias) { p.style.webkitFontSmoothing = 'antialiased'; p.style.textRendering = 'optimizeLegibility'; }
+        else { p.style.webkitFontSmoothing = ''; p.style.textRendering = ''; }
+        p.style.textShadow = shadow;
+        p.style.webkitTextStroke = stroke;
+        p.style.opacity = cfg.enabled ? '1' : '0.55';
+      }
+
+      function apply() {
+        var cfg = collect();
+        saveLocal(cfg);
+        showConfig(cfg);
+        renderPreview(cfg);
+        channel.request('command', { action: 'applyConfig', config: cfg }, 4000)
+          .then(function (d) {
+            if (d && d.ok) PUI.toast('已应用到原页面', 'success');
+            else PUI.toast('原页面返回异常', 'warn');
+          })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      }
+
+      // 预设切换：本地应用片段 + 下发
+      function onPresetChange() {
+        var name = $('f-preset').value;
+        if (name === 'custom') { return; }
+        var fragment = PRESETS[name];
+        if (!fragment) return;
+        var cfg = merge(collect(), fragment);
+        cfg.preset = name;
+        saveLocal(cfg); showConfig(cfg); setStatus('预设「' + name + '」已就绪，点击「应用到原页面」生效');
+      }
+
+      function setStatus(text) { $('frStatus').textContent = text; }
+
+      // 字体列表填充（从原页面检测）
+      function fillFontList(fonts) {
+        if (!Array.isArray(fonts)) return;
+        var zh = document.createDocumentFragment(), en = document.createDocumentFragment(), mono = document.createDocumentFragment();
+        function opt(v) { var o = document.createElement('option'); o.value = v; return o; }
+        fonts.forEach(function (f) {
+          if (f && f.en) {
+            if (f.available !== false) zh.appendChild(opt(f.en));
+            en.appendChild(opt(f.en));
+            mono.appendChild(opt(f.en));
+            if (f.available !== false) mono.appendChild(opt('Sarasa Mono SC'));
+          }
+        });
+        $('fontlist-zh').appendChild(zh);
+        $('fontlist-en').appendChild(en);
+        $('fontlist-mono').appendChild(mono);
+      }
+
+      // 弹窗（导出/导入/日志，自建轻量 modal）
+      function openModal(title, bodyHtml, footHtml) {
+        var layer = document.createElement('div');
+        layer.className = 'fr-modal-layer';
+        var box = document.createElement('div');
+        box.className = 'fr-modal';
+        box.innerHTML = '<div class="fr-modal-head">' + title + '</div>' +
+          '<div class="fr-modal-body">' + bodyHtml + '</div>' +
+          (footHtml ? '<div class="fr-modal-foot">' + footHtml + '</div>' : '');
+        layer.appendChild(box);
+        document.body.appendChild(layer);
+        layer.addEventListener('click', function (e) { if (e.target === layer) layer.remove(); });
+        return { layer: layer, box: box };
+      }
+
+      function exportConfig() {
+        var cfg = collect();
+        var json = JSON.stringify(cfg, null, 2);
+        var foot = '<button type="button" class="pui-btn" data-act="copy">复制</button>' +
+          '<button type="button" class="pui-btn" data-act="close">关闭</button>';
+        var m = openModal('导出配置', '<textarea readonly>' + json.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</textarea><p class="fr-hint" style="margin:6px 0 0;">复制 JSON 后可保存为备份。</p>', foot);
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        m.box.querySelector('[data-act="copy"]').addEventListener('click', function () {
+          var ta = m.box.querySelector('textarea');
+          if (ta.contentEditable !== 'true') { try { navigator.clipboard.writeText(json).then(function () { PUI.toast('已复制', 'success'); }).catch(function () { fallbackCopy(json); }); } catch (e) { fallbackCopy(json); } }
+          else { fallbackCopy(json); }
+          function fallbackCopy(t) { try { var tmp = document.createElement('textarea'); tmp.value = t; document.body.appendChild(tmp); tmp.select(); document.execCommand('copy'); tmp.remove(); PUI.toast('已复制', 'success'); } catch (e2) { PUI.toast('复制失败，请手动选择文本复制', 'warn'); } }
+        });
+      }
+
+      function importConfig() {
+        var foot = '<button type="button" class="pui-btn pui-btn-primary" data-act="ok">导入</button>' +
+          '<button type="button" class="pui-btn" data-act="close">关闭</button>';
+        var m = openModal('导入配置', '<textarea id="imp-json" placeholder="粘贴 JSON 配置…"></textarea>', foot);
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        m.box.querySelector('[data-act="ok"]').addEventListener('click', function () {
+          try {
+            var cfg = JSON.parse(m.box.querySelector('#imp-json').value);
+            if (!cfg || typeof cfg !== 'object') throw new Error('bad');
+            saveLocal(cfg); showConfig(cfg); m.layer.remove();
+            PUI.toast('导入成功，点击「应用到原页面」生效', 'success');
+            apply();
+          } catch (e) { PUI.toast('JSON 解析失败', 'error'); }
+        });
+      }
+
+      function viewLogs() {
+        var foot = '<button type="button" class="pui-btn" data-act="close">关闭</button>';
+        var m = openModal('运行日志', '<div class="fr-logs" id="logBox">正在获取…</div>', foot);
+        var box = m.box.querySelector('#logBox');
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) { box.textContent = (d && d.logs) ? d.logs : '（无日志）'; })
+          .catch(function () { box.textContent = '无法获取原页面日志（面板独立模式）。'; });
+      }
+
+      function excludeCurrentSite() {
+        channel.request('command', { action: 'getPageInfo' }, 4000)
+          .then(function (d) {
+            var host = (d && d.page && d.page.host) || '';
+            if (!host) { PUI.toast('未获取到当前站点', 'warn'); return; }
+            var cfg = collect();
+            if (cfg.filterMode === 'blacklist') {
+              if (cfg.excludeSites.indexOf(host) < 0) cfg.excludeSites.push(host);
+              cfg.includeSites = [];
+            } else {
+              cfg.includeSites = cfg.includeSites.filter(function (h) { return h !== host; });
+            }
+            saveLocal(cfg); showConfig(cfg);
+            PUI.toast('已将「' + host + '」加入排除，点击应用生效', 'success');
+          })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      }
+
+      // 事件绑定
+      function bind() {
+        ['f-enabled', 'f-aa', 'f-sh-on', 'f-st-on', 'f-rewrite'].forEach(function (id) {
+          $(id).addEventListener('change', function () { renderPreview(collect()); });
+        });
+        ['f-fontzh', 'f-fonten', 'f-mono'].forEach(function (id) {
+          $(id).addEventListener('input', function () { renderPreview(collect()); });
+        });
+        $('f-zoom').addEventListener('input', function () { $('f-zoom-val').textContent = $('f-zoom').value; renderPreview(collect()); });
+        $('f-sh-size').addEventListener('input', function () { $('f-sh-size-val').textContent = (Number($('f-sh-size').value) / 10).toFixed(1); renderPreview(collect()); });
+        $('f-sh-alpha').addEventListener('input', function () { $('f-sh-alpha-val').textContent = $('f-sh-alpha').value; renderPreview(collect()); });
+        $('f-sh-color').addEventListener('input', function () { renderPreview(collect()); });
+        $('f-st-width').addEventListener('input', function () { $('f-st-width-val').textContent = (Number($('f-st-width').value) / 1000).toFixed(3); renderPreview(collect()); });
+        $('f-st-color').addEventListener('input', function () { renderPreview(collect()); });
+        $('f-preset').addEventListener('change', onPresetChange);
+        var radios = document.getElementsByName('filtermode');
+        for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', function () { showConfig(collect()); });
+        $('f-exsites').addEventListener('change', function () { showConfig(collect()); });
+        $('f-expaths').addEventListener('change', function () { showConfig(collect()); });
+
+        $('btn-apply').addEventListener('click', apply);
+        $('btn-reset').addEventListener('click', function () {
+          saveLocal(DEFAULTS); showConfig(DEFAULTS);
+          channel.request('command', { action: 'resetConfig' }, 4000)
+            .then(function (d) { if (d && d.ok) PUI.toast('已恢复默认', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+            .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+        });
+        $('btn-export').addEventListener('click', exportConfig);
+        $('btn-import').addEventListener('click', importConfig);
+        $('btn-logs').addEventListener('click', viewLogs);
+        $('btn-exclude-site').addEventListener('click', excludeCurrentSite);
+      }
+
+      // 监听原页面状态推送（备用）
+      channel.on('renderState', function (data) {
+        if (data && data.config) { showConfig(data.config); }
+      });
+
+      // 初始化
+      showConfig(loadLocal()); bind();
+
+      channel.request('command', { action: 'queryConfig' }, 4000)
+        .then(function (d) {
+          if (d && d.config) {
+            saveLocal(d.config); showConfig(d.config); setStatus('与原页面同步成功');
+          }
+        })
+        .catch(function () { setStatus('未连接原页面（面板独立模式，配置仅保存在本面板）'); });
+
+      channel.request('command', { action: 'getFontList' }, 4000)
+        .then(function (d) { if (d && Array.isArray(d.fonts)) fillFontList(d.fonts); })
+        .catch(function () { /* 独立模式忽略 */ });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>

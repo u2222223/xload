@@ -250,6 +250,38 @@
       "license": "MIT",
       "featured": false,
       "status": "stable"
+    },
+    {
+      "id": "greasyfork-416688-1",
+      "type": "script",
+      "title": "全局字体渲染增强",
+      "short": "无需 MacType，享受细腻网页字体阅读体验",
+      "description": "通过智能 CSS 注入实现全局字体重写，支持中英文分字体设置、抗锯齿平滑、描边阴影、动态缩放等高级渲染效果。内置黑白名单过滤与站点个性化配置，兼容主流浏览器，让网页文字在任何屏幕上都清晰美观。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html",
+      "installUrl": "/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.user.js",
+      "files": [
+        "greasyfork-416688-1.user.js",
+        "panel.html"
+      ],
+      "tags": [
+        "字体渲染",
+        "字体重写",
+        "抗锯齿",
+        "微软雅黑",
+        "阅读优化",
+        "美化"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-09",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }
