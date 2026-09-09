@@ -60,7 +60,7 @@
     var name = data ? esc(data.site.name) : "xload";
     return (
       '<header class="site-header"><div class="nav-wrap">' +
-      '<a class="logo" href="/" target="_blank" rel="noopener"><img class="logo-img" src="/assets/img/xload_logo.png" alt="' + name + ' logo"><span>' + name + "</span></a>" +
+      '<a class="logo" href="/"><img class="logo-img" src="/assets/img/xload_logo.png" alt="' + name + ' logo"><span>' + name + "</span></a>" +
       '<nav class="main-nav" id="main-nav">' + nav + "</nav>" +
       '<button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button>' +
       "</div></header>"
