@@ -139,7 +139,7 @@
   var LS_KEY = 'xload-dy-player-settings';
   var LS_MEMORY_KEY = 'xload-dy-player-quality-memory';
   // 面板入口（上线时站点域名以实际部署为准；协议仅 http/https）
-  var PANEL_URL = 'https://u2222223.github.io/xload/scripts/userscripts/scriptcat-2534-2/panel.html';
+  var PANEL_URL = 'https://xload.net/scripts/userscripts/scriptcat-2534-2/panel.html';
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
