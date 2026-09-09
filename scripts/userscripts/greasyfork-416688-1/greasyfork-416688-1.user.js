@@ -565,7 +565,8 @@
         if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
       },
       on: function (type, h) { (handlers[type] = handlers[type] || []).push(h); },
-      setPanelWin: function (w) { panelWin = w; }
+      setPanelWin: function (w) { panelWin = w; },
+      getPanelWin: function () { return panelWin; }
     };
   }
 
@@ -624,12 +625,18 @@
     log('render.cleanup', {});
   }
 
-  // ---- 面板入口（独立页弹窗：window.open + moveTo 居中）------------
+  // ---- 面板入口（独立页弹窗：window.open + moveTo 居中，单例复用）----
   function openPanel() {
     if (!isSafeUrl(PANEL_URL)) { log('panel.open.blocked', { url: PANEL_URL }); return false; }
     restoreLogs();
     log('panel.open', { url: PANEL_URL });
     try {
+      var existing = channel.getPanelWin && channel.getPanelWin();
+      if (existing && !existing.closed) {
+        try { existing.focus(); } catch (e) { /* ignore */ }
+        log('panel.reuse', {});
+        return true;
+      }
       var W = Math.min(900, Math.max(440, (window.screen.availWidth || 1280) - 120));
       var H = Math.min(800, Math.max(520, (window.screen.availHeight || 900) - 140));
       var L = Math.max(0, Math.round(((window.screen.availWidth || 1280) - W) / 2));
@@ -650,16 +657,68 @@
     }
   }
 
-  function injectFab() {
+  // ---- xload 聚合按钮组（多脚本共用一个 FAB）-----------------------
+  // DOM 协议（所有 xload 脚本共用，避免每脚本一个悬浮按钮打架）：
+  //   #xload-fab-root[data-xload-fab-root]        聚合容器（fixed 右下角）
+  //     [data-xload-fab-list]                      子按钮列表（默认收起）
+  //     [data-xload-fab-toggle]                    主开关按钮（点击展开/收起）
+  //   [data-xload-fab-item][data-xload-task=ID]    各脚本自己的子按钮
+  // 存在即复用 root；toggle 用事件委托，只绑定一次（root 上 data-xload-fab-open 记录状态）。
+  function ensureFabRoot() {
+    var root = document.getElementById('xload-fab-root');
+    if (root) return root;
+    root = document.createElement('div');
+    root.id = 'xload-fab-root';
+    root.setAttribute('data-xload-fab-root', '');
+    root.setAttribute('data-xload-fab-open', '0');
+    root.style.cssText = 'position:fixed;right:16px;bottom:140px;z-index:2147483000;' +
+      'display:flex;flex-direction:column;align-items:flex-end;';
+    var list = document.createElement('div');
+    list.setAttribute('data-xload-fab-list', '');
+    list.style.cssText = 'display:none;flex-direction:column;align-items:flex-end;gap:6px;margin-bottom:8px;';
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.setAttribute('data-xload-fab-toggle', '');
+    toggle.textContent = 'Xload ▾';
+    toggle.style.cssText = 'padding:8px 14px;border:0;border-radius:18px;background:#111827;color:#fff;' +
+      'font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.92;';
+    root.appendChild(list);
+    root.appendChild(toggle);
+    document.body.appendChild(root);
+    root.addEventListener('click', function (ev) {
+      var t = ev.target && ev.target.closest ? ev.target.closest('[data-xload-fab-toggle]') : null;
+      if (!t) return;
+      var open = root.getAttribute('data-xload-fab-open') === '1';
+      open = !open;
+      root.setAttribute('data-xload-fab-open', open ? '1' : '0');
+      list.style.display = open ? 'flex' : 'none';
+      t.textContent = 'Xload ' + (open ? '▴' : '▾');
+      ev.stopPropagation();
+    });
+    return root;
+  }
+
+  function ensureFabItem(root, taskId, label, onClick) {
+    if (!root) return;
+    var list = root.querySelector('[data-xload-fab-list]');
+    if (!list) return;
+    var existing = root.querySelector('[data-xload-task="' + taskId + '"]');
+    if (existing) return existing;
     var btn = document.createElement('button');
     btn.type = 'button';
-    btn.textContent = '字体渲染';
-    btn.setAttribute('data-xload-fab', TASK_ID);
-    btn.style.cssText = 'position:fixed;right:16px;bottom:140px;z-index:2147483000;' +
-      'padding:10px 14px;border:0;border-radius:20px;background:#4f46e5;color:#fff;' +
-      'font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.92;';
-    btn.addEventListener('click', openPanel);
-    document.body.appendChild(btn);
+    btn.setAttribute('data-xload-fab-item', '');
+    btn.setAttribute('data-xload-task', taskId);
+    btn.textContent = label;
+    btn.style.cssText = 'padding:6px 12px;border:0;border-radius:14px;background:#4f46e5;color:#fff;' +
+      'font-size:12px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.22);opacity:.95;';
+    btn.addEventListener('click', onClick);
+    list.appendChild(btn);
+    return btn;
+  }
+
+  function injectFab() {
+    var root = ensureFabRoot();
+    ensureFabItem(root, TASK_ID, '字体渲染', openPanel);
   }
 
   // 快捷键唤出面板（Alt+F），避免与页面输入冲突
