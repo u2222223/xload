@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/</loc>
+    <loc>https://xload.net/listing.html</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/listing.html</loc>
-    <changefreq>daily</changefreq>
+    <loc>https://xload.net/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/about.html</loc>
+    <loc>https://xload.net/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xload.net/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/contact.html</loc>
+    <loc>https://xload.net/contact.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/privacy-policy.html</loc>
+    <loc>https://xload.net/privacy-policy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/terms-of-service.html</loc>
+    <loc>https://xload.net/terms-of-service.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN.com/cookie-policy.html</loc>
+    <loc>https://xload.net/cookie-policy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

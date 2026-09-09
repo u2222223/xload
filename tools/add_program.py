@@ -54,7 +54,7 @@ DATA = os.path.join(ROOT, "scripts-data.json")
 TEMPLATE = os.path.join(ROOT, "scripts", "_template.html")
 
 TYPE_LABEL = {
-    "script": "Usercript",
+    "script": "Userscript",
     "extension": "Browser Extension",
     "app": "App",
     "other": "Other",

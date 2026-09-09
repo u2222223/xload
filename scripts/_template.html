@@ -1,20 +1,4 @@
 ﻿<!DOCTYPE html>
-<!--
-  ================================================================
-  SCRIPT / LISTING PAGE TEMPLATE — HOW TO USE
-  ================================================================
-  1) Save a copy of this file as:  /scripts/YOUR-SLUG.html
-  2) Replace every "REPLACE_*" value below (title, meta, github,
-     install URL, dates, sidebars, description, screenshots...).
-  3) ALSO add (or update) the matching entry in /scripts-data.json
-     so the tool appears in the homepage, listings and search.
-     The "id" and "page" fields in the JSON must match this file.
-  4) Keep the <div id="chrome-header"> and id="chrome-footer">
-     placeholders and the <script src="/assets/js/main.js"> tag.
-     They load the shared header/footer/cookie banner automatically.
-  5) Upload the folder to the server (see /README.md).
-  ================================================================
--->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -22,7 +6,7 @@
   <title>REPLACE_TITLE — xload</title>
   <meta name="description" content="REPLACE_META_DESCRIPTION (max ~160 chars for SEO)">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://REPLACE-WITH-YOUR-DOMAIN.com/REPLACE_CANONICAL">
+  <link rel="canonical" href="https://xload.net/REPLACE_CANONICAL">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
   <!-- Google AdSense consent + auto ads -->
@@ -31,7 +15,7 @@
     window.googleToken = "xloadInit";
     window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
   <!-- End Google AdSense -->
 
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -42,7 +26,7 @@
 
   <main>
     <div class="container page">
-      <nav class="crumb"><a href="/">Home</a> &rsaquo; <a href="/listing.html">Tools</a> &rsaquo; <span>REPLACE_TITLE</span></nav>
+      <nav class="crumb"><a href="/listing.html">Userscripts</a> &rsaquo; <span>REPLACE_TITLE</span></nav>
 
       <div class="detail-grid">
         <!-- ==================== MAIN CONTENT ==================== -->
@@ -58,11 +42,6 @@
             </div>
           </div>
 
-          <!-- Ad slot (optional) -->
-          <div class="adslot"><div class="adslot-label">Sponsored</div>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="REPLACE_HORIZONTAL_SLOT" data-ad-format="auto" data-full-width-responsive="true"></ins>
-          </div>
-
           <div class="prose">
             <h2>Overview</h2>
             <p>REPLACE: a clear paragraph describing what this tool does and who it helps.</p>
@@ -76,9 +55,9 @@
 
             <h2>How to install &amp; use</h2>
             <ol>
-              <li>REPLACE: step 1 (e.g. install a userscript manager such as Tampermonkey).</li>
-              <li>REPLACE: step 2 (click the Install button / open the GitHub releases page).</li>
-              <li>REPLACE: step 3 (grant permissions / configure as documented).</li>
+              <li>Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li>Click the "Download / install" button above and confirm in the manager.</li>
+              <li>Open the target site and use the script as documented below.</li>
             </ol>
 
             <h2>Configuration</h2>
@@ -88,16 +67,8 @@
             <h2>Privacy &amp; permissions</h2>
             <p>REPLACE: be specific about what the tool accesses and why. Transparency helps trust and keeps advertising compliant.</p>
 
-            <!-- Optional screenshots: 
-              <img src="/assets/img/screenshot-name.png" alt="REPLACE alt text"> -->
-
             <h2>Changelog</h2>
             <p>See the releases page on GitHub for the full history of changes.</p>
-          </div>
-
-          <!-- Ad slot (optional) -->
-          <div class="adslot"><div class="adslot-label">Sponsored</div>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="REPLACE_HORIZONTAL_SLOT" data-ad-format="auto" data-full-width-responsive="true"></ins>
           </div>
         </div>
 
@@ -115,7 +86,7 @@
           <div class="sidebar-card">
             <h3>Details</h3>
             <div class="meta-list">
-              <div class="row"><span class="k">Type</span><span class="v">Usercript</span></div>
+              <div class="row"><span class="k">Type</span><span class="v">Userscript</span></div>
               <div class="row"><span class="k">Category</span><span class="v">REPLACE_CATEGORY</span></div>
               <div class="row"><span class="k">License</span><span class="v">REPLACE_LICENSE (e.g. MIT)</span></div>
               <div class="row"><span class="k">Last updated</span><span class="v">REPLACE_DATE</span></div>
@@ -123,8 +94,6 @@
               <div class="row"><span class="k">GitHub stars</span><span class="v">REPLACE_COUNT</span></div>
             </div>
           </div>
-
-          <div class="ad-card">Advertisement: your unit appears here when enabled and approved.</div>
         </aside>
       </div>
     </div>

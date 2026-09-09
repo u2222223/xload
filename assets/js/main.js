@@ -53,7 +53,6 @@
   function buildHeader() {
     var active = document.body.getAttribute("data-nav") || "";
     var nav = "";
-    nav += navLink("/", "Home", active === "home");
     enabledTypes().forEach(function (t) {
       nav += navLink("/listing.html?type=" + encodeURIComponent(t), typeById(t).label, active === t);
     });

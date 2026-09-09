@@ -2,16 +2,16 @@
   "site": {
     "name": "xload",
     "tagline": "Fast, free and safe downloads for browser userscripts",
-    "url": "https://REPLACE-WITH-YOUR-DOMAIN.com",
+    "url": "https://xload.net",
     "adsense": {
-      "publisherId": "pub-XXXXXXXXXXXXXXXX",
+      "publisherId": "pub-8681634724543084",
       "enabled": true,
       "autoAds": true
     },
-    "contactEmail": "contact@REPLACE-WITH-YOUR-DOMAIN.com",
+    "contactEmail": "contact@xload.net",
     "phone": "",
     "address": "",
-    "lastUpdated": "2026-08-30"
+    "lastUpdated": "2026-09-09"
   },
   "enabledTypes": [
     "script"
@@ -19,7 +19,7 @@
   "types": [
     {
       "id": "script",
-      "label": "Usercripts",
+      "label": "Userscripts",
       "icon": "puzzle"
     },
     {
@@ -53,174 +53,6 @@
   ],
   "scripts": [
     {
-      "id": "example-userscript",
-      "type": "script",
-      "title": "Example Userscript",
-      "short": "Reference page showing the catalog structure.",
-      "description": "A structured example userscript used by the docs and templates to demonstrate the catalog layout.",
-      "github": "https://github.com/xload/example-userscript",
-      "page": "/scripts/productivity/example-userscript/example-userscript.html",
-      "installUrl": "/scripts/productivity/example-userscript/example-userscript.user.js",
-      "files": [
-        "example-userscript.user.js"
-      ],
-      "tags": [
-        "example",
-        "demo",
-        "reference"
-      ],
-      "categories": [
-        "Productivity"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "clean-tabs",
-      "type": "script",
-      "title": "Clean Tabs",
-      "short": "Closes duplicate and idle tabs to keep your browser tidy.",
-      "description": "Automatically finds duplicate, idle and leftover tabs and offers to close them in one click. Saves memory and keeps your workspace focused.",
-      "github": "https://github.com/xload/clean-tabs",
-      "page": "/scripts/productivity/clean-tabs/clean-tabs.html",
-      "installUrl": "/scripts/productivity/clean-tabs/clean-tabs.user.js",
-      "files": [
-        "clean-tabs.user.js"
-      ],
-      "tags": [
-        "tabs",
-        "browser",
-        "productivity"
-      ],
-      "categories": [
-        "Productivity"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": true,
-      "status": "stable"
-    },
-    {
-      "id": "video-enhancer",
-      "type": "script",
-      "title": "Video Enhancer",
-      "short": "Adds playback speed, brightness and quality controls to video players.",
-      "description": "Injects extra playback controls into HTML5 video players: speed beyond the default range, brightness and contrast, and quick quality switches.",
-      "github": "https://github.com/xload/video-enhancer",
-      "page": "/scripts/media-entertainment/video-enhancer/video-enhancer.html",
-      "installUrl": "/scripts/media-entertainment/video-enhancer/video-enhancer.user.js",
-      "files": [
-        "video-enhancer.user.js"
-      ],
-      "tags": [
-        "video",
-        "media",
-        "playback"
-      ],
-      "categories": [
-        "Media & Entertainment"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "message-formatter",
-      "type": "script",
-      "title": "Message Formatter",
-      "short": "Rich-text and code formatting for web chat boxes.",
-      "description": "Turns plain chat textareas into lightweight rich editors with code blocks, mentions and auto-links.",
-      "github": "https://github.com/xload/message-formatter",
-      "page": "/scripts/social-communication/message-formatter/message-formatter.html",
-      "installUrl": "/scripts/social-communication/message-formatter/message-formatter.user.js",
-      "files": [
-        "message-formatter.user.js"
-      ],
-      "tags": [
-        "chat",
-        "social",
-        "rich-text"
-      ],
-      "categories": [
-        "Social & Communication"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": true,
-      "status": "stable"
-    },
-    {
-      "id": "price-beacon",
-      "type": "script",
-      "title": "Price Beacon",
-      "short": "Shows price history and best-time-to-buy hints while you shop.",
-      "description": "Adds a small history badge to product pages so you can see the price trend and whether now is a good time to buy.",
-      "github": "https://github.com/xload/price-beacon",
-      "page": "/scripts/shopping/price-beacon/price-beacon.html",
-      "installUrl": "/scripts/shopping/price-beacon/price-beacon.user.js",
-      "files": [
-        "price-beacon.user.js"
-      ],
-      "tags": [
-        "shopping",
-        "price",
-        "deals"
-      ],
-      "categories": [
-        "Shopping"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "quick-screenshot",
-      "type": "script",
-      "title": "Quick Screenshot",
-      "short": "Capture full-page or region screenshots from any site.",
-      "description": "Adds a floating button and keyboard shortcut to snap a region, a visible area or a full page, then download it as PNG.",
-      "github": "https://github.com/xload/quick-screenshot",
-      "page": "/scripts/utilities/quick-screenshot/quick-screenshot.html",
-      "installUrl": "/scripts/utilities/quick-screenshot/quick-screenshot.user.js",
-      "files": [
-        "quick-screenshot.user.js"
-      ],
-      "tags": [
-        "screenshot",
-        "utility",
-        "png"
-      ],
-      "categories": [
-        "Utilities"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-08-30",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
       "id": "scriptcat-2534-2",
       "type": "script",
       "title": "抖音播放器增强",
@@ -243,12 +75,12 @@
       "categories": [
         "Userscripts"
       ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
+      "rating": 4.8,
+      "downloads": 135348,
+      "stars": 8,
       "lastUpdated": "2026-09-09",
       "license": "MIT",
-      "featured": false,
+      "featured": true,
       "status": "stable"
     },
     {
@@ -271,6 +103,38 @@
         "微软雅黑",
         "阅读优化",
         "美化"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 4.8,
+      "downloads": 123626,
+      "stars": 320,
+      "lastUpdated": "2026-09-09",
+      "license": "MIT",
+      "featured": true,
+      "status": "stable"
+    },
+    {
+      "id": "scriptcat-1397-1",
+      "type": "script",
+      "title": "学术论文免费下载工具",
+      "short": "多平台学术论文一键免费下载",
+      "description": "支持知网、万方、维普、皮书、中华医学会、博看期刊等多大学术数据库，在论文详情页一键获取免费下载链接，无需登录付费账号。聚合多站点资源解析通道，智能切换可用接口，提升下载成功率。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.html",
+      "installUrl": "/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.user.js",
+      "files": [
+        "scriptcat-1397-1.user.js",
+        "panel.html"
+      ],
+      "tags": [
+        "知网",
+        "万方",
+        "维普",
+        "论文下载",
+        "学术工具",
+        "免费下载"
       ],
       "categories": [
         "Userscripts"

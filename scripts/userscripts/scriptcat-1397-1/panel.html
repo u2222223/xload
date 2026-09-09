@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学术论文免费下载工具 - 功能面板</title>
+  <meta name="description" content="支持知网、万方、维普、皮书、中华医学会、博看期刊等多平台学术论文一键免费下载">
+  <meta name="keywords" content="知网,万方,维普,论文下载,学术工具,免费下载">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>学术论文免费下载工具</h1>
+        <p class="panel-subtitle">支持多站点一键解析下载：知网 · 万方 · 维普 · 皮书 · 中华医学会 · 博看期刊</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI ==================== -->
+        <style>
+          .pp-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; word-break: break-all; }
+          .pp-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .pp-group:last-of-type { border-bottom: 0; }
+          .pp-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .pp-sites { display: flex; flex-wrap: wrap; gap: 8px; }
+          .pp-site { flex: 1 1 150px; padding: 10px 8px; border: 1px solid #d1d5db; border-radius: 10px; background: #f9fafb; cursor: pointer; text-align: center; }
+          .pp-site:hover { border-color: #2563eb; }
+          .pp-site .name { font-size: 14px; font-weight: 600; color: #111827; }
+          .pp-site .cnt { display: block; margin-top: 2px; font-size: 12px; color: #6b7280; }
+          .pp-field { margin-bottom: 10px; }
+          .pp-field > label { display: block; font-size: 13px; color: #4b5563; margin-bottom: 4px; }
+          .pp-field select, .pp-field input[type="number"] { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; width: 100%; max-width: 320px; }
+          .pp-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+          .pp-kv { font-size: 13px; color: #374151; }
+          .pp-kv b { color: #111827; }
+          .pp-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+          .pp-radio { display: flex; gap: 14px; align-items: center; }
+          .pp-radio label { font-size: 14px; color: #1f2328; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+          .pp-link { font-size: 12px; color: #2563eb; word-break: break-all; }
+          .pp-hist { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; }
+          .pp-hist li { padding: 8px 4px; border-bottom: 1px solid #f0f1f3; font-size: 13px; color: #374151; }
+          .pp-hist li:last-child { border-bottom: 0; }
+          .pp-hist .t { color: #111827; display: block; word-break: break-all; }
+          .pp-hist .m { color: #9ca3af; font-size: 12px; }
+          .pp-hint { margin: 4px 0 0; font-size: 12px; color: #9ca3af; }
+        </style>
+
+        <div class="pp-status" id="ppStatus">等待原页面连接…</div>
+
+        <section class="pp-group">
+          <h2>站点导航</h2>
+          <div class="pp-sites" id="ppSites"></div>
+          <p class="pp-hint">点击站点卡片在新标签页打开对应官网；请在该站论文详情页点击页面右下角「免费下载」按钮使用。卡片下方数字为今日解析次数。</p>
+        </section>
+
+        <section class="pp-group">
+          <h2>当前解析</h2>
+          <div class="pp-field">
+            <label>论文标题</label>
+            <div class="pp-kv" id="ppTitle">—</div>
+          </div>
+          <div class="pp-field">
+            <label>来源站点</label>
+            <div class="pp-kv" id="ppSite">—</div>
+          </div>
+          <div class="pp-field">
+            <label for="ppSource">解析源（默认自动逐镜像切换）</label>
+            <select id="ppSource"></select>
+          </div>
+          <div class="pp-actions">
+            <button type="button" id="ppResolve" class="pui-btn pui-btn-primary">开始解析</button>
+            <button type="button" id="ppCopy" class="pui-btn">复制下载链接</button>
+            <button type="button" id="ppDownload" class="pui-btn pui-btn-primary">下载 PDF</button>
+          </div>
+          <div class="pp-field" style="margin-top:10px;">
+            <label>解析结果</label>
+            <div class="pp-link" id="ppResult">尚未解析</div>
+          </div>
+        </section>
+
+        <section class="pp-group">
+          <h2>下载历史</h2>
+          <ul class="pp-hist" id="ppHistory"><li>暂无记录</li></ul>
+        </section>
+
+        <section class="pp-group">
+          <h2>设置</h2>
+          <div class="pp-field">
+            <label for="ppDefaultSource">默认解析源</label>
+            <select id="ppDefaultSource"></select>
+          </div>
+          <div class="pp-field">
+            <label>下载格式偏好（格式最终由解析源决定）</label>
+            <div class="pp-radio">
+              <label><input type="radio" name="ppFormat" value="pdf" checked> 优先 PDF</label>
+              <label><input type="radio" name="ppFormat" value="caj"> 优先 CAJ（知网）</label>
+            </div>
+          </div>
+          <div class="pp-field">
+            <label for="ppThreshold">每日用量提醒阈值（次/站点）</label>
+            <input type="number" id="ppThreshold" min="1" max="999" value="10">
+          </div>
+          <div class="pp-actions">
+            <button type="button" id="ppApplySettings" class="pui-btn pui-btn-primary">保存设置</button>
+            <button type="button" id="ppClearHistory" class="pui-btn pui-btn-danger">清空历史</button>
+            <button type="button" id="ppLogs" class="pui-btn">查看日志</button>
+          </div>
+        </section>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/">xload</a>
+      <a href="/listing.html">工具列表</a>
+      <a href="/privacy-policy.html">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-1397-1');
+
+      // ==================== 功能逻辑 ====================
+      var SITES = [
+        { key: 'cnki', label: '知网', home: 'https://www.cnki.net/' },
+        { key: 'wanfang', label: '万方', home: 'https://www.wanfangdata.com.cn/' },
+        { key: 'cqvip', label: '维普', home: 'https://lib.cqvip.com/' },
+        { key: 'pishu', label: '皮书', home: 'https://www.pishu.com.cn/' },
+        { key: 'yiigle', label: '中华医学会', home: 'https://www.yiigle.com/index' },
+        { key: 'bookan', label: '博看期刊', home: 'http://new.bookan.com.cn/' }
+      ];
+      var MIRRORS = [
+        'https://sci-hub.se',
+        'https://sci-hub.st',
+        'https://sci-hub.ru',
+        'https://sci-hub.ee',
+        'https://sci-hub.wf'
+      ];
+      var LS_KEY = 'xload-paper-settings';
+
+      var lastResolved = null;
+      var stateUsage = {};
+
+      function $(id) { return document.getElementById(id); }
+      function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+      function siteLabel(key) {
+        for (var i = 0; i < SITES.length; i++) if (SITES[i].key === key) return SITES[i].label;
+        return key || '—';
+      }
+      function loadLocal() {
+        try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; } catch (e) { return {}; }
+      }
+      function saveLocal(s) { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+
+      function fillSelect(sel, options, value) {
+        sel.innerHTML = '';
+        options.forEach(function (o) {
+          var opt = document.createElement('option');
+          opt.value = o.v;
+          opt.textContent = o.label;
+          sel.appendChild(opt);
+        });
+        sel.value = value;
+      }
+
+      function sourceOptions(selected) {
+        var list = [{ v: 'auto', label: '自动（逐镜像切换）' }];
+        MIRRORS.forEach(function (m) { list.push({ v: m, label: m }); });
+        fillSelect($('ppSource'), list, selected || 'auto');
+        fillSelect($('ppDefaultSource'), list, selected || 'auto');
+      }
+
+      function renderSites(usage) {
+        var box = $('ppSites');
+        box.innerHTML = '';
+        SITES.forEach(function (s) {
+          var b = el('button', 'pp-site');
+          b.type = 'button';
+          b.appendChild(el('span', 'name', s.label));
+          var cnt = el('span', 'cnt', '今日 ' + ((usage && usage[s.key]) || 0) + ' 次');
+          b.appendChild(cnt);
+          b.addEventListener('click', function () {
+            try { window.open(s.home, '_blank', 'noopener'); } catch (e) { /* ignore */ }
+          });
+          box.appendChild(b);
+        });
+      }
+
+      function renderHistory(hist) {
+        var box = $('ppHistory');
+        box.innerHTML = '';
+        if (!hist || !hist.length) { box.appendChild(el('li', null, '暂无记录')); return; }
+        hist.forEach(function (h) {
+          var li = el('li');
+          li.appendChild(el('span', 't', h.title || '未命名文献'));
+          var m = '站点 ' + (h.site ? siteLabel(h.site) : '—') + ' · ' + (h.time ? h.time.slice(0, 19).replace('T', ' ') : '') + ' · ' + (h.status || '');
+          li.appendChild(el('span', 'm', m));
+          box.appendChild(li);
+        });
+      }
+
+      function setStatus(text, kind) {
+        var s = $('ppStatus');
+        s.textContent = text;
+        s.style.background = kind === 'error' ? '#fef2f2' : '#eef2ff';
+        s.style.color = kind === 'error' ? '#b91c1c' : '#3730a3';
+      }
+
+      function copyText(text) {
+        if (!text) { PUI.toast('暂无链接可复制', 'warn'); return; }
+        var done = function () { PUI.toast('已复制到剪贴板', 'success'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+        } else { fallbackCopy(text); done(); }
+      }
+      function fallbackCopy(text) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (e) { /* ignore */ }
+      }
+
+      function showResult() {
+        var box = $('ppResult');
+        if (!lastResolved) { box.textContent = '尚未解析'; return; }
+        var url = lastResolved.downloadUrl || lastResolved.landingUrl || '';
+        box.textContent = '源：' + (lastResolved.source && lastResolved.source.name || '—') + '　' + url;
+      }
+
+      var progressBar = null;
+      function resolveNow() {
+        setStatus('正在解析…', '');
+        if (progressBar) progressBar.hide();
+        progressBar = PUI.progressBar({ text: '解析中…' });
+        channel.request('command', { action: 'resolve', source: $('ppSource').value }, 20000)
+          .then(function (d) {
+            if (progressBar) progressBar.done('解析完成');
+            if (d && d.ok && d.resolved) {
+              lastResolved = d.resolved;
+              showResult();
+              setStatus('解析成功 · 源：' + (d.resolved.source && d.resolved.source.name || '—') + ' · 可下载/复制链接', '');
+              PUI.toast('解析成功', 'success');
+            } else {
+              setStatus('解析失败：' + (d && d.error || '未知错误'), 'error');
+              PUI.toast('解析失败', 'error');
+            }
+          })
+          .catch(function (e) {
+            if (progressBar) progressBar.hide();
+            setStatus('未连接原页面（独立模式）：请从论文详情页点击「免费下载」按钮', 'error');
+            PUI.toast('原页面未响应', 'warn');
+          });
+      }
+
+      function downloadNow() {
+        if (!lastResolved) { PUI.toast('请先解析', 'warn'); return; }
+        channel.request('command', { action: 'download', resolved: lastResolved }, 20000)
+          .then(function (d) {
+            if (d && d.ok) { PUI.toast('下载已发起', 'success'); refreshState(); }
+            else PUI.toast('下载失败：' + (d && d.error || ''), 'error');
+          })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      }
+
+      function applySettings() {
+        var mode = $('ppDefaultSource').value;
+        var fmt = (function () {
+          var r = document.getElementsByName('ppFormat');
+          for (var i = 0; i < r.length; i++) if (r[i].checked) return r[i].value;
+          return 'pdf';
+        })();
+        var th = parseInt($('ppThreshold').value, 10) || 10;
+        var s = { resolverMode: mode, format: fmt, dailyThreshold: th };
+        saveLocal(s);
+        channel.request('command', { action: 'applySettings', settings: s }, 4000)
+          .then(function () { PUI.toast('设置已保存', 'success'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      }
+
+      function refreshState() {
+        channel.request('command', { action: 'getState' }, 4000)
+          .then(function (d) {
+            if (!d) return;
+            var paper = d.paper || {};
+            $('ppTitle').textContent = paper.title || '—';
+            $('ppSite').textContent = paper.site ? siteLabel(paper.site) : '—';
+            stateUsage = d.usage || {};
+            renderSites(stateUsage);
+            renderHistory(d.history);
+            var st = d.settings || loadLocal();
+            sourceOptions(st.resolverMode || 'auto');
+            var fmt = st.format || 'pdf';
+            var r = document.getElementsByName('ppFormat');
+            for (var i = 0; i < r.length; i++) r[i].checked = (r[i].value === fmt);
+            $('ppThreshold').value = String(st.dailyThreshold || 10);
+            setStatus('与原页面同步成功', '');
+          })
+          .catch(function () {
+            setStatus('未连接原页面（独立模式）：请从论文详情页点击「免费下载」按钮', 'error');
+            var local = loadLocal();
+            sourceOptions(local.resolverMode || 'auto');
+            $('ppThreshold').value = String(local.dailyThreshold || 10);
+            renderSites({});
+          });
+      }
+
+      // 监听原页面推送的进度/结果
+      channel.on('progress', function (d) {
+        d = d || {};
+        if (progressBar && d.stage === 'check') progressBar.set(Math.round((d.now / (d.total || 1)) * 90), '试源 ' + d.now + '/' + d.total + '：' + d.source);
+        if (d.stage === 'downloaded') { PUI.toast('下载完成', 'success'); }
+      });
+      channel.on('done', function (d) {
+        d = d || {};
+        PUI.toast('解析完成：' + (d.source || ''), 'success');
+      });
+      channel.on('error', function (d) {
+        d = d || {};
+        setStatus('出错：' + (d.message || ''), 'error');
+      });
+
+      $('ppResolve').addEventListener('click', resolveNow);
+      $('ppCopy').addEventListener('click', function () {
+        if (!lastResolved) { PUI.toast('请先解析', 'warn'); return; }
+        copyText(lastResolved.downloadUrl || lastResolved.landingUrl || '');
+      });
+      $('ppDownload').addEventListener('click', downloadNow);
+      $('ppApplySettings').addEventListener('click', applySettings);
+      $('ppClearHistory').addEventListener('click', function () {
+        channel.request('command', { action: 'clearHistory' }, 4000)
+          .then(function () { PUI.toast('历史已清空', 'success'); refreshState(); })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      });
+      $('ppLogs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) {
+            var text = (d && d.text) || '（无日志）';
+            var body = el('pre', null, text);
+            body.style.cssText = 'max-height:300px;overflow:auto;white-space:pre-wrap;font-size:12px;';
+            var m = PUI.modal({
+              title: '脚本日志',
+              body: body,
+              buttons: [
+                { text: '复制日志', type: 'primary', onClick: function () { copyText(text); } },
+                { text: '关闭', type: 'default' }
+              ]
+            });
+            if (m && m.close) { /* 由按钮关闭 */ }
+          })
+          .catch(function () { PUI.toast('原页面未响应，无法读取日志', 'warn'); });
+      });
+
+      // 初始化
+      sourceOptions('auto');
+      renderSites({});
+      refreshState();
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>

@@ -8,4 +8,4 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
-Sitemap: https://REPLACE-WITH-YOUR-DOMAIN.com/sitemap.xml
+Sitemap: https://xload.net/sitemap.xml
