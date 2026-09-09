@@ -3,7 +3,7 @@
 // @name:zh-CN   通用小说下载器
 // @name:en      NovelFetch - Universal Novel Downloader
 // @namespace    https://github.com/u2222223/xload
-// @version      1.0.1
+// @version      1.0.2
 // @description  一个可扩展的通用型小说下载器：在小说目录页一键抓取章节，自动生成 TXT 纯文本与 EPUB 电子书，支持章节筛选、自定义命名、并发下载与进度实时显示。
 // @author       xload
 // @match        *://*/*
@@ -1295,6 +1295,7 @@
       else { root.removeAttribute('data-xload-fab-collapsed'); }
   
       var dragging = false;
+      var downOnToggle = false;
       var sx = 0, sy = 0, ox = 0, oy = 0;
   
       // 从手柄或组内空白处起拖；item 按钮上起按仅当移动超过阈值才进入拖拽（保留点击）
@@ -1306,6 +1307,7 @@
         if (isItem && !isToggle) return; // item 按钮交给点击逻辑（item 自身 pointerdown 处理拖拽）
         dragging = true;
         movedFlag = false;
+        downOnToggle = isToggle;
         sx = ev.clientX; sy = ev.clientY;
         ox = root.offsetLeft; oy = root.offsetTop;
         try { root.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
@@ -1324,15 +1326,21 @@
         dragging = false;
         if (movedFlag) {
           fabStoreSet(POS_KEY, { x: root.offsetLeft, y: root.offsetTop });
+        } else if (downOnToggle) {
+          // 在手柄上起按且未发生拖拽 = 点击手柄 → 折叠/展开。
+          // 注意：setPointerCapture 会把派生的 click 事件重定向到 root，handle 上的 click 监听
+          // 收不到，因此这里在 pointerup 直接处理，不依赖 click 事件（拖拽后 downOnToggle 判定自然屏蔽误触）。
+          toggleCollapse();
         }
+        downOnToggle = false;
       }
       root.addEventListener('pointerup', endDrag);
-      root.addEventListener('pointercancel', endDrag);
-  
-      // 手柄：点击 = 折叠/展开（拖拽后自动屏蔽误触）
-      handle.addEventListener('click', function () {
-        if (movedFlag) { movedFlag = false; return; }
-        toggleCollapse();
+      // pointercancel（如系统手势抢占）：视为放弃本次按下，不触发折叠
+      root.addEventListener('pointercancel', function () {
+        if (!dragging) return;
+        dragging = false;
+        downOnToggle = false;
+        movedFlag = false;
       });
   
       // 屏幕切换 / 窗口 resize / 缩放：重新 clamp，避免按钮跑出屏幕看不见
