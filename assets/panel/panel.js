@@ -6,16 +6,46 @@
 
   var PREFIX = 'xload-panel:';
 
-  // ---------- PanelChannel：BroadcastChannel 封装 ----------
+  // ---------- PanelChannel：BroadcastChannel + 跨源 postMessage 封装 ----------
+  // 同源（面板与页面同域）用 BroadcastChannel；跨源（面板在 xload 站点、脚本在目标站点）
+  // 用 window.opener + postMessage：脚本 window.open 面板（不用 noopener）后，面板通过
+  // window.opener.postMessage 发给页面，页面用 event.source.postMessage 回包。
   function PanelChannel(taskId) {
     this._id = String(taskId || '');
     this._seq = 0;
     this._handlers = {};
     this._pending = {};
-    this._bc = new BroadcastChannel(PREFIX + this._id);
+    this._bc = null;
+    this._opener = null;
+    this._onMsg = null;
     var self = this;
-    this._bc.onmessage = function (ev) { self._dispatch(ev.data); };
+
+    // 优先跨源通道：面板由脚本 window.open 打开时 window.opener 指向目标页面
+    try {
+      if (window.opener && window.opener !== window) this._opener = window.opener;
+    } catch (e) { this._opener = null; }
+
+    if (this._opener) {
+      this._onMsg = function (ev) {
+        if (!ev.data || typeof ev.data !== 'object' || !ev.data.type) return;
+        if (ev.source === window) return;
+        if (ev.data._from !== self._id) return;
+        self._dispatch(ev.data);
+      };
+      window.addEventListener('message', this._onMsg);
+    } else {
+      try {
+        this._bc = new BroadcastChannel(PREFIX + this._id);
+        this._bc.onmessage = function (ev) { self._dispatch(ev.data); };
+      } catch (e) { this._bc = null; }
+    }
   }
+
+  // 统一投递：跨源走 opener.postMessage，同源走 BroadcastChannel
+  PanelChannel.prototype._post = function (msg) {
+    if (this._opener) { try { this._opener.postMessage(msg, '*'); } catch (e) { /* ignore */ } }
+    else if (this._bc) { try { this._bc.postMessage(msg); } catch (e) { /* ignore */ } }
+  };
 
   PanelChannel.prototype._dispatch = function (msg) {
     if (!msg || typeof msg !== 'object' || !msg.type) return;
@@ -37,7 +67,7 @@
 
   // 单向发送：panel -> 油猴（type 命令），或 油猴 -> panel（type: progress/done/error）
   PanelChannel.prototype.send = function (type, data) {
-    this._bc.postMessage({ type: type, data: data == null ? {} : data, _from: this._id });
+    this._post({ type: type, data: data == null ? {} : data, _from: this._id });
     return this;
   };
 
@@ -57,7 +87,7 @@
           }
         }, t)
       };
-      self._bc.postMessage({ type: type, data: data == null ? {} : data, _id: id, _request: true, _from: self._id });
+      self._post({ type: type, data: data == null ? {} : data, _id: id, _request: true, _from: self._id });
     });
   };
 
@@ -74,7 +104,10 @@
   };
 
   PanelChannel.prototype.close = function () {
-    this._bc.close();
+    if (this._onMsg) { try { window.removeEventListener('message', this._onMsg); } catch (e) { /* ignore */ } }
+    if (this._bc) { try { this._bc.close(); } catch (e) { /* ignore */ } }
+    this._bc = null;
+    this._opener = null;
     this._handlers = {};
     this._pending = {};
   };

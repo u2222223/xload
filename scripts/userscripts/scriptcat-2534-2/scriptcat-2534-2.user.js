@@ -178,9 +178,12 @@
   }
 
   // ---- 面板通信（与 panel.js 的 PanelChannel 协议一致）---------------
+  // 同源走 BroadcastChannel；跨源（面板在 xload 站点、脚本在抖音）走
+  // window.open(面板) → 面板用 opener.postMessage 发来 → 脚本监听 message 并用 event.source 回包。
   function createChannel(taskId) {
     var bc = null;
     var handlers = {};
+    var panelWin = null;
     try { bc = new BroadcastChannel('xload-panel:' + taskId); } catch (e) { bc = null; }
 
     function dispatch(msg) {
@@ -193,14 +196,31 @@
     }
     if (bc) bc.onmessage = function (ev) { dispatch(ev.data); };
 
+    // 跨源：接收面板（window.open 打开，opener=本页面）postMessage 来的消息，记住来源供回包
+    function onWindowMessage(ev) {
+      var m = ev && ev.data;
+      if (!m || typeof m !== 'object' || !m.type) return;
+      if (ev.source === window) return;
+      if (m._from && m._from !== taskId) return;
+      m._source = ev.source;
+      dispatch(m);
+    }
+    window.addEventListener('message', onWindowMessage);
+
     return {
-      send: function (type, data) { if (bc) bc.postMessage({ type: type, data: data == null ? {} : data, _from: taskId }); },
-      reply: function (msg, data) {
-        if (bc && msg && msg._id != null && msg._request) {
-          bc.postMessage({ type: msg.type, data: data == null ? {} : data, _id: msg._id, _from: taskId });
-        }
+      send: function (type, data) {
+        var m = { type: type, data: data == null ? {} : data, _from: taskId };
+        if (panelWin) { try { panelWin.postMessage(m, '*'); } catch (e) { /* ignore */ } }
+        if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
       },
-      on: function (type, h) { (handlers[type] = handlers[type] || []).push(h); }
+      reply: function (msg, data) {
+        if (!msg || msg._id == null || !msg._request) return;
+        var m = { type: msg.type, data: data == null ? {} : data, _id: msg._id, _from: taskId };
+        if (msg._source) { try { msg._source.postMessage(m, '*'); } catch (e) { /* ignore */ } }
+        if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
+      },
+      on: function (type, h) { (handlers[type] = handlers[type] || []).push(h); },
+      setPanelWin: function (w) { panelWin = w; }
     };
   }
 
@@ -446,7 +466,12 @@
   // ---- 面板入口（悬浮按钮）-------------------------------------------
   function openPanel() {
     if (!isSafeUrl(PANEL_URL)) return false;
-    try { window.open(PANEL_URL, '_blank', 'noopener'); return true; } catch (e) { return false; }
+    try {
+      // 不用 noopener：跨源通信依赖 window.opener + postMessage
+      var w = window.open(PANEL_URL, '_blank');
+      if (w) channel.setPanelWin(w);
+      return true;
+    } catch (e) { return false; }
   }
 
   function injectFab() {
