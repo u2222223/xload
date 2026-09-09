@@ -60,13 +60,13 @@
     var name = data ? esc(data.site.name) : "xload";
     return (
       '<header class="site-header"><div class="nav-wrap">' +
-      '<a class="logo" href="/"><span class="logo-mark">XL</span><span>' + name + "</span></a>" +
+      '<a class="logo" href="/" target="_blank" rel="noopener"><img class="logo-img" src="/assets/img/xload_logo.png" alt="' + name + ' logo"><span>' + name + "</span></a>" +
       '<nav class="main-nav" id="main-nav">' + nav + "</nav>" +
       '<button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button>' +
       "</div></header>"
     );
     function navLink(href, label, isActive) {
-      return '<a href="' + href + '"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
+      return '<a href="' + href + '" target="_blank" rel="noopener"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
     }
   }
 
@@ -75,21 +75,21 @@
     var en = enabledTypes();
     var typesCol = en.map(function (id) {
       var t = typeById(id);
-      return '<li><a href="/listing.html?type=' + encodeURIComponent(id) + '">' + esc(t.label) + "</a></li>";
+      return '<li><a href="/listing.html?type=' + encodeURIComponent(id) + '" target="_blank" rel="noopener">' + esc(t.label) + "</a></li>";
     }).join("");
     return (
       '<footer class="site-footer"><div class="container">' +
       '<div class="footer-grid">' +
       "<div class=\"footer-col\"><h4>" + esc(data.site.name) + "</h4><ul>" +
       "<li>" + esc(data.site.tagline) + "</li>" +
-      '<li><a href="/about.html">About us</a></li>' +
-      '<li><a href="/contact.html">Contact</a></li>' +
+      '<li><a href="/about.html" target="_blank" rel="noopener">About us</a></li>' +
+      '<li><a href="/contact.html" target="_blank" rel="noopener">Contact</a></li>' +
       "</ul></div>" +
       "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
       "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
-      '<li><a href="/privacy-policy.html">Privacy Policy</a></li>' +
-      '<li><a href="/terms-of-service.html">Terms of Service</a></li>' +
-      '<li><a href="/cookie-policy.html">Cookie Policy</a></li>' +
+      '<li><a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a></li>' +
+      '<li><a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a></li>' +
+      '<li><a href="/cookie-policy.html" target="_blank" rel="noopener">Cookie Policy</a></li>' +
       "</ul></div>" +
       "</div>" +
       '<div class="footer-bottom"><span>&copy; ' + new Date().getFullYear() + " " + esc(data.site.name) + ". All rights reserved.</span>" +
@@ -105,7 +105,7 @@
     banner.setAttribute("role", "dialog");
     banner.innerHTML =
       "<p>We use cookies to personalise content, provide analytics and show ads tailored to you. See our " +
-      '<a href="/cookie-policy.html">Cookie Policy</a> for details.</p>' +
+      '<a href="/cookie-policy.html" target="_blank" rel="noopener">Cookie Policy</a> for details.</p>' +
       '<div class="actions">' +
       '<button class="btn btn-ghost" data-ck="essential">Essential only</button>' +
       '<button class="btn" data-ck="all">Accept all</button>' +
@@ -164,7 +164,7 @@
     var tags = (item.tags || []).slice(0, 3).map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("");
     var gh = icon("download");
     return (
-      '<a class="script-card" href="' + esc(item.page) + '">' +
+      '<a class="script-card" href="' + esc(item.page) + '" target="_blank" rel="noopener">' +
       '<div class="card-top"><span class="card-badge">' + icon(tm.icon) + "</span>" +
       "<h3>" + esc(item.title) + "</h3></div>" +
       '<p class="desc">' + esc(item.short || item.description) + "</p>" +

@@ -72,12 +72,11 @@ ul { list-style: none; }
   letter-spacing: -0.02em;
 }
 .logo:hover { text-decoration: none; }
-.logo-mark {
-  width: 30px; height: 30px;
+.logo-img {
+  width: 32px; height: 32px;
   border-radius: 8px;
-  background: var(--accent-grad);
-  display: grid; place-items: center;
-  color: #fff; font-family: var(--font-mono); font-weight: 700;
+  object-fit: contain;
+  display: block;
 }
 
 .main-nav { display: flex; gap: 4px; flex: 1; }
@@ -200,6 +199,7 @@ main { flex: 1; }
   border: 1px solid var(--border);
 }
 .btn-block { width: 100%; justify-content: center; }
+.sidebar-card .btn + .btn { margin-top: 10px; }
 
 .toolbar {
   display: flex; gap: 12px; align-items: center;
