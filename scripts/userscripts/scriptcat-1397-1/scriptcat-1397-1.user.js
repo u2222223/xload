@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        学术论文免费下载工具
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.0
+// @version     1.0.1
 // @description 多平台学术论文一键免费下载：知网、万方、维普、皮书、中华医学会、博看期刊，无需登录付费账号
 // @author      xload
 // @match       *://*.cnki.net/*
@@ -261,6 +261,7 @@
         var m = { type: msg.type, data: data == null ? {} : data, _id: msg._id, _from: taskId };
         // 优先经 panelWin（window.open 直接引用）回包：油猴沙箱中 event.source 可能为 null，不能只靠它。
         // 若面板由 window.open 打开，panelWin 回包能命中面板的 window 'message' 监听。
+        log('channel.reply.send', { type: m.type, hasPanelWin: !!panelWin, hasSource: !!msg._source, hasBc: !!bc });
         if (panelWin) { try { panelWin.postMessage(m, '*'); } catch (e) { /* ignore */ } }
         if (msg._source && msg._source !== panelWin) { try { msg._source.postMessage(m, '*'); } catch (e) { /* ignore */ } }
         if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }

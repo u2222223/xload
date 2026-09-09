@@ -9,7 +9,9 @@
   // ---------- PanelChannel：BroadcastChannel + 跨源 postMessage 封装 ----------
   // 同源（面板与页面同域）用 BroadcastChannel；跨源（面板在 xload 站点、脚本在目标站点）
   // 用 window.opener + postMessage：脚本 window.open 面板（不用 noopener）后，面板通过
-  // window.opener.postMessage 发给页面，页面用 event.source.postMessage 回包。
+  // window.opener.postMessage 发给页面，页面用 event.source/panelWin postMessage 回包。
+  // 双通道策略：不二选一，始终「同时」监听 window 'message' + BroadcastChannel，
+  // 发送也同时走 opener.postMessage + bc.postMessage——脚本侧从哪条通道回包都能命中。
   function PanelChannel(taskId) {
     this._id = String(taskId || '');
     this._seq = 0;
@@ -25,26 +27,26 @@
       if (window.opener && window.opener !== window) this._opener = window.opener;
     } catch (e) { this._opener = null; }
 
-    if (this._opener) {
-      this._onMsg = function (ev) {
-        if (!ev.data || typeof ev.data !== 'object' || !ev.data.type) return;
-        if (ev.source === window) return;
-        if (ev.data._from !== self._id) return;
-        self._dispatch(ev.data);
-      };
-      window.addEventListener('message', this._onMsg);
-    } else {
-      try {
-        this._bc = new BroadcastChannel(PREFIX + this._id);
-        this._bc.onmessage = function (ev) { self._dispatch(ev.data); };
-      } catch (e) { this._bc = null; }
-    }
+    // 通道1：window 'message'（跨源 postMessage，opener / panelWin / event.source 都走这里）
+    this._onMsg = function (ev) {
+      if (!ev.data || typeof ev.data !== 'object' || !ev.data.type) return;
+      if (ev.source === window) return;
+      if (ev.data._from !== self._id) return;
+      self._dispatch(ev.data);
+    };
+    window.addEventListener('message', this._onMsg);
+
+    // 通道2：BroadcastChannel（同源兜底，与脚本侧 bc 互通）
+    try {
+      this._bc = new BroadcastChannel(PREFIX + this._id);
+      this._bc.onmessage = function (ev) { self._dispatch(ev.data); };
+    } catch (e) { this._bc = null; }
   }
 
-  // 统一投递：跨源走 opener.postMessage，同源走 BroadcastChannel
+  // 统一投递：跨源走 opener.postMessage，同源走 BroadcastChannel，双通道都发
   PanelChannel.prototype._post = function (msg) {
     if (this._opener) { try { this._opener.postMessage(msg, '*'); } catch (e) { /* ignore */ } }
-    else if (this._bc) { try { this._bc.postMessage(msg); } catch (e) { /* ignore */ } }
+    if (this._bc) { try { this._bc.postMessage(msg); } catch (e) { /* ignore */ } }
   };
 
   PanelChannel.prototype._dispatch = function (msg) {
