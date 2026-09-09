@@ -3,7 +3,7 @@
 // @name:zh-CN   通用小说下载器
 // @name:en      NovelFetch - Universal Novel Downloader
 // @namespace    https://github.com/u2222223/xload
-// @version      1.0.2
+// @version      1.0.3
 // @description  一个可扩展的通用型小说下载器：在小说目录页一键抓取章节，自动生成 TXT 纯文本与 EPUB 电子书，支持章节筛选、自定义命名、并发下载与进度实时显示。
 // @author       xload
 // @match        *://*/*
@@ -1116,8 +1116,8 @@
     }
   }
 
-  // ---- xload 聚合按钮组（共享模板 templates/fab.js v3，全部复制，勿自行重写）----------
-  // 可折叠（默认展开）、极简扁平、整组拖拽、位置记忆、防出屏。
+  // ---- xload 聚合按钮组（共享模板 templates/fab.js v3.1，全部复制，勿自行重写）----------
+  // 可折叠（默认展开）、大气版视觉、整组拖拽、位置记忆、防出屏。
   function xloadFab() {
     var POS_KEY = 'xload-fab-pos';
     var COLLAPSE_KEY = 'xload-fab-collapsed';
@@ -1166,65 +1166,66 @@
       st.textContent =
         '#xload-fab-root{' +
           'position:fixed;right:16px;bottom:140px;z-index:2147483000;' +
-          'display:flex;flex-direction:column;gap:4px;' +
-          'min-width:150px;max-width:230px;padding:6px;box-sizing:border-box;' +
+          'display:flex;flex-direction:column;gap:6px;' +
+          'min-width:170px;max-width:240px;padding:8px;box-sizing:border-box;' +
           'background:#fff;' +
-          'border:1px solid #e2e8f0;border-radius:10px;' +
-          'box-shadow:0 1px 3px rgba(15,23,42,.06);' +
+          'border:1px solid #e2e8f0;border-radius:12px;' +
+          'box-shadow:0 8px 24px rgba(15,23,42,.10),0 2px 6px rgba(15,23,42,.05);' +
           'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;' +
           'user-select:none;-webkit-user-select:none;touch-action:none;' +
         '}' +
-        '#xload-fab-root[data-xload-fab-collapsed="true"]{padding:4px;}' +
+        '#xload-fab-root[data-xload-fab-collapsed="true"]{padding:6px;}' +
         '#xload-fab-root button{font-family:inherit;}' +
         '#xload-fab-root [data-xload-fab-toggle]{' +
           'display:flex;align-items:center;gap:8px;width:100%;' +
-          'padding:7px 8px;border:0;border-radius:8px;cursor:grab;' +
-          'background:transparent;color:#334155;' +
-          'font-size:13px;font-weight:600;line-height:1;text-align:left;' +
-          'transition:background .15s ease,color .15s ease;' +
+          'padding:9px 10px;border:0;border-radius:9px;cursor:pointer;' +
+          'background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;' +
+          'font-size:13px;font-weight:700;letter-spacing:.2px;line-height:1;text-align:left;' +
+          'box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 2px 6px rgba(29,78,216,.25);' +
+          'transition:filter .15s ease,box-shadow .15s ease;' +
         '}' +
         '#xload-fab-root [data-xload-fab-toggle]:hover{' +
-          'background:#f1f5f9;color:#0f172a;' +
+          'filter:brightness(1.07);' +
+          'box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 3px 10px rgba(29,78,216,.35);' +
         '}' +
-        '#xload-fab-root [data-xload-fab-toggle]:active{background:#e8eef5;}' +
+        '#xload-fab-root [data-xload-fab-toggle]:active{filter:brightness(.95);}' +
         '#xload-fab-root .xf-brand{' +
           'display:inline-flex;align-items:center;justify-content:center;flex:none;' +
-          'width:20px;height:20px;border-radius:6px;background:#2563eb;color:#fff;' +
+          'width:21px;height:21px;border-radius:6px;background:#fff;color:#1d4ed8;' +
           'font-size:11px;font-weight:800;' +
         '}' +
         '#xload-fab-root .xf-title{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}' +
         '#xload-fab-root .xf-caret{' +
           'flex:none;width:0;height:0;' +
           'border-left:4px solid transparent;border-right:4px solid transparent;' +
-          'border-top:5px solid #94a3b8;transition:transform .18s ease;' +
+          'border-top:5px solid rgba(255,255,255,.85);transition:transform .18s ease;' +
         '}' +
         '#xload-fab-root[data-xload-fab-collapsed="true"] .xf-caret{transform:rotate(-90deg);}' +
-        '#xload-fab-root [data-xload-fab-list]{display:flex;flex-direction:column;gap:4px;margin-top:2px;}' +
+        '#xload-fab-root [data-xload-fab-list]{display:flex;flex-direction:column;gap:6px;margin-top:2px;}' +
         '#xload-fab-root[data-xload-fab-collapsed="true"] [data-xload-fab-list]{display:none;}' +
         '#xload-fab-root [data-xload-fab-item]{' +
-          'display:flex;align-items:center;gap:8px;width:100%;' +
-          'padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;' +
+          'display:flex;align-items:center;gap:9px;width:100%;' +
+          'padding:9px 11px;border:1px solid #e2e8f0;border-radius:9px;' +
           'background:#f8fafc;color:#334155;' +
           'font-size:13px;font-weight:500;line-height:1;text-align:left;cursor:pointer;' +
-          'transition:border-color .15s ease,background .15s ease,color .15s ease;' +
+          'box-shadow:0 1px 2px rgba(15,23,42,.04);' +
+          'transition:border-color .15s ease,background .15s ease,color .15s ease,box-shadow .15s ease,transform .15s ease;' +
         '}' +
         '#xload-fab-root [data-xload-fab-item]:hover{' +
-          'border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8;' +
+          'border-color:#93c5fd;background:#eff6ff;color:#1d4ed8;' +
+          'box-shadow:0 2px 8px rgba(37,99,235,.15);' +
         '}' +
         '#xload-fab-root [data-xload-fab-item]:active{background:#dbeafe;}' +
         '#xload-fab-root .xf-dot{' +
           'width:8px;height:8px;border-radius:50%;flex:none;background:#10b981;' +
         '}' +
         '@media (prefers-color-scheme:dark){' +
-          '#xload-fab-root{background:#0f172a;border-color:rgba(148,163,184,.18);' +
-            'box-shadow:0 1px 3px rgba(0,0,0,.4);}' +
-          '#xload-fab-root [data-xload-fab-toggle]{color:#cbd5e1;}' +
-          '#xload-fab-root [data-xload-fab-toggle]:hover{background:rgba(148,163,184,.12);color:#f1f5f9;}' +
-          '#xload-fab-root [data-xload-fab-toggle]:active{background:rgba(148,163,184,.20);}' +
-          '#xload-fab-root [data-xload-fab-item]{background:#1e293b;border-color:rgba(148,163,184,.20);color:#cbd5e1;}' +
-          '#xload-fab-root [data-xload-fab-item]:hover{border-color:#3b82f6;background:rgba(37,99,235,.18);color:#fff;}' +
+          '#xload-fab-root{background:#111827;border-color:rgba(148,163,184,.20);' +
+            'box-shadow:0 8px 24px rgba(0,0,0,.5);}' +
+          '#xload-fab-root [data-xload-fab-item]{background:#1f2937;border-color:rgba(148,163,184,.22);color:#e2e8f0;}' +
+          '#xload-fab-root [data-xload-fab-item]:hover{border-color:#3b82f6;background:rgba(37,99,235,.18);color:#fff;' +
+            'box-shadow:0 2px 8px rgba(59,130,246,.3);}' +
           '#xload-fab-root [data-xload-fab-item]:active{background:rgba(37,99,235,.28);}' +
-          '#xload-fab-root .xf-caret{border-top-color:#64748b;}' +
         '}';
       root.appendChild(st);
     }
@@ -1302,7 +1303,8 @@
       root.addEventListener('pointerdown', function (ev) {
         if (ev.button !== 0) return;
         var t = ev.target;
-        var isToggle = !!(t && t.getAttribute && t.getAttribute('data-xload-fab-toggle') === 'true');
+        // 用 closest 判断是否命中手柄（点击手柄内部文字/徽标/箭头也应视为手柄）
+        var isToggle = !!(t && t.closest && t.closest('[data-xload-fab-toggle]'));
         var isItem = !!(t && t.closest && t.closest('[data-xload-fab-item]'));
         if (isItem && !isToggle) return; // item 按钮交给点击逻辑（item 自身 pointerdown 处理拖拽）
         dragging = true;
