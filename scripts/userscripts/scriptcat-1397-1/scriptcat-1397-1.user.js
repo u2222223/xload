@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        学术论文免费下载工具
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.1
+// @version     1.0.2
 // @description 多平台学术论文一键免费下载：知网、万方、维普、皮书、中华医学会、博看期刊，无需登录付费账号
 // @author      xload
 // @match       *://*.cnki.net/*
@@ -587,53 +587,198 @@
     } catch (e) { log('panel.open.error', { message: String(e && e.message || e) }); return false; }
   }
 
-  // ---- FAB 聚合按钮组（遵守 #xload-fab-root 协议）-------------------
-  var FAB_LABEL = '免费下载';
+// =====================================================================
+// xload 聚合按钮组（FAB）共享模板 —— 经过验证的通用实现
+// ---------------------------------------------------------------------
+// 特性：
+//   1) 多按钮平铺显示，不折叠（即使页面只有 1 个 xload 脚本也用此协议）；
+//   2) 整组可拖拽（手柄「≡ xload」或组内任意空白处起拖；item 按钮点击与拖拽分离）；
+//   3) 位置记忆：拖拽后保存，刷新/重开页面恢复；
+//   4) 防出屏：拖拽时 clamp 到视口内；
+//   5) 屏幕切换/窗口 resize/缩放：自动重新 clamp，按钮不会跑出屏幕外。
+// 使用方式：把本块复制到 <task_id>.user.js，然后在启动处调用：
+//   var fab = xloadFab();
+//   fab.addItem(TASK_ID, '按钮文案', function () { openPanel(); });
+// 说明：同一页面多个 xload 脚本共用同一个 #xload-fab-root，重复调用幂等；
+//   拖拽绑定只做一次；位置经 localStorage（页面上下文）/ GM 值（沙箱）持久化。
+// 本文件为模板，非成品脚本，不参与 check-output。
+// =====================================================================
 
-  function ensureFabRoot() {
-    var root = document.getElementById('xload-fab-root');
-    if (root) return root;
+function xloadFab() {
+  var POS_KEY = 'xload-fab-pos';
+  var DRAG_THRESHOLD = 4;
+
+  function storeGet(key, def) {
+    try {
+      if (typeof GM_getValue === 'function') {
+        var v = GM_getValue(key, null);
+        return (v == null) ? def : v;
+      }
+      var s = window.localStorage.getItem(key);
+      return (s == null) ? def : JSON.parse(s);
+    } catch (e) { return def; }
+  }
+  function storeSet(key, val) {
+    try {
+      if (typeof GM_setValue === 'function') { GM_setValue(key, val); return; }
+      window.localStorage.setItem(key, JSON.stringify(val));
+    } catch (e) { /* ignore */ }
+  }
+
+  var root = document.getElementById('xload-fab-root');
+  if (root) {
+    // 兼容旧协议：旧容器可能是「toggle+折叠list」结构，这里强制 list 平铺
+    var oldList = root.querySelector('[data-xload-fab-list]');
+    if (oldList) { oldList.style.display = 'flex'; }
+  } else {
     root = document.createElement('div');
     root.id = 'xload-fab-root';
     root.setAttribute('data-xload-fab-root', 'true');
-    root.style.cssText = 'position:fixed;right:16px;bottom:140px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:8px;';
+    root.style.cssText = 'position:fixed;right:16px;bottom:140px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:6px;user-select:none;touch-action:none;';
     document.body.appendChild(root);
-
-    var toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.setAttribute('data-xload-fab-toggle', 'true');
-    toggle.setAttribute('aria-label', 'xload 工具');
-    toggle.textContent = 'xload 工具';
-    toggle.style.cssText = 'padding:10px 16px;border:0;border-radius:20px;background:#2563eb;color:#fff;font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.92;';
-
-    var list = document.createElement('div');
-    list.setAttribute('data-xload-fab-list', 'true');
-    list.style.cssText = 'display:none;flex-direction:column;align-items:flex-end;gap:6px;';
-
-    toggle.addEventListener('click', function () {
-      var hidden = list.style.display === 'none';
-      list.style.display = hidden ? 'flex' : 'none';
-      log('fab.toggle', { open: hidden });
-    });
-
-    root.appendChild(toggle);
-    root.appendChild(list);
-    return root;
   }
 
+  var handle = root.querySelector('[data-xload-fab-toggle]');
+  if (!handle) {
+    handle = document.createElement('button');
+    handle.type = 'button';
+    handle.setAttribute('data-xload-fab-toggle', 'true');
+    handle.setAttribute('aria-label', 'xload 工具');
+    handle.textContent = '≡ xload';
+    handle.style.cssText = 'padding:8px 14px;border:0;border-radius:18px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;cursor:grab;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.94;';
+    root.insertBefore(handle, root.firstChild);
+  }
+
+  var list = root.querySelector('[data-xload-fab-list]');
+  if (!list) {
+    list = document.createElement('div');
+    list.setAttribute('data-xload-fab-list', 'true');
+    list.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end;gap:6px;';
+    root.appendChild(list);
+  }
+  list.style.display = 'flex'; // 始终平铺，不折叠
+
+  // ---------- 拖拽 + 位置记忆 + 防出屏（只绑定一次） ----------
+  var movedFlag = false;
+  if (!root.getAttribute('data-xload-fab-drag-ready')) {
+    root.setAttribute('data-xload-fab-drag-ready', 'true');
+
+    function applyPos(x, y) {
+      x = Math.max(4, Math.min(x, window.innerWidth - root.offsetWidth - 4));
+      y = Math.max(4, Math.min(y, window.innerHeight - root.offsetHeight - 4));
+      root.style.left = x + 'px';
+      root.style.top = y + 'px';
+      root.style.right = 'auto';
+      root.style.bottom = 'auto';
+      return { x: x, y: y };
+    }
+
+    function restorePos() {
+      var p = storeGet(POS_KEY, null);
+      if (p && typeof p.x === 'number' && typeof p.y === 'number') {
+        applyPos(p.x, p.y);
+      }
+    }
+
+    var dragging = false;
+    var sx = 0, sy = 0, ox = 0, oy = 0;
+
+    // 从手柄或组内空白处起拖；item 按钮上起按仅当移动超过阈值才进入拖拽（保留点击）
+    root.addEventListener('pointerdown', function (ev) {
+      if (ev.button !== 0) return;
+      var t = ev.target;
+      var isToggle = !!(t && t.getAttribute && t.getAttribute('data-xload-fab-toggle') === 'true');
+      var isItem = !!(t && t.closest && t.closest('[data-xload-fab-item]'));
+      if (isItem && !isToggle) return; // item 按钮交给点击逻辑（item 自身 pointerdown 处理拖拽）
+      dragging = true;
+      movedFlag = false;
+      sx = ev.clientX; sy = ev.clientY;
+      ox = root.offsetLeft; oy = root.offsetTop;
+      try { root.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
+    });
+
+    root.addEventListener('pointermove', function (ev) {
+      if (!dragging) return;
+      var dx = ev.clientX - sx, dy = ev.clientY - sy;
+      if (!movedFlag && Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) return;
+      movedFlag = true;
+      applyPos(ox + dx, oy + dy);
+    });
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      if (movedFlag) {
+        storeSet(POS_KEY, { x: root.offsetLeft, y: root.offsetTop });
+      }
+    }
+    root.addEventListener('pointerup', endDrag);
+    root.addEventListener('pointercancel', endDrag);
+
+    // 屏幕切换 / 窗口 resize / 缩放：重新 clamp，避免按钮跑出屏幕看不见
+    function onViewportChange() {
+      var p = storeGet(POS_KEY, null);
+      if (p && typeof p.x === 'number' && typeof p.y === 'number') {
+        applyPos(p.x, p.y);
+      } else if (root.style.left || root.style.top) {
+        applyPos(parseInt(root.style.left, 10) || 16, parseInt(root.style.top, 10) || 140);
+      }
+    }
+    window.addEventListener('resize', onViewportChange);
+    window.addEventListener('orientationchange', onViewportChange);
+
+    restorePos();
+    // 初始布局后立即 clamp 一次（图标/尺寸渲染完）
+    setTimeout(onViewportChange, 200);
+  }
+
+  return {
+    root: root,
+    list: list,
+    addItem: function (taskId, label, onClick) {
+      var existing = list.querySelector('[data-xload-task="' + taskId + '"]');
+      if (existing) return existing;
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.setAttribute('data-xload-fab-item', 'true');
+      item.setAttribute('data-xload-task', taskId);
+      item.textContent = label;
+      item.style.cssText = 'padding:9px 15px;border:0;border-radius:18px;background:#16a34a;color:#fff;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.95;';
+      // item 自身拖拽：按下后移动超过阈值视为拖拽，屏蔽随后的 click
+      item.addEventListener('pointerdown', function (ev) {
+        if (ev.button !== 0) return;
+        var sx2 = ev.clientX, sy2 = ev.clientY;
+        var dragged = false;
+        var onMove = function (ev2) {
+          if (Math.abs(ev2.clientX - sx2) > DRAG_THRESHOLD || Math.abs(ev2.clientY - sy2) > DRAG_THRESHOLD) {
+            dragged = true;
+          }
+        };
+        var onUp = function (ev2) {
+          item.removeEventListener('pointermove', onMove);
+          item.removeEventListener('pointerup', onUp);
+          item.removeEventListener('pointercancel', onUp);
+          if (dragged) movedFlag = true;
+        };
+        item.addEventListener('pointermove', onMove, { once: false });
+        item.addEventListener('pointerup', onUp, { once: true });
+        item.addEventListener('pointercancel', onUp, { once: true });
+      });
+      item.addEventListener('click', function () {
+        if (movedFlag) { movedFlag = false; return; }
+        if (onClick) onClick();
+      });
+      list.appendChild(item);
+      return item;
+    }
+  };
+}
+
+  var FAB_LABEL = '免费下载';
+
   function mountFabItem() {
-    var root = ensureFabRoot();
-    var list = root.querySelector('[data-xload-fab-list]');
-    if (!list) return;
-    if (list.querySelector('[data-xload-task="' + TASK_ID + '"]')) return;
-    var item = document.createElement('button');
-    item.type = 'button';
-    item.setAttribute('data-xload-fab-item', 'true');
-    item.setAttribute('data-xload-task', TASK_ID);
-    item.textContent = FAB_LABEL;
-    item.style.cssText = 'padding:10px 16px;border:0;border-radius:20px;background:#16a34a;color:#fff;font-size:13px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.95;';
-    item.addEventListener('click', openPanel);
-    list.appendChild(item);
+    var fab = xloadFab();
+    fab.addItem(TASK_ID, FAB_LABEL, openPanel);
     log('fab.mount', { task: TASK_ID });
   }
 
