@@ -467,8 +467,14 @@
   function openPanel() {
     if (!isSafeUrl(PANEL_URL)) return false;
     try {
-      // 不用 noopener：跨源通信依赖 window.opener + postMessage
-      var w = window.open(PANEL_URL, '_blank');
+      // 居中弹窗：width/height 定位在当前页面中间；不用 noopener，跨源通信依赖 window.opener + postMessage
+      var W = Math.min(860, Math.max(420, window.screen.availWidth - 120));
+      var H = Math.min(720, Math.max(480, window.screen.availHeight - 140));
+      var L = Math.max(0, Math.round((window.screen.availWidth - W) / 2));
+      var T = Math.max(0, Math.round((window.screen.availHeight - H) / 2));
+      var features = 'width=' + W + ',height=' + H + ',left=' + L + ',top=' + T +
+        ',menubar=no,toolbar=no,location=yes,status=yes,resizable=yes,scrollbars=yes';
+      var w = window.open(PANEL_URL, '_blank', features);
       if (w) channel.setPanelWin(w);
       return true;
     } catch (e) { return false; }
