@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        学术论文免费下载工具
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.3
+// @version     1.0.4
 // @description 多平台学术论文一键免费下载：知网、万方、维普、皮书、中华医学会、博看期刊，无需登录付费账号
 // @author      xload
 // @match       *://*.cnki.net/*
@@ -250,21 +250,36 @@
     }
     window.addEventListener('message', onWindowMessage);
 
+    // 沙箱安全投递：isolated world 中 window 方法 this 绑定可能失效，
+    // 用 Function.prototype.call 显式绑定目标窗口，避免 Illegal invocation。
+    function postTo(win, m) {
+      try {
+        if (win && typeof win.postMessage === 'function') {
+          win.postMessage.call(win, m, '*');
+          return true;
+        }
+      } catch (e) { /* ignore */ }
+      return false;
+    }
+
     return {
       send: function (type, data) {
         var m = { type: type, data: data == null ? {} : data, _from: taskId };
-        if (panelWin) { try { panelWin.postMessage(m, '*'); } catch (e) { /* ignore */ } }
-        if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
+        var r = { panelWin: postTo(panelWin, m), bc: false };
+        if (bc) { try { bc.postMessage(m); r.bc = true; } catch (e) { /* ignore */ } }
+        log('channel.send', { type: type, panelWin: r.panelWin, bc: r.bc });
       },
       reply: function (msg, data) {
         if (!msg || msg._id == null || !msg._request) return;
         var m = { type: msg.type, data: data == null ? {} : data, _id: msg._id, _from: taskId };
-        // 优先经 panelWin（window.open 直接引用）回包：油猴沙箱中 event.source 可能为 null，不能只靠它。
-        // 若面板由 window.open 打开，panelWin 回包能命中面板的 window 'message' 监听。
-        log('channel.reply.send', { type: m.type, hasPanelWin: !!panelWin, hasSource: !!msg._source, hasBc: !!bc });
-        if (panelWin) { try { panelWin.postMessage(m, '*'); } catch (e) { /* ignore */ } }
-        if (msg._source && msg._source !== panelWin) { try { msg._source.postMessage(m, '*'); } catch (e) { /* ignore */ } }
-        if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
+        // 三级投递：panelWin（window.open 直接引用）→ event.source → BroadcastChannel
+        var r = {
+          panelWin: postTo(panelWin, m),
+          source: (msg._source && msg._source !== panelWin) ? postTo(msg._source, m) : false,
+          bc: false
+        };
+        if (bc) { try { bc.postMessage(m); r.bc = true; } catch (e) { /* ignore */ } }
+        log('channel.reply.send', { type: m.type, ok: r, hasPanelWin: !!panelWin, hasSource: !!msg._source, hasBc: !!bc });
       },
       on: function (type, h) { (handlers[type] = handlers[type] || []).push(h); },
       setPanelWin: function (w) { panelWin = w; },
@@ -386,7 +401,9 @@
   }
 
   // ---- 解析引擎（多源智能切换）---------------------------------------
-  function gmGet(url) {
+  // 注意：网络请求函数命名 httpGet，勿与上方 GM 存储封装 gmGet(key,def) 重名，
+  // 否则函数声明提升会让后声明的覆盖前者，导致存储读取把键名当 URL 校验而抛「不允许的 URL」。
+  function httpGet(url) {
     return new Promise(function (resolve, reject) {
       if (!isSafeUrl(url)) { reject(new Error('不允许的 URL')); return; }
       try {
@@ -404,7 +421,7 @@
   }
 
   function probeSource(url) {
-    return gmGet(url).then(function (res) {
+    return httpGet(url).then(function (res) {
       var text = typeof res.responseText === 'string' ? res.responseText
         : (res.response || res.responseText || '');
       var reason = classifyError(text);
@@ -871,6 +888,18 @@ function xloadFab() {
       return;
     }
     log('init.start', { ua: navigator.userAgent.slice(0, 80), host: host, readyState: document.readyState });
+
+    // 全局错误捕获：未捕获异常 / 未处理 promise 拒绝都写入日志，便于用户回传定位
+    try {
+      window.addEventListener('error', function (ev) {
+        log('window.error', { message: String((ev && ev.message) || ''), file: String((ev && ev.filename) || ''), line: (ev && ev.lineno) || 0, col: (ev && ev.colno) || 0 });
+      });
+      window.addEventListener('unhandledrejection', function (ev) {
+        var r = ev && ev.reason;
+        log('window.unhandledrejection', { message: String((r && r.message) || r) });
+        if (ev && typeof ev.preventDefault === 'function') { try { ev.preventDefault(); } catch (e) { /* ignore */ } }
+      });
+    } catch (e) { /* ignore */ }
 
     registerChannelHandlers();
 
