@@ -219,6 +219,37 @@
       "license": "MIT",
       "featured": false,
       "status": "stable"
+    },
+    {
+      "id": "scriptcat-2534-2",
+      "type": "script",
+      "title": "抖音播放器增强",
+      "short": "画质记忆、禁止自动播放、自定义全屏与背景色",
+      "description": "增强抖音网页版播放器体验，支持画质自动记忆、禁止自动播放、双击/单击全屏可配置、视频区背景自定义、移动端进度条拖拽优化。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html",
+      "installUrl": "/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.user.js",
+      "files": [
+        "scriptcat-2534-2.user.js",
+        "panel.html"
+      ],
+      "tags": [
+        "抖音",
+        "播放器",
+        "画质",
+        "全屏",
+        "自动播放"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-09",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }

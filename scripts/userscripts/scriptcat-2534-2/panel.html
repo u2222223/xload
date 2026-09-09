@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音播放器增强 - 功能面板</title>
+  <meta name="description" content="画质记忆、禁止自动播放、自定义全屏与背景色">
+  <meta name="keywords" content="抖音,播放器,画质,全屏,自动播放">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>抖音播放器增强</h1>
+        <p class="panel-subtitle">画质记忆、禁止自动播放、自定义全屏与背景色</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .dp-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; }
+          .dp-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .dp-group:last-of-type { border-bottom: 0; }
+          .dp-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .dp-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+          .dp-field { display: flex; flex-direction: column; gap: 6px; min-width: 160px; }
+          .dp-field > label { font-size: 13px; color: #4b5563; }
+          .dp-field select, .dp-field input[type="color"] { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+          .dp-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .dp-check input { width: 16px; height: 16px; }
+          .dp-check label { font-size: 14px; color: #1f2328; cursor: pointer; }
+          .dp-radio { display: flex; gap: 16px; }
+          .dp-radio label { font-size: 14px; color: #1f2328; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+          .dp-hint { margin: 10px 0 0; font-size: 12px; color: #9ca3af; }
+          .dp-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 6px; }
+          input[type="range"] { width: 100%; }
+        </style>
+
+        <div class="dp-status" id="dpStatus">等待原页面连接…</div>
+
+        <section class="dp-group">
+          <h2>画质设置</h2>
+          <div class="dp-row">
+            <div class="dp-field">
+              <label for="f-quality">默认画质</label>
+              <select id="f-quality"></select>
+            </div>
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-memory">
+              <label for="f-memory">记忆上次选择的画质</label>
+            </div>
+          </div>
+          <p class="dp-hint">画质档位取决于抖音平台实际提供的分辨率；本脚本不解锁平台未开放的画质。</p>
+        </section>
+
+        <section class="dp-group">
+          <h2>播放控制</h2>
+          <div class="dp-row">
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-noautoplay">
+              <label for="f-noautoplay">禁止自动播放</label>
+            </div>
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-autofs">
+              <label for="f-autofs">自动进入全屏</label>
+            </div>
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-dblclick">
+              <label for="f-dblclick">双击进入全屏</label>
+            </div>
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-clickarea">
+              <label for="f-clickarea">单击视频区进入全屏</label>
+            </div>
+          </div>
+          <div class="dp-field" style="margin-top:12px;">
+            <label>全屏模式</label>
+            <div class="dp-radio">
+              <label><input type="radio" name="fsmode" value="element"> 元素全屏（真实全屏）</label>
+              <label><input type="radio" name="fsmode" value="website"> 网页全屏</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="dp-group">
+          <h2>界面定制</h2>
+          <div class="dp-field dp-check" style="margin-bottom:10px;">
+            <input type="checkbox" id="f-bgen">
+            <label for="f-bgen">自定义视频区背景色</label>
+          </div>
+          <div class="dp-row">
+            <div class="dp-field">
+              <label for="f-bgcolor">颜色</label>
+              <input type="color" id="f-bgcolor" value="#000000">
+            </div>
+            <div class="dp-field" style="flex:1;min-width:220px;">
+              <label for="f-bgalpha">不透明度 <span id="f-bgalpha-val">60</span>%</label>
+              <input type="range" id="f-bgalpha" min="0" max="100" step="1" value="60">
+            </div>
+          </div>
+        </section>
+
+        <section class="dp-group">
+          <h2>移动端优化</h2>
+          <div class="dp-row">
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-progress">
+              <label for="f-progress">进度条拖拽修复</label>
+            </div>
+            <div class="dp-field dp-check">
+              <input type="checkbox" id="f-touch">
+              <label for="f-touch">触控区域放大</label>
+            </div>
+          </div>
+        </section>
+
+        <div class="dp-actions">
+          <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认设置</button>
+          <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+        </div>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/">xload</a>
+      <a href="/listing.html">工具列表</a>
+      <a href="/privacy-policy.html">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-2534-2');
+
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-dy-player-settings';
+      var QUALITY_OPTIONS = [
+        { v: 0, label: '智能（自动）' },
+        { v: -2, label: '超清 4K' },
+        { v: -1, label: '超清 2K' },
+        { v: 1, label: '高清 1080P' },
+        { v: 2, label: '高清 720P' },
+        { v: 3, label: '标清 540P' },
+        { v: 4, label: '极速' }
+      ];
+      var DEFAULTS = {
+        qualityMode: 0,
+        qualityMemory: false,
+        disableAutoplay: false,
+        autoFullscreen: false,
+        doubleClickFullscreen: false,
+        clickAreaFullscreen: false,
+        fullscreenMode: 'element',
+        bgEnabled: false,
+        bgColor: '#000000',
+        bgAlpha: 60,
+        progressDragFix: true,
+        touchAreaEnlarge: false
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function loadLocal() {
+        try {
+          var r = JSON.parse(localStorage.getItem(LS_KEY));
+          return r && typeof r === 'object' ? r : {};
+        } catch (e) { return {}; }
+      }
+      function saveLocal(s) {
+        try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ }
+      }
+      function showSettings(settings) {
+        var s = merge(DEFAULTS, settings || {});
+        $('f-quality').value = String(s.qualityMode);
+        $('f-memory').checked = Boolean(s.qualityMemory);
+        $('f-noautoplay').checked = Boolean(s.disableAutoplay);
+        $('f-autofs').checked = Boolean(s.autoFullscreen);
+        $('f-dblclick').checked = Boolean(s.doubleClickFullscreen);
+        $('f-clickarea').checked = Boolean(s.clickAreaFullscreen);
+        var radios = document.getElementsByName('fsmode');
+        for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === s.fullscreenMode);
+        $('f-bgen').checked = Boolean(s.bgEnabled);
+        $('f-bgcolor').value = (typeof s.bgColor === 'string' && /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(s.bgColor)) ? s.bgColor : '#000000';
+        var alpha = Math.max(0, Math.min(100, Number(s.bgAlpha) || 0));
+        $('f-bgalpha').value = String(alpha);
+        $('f-bgalpha-val').textContent = String(alpha);
+        $('f-progress').checked = Boolean(s.progressDragFix);
+        $('f-touch').checked = Boolean(s.touchAreaEnlarge);
+      }
+      function collect() {
+        var fsMode = 'element';
+        var radios = document.getElementsByName('fsmode');
+        for (var i = 0; i < radios.length; i++) if (radios[i].checked) fsMode = radios[i].value;
+        return {
+          qualityMode: Number($('f-quality').value),
+          qualityMemory: $('f-memory').checked,
+          disableAutoplay: $('f-noautoplay').checked,
+          autoFullscreen: $('f-autofs').checked,
+          doubleClickFullscreen: $('f-dblclick').checked,
+          clickAreaFullscreen: $('f-clickarea').checked,
+          fullscreenMode: fsMode,
+          bgEnabled: $('f-bgen').checked,
+          bgColor: $('f-bgcolor').value,
+          bgAlpha: Number($('f-bgalpha').value),
+          progressDragFix: $('f-progress').checked,
+          touchAreaEnlarge: $('f-touch').checked
+        };
+      }
+      function apply() {
+        var settings = collect();
+        saveLocal(settings);
+        showSettings(settings);
+        channel.request('command', { action: 'applySettings', settings: settings }, 4000)
+          .then(function (d) {
+            if (d && d.ok) PUI.toast('已应用到原页面', 'success');
+            else PUI.toast('原页面返回异常', 'warn');
+          })
+          .catch(function () {
+            PUI.toast('已保存到面板（原页面未响应，可能非同源）', 'warn');
+          });
+      }
+
+      // 初始化画质下拉
+      (function () {
+        var sel = $('f-quality');
+        QUALITY_OPTIONS.forEach(function (o) {
+          var opt = document.createElement('option');
+          opt.value = String(o.v);
+          opt.textContent = o.label;
+          sel.appendChild(opt);
+        });
+      })();
+
+      // 控件变更即应用
+      $('f-quality').addEventListener('change', apply);
+      $('f-memory').addEventListener('change', apply);
+      $('f-noautoplay').addEventListener('change', apply);
+      $('f-autofs').addEventListener('change', apply);
+      $('f-dblclick').addEventListener('change', apply);
+      $('f-clickarea').addEventListener('change', apply);
+      $('f-bgen').addEventListener('change', apply);
+      $('f-bgcolor').addEventListener('change', apply);
+      $('f-bgcolor').addEventListener('input', apply);
+      $('f-bgalpha').addEventListener('input', function () {
+        $('f-bgalpha-val').textContent = $('f-bgalpha').value;
+        apply();
+      });
+      $('f-progress').addEventListener('change', apply);
+      $('f-touch').addEventListener('change', apply);
+      var radios = document.getElementsByName('fsmode');
+      for (var i = 0; i < radios.length; i++) radios[i].addEventListener('change', apply);
+      $('btn-apply').addEventListener('click', apply);
+
+      $('btn-reset').addEventListener('click', function () {
+        saveLocal(DEFAULTS);
+        showSettings(DEFAULTS);
+        channel.request('command', { action: 'resetSettings' }, 4000)
+          .then(function (d) { if (d && d.ok) PUI.toast('已恢复默认', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+          .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+      });
+
+      // 监听原页面状态推送
+      channel.on('playerState', function (data) {
+        data = data || {};
+        var text = '原页面已连接';
+        if (data.isPlaying != null) text += ' · ' + (data.isPlaying ? '播放中' : '已暂停');
+        if (data.quality) text += ' · 画质：' + data.quality;
+        if (data.isFullscreen != null) text += ' · ' + (data.isFullscreen ? '全屏' : '非全屏');
+        $('dpStatus').textContent = text;
+      });
+
+      // 初始化：优先从原页面同步，失败则用本地面板缓存
+      showSettings(loadLocal());
+      channel.request('command', { action: 'querySettings' }, 4000)
+        .then(function (d) {
+          if (d && d.settings) { saveLocal(d.settings); showSettings(d.settings); $('dpStatus').textContent = '与原页面同步成功'; }
+        })
+        .catch(function () {
+          $('dpStatus').textContent = '未连接原页面（面板独立模式，设置仅保存在本面板）';
+        });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>
