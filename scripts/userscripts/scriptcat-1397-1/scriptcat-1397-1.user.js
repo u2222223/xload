@@ -259,11 +259,15 @@
       reply: function (msg, data) {
         if (!msg || msg._id == null || !msg._request) return;
         var m = { type: msg.type, data: data == null ? {} : data, _id: msg._id, _from: taskId };
-        if (msg._source) { try { msg._source.postMessage(m, '*'); } catch (e) { /* ignore */ } }
+        // 优先经 panelWin（window.open 直接引用）回包：油猴沙箱中 event.source 可能为 null，不能只靠它。
+        // 若面板由 window.open 打开，panelWin 回包能命中面板的 window 'message' 监听。
+        if (panelWin) { try { panelWin.postMessage(m, '*'); } catch (e) { /* ignore */ } }
+        if (msg._source && msg._source !== panelWin) { try { msg._source.postMessage(m, '*'); } catch (e) { /* ignore */ } }
         if (bc) { try { bc.postMessage(m); } catch (e) { /* ignore */ } }
       },
       on: function (type, h) { (handlers[type] = handlers[type] || []).push(h); },
-      setPanelWin: function (w) { panelWin = w; }
+      setPanelWin: function (w) { panelWin = w; },
+      getPanelWin: function () { return panelWin; }
     };
   }
 
@@ -552,10 +556,17 @@
     });
   }
 
-  // ---- 面板入口（独立页弹窗）----------------------------------------
+  // ---- 面板入口（独立页弹窗，单例复用）--------------------------------
   function openPanel() {
     if (!isSafeUrl(PANEL_URL)) { log('panel.open.blocked', { url: PANEL_URL }); return false; }
     restoreLogs();
+    // 单例：已打开且未关闭则复用聚焦，不重复 window.open
+    var existing = channel.getPanelWin();
+    if (existing && !existing.closed) {
+      try { existing.focus(); } catch (e) { /* ignore */ }
+      log('panel.reuse', {});
+      return true;
+    }
     log('panel.open', { url: PANEL_URL });
     try {
       var W = Math.min(900, Math.max(480, (window.screen.availWidth || 1280) - 120));
