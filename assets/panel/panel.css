@@ -1,0 +1,279 @@
+/* panel.css —— 功能面板页公共样式（布局 + pui-* UI 组件） */
+
+/* ---------- 布局 ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: #f5f6f8;
+  color: #1f2328;
+  line-height: 1.6;
+}
+
+.panel-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.panel-header {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #fff;
+}
+
+.panel-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 24px 28px;
+}
+
+.panel-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.panel-subtitle {
+  margin: 8px 0 0;
+  opacity: 0.9;
+  font-size: 15px;
+}
+
+.panel-main {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.panel-content {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.panel-footer {
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 24px;
+  text-align: center;
+  background: #fff;
+}
+
+.panel-footer a {
+  color: #6b7280;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 13px;
+}
+
+.panel-footer a:hover {
+  color: #2563eb;
+}
+
+/* 广告位：预留占位，后续统一接入 */
+.ad-slot {
+  display: block;
+  min-height: 90px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: #fafafa;
+  border: 1px dashed #d1d5db;
+}
+
+.ad-slot-top {
+  min-height: 90px;
+}
+
+/* ---------- PUI 组件 ---------- */
+.pui-toasts {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pui-toast {
+  min-width: 200px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: pui-fade-in 0.2s ease;
+}
+
+.pui-toast-info {
+  background: #2563eb;
+}
+
+.pui-toast-success {
+  background: #16a34a;
+}
+
+.pui-toast-warn {
+  background: #d97706;
+}
+
+.pui-toast-error {
+  background: #dc2626;
+}
+
+@keyframes pui-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pui-progress {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 320px;
+  max-width: calc(100vw - 48px);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.pui-progress-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.pui-progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  transition: width 0.2s ease;
+}
+
+.pui-progress-label {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.pui-modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.pui-modal {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.pui-modal-head {
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.pui-modal-body {
+  padding: 18px 20px;
+  font-size: 14px;
+  color: #374151;
+  word-break: break-word;
+}
+
+.pui-modal-foot {
+  padding: 12px 20px;
+  border-top: 1px solid #e5e7eb;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.pui-btn {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pui-btn-default {
+  background: #fff;
+  border-color: #d1d5db;
+  color: #1f2328;
+}
+
+.pui-btn-default:hover {
+  border-color: #9ca3af;
+}
+
+.pui-btn-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.pui-btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.pui-btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+.pui-btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 640px) {
+  .panel-header-inner {
+    padding: 24px 16px 20px;
+  }
+
+  .panel-header h1 {
+    font-size: 22px;
+  }
+
+  .panel-main {
+    padding: 16px;
+  }
+
+  .panel-content {
+    padding: 16px;
+  }
+}
