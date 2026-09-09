@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        学术论文免费下载工具
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.2
+// @version     1.0.3
 // @description 多平台学术论文一键免费下载：知网、万方、维普、皮书、中华医学会、博看期刊，无需登录付费账号
 // @author      xload
 // @match       *://*.cnki.net/*
@@ -588,19 +588,21 @@
   }
 
 // =====================================================================
-// xload 聚合按钮组（FAB）共享模板 —— 经过验证的通用实现
+// xload 聚合按钮组（FAB）共享模板 —— 经过验证的通用实现（v2 视觉升级）
 // ---------------------------------------------------------------------
 // 特性：
 //   1) 多按钮平铺显示，不折叠（即使页面只有 1 个 xload 脚本也用此协议）；
-//   2) 整组可拖拽（手柄「≡ xload」或组内任意空白处起拖；item 按钮点击与拖拽分离）；
+//   2) 整组可拖拽（拖手柄或组内空白处起拖；item 按钮点击与拖拽分离）；
 //   3) 位置记忆：拖拽后保存，刷新/重开页面恢复；
 //   4) 防出屏：拖拽时 clamp 到视口内；
 //   5) 屏幕切换/窗口 resize/缩放：自动重新 clamp，按钮不会跑出屏幕外。
+// 视觉：玻璃拟态卡片（毛玻璃 + 细边框 + 柔和阴影）、品牌渐变手柄、白卡片 item、
+//       hover 动效、自动适配暗色模式（prefers-color-scheme: dark）。
 // 使用方式：把本块复制到 <task_id>.user.js，然后在启动处调用：
 //   var fab = xloadFab();
 //   fab.addItem(TASK_ID, '按钮文案', function () { openPanel(); });
 // 说明：同一页面多个 xload 脚本共用同一个 #xload-fab-root，重复调用幂等；
-//   拖拽绑定只做一次；位置经 localStorage（页面上下文）/ GM 值（沙箱）持久化。
+//   拖拽绑定与样式注入只做一次；位置经 localStorage（页面上下文）/ GM 值（沙箱）持久化。
 // 本文件为模板，非成品脚本，不参与 check-output。
 // =====================================================================
 
@@ -634,8 +636,74 @@ function xloadFab() {
     root = document.createElement('div');
     root.id = 'xload-fab-root';
     root.setAttribute('data-xload-fab-root', 'true');
-    root.style.cssText = 'position:fixed;right:16px;bottom:140px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:6px;user-select:none;touch-action:none;';
     document.body.appendChild(root);
+  }
+
+  // ---------- 样式注入（幂等，scoped 到 #xload-fab-root，不污染页面） ----------
+  if (!root.querySelector('style[data-xload-fab-style]')) {
+    var st = document.createElement('style');
+    st.setAttribute('data-xload-fab-style', '');
+    st.textContent =
+      '#xload-fab-root{' +
+        'position:fixed;right:16px;bottom:140px;z-index:2147483000;' +
+        'display:flex;flex-direction:column;align-items:stretch;gap:8px;' +
+        'min-width:150px;max-width:230px;padding:8px;box-sizing:border-box;' +
+        'background:rgba(255,255,255,.82);' +
+        '-webkit-backdrop-filter:blur(12px) saturate(160%);backdrop-filter:blur(12px) saturate(160%);' +
+        'border:1px solid rgba(148,163,184,.30);border-radius:14px;' +
+        'box-shadow:0 10px 30px rgba(15,23,42,.14),0 2px 8px rgba(15,23,42,.08);' +
+        'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;' +
+        'user-select:none;-webkit-user-select:none;touch-action:none;' +
+      '}' +
+      '#xload-fab-root button{font-family:inherit;}' +
+      '#xload-fab-root [data-xload-fab-toggle]{' +
+        'display:flex;align-items:center;justify-content:center;gap:8px;' +
+        'padding:9px 12px;border:0;border-radius:10px;cursor:grab;' +
+        'background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff;' +
+        'font-size:13px;font-weight:700;letter-spacing:.3px;line-height:1;' +
+        'box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 3px 8px rgba(29,78,216,.32);' +
+        'transition:filter .15s ease,box-shadow .15s ease,transform .15s ease;' +
+      '}' +
+      '#xload-fab-root [data-xload-fab-toggle]:hover{' +
+        'filter:brightness(1.06);' +
+        'box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 12px rgba(29,78,216,.40);' +
+        'transform:translateY(-1px);' +
+      '}' +
+      '#xload-fab-root [data-xload-fab-toggle]:active{transform:translateY(0);}' +
+      '#xload-fab-root .xf-brand{' +
+        'display:inline-flex;align-items:center;justify-content:center;flex:none;' +
+        'width:19px;height:19px;border-radius:6px;background:rgba(255,255,255,.18);' +
+        'font-size:9px;font-weight:800;letter-spacing:0;' +
+      '}' +
+      '#xload-fab-root .xf-dots{display:inline-flex;flex-direction:column;gap:2px;flex:none;}' +
+      '#xload-fab-root .xf-dots i{display:block;width:13px;height:1.5px;border-radius:1px;background:currentColor;opacity:.9;}' +
+      '#xload-fab-root [data-xload-fab-list]{display:flex;flex-direction:column;gap:6px;}' +
+      '#xload-fab-root [data-xload-fab-item]{' +
+        'display:flex;align-items:center;gap:8px;width:100%;' +
+        'padding:8px 11px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;color:#0f172a;' +
+        'font-size:13px;font-weight:500;line-height:1;text-align:left;cursor:pointer;' +
+        'box-shadow:0 1px 2px rgba(15,23,42,.05);' +
+        'transition:border-color .15s ease,background .15s ease,color .15s ease,transform .15s ease,box-shadow .15s ease;' +
+      '}' +
+      '#xload-fab-root [data-xload-fab-item]:hover{' +
+        'border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8;' +
+        'transform:translateX(-2px);box-shadow:0 2px 6px rgba(37,99,235,.18);' +
+      '}' +
+      '#xload-fab-root [data-xload-fab-item]:active{transform:translateX(-2px) scale(.98);}' +
+      '#xload-fab-root .xf-dot{' +
+        'width:7px;height:7px;border-radius:50%;flex:none;' +
+        'background:linear-gradient(135deg,#22c55e,#16a34a);' +
+        'box-shadow:0 0 0 2px rgba(34,197,94,.18);' +
+      '}' +
+      '@media (prefers-color-scheme:dark){' +
+        '#xload-fab-root{background:rgba(15,23,42,.74);border-color:rgba(148,163,184,.20);' +
+          'box-shadow:0 10px 30px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.35);}' +
+        '#xload-fab-root [data-xload-fab-item]{background:rgba(30,41,59,.85);color:#e2e8f0;border-color:rgba(148,163,184,.22);' +
+          'box-shadow:0 1px 2px rgba(0,0,0,.3);}' +
+        '#xload-fab-root [data-xload-fab-item]:hover{background:#1e3a8a;border-color:#3b82f6;color:#fff;' +
+          'box-shadow:0 2px 8px rgba(59,130,246,.3);}' +
+      '}';
+    root.appendChild(st);
   }
 
   var handle = root.querySelector('[data-xload-fab-toggle]');
@@ -644,8 +712,10 @@ function xloadFab() {
     handle.type = 'button';
     handle.setAttribute('data-xload-fab-toggle', 'true');
     handle.setAttribute('aria-label', 'xload 工具');
-    handle.textContent = '≡ xload';
-    handle.style.cssText = 'padding:8px 14px;border:0;border-radius:18px;background:#2563eb;color:#fff;font-size:13px;font-weight:600;cursor:grab;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.94;';
+    handle.innerHTML =
+      '<span class="xf-brand">x</span>' +
+      '<span class="xf-dots"><i></i><i></i><i></i></span>' +
+      '<span>xload 工具</span>';
     root.insertBefore(handle, root.firstChild);
   }
 
@@ -653,7 +723,6 @@ function xloadFab() {
   if (!list) {
     list = document.createElement('div');
     list.setAttribute('data-xload-fab-list', 'true');
-    list.style.cssText = 'display:flex;flex-direction:column;align-items:flex-end;gap:6px;';
     root.appendChild(list);
   }
   list.style.display = 'flex'; // 始终平铺，不折叠
@@ -742,8 +811,12 @@ function xloadFab() {
       item.type = 'button';
       item.setAttribute('data-xload-fab-item', 'true');
       item.setAttribute('data-xload-task', taskId);
-      item.textContent = label;
-      item.style.cssText = 'padding:9px 15px;border:0;border-radius:18px;background:#16a34a;color:#fff;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:.95;';
+      var dot = document.createElement('span');
+      dot.className = 'xf-dot';
+      var txt = document.createElement('span');
+      txt.textContent = label;
+      item.appendChild(dot);
+      item.appendChild(txt);
       // item 自身拖拽：按下后移动超过阈值视为拖拽，屏蔽随后的 click
       item.addEventListener('pointerdown', function (ev) {
         if (ev.button !== 0) return;
