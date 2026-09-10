@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音视频流过滤 - 功能面板</title>
+  <meta name="description" content="自定义过滤抖音视频流中的广告、直播和不感兴趣内容">
+  <meta name="keywords" content="抖音,视频过滤,广告过滤,关键词屏蔽,沉浸式浏览">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>抖音视频流过滤</h1>
+        <p class="panel-subtitle">自定义过滤抖音视频流中的广告、直播和不感兴趣内容</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .df-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; }
+          .df-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .df-group:last-of-type { border-bottom: 0; }
+          .df-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .df-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+          .df-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .df-check input[type="checkbox"] { width: 16px; height: 16px; }
+          .df-check label { font-size: 14px; color: #1f2328; cursor: pointer; }
+          .df-hint { margin: 10px 0 0; font-size: 12px; color: #9ca3af; }
+          .df-rule { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #e5e7eb; border-radius: 9px; margin-bottom: 8px; background: #fafbfc; }
+          .df-rule.disabled { opacity: .55; }
+          .df-rule .r-field { min-width: 92px; font-weight: 600; color: #334155; font-size: 13px; }
+          .df-rule .r-op { color: #9ca3af; font-size: 12px; min-width: 52px; }
+          .df-rule .r-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #111827; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+          .df-rule .r-col { font-size: 12px; color: #9ca3af; }
+          .df-rule button { border: 0; background: transparent; cursor: pointer; font-size: 13px; padding: 4px 8px; border-radius: 6px; }
+          .df-rule .r-del { color: #dc2626; }
+          .df-rule .r-del:hover { background: #fee2e2; }
+          .df-rule .r-toggle { color: #2563eb; }
+          .df-rule .r-toggle:hover { background: #e0e7ff; }
+          .df-add { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+          .df-add select, .df-add input[type="text"] { padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 13px; }
+          .df-add input[type="text"] { flex: 1; min-width: 160px; }
+          .df-stats { display: flex; gap: 22px; font-size: 14px; color: #374151; }
+          .df-stats b { font-size: 20px; color: #2563eb; }
+          .df-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 6px; flex-wrap: wrap; }
+          .df-empty { color: #9ca3af; font-size: 13px; padding: 6px 0; }
+        </style>
+
+        <div class="df-status" id="dfStatus">等待原页面连接…</div>
+
+        <section class="df-group">
+          <h2>基础过滤</h2>
+          <div class="df-row">
+            <div class="df-check">
+              <input type="checkbox" id="f-enabled">
+              <label for="f-enabled">启用过滤</label>
+            </div>
+            <div class="df-check">
+              <input type="checkbox" id="f-ads">
+              <label for="f-ads">过滤广告视频</label>
+            </div>
+            <div class="df-check">
+              <input type="checkbox" id="f-live">
+              <label for="f-live">过滤直播</label>
+            </div>
+            <div class="df-check">
+              <input type="checkbox" id="f-picture">
+              <label for="f-picture">过滤图集/图文</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="df-group">
+          <h2>自定义规则</h2>
+          <div id="dfRules"></div>
+          <div class="df-add" style="margin-top:12px;">
+            <select id="f-field"></select>
+            <select id="f-op"></select>
+            <input type="text" id="f-value" placeholder="规则值（关键词/作者/时长毫秒）">
+            <label class="df-check" style="margin:0;">
+              <input type="checkbox" id="f-case">
+              <span style="font-size:13px;">区分大小写</span>
+            </label>
+            <button type="button" id="btn-add" class="pui-btn pui-btn-primary">添加规则</button>
+          </div>
+          <p class="df-hint">关键词按「标题/文案」「作者昵称」「作者ID」「话题标签」匹配；「时长」单位与抖音接口一致（毫秒，15 秒 = 15000）。正则规则无效时静默跳过。</p>
+        </section>
+
+        <section class="df-group">
+          <h2>过滤统计</h2>
+          <div class="df-stats">
+            <div>已过滤 <b id="s-filtered">0</b> 个视频</div>
+            <div>已扫描 <b id="s-scanned">0</b> 个</div>
+          </div>
+          <p class="df-hint">统计在页面刷新的视频流上累计；可点右下角「清空统计」重置。</p>
+        </section>
+
+        <div class="df-actions">
+          <button type="button" id="btn-import" class="pui-btn pui-btn-default">导入规则</button>
+          <button type="button" id="btn-export" class="pui-btn pui-btn-default">导出规则</button>
+          <button type="button" id="btn-logs" class="pui-btn pui-btn-default">查看日志</button>
+          <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认设置</button>
+          <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+        </div>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-2534-1');
+
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-dy-filter-config';
+
+      var FIELD_OPTS = [
+        { v: 'desc', label: '标题/文案', ops: [['contains', '包含'], ['equals', '等于'], ['regex', '正则']] },
+        { v: 'author', label: '作者昵称', ops: [['contains', '包含'], ['equals', '等于'], ['regex', '正则']] },
+        { v: 'uid', label: '作者ID', ops: [['contains', '包含'], ['equals', '等于'], ['regex', '正则']] },
+        { v: 'tags', label: '话题标签', ops: [['contains', '包含'], ['equals', '等于'], ['regex', '正则']] },
+        { v: 'duration', label: '时长(毫秒)', ops: [['gt', '大于'], ['gte', '大于等于'], ['lt', '小于'], ['lte', '小于等于'], ['equals', '等于']] }
+      ];
+      var DEFAULTS = { enabled: true, filterAds: true, filterLive: false, filterPicture: false, rules: [] };
+      var TEXT_OPS = ['contains', 'equals', 'regex'];
+      var NUM_OPS = ['gt', 'gte', 'lt', 'lte', 'equals'];
+      var rSeq = 0;
+
+      function $(id) { return document.getElementById(id); }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function genId() { rSeq++; return 'rule_' + Date.now().toString(36) + '_' + rSeq; }
+      function fieldMeta(field) {
+        for (var i = 0; i < FIELD_OPTS.length; i++) if (FIELD_OPTS[i].v === field) return FIELD_OPTS[i];
+        return FIELD_OPTS[0];
+      }
+      function normalizeRule(r) {
+        var fm = fieldMeta(r && r.field);
+        var ops = fm.v === 'duration' ? NUM_OPS : TEXT_OPS;
+        var op = ops.indexOf(r && r.op) >= 0 ? r.op : ops[0];
+        return {
+          id: (r && typeof r.id === 'string' && r.id) ? r.id : genId(),
+          enabled: r == null || r.enabled !== false,
+          field: fm.v,
+          op: op,
+          value: (r && typeof r.value === 'string') ? r.value : '',
+          caseSensitive: Boolean(r && r.caseSensitive)
+        };
+      }
+      function normalizeConfig(raw) {
+        var src = (raw && typeof raw === 'object') ? raw : {};
+        var cfg = { enabled: true, filterAds: true, filterLive: false, filterPicture: false, rules: [] };
+        if (src.enabled === false) cfg.enabled = false;
+        if (src.filterAds != null) cfg.filterAds = Boolean(src.filterAds);
+        if (src.filterLive != null) cfg.filterLive = Boolean(src.filterLive);
+        if (src.filterPicture != null) cfg.filterPicture = Boolean(src.filterPicture);
+        var rules = Array.isArray(src.rules) ? src.rules : [];
+        for (var i = 0; i < rules.length; i++) {
+          var nr = normalizeRule(rules[i]);
+          if (nr.value && nr.value.trim() !== '') cfg.rules.push(nr);
+        }
+        return cfg;
+      }
+      function loadLocal() {
+        try { return normalizeConfig(JSON.parse(localStorage.getItem(LS_KEY))); }
+        catch (e) { return normalizeConfig({}); }
+      }
+      function saveLocal(cfg) {
+        try { localStorage.setItem(LS_KEY, JSON.stringify(cfg)); } catch (e) { /* ignore */ }
+      }
+
+      let current = loadLocal();
+      let stats = { filtered: 0, scanned: 0 };
+
+      // ---------- 渲染 ----------
+      function fillOps(sel, ops) {
+        sel.innerHTML = '';
+        ops.forEach(function (o) {
+          var opt = document.createElement('option');
+          opt.value = o[0];
+          opt.textContent = o[1];
+          sel.appendChild(opt);
+        });
+      }
+      function fillFieldSel() {
+        var sel = $('f-field');
+        sel.innerHTML = '';
+        FIELD_OPTS.forEach(function (f) {
+          var opt = document.createElement('option');
+          opt.value = f.v;
+          opt.textContent = f.label;
+          sel.appendChild(opt);
+        });
+      }
+      // 字段切换时联动操作符下拉
+      $('f-field').addEventListener('change', function () {
+        fillOps($('f-op'), fieldMeta($('f-field').value).ops);
+      });
+      fillFieldSel();
+      fillOps($('f-op'), fieldMeta('desc').ops);
+
+      function showRules() {
+        var box = $('dfRules');
+        box.innerHTML = '';
+        if (!current.rules.length) {
+          var e = document.createElement('div');
+          e.className = 'df-empty';
+          e.textContent = '暂无自定义规则，用上方表单添加。';
+          box.appendChild(e);
+          return;
+        }
+        current.rules.forEach(function (r, i) {
+          var row = document.createElement('div');
+          row.className = 'df-rule' + (r.enabled ? '' : ' disabled');
+          var spanField = document.createElement('span');
+          spanField.className = 'r-field';
+          spanField.textContent = fieldMeta(r.field).label;
+          var spanOp = document.createElement('span');
+          spanOp.className = 'r-op';
+          spanOp.textContent = opLabel(r.field, r.op);
+          var spanVal = document.createElement('span');
+          spanVal.className = 'r-value';
+          spanVal.title = r.value;
+          spanVal.textContent = r.value;
+          var spanCol = document.createElement('span');
+          spanCol.className = 'r-col';
+          spanCol.textContent = r.caseSensitive ? '区分大小写' : '';
+          var btnToggle = document.createElement('button');
+          btnToggle.className = 'r-toggle';
+          btnToggle.type = 'button';
+          btnToggle.textContent = r.enabled ? '停用' : '启用';
+          var btnDel = document.createElement('button');
+          btnDel.className = 'r-del';
+          btnDel.type = 'button';
+          btnDel.textContent = '删除';
+          row.appendChild(spanField);
+          row.appendChild(spanOp);
+          row.appendChild(spanVal);
+          row.appendChild(spanCol);
+          row.appendChild(btnToggle);
+          row.appendChild(btnDel);
+
+          btnToggle.addEventListener('click', function () {
+            current.rules[i].enabled = !current.rules[i].enabled;
+            saveLocal(current); showRules(); pushConfig();
+          });
+          btnDel.addEventListener('click', function () {
+            current.rules.splice(i, 1);
+            saveLocal(current); showRules(); pushConfig();
+          });
+          box.appendChild(row);
+        });
+      }
+      function opLabel(field, op) {
+        var ops = fieldMeta(field).ops;
+        for (var i = 0; i < ops.length; i++) if (ops[i][0] === op) return ops[i][1];
+        return op;
+      }
+      function showSettings() {
+        $('f-enabled').checked = current.enabled;
+        $('f-ads').checked = current.filterAds;
+        $('f-live').checked = current.filterLive;
+        $('f-picture').checked = current.filterPicture;
+        showRules();
+      }
+      function showStats(s) {
+        s = s || {};
+        stats = { filtered: Number(s.filtered) || 0, scanned: Number(s.scanned) || 0 };
+        $('s-filtered').textContent = String(stats.filtered);
+        $('s-scanned').textContent = String(stats.scanned);
+      }
+      function collect() {
+        return {
+          enabled: $('f-enabled').checked,
+          filterAds: $('f-ads').checked,
+          filterLive: $('f-live').checked,
+          filterPicture: $('f-picture').checked,
+          rules: current.rules
+        };
+      }
+      function pushConfig(cfg) {
+        var c = cfg || collect();
+        channel.request('command', { action: 'applyConfig', config: c }, 4000)
+          .then(function (d) {
+            if (d && d.ok) PUI.toast('已保存应用到原页面', 'success');
+          })
+          .catch(function () {
+            PUI.toast('已保存到面板（原页面未响应）', 'warn');
+          });
+      }
+
+      // ---------- 事件 ----------
+      var flagEls = ['f-enabled', 'f-ads', 'f-live', 'f-picture'];
+      flagEls.forEach(function (id) {
+        $(id).addEventListener('change', function () {
+          var cfg = collect();
+          current = cfg;
+          saveLocal(current);
+          pushConfig(cfg);
+        });
+      });
+      $('btn-add').addEventListener('click', function () {
+        var field = $('f-field').value;
+        var op = $('f-op').value;
+        var value = $('f-value').value.trim();
+        if (!value) { PUI.toast('请填写规则值', 'warn'); return; }
+        current.rules.push(normalizeRule({ field: field, op: op, value: value, caseSensitive: $('f-case').checked, enabled: true }));
+        saveLocal(current);
+        showRules();
+        $('f-value').value = '';
+        pushConfig();
+        PUI.toast('已添加规则', 'success');
+      });
+      function textareaNode(value, height) {
+        var ta = document.createElement('textarea');
+        ta.style.cssText = 'width:100%;height:' + (height || 160) + 'px;padding:8px;border:1px solid #d1d5db;border-radius:8px;font-family:ui-monospace,Consolas,monospace;font-size:12px;resize:vertical;box-sizing:border-box;';
+        ta.value = value || '';
+        return ta;
+      }
+      function copyText(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () { PUI.toast('已复制到剪贴板', 'success'); });
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            PUI.toast('已复制到剪贴板', 'success');
+          }
+        } catch (e) { PUI.toast('复制失败，请手动选择复制', 'warn'); }
+      }
+      $('btn-import').addEventListener('click', function () {
+        var ta = textareaNode('', 200);
+        ta.placeholder = '粘贴导出的规则 JSON…';
+        PUI.modal({
+          title: '导入规则',
+          body: ta,
+          buttons: [
+            { text: '取消', type: 'default' },
+            {
+              text: '导入', type: 'primary', onClick: function () {
+                var text = ta.value;
+                try {
+                  var obj = JSON.parse(text);
+                  current = normalizeConfig(obj);
+                  saveLocal(current);
+                  showSettings();
+                  pushConfig();
+                  PUI.toast('已导入 ' + current.rules.length + ' 条规则', 'success');
+                } catch (e) {
+                  PUI.toast('JSON 解析失败：' + (e && e.message || e), 'error');
+                  return false;
+                }
+              }
+            }
+          ]
+        });
+      });
+      $('btn-export').addEventListener('click', function () {
+        var json = JSON.stringify(collect(), null, 2);
+        var ta = textareaNode(json, 260);
+        ta.readOnly = true;
+        PUI.modal({
+          title: '导出规则（复制下面对应 JSON）',
+          body: ta,
+          buttons: [
+            { text: '关闭', type: 'default' },
+            { text: '复制', type: 'primary', onClick: function () { copyText(ta.value); return false; } }
+          ]
+        });
+      });
+      $('btn-logs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) {
+            var ta = textareaNode((d && d.logs) || '', 300);
+            ta.readOnly = true;
+            PUI.modal({
+              title: '运行日志',
+              body: ta,
+              buttons: [
+                { text: '关闭', type: 'default' },
+                { text: '复制', type: 'primary', onClick: function () { copyText(ta.value); return false; } }
+              ]
+            });
+          })
+          .catch(function () {
+            PUI.toast('未连接原页面，无法读取日志', 'warn');
+          });
+      });
+      $('btn-reset').addEventListener('click', function () {
+        current = normalizeConfig(DEFAULTS);
+        saveLocal(current);
+        showSettings();
+        channel.request('command', { action: 'resetConfig' }, 4000)
+          .then(function (d) { if (d && d.ok) PUI.toast('已恢复默认', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+          .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+      });
+      $('btn-apply').addEventListener('click', function () {
+        pushConfig();
+      });
+
+      // ---------- 监听原页面推送 ----------
+      channel.on('filterStats', function (data) {
+        data = data || {};
+        $('dfStatus').textContent = '原页面已连接';
+        showStats(data);
+      });
+
+      // ---------- 初始化 ----------
+      showSettings();
+      channel.request('command', { action: 'getState' }, 4000)
+        .then(function (d) {
+          if (d && d.config) {
+            current = normalizeConfig(d.config);
+            saveLocal(current);
+            showSettings();
+            showStats(d.stats);
+            $('dfStatus').textContent = '与原页面同步成功';
+          }
+        })
+        .catch(function () {
+          $('dfStatus').textContent = '未连接原页面（面板独立模式，设置在面板编辑后需点「应用到原页面」）';
+        });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>

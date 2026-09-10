@@ -209,6 +209,99 @@
       "license": "MIT",
       "featured": false,
       "status": "stable"
+    },
+    {
+      "id": "scriptcat-2534-1",
+      "type": "script",
+      "title": "抖音视频流过滤",
+      "short": "自定义过滤抖音视频流中的广告、直播和不感兴趣内容",
+      "description": "支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html",
+      "installUrl": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.user.js",
+      "files": [
+        "panel.html",
+        "scriptcat-2534-1.user.js"
+      ],
+      "tags": [
+        "抖音",
+        "视频过滤",
+        "广告过滤",
+        "关键词屏蔽",
+        "沉浸式浏览"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 135348,
+      "stars": 0,
+      "lastUpdated": "2026-09-10",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "scriptcat-2534-3",
+      "type": "script",
+      "title": "抖音界面沉浸优化",
+      "short": "沉浸模式+手机模式+自定义主题，专注视频内容",
+      "description": "隐藏顶部导航、侧边栏等冗余元素打造沉浸浏览，支持手机模式模拟移动端布局，视频区/评论区/侧边栏背景色自由定制，支持暗色亮色主题切换。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.html",
+      "installUrl": "/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.user.js",
+      "files": [
+        "panel.html",
+        "scriptcat-2534-3.user.js"
+      ],
+      "tags": [
+        "抖音",
+        "沉浸模式",
+        "手机模式",
+        "主题",
+        "界面优化"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 135348,
+      "stars": 0,
+      "lastUpdated": "2026-09-10",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "scriptcat-2534-4",
+      "type": "script",
+      "title": "抖音互动内容屏蔽",
+      "short": "弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单",
+      "description": "统一管理抖音直播弹幕、评论区、礼物特效的屏蔽规则，支持关键词过滤、用户黑名单，被屏蔽内容可选折叠或完全隐藏，规则跨场景复用。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.html",
+      "installUrl": "/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.user.js",
+      "files": [
+        "panel.html",
+        "scriptcat-2534-4.user.js"
+      ],
+      "tags": [
+        "抖音",
+        "弹幕屏蔽",
+        "评论屏蔽",
+        "礼物特效",
+        "关键词过滤"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 135348,
+      "stars": 0,
+      "lastUpdated": "2026-09-10",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }

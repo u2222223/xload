@@ -1,0 +1,118 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音视频流过滤 — xload</title>
+  <meta name="description" content="支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a target="_blank" rel="noopener" href="/listing.html">Home</a> &rsaquo; <span>抖音视频流过滤</span></nav>
+
+      <div class="detail-grid">
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <div>
+          <div class="detail-hero">
+            <!-- Swap the SVG below for your tool's icon if you have one -->
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>抖音视频流过滤</h1>
+              <p class="lead">自定义过滤抖音视频流中的广告、直播和不感兴趣内容</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2>Overview</h2>
+            <p>支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。</p>
+
+            <h2>Key features</h2>
+            <ul>
+              <li>广告与直播一键过滤</li>
+              <li>自定义关键词/作者规则</li>
+              <li>过滤后自动续流不卡顿</li>
+            </ul>
+
+            <h2>How to install &amp; use</h2>
+            <ol>
+              <li>Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li>Click the "Download / install" button above and confirm in the manager.</li>
+              <li>Open the target site and use the script as documented below.</li>
+            </ol>
+
+            <h2>Configuration</h2>
+            <p>进入抖音网页版，点击页面右下角「xload 工具」悬浮按钮组中的「视频流过滤」打开功能面板，可调整以下选项：</p>
+            <ul>
+              <li>总开关：一键停用/启用全部过滤规则。</li>
+              <li>预设过滤项：广告视频、直播、图集/图文，可单独开关。</li>
+              <li>自定义规则：按标题/文案关键词、作者昵称、作者 ID、话题标签（包含/等于/正则）过滤，支持时长区间（毫秒）。</li>
+              <li>过滤统计：实时展示已过滤/已扫描数量，可清空。</li>
+              <li>规则导入/导出：JSON 格式，可备份或迁移规则。</li>
+            </ul>
+            <pre><code># 规则格式示例（面板中编辑，或 JSON 导入）
+{ "type": "title", "op": "contains", "value": "广告" }    # 标题含「广告」的视频
+{ "type": "author", "op": "equals", "value": "某作者" }    # 指定作者
+{ "type": "duration", "op": "lt", "value": 15000 }         # 时长小于 15 秒</code></pre>
+
+            <h2>Privacy &amp; permissions</h2>
+            <p>脚本仅在抖音网页版（<code>*.douyin.com</code> / <code>*.iesdouyin.com</code>）运行时于页面内做 DOM 内容过滤与滚动，不读取、不篡改登录态，不向任何第三方发送数据。所有过滤规则与统计均保存在浏览器本地存储（localStorage）。过滤行为可能被平台识别为异常浏览，相关风险由使用者自行承担。</p>
+
+            <h2>Changelog</h2>
+            <p>See the releases page on GitHub for the full history of changes.</p>
+          </div>
+        </div>
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.user.js" target="_blank" rel="noopener" data-internal-download>
+              Download / install
+            </a>
+            <a class="btn btn-block btn-ghost" href="https://github.com/u2222223/xload" target="_blank" rel="noopener">
+              View source on GitHub
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3>Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k">Type</span><span class="v">Userscript</span></div>
+              <div class="row"><span class="k">Category</span><span class="v">Userscripts</span></div>
+              <div class="row"><span class="k">License</span><span class="v">MIT</span></div>
+              <div class="row"><span class="k">Last updated</span><span class="v">2026-09-10</span></div>
+              <div class="row"><span class="k">Downloads</span><span class="v">0</span></div>
+              <div class="row"><span class="k">GitHub stars</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

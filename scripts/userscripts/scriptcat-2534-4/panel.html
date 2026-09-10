@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音互动内容屏蔽 - 功能面板</title>
+  <meta name="description" content="弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单">
+  <meta name="keywords" content="抖音,弹幕屏蔽,评论屏蔽,礼物特效,关键词过滤">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <style>
+    /* ===== 功能 UI 专属样式（前缀 ib-，避免与壳冲突） ===== */
+    .ib-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+    .ib-status{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#64748b;}
+    .ib-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;flex:none;}
+    .ib-dot.on{background:#10b981;}
+    .ib-dot.off{background:#ef4444;}
+    .ib-stats{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto;font-size:12px;color:#475569;}
+    .ib-stats b{font-size:15px;color:#1d4ed8;margin-left:3px;}
+
+    .ib-tabs{display:flex;gap:6px;border-bottom:1px solid #e2e8f0;margin-bottom:16px;flex-wrap:wrap;}
+    .ib-tab{padding:9px 14px;border:0;background:transparent;cursor:pointer;font-size:14px;color:#64748b;
+      border-bottom:2px solid transparent;margin-bottom:-1px;font-weight:500;}
+    .ib-tab:hover{color:#1d4ed8;}
+    .ib-tab.active{color:#1d4ed8;border-bottom-color:#1d4ed8;}
+
+    .ib-panel{display:none;}
+    .ib-panel.active{display:block;}
+
+    .ib-card{background:#fff;border:1px solid #eef2f7;border-radius:12px;padding:16px;margin-bottom:14px;}
+    .ib-card h3{margin:0 0 4px;font-size:15px;color:#0f172a;}
+    .ib-card .ib-desc{margin:0 0 12px;font-size:12px;color:#94a3b8;}
+
+    .ib-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 2px;border-bottom:1px solid #f1f5f9;}
+    .ib-row:last-child{border-bottom:0;}
+    .ib-row .ib-label{font-size:14px;color:#334155;}
+    .ib-row .ib-hint{font-size:12px;color:#94a3b8;margin-top:2px;}
+
+    .ib-switch{position:relative;display:inline-block;width:42px;height:24px;flex:none;cursor:pointer;}
+    .ib-switch input{opacity:0;width:0;height:0;}
+    .ib-switch .ib-track{position:absolute;inset:0;background:#cbd5e1;border-radius:24px;transition:background .18s;}
+    .ib-switch .ib-track:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .18s;box-shadow:0 1px 2px rgba(0,0,0,.2);}
+    .ib-switch input:checked + .ib-track{background:#2563eb;}
+    .ib-switch input:checked + .ib-track:before{transform:translateX(18px);}
+
+    .ib-radio{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:#334155;cursor:pointer;margin-right:16px;}
+    .ib-radio input{accent-color:#2563eb;}
+
+    .ib-taglist{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+    .ib-tag{display:inline-flex;align-items:center;gap:6px;background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe;
+      font-size:13px;padding:5px 10px;border-radius:999px;}
+    .ib-tag .ib-x{cursor:pointer;font-weight:700;color:#93c5fd;line-height:1;}
+    .ib-tag .ib-x:hover{color:#dc2626;}
+
+    .ib-addrow{display:flex;gap:8px;margin-top:10px;}
+    .ib-addrow input{flex:1;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;outline:none;}
+    .ib-addrow input:focus{border-color:#93c5fd;}
+
+    .ib-btn{padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#334155;font-size:13px;cursor:pointer;}
+    .ib-btn:hover{border-color:#93c5fd;color:#1d4ed8;}
+    .ib-btn.primary{background:#2563eb;border-color:#2563eb;color:#fff;}
+    .ib-btn.primary:hover{background:#1d4ed8;color:#fff;}
+    .ib-btn.danger{color:#dc2626;}
+    .ib-btn.danger:hover{border-color:#fca5a5;}
+
+    .ib-rule{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid #eef2f7;border-radius:9px;margin-bottom:8px;font-size:13px;}
+    .ib-rule .ib-badge{padding:2px 8px;border-radius:6px;font-size:12px;background:#f1f5f9;color:#64748b;flex:none;}
+    .ib-rule .ib-badge.kw{background:#eff6ff;color:#1d4ed8;}
+    .ib-rule .ib-badge.user{background:#fefce8;color:#b45309;}
+    .ib-rule .ib-val{flex:1;color:#0f172a;word-break:break-all;}
+    .ib-rule .ib-scene{font-size:12px;color:#94a3b8;flex:none;}
+
+    textarea.ib-ta{width:100%;box-sizing:border-box;min-height:90px;padding:10px 12px;border:1px solid #e2e8f0;
+      border-radius:8px;font-size:13px;font-family:inherit;outline:none;resize:vertical;}
+    textarea.ib-ta:focus{border-color:#93c5fd;}
+
+    .ib-empty{padding:22px 12px;text-align:center;color:#cbd5e1;font-size:13px;}
+  </style>
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>抖音互动内容屏蔽</h1>
+        <p class="panel-subtitle">弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI ==================== -->
+        <div class="ib-toolbar">
+          <span class="ib-status">
+            <span class="ib-dot" id="ib-conn-dot"></span>
+            <span id="ib-conn-text">连接中…</span>
+          </span>
+          <span class="ib-stats">
+            已屏蔽 <b id="ib-stat-danmaku">0</b> 条弹幕 ·
+            <b id="ib-stat-comment">0</b> 条评论 ·
+            <b id="ib-stat-gift">0</b> 次特效
+          </span>
+          <button class="ib-btn" id="ib-btn-logs" type="button">查看日志</button>
+          <button class="ib-btn danger" id="ib-btn-reset" type="button">重置全部</button>
+        </div>
+
+        <div class="ib-tabs">
+          <button class="ib-tab active" data-tab="danmaku" type="button">弹幕屏蔽</button>
+          <button class="ib-tab" data-tab="comment" type="button">评论屏蔽</button>
+          <button class="ib-tab" data-tab="gift" type="button">礼物特效</button>
+          <button class="ib-tab" data-tab="rules" type="button">规则管理</button>
+        </div>
+
+        <!-- 弹幕屏蔽 -->
+        <section class="ib-panel active" data-panel="danmaku">
+          <div class="ib-card">
+            <h3>直播弹幕屏蔽</h3>
+            <p class="ib-desc">作用于直播间滚动弹幕（普通聊天、表情、屏聊）。</p>
+            <div class="ib-row">
+              <div><div class="ib-label">启用弹幕屏蔽</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-dm-enabled"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">屏蔽全部弹幕</div><div class="ib-hint">开启后直播间不再显示任何普通弹幕</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-dm-blockAll"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">关键词屏蔽</div><div class="ib-hint">命中关键词的弹幕整条隐藏；支持 /正则/ 写法</div></div>
+            </div>
+            <div class="ib-addrow">
+              <input type="text" id="ib-dm-kw-input" placeholder="输入关键词，回车或点击添加">
+              <button class="ib-btn primary" id="ib-dm-kw-add" type="button">添加</button>
+            </div>
+            <div class="ib-taglist" id="ib-dm-kw-list"></div>
+            <div class="ib-row" style="margin-top:10px;">
+              <div><div class="ib-label">用户屏蔽</div><div class="ib-hint">按昵称屏蔽指定用户的弹幕</div></div>
+            </div>
+            <div class="ib-addrow">
+              <input type="text" id="ib-dm-user-input" placeholder="输入用户昵称，回车或点击添加">
+              <button class="ib-btn primary" id="ib-dm-user-add" type="button">添加</button>
+            </div>
+            <div class="ib-taglist" id="ib-dm-user-list"></div>
+          </div>
+        </section>
+
+        <!-- 评论屏蔽 -->
+        <section class="ib-panel" data-panel="comment">
+          <div class="ib-card">
+            <h3>评论区屏蔽</h3>
+            <p class="ib-desc">作用于视频评论区评论项（昵称 + 正文匹配）。</p>
+            <div class="ib-row">
+              <div><div class="ib-label">启用评论屏蔽</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-cm-enabled"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">被屏蔽评论显示方式</div></div>
+              <div>
+                <label class="ib-radio"><input type="radio" name="ib-cm-mode" value="fold">折叠占位条（可展开）</label>
+                <label class="ib-radio"><input type="radio" name="ib-cm-mode" value="hide">完全隐藏</label>
+              </div>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">关键词屏蔽</div><div class="ib-hint">命中关键词的评论被折叠或隐藏</div></div>
+            </div>
+            <div class="ib-addrow">
+              <input type="text" id="ib-cm-kw-input" placeholder="输入关键词，回车或点击添加">
+              <button class="ib-btn primary" id="ib-cm-kw-add" type="button">添加</button>
+            </div>
+            <div class="ib-taglist" id="ib-cm-kw-list"></div>
+            <div class="ib-row" style="margin-top:10px;">
+              <div><div class="ib-label">用户黑名单</div><div class="ib-hint">按昵称屏蔽指定用户的评论</div></div>
+            </div>
+            <div class="ib-addrow">
+              <input type="text" id="ib-cm-user-input" placeholder="输入用户昵称，回车或点击添加">
+              <button class="ib-btn primary" id="ib-cm-user-add" type="button">添加</button>
+            </div>
+            <div class="ib-taglist" id="ib-cm-user-list"></div>
+          </div>
+        </section>
+
+        <!-- 礼物特效 -->
+        <section class="ib-panel" data-panel="gift">
+          <div class="ib-card">
+            <h3>礼物与特效屏蔽</h3>
+            <p class="ib-desc">屏蔽直播间的礼物动画、进场/点赞/粉丝牌等屏幕特效。</p>
+            <div class="ib-row">
+              <div><div class="ib-label">启用礼物特效屏蔽</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-gf-enabled"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">礼物动画</div><div class="ib-hint">打赏礼物动画与礼物栏特效</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-gf-giftAnim"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">进场特效</div><div class="ib-hint">观众进房、等级/贵宾进场播报</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-gf-enter"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">点赞特效</div><div class="ib-hint">点赞播报信息</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-gf-like"><span class="ib-track"></span></label>
+            </div>
+            <div class="ib-row">
+              <div><div class="ib-label">粉丝牌</div><div class="ib-hint">弹幕中的粉丝团/粉丝牌图标</div></div>
+              <label class="ib-switch"><input type="checkbox" id="ib-gf-fansClub"><span class="ib-track"></span></label>
+            </div>
+          </div>
+        </section>
+
+        <!-- 规则管理 -->
+        <section class="ib-panel" data-panel="rules">
+          <div class="ib-card">
+            <h3>统一规则列表</h3>
+            <p class="ib-desc">弹幕与评论的关键词/用户规则汇总，可在此统一增删。</p>
+            <div class="ib-addrow">
+              <select id="ib-rule-type" style="padding:8px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                <option value="keyword">关键词</option>
+                <option value="user">用户</option>
+              </select>
+              <input type="text" id="ib-rule-value" placeholder="输入值">
+              <select id="ib-rule-scene" style="padding:8px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                <option value="all">弹幕+评论</option>
+                <option value="danmaku">仅弹幕</option>
+                <option value="comment">仅评论</option>
+              </select>
+              <button class="ib-btn primary" id="ib-rule-add" type="button">添加规则</button>
+            </div>
+            <div id="ib-rule-list" style="margin-top:12px;"></div>
+          </div>
+          <div class="ib-card">
+            <h3>规则导入 / 导出</h3>
+            <p class="ib-desc">每行一条，格式「类型:值:场景」；类型= keyword｜user，场景= danmaku｜comment｜all（缺省 all）。</p>
+            <textarea class="ib-ta" id="ib-rule-import-ta" placeholder="keyword:广告:all&#10;user:某用户:comment"></textarea>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <button class="ib-btn primary" id="ib-rule-import" type="button">导入以上规则</button>
+              <button class="ib-btn" id="ib-rule-export" type="button">导出全部规则</button>
+            </div>
+            <textarea class="ib-ta" id="ib-rule-export-ta" style="margin-top:10px;" readonly placeholder="导出的规则将显示在此，可全选复制"></textarea>
+          </div>
+        </section>
+
+        <p style="font-size:12px;color:#94a3b8;margin-top:6px;">
+          提示：所有配置实时保存并生效；请先在抖音直播间或视频评论区打开本面板完成设置。
+        </p>
+        <!-- ==================== /功能 UI ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-2534-4');
+
+      // ==================== 功能逻辑 ====================
+      var TASK_ID = 'scriptcat-2534-4';
+
+      function defaultSettings() {
+        return {
+          danmaku: { enabled: true, blockAll: false, keywords: [], users: [] },
+          comment: { enabled: true, mode: 'fold', keywords: [], users: [] },
+          gift: { enabled: true, blockGiftAnim: true, blockEnter: true, blockLike: true, blockFansClub: true }
+        };
+      }
+
+      var state = { settings: defaultSettings(), stats: { danmaku: 0, comment: 0, gift: 0 }, connected: false };
+
+      // ---- 工具 ----
+      function $(id) { return document.getElementById(id); }
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+
+      function collectRules(settings) {
+        var rules = [];
+        var s = settings || {};
+        function push(arr, type, scene) {
+          if (!Array.isArray(arr)) return;
+          arr.forEach(function (v) {
+            if (v == null || String(v) === '') return;
+            rules.push({ type: type, value: String(v), scene: scene });
+          });
+        }
+        push(s.danmaku.keywords, 'keyword', 'danmaku');
+        push(s.danmaku.users, 'user', 'danmaku');
+        push(s.comment.keywords, 'keyword', 'comment');
+        push(s.comment.users, 'user', 'comment');
+        return rules;
+      }
+
+      function parseRulesText(text) {
+        var rules = [];
+        if (typeof text !== 'string') return rules;
+        text.split(/\r?\n/).forEach(function (lineRaw) {
+          var line = lineRaw.trim();
+          if (line === '' || line.charAt(0) === '#') return;
+          var parts = line.split(':');
+          var type = (parts[0] || '').trim().toLowerCase();
+          if (type !== 'keyword' && type !== 'user') return;
+          var scene = (parts[parts.length - 1] || '').trim().toLowerCase();
+          var value;
+          if (scene === 'danmaku' || scene === 'comment' || scene === 'all') {
+            value = parts.slice(1, parts.length - 1).join(':').trim();
+          } else {
+            scene = 'all';
+            value = parts.slice(1).join(':').trim();
+          }
+          if (value === '') return;
+          rules.push({ type: type, value: value, scene: scene });
+        });
+        return rules;
+      }
+
+      function formatRulesText(rules) {
+        var out = [];
+        (rules || []).forEach(function (r) {
+          if (r.value === '') return;
+          out.push(r.type + ':' + r.value + ':' + r.scene);
+        });
+        return out.join('\n');
+      }
+
+      function applyRulesToSettings(settings, rules) {
+        var s = settings;
+        s.danmaku.keywords = []; s.danmaku.users = []; s.comment.keywords = []; s.comment.users = [];
+        rules.forEach(function (r) {
+          var isUser = r.type === 'user';
+          var inD = r.scene === 'danmaku' || r.scene === 'all';
+          var inC = r.scene === 'comment' || r.scene === 'all';
+          if (isUser) {
+            if (inD) s.danmaku.users.push(r.value);
+            if (inC) s.comment.users.push(r.value);
+          } else {
+            if (inD) s.danmaku.keywords.push(r.value);
+            if (inC) s.comment.keywords.push(r.value);
+          }
+        });
+        return s;
+      }
+
+      // ---- 提交到脚本 ----
+      function pushSettings() {
+        if (!state.connected) return;
+        channel.request('setState', { settings: state.settings }, 5000).then(function () {
+          // ok
+        }).catch(function (e) {
+          PUI.toast('同步失败：' + e.message, 'error');
+        });
+      }
+
+      // ---- 渲染 ----
+      function renderTags(el, arr) {
+        el.innerHTML = '';
+        if (!arr || arr.length === 0) {
+          el.innerHTML = '<span class="ib-empty">暂无条目</span>';
+          return;
+        }
+        arr.forEach(function (v, idx) {
+          var tag = document.createElement('span');
+          tag.className = 'ib-tag';
+          tag.innerHTML = esc(v) + '<span class="ib-x" data-idx="' + idx + '">×</span>';
+          tag.querySelector('.ib-x').addEventListener('click', function () {
+            arr.splice(idx, 1);
+            pushSettings();
+            render();
+          });
+          el.appendChild(tag);
+        });
+      }
+
+      function renderRuleList() {
+        var el = $('ib-rule-list');
+        var rules = collectRules(state.settings);
+        el.innerHTML = '';
+        if (rules.length === 0) {
+          el.innerHTML = '<div class="ib-empty">暂无规则</div>';
+          return;
+        }
+        rules.forEach(function (r, idx) {
+          var row = document.createElement('div');
+          row.className = 'ib-rule';
+          var badge = '<span class="ib-badge ' + (r.type === 'user' ? 'user' : 'kw') + '">' +
+            (r.type === 'user' ? '用户' : '关键词') + '</span>';
+          var scene = r.scene === 'danmaku' ? '弹幕' : (r.scene === 'comment' ? '评论' : '全部');
+          row.innerHTML = badge + '<span class="ib-val">' + esc(r.value) + '</span>' +
+            '<span class="ib-scene">' + esc(scene) + '</span>' +
+            '<button class="ib-btn danger" data-idx="' + idx + '" type="button">删除</button>';
+          row.querySelector('button').addEventListener('click', function () {
+            removeRuleAtIndex(idx);
+          });
+          el.appendChild(row);
+        });
+      }
+
+      function removeRuleAtIndex(idx) {
+        var rules = collectRules(state.settings);
+        var target = rules[idx];
+        if (!target) return;
+        var list = target.type === 'user'
+          ? (target.scene === 'danmaku' ? state.settings.danmaku.users
+             : (target.scene === 'comment' ? state.settings.comment.users : null))
+          : (target.scene === 'danmaku' ? state.settings.danmaku.keywords
+             : (target.scene === 'comment' ? state.settings.comment.keywords : null));
+        if (target.scene === 'all') {
+          // 从两处都删
+          var lists = target.type === 'user'
+            ? [state.settings.danmaku.users, state.settings.comment.users]
+            : [state.settings.danmaku.keywords, state.settings.comment.keywords];
+          lists.forEach(function (l) {
+            var i = l.indexOf(target.value);
+            if (i !== -1) l.splice(i, 1);
+          });
+        } else if (list) {
+          var i = list.indexOf(target.value);
+          if (i !== -1) list.splice(i, 1);
+        }
+        pushSettings();
+        render();
+      }
+
+      function render() {
+        var s = state.settings;
+        // 弹幕
+        $('ib-dm-enabled').checked = !!s.danmaku.enabled;
+        $('ib-dm-blockAll').checked = !!s.danmaku.blockAll;
+        renderTags($('ib-dm-kw-list'), s.danmaku.keywords);
+        renderTags($('ib-dm-user-list'), s.danmaku.users);
+        // 评论
+        $('ib-cm-enabled').checked = !!s.comment.enabled;
+        var radios = document.getElementsByName('ib-cm-mode');
+        for (var i = 0; i < radios.length; i++) radios[i].checked = (radios[i].value === s.comment.mode);
+        renderTags($('ib-cm-kw-list'), s.comment.keywords);
+        renderTags($('ib-cm-user-list'), s.comment.users);
+        // 礼物
+        $('ib-gf-enabled').checked = !!s.gift.enabled;
+        $('ib-gf-giftAnim').checked = !!s.gift.blockGiftAnim;
+        $('ib-gf-enter').checked = !!s.gift.blockEnter;
+        $('ib-gf-like').checked = !!s.gift.blockLike;
+        $('ib-gf-fansClub').checked = !!s.gift.blockFansClub;
+        // 规则
+        renderRuleList();
+        renderStats();
+      }
+
+      function renderStats() {
+        $('ib-stat-danmaku').textContent = state.stats.danmaku || 0;
+        $('ib-stat-comment').textContent = state.stats.comment || 0;
+        $('ib-stat-gift').textContent = state.stats.gift || 0;
+      }
+
+      function setConn(on) {
+        state.connected = on;
+        var dot = $('ib-conn-dot');
+        var txt = $('ib-conn-text');
+        if (on) { dot.className = 'ib-dot on'; txt.textContent = '已连接原页面'; }
+        else { dot.className = 'ib-dot off'; txt.textContent = '未连接原页面（独立模式）'; }
+      }
+
+      // ---- Tab 切换 ----
+      var tabs = document.querySelectorAll('.ib-tab');
+      tabs.forEach(function (t) {
+        t.addEventListener('click', function () {
+          tabs.forEach(function (x) { x.classList.remove('active'); });
+          t.classList.add('active');
+          var name = t.getAttribute('data-tab');
+          document.querySelectorAll('.ib-panel').forEach(function (p) {
+            p.classList.toggle('active', p.getAttribute('data-panel') === name);
+          });
+        });
+      });
+
+      // ---- 事件绑定 ----
+      function bindCheck(id, fn) {
+        $(id).addEventListener('change', function (ev) { fn(ev.target.checked); pushSettings(); render(); });
+      }
+      bindCheck('ib-dm-enabled', function (v) { state.settings.danmaku.enabled = v; });
+      bindCheck('ib-dm-blockAll', function (v) { state.settings.danmaku.blockAll = v; });
+      bindCheck('ib-cm-enabled', function (v) { state.settings.comment.enabled = v; });
+      bindCheck('ib-gf-enabled', function (v) { state.settings.gift.enabled = v; });
+      bindCheck('ib-gf-giftAnim', function (v) { state.settings.gift.blockGiftAnim = v; });
+      bindCheck('ib-gf-enter', function (v) { state.settings.gift.blockEnter = v; });
+      bindCheck('ib-gf-like', function (v) { state.settings.gift.blockLike = v; });
+      bindCheck('ib-gf-fansClub', function (v) { state.settings.gift.blockFansClub = v; });
+
+      var modeRadios = document.getElementsByName('ib-cm-mode');
+      for (var ri = 0; ri < modeRadios.length; ri++) {
+        modeRadios[ri].addEventListener('change', function (ev) {
+          if (ev.target.checked) { state.settings.comment.mode = ev.target.value; pushSettings(); }
+        });
+      }
+
+      function addPlus(inputId, btnId, arr, fn) {
+        function doAdd() {
+          var inp = $(inputId);
+          var v = inp.value.trim();
+          if (!v) return;
+          arr.push(v);
+          inp.value = '';
+          pushSettings();
+          render();
+          if (fn) fn();
+        }
+        $(btnId).addEventListener('click', doAdd);
+        $(inputId).addEventListener('keydown', function (ev) { if (ev.key === 'Enter') doAdd(); });
+      }
+      addPlus('ib-dm-kw-input', 'ib-dm-kw-add', state.settings.danmaku.keywords);
+      addPlus('ib-dm-user-input', 'ib-dm-user-add', state.settings.danmaku.users);
+      addPlus('ib-cm-kw-input', 'ib-cm-kw-add', state.settings.comment.keywords);
+      addPlus('ib-cm-user-input', 'ib-cm-user-add', state.settings.comment.users);
+
+      // 规则管理：新增
+      function addRule() {
+        var type = $('ib-rule-type').value;
+        var value = $('ib-rule-value').value.trim();
+        var scene = $('ib-rule-scene').value;
+        if (!value) { PUI.toast('请输入规则值', 'warn'); return; }
+        applyRulesToSettings(state.settings, collectRules(state.settings).concat([{ type: type, value: value, scene: scene }]));
+        $('ib-rule-value').value = '';
+        pushSettings();
+        render();
+      }
+      $('ib-rule-add').addEventListener('click', addRule);
+      $('ib-rule-value').addEventListener('keydown', function (ev) { if (ev.key === 'Enter') addRule(); });
+
+      // 规则导入
+      $('ib-rule-import').addEventListener('click', function () {
+        var text = $('ib-rule-import-ta').value;
+        var rules = parseRulesText(text);
+        if (rules.length === 0) { PUI.toast('未解析到有效规则', 'warn'); return; }
+        applyRulesToSettings(state.settings, collectRules(state.settings).concat(rules));
+        pushSettings();
+        render();
+        PUI.toast('已导入 ' + rules.length + ' 条规则', 'success');
+      });
+
+      // 规则导出
+      $('ib-rule-export').addEventListener('click', function () {
+        var rules = collectRules(state.settings);
+        var text = formatRulesText(rules);
+        $('ib-rule-export-ta').value = text;
+        copyText(text);
+        PUI.toast('已导出 ' + rules.length + ' 条规则并复制到剪贴板', 'success');
+      });
+
+      function copyText(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            document.execCommand('copy'); document.body.removeChild(ta);
+          }
+        } catch (e) { /* ignore */ }
+      }
+
+      // 查看日志
+      $('ib-btn-logs').addEventListener('click', function () {
+        channel.request('getLogs', {}, 5000).then(function (d) {
+          var logs = d.logs || [];
+          var lines = logs.map(function (e) {
+            var t = new Date(e.t).toLocaleTimeString();
+            return '[' + t + '][' + e.tag + '] ' + JSON.stringify(e.data);
+          });
+          var text = lines.join('\n') || '（暂无日志）';
+          var body = document.createElement('div');
+          var pre = document.createElement('pre');
+          pre.style.cssText = 'max-height:50vh;overflow:auto;font-size:12px;white-space:pre-wrap;word-break:break-all;margin:0;';
+          pre.textContent = text;
+          body.appendChild(pre);
+          PUI.modal({
+            title: '脚本日志（共 ' + logs.length + ' 条）',
+            body: body,
+            buttons: [
+              { text: '复制日志', type: 'primary', onClick: function () { copyText(text); PUI.toast('已复制', 'success'); } },
+              { text: '关闭', type: 'default' }
+            ]
+          });
+        }).catch(function (e) {
+          PUI.toast(e.message, 'warn');
+        });
+      });
+
+      // 重置
+      $('ib-btn-reset').addEventListener('click', function () {
+        PUI.modal({
+          title: '重置确认',
+          body: '确定清空所有屏蔽规则并恢复默认设置吗？此操作不可撤销。',
+          buttons: [
+            { text: '取消', type: 'default' },
+            {
+              text: '确认重置', type: 'danger',
+              onClick: function () {
+                state.settings = defaultSettings();
+                if (state.connected) {
+                  channel.request('reset', {}, 5000).then(function () {
+                    PUI.toast('已重置', 'success');
+                  }).catch(function () { PUI.toast('已本地重置（原页面未响应）', 'warn'); });
+                }
+                render();
+              }
+            }
+          ]
+        });
+      });
+
+      // ---- 初始化：获取脚本状态 ----
+      channel.request('getState', {}, 5000).then(function (d) {
+        setConn(true);
+        state.settings = d.settings || defaultSettings();
+        state.stats = d.stats || { danmaku: 0, comment: 0, gift: 0 };
+        render();
+        PUI.toast('已连接原页面', 'success');
+      }).catch(function () {
+        setConn(false);
+        state.settings = defaultSettings();
+        render();
+        PUI.toast('未连接原页面，当前为独立模式（修改不会同步到抖音页面）', 'warn');
+      });
+
+      // 定期刷新统计
+      setInterval(function () {
+        if (!state.connected) return;
+        channel.request('pullStats', {}, 4000).then(function (d) {
+          if (d && d.stats) { state.stats = d.stats; renderStats(); }
+        }).catch(function () { /* 忽略单次超时 */ });
+      }, 2500);
+      // ==================== /功能逻辑 ====================
+    })();
+  </script>
+</body>
+</html>

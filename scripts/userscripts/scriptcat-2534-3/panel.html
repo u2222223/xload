@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抖音界面沉浸优化 - 功能面板</title>
+  <meta name="description" content="沉浸模式+手机模式+自定义主题，专注视频内容">
+  <meta name="keywords" content="抖音,沉浸模式,手机模式,主题,界面优化">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>抖音界面沉浸优化</h1>
+        <p class="panel-subtitle">沉浸模式+手机模式+自定义主题，专注视频内容</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .xpanel-card {
+            background: var(--panel-card-bg, #fff);
+            border: 1px solid var(--panel-card-border, #e2e8f0);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 14px;
+          }
+          .xpanel-card h2 {
+            margin: 0 0 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--panel-text, #0f172a);
+          }
+          .xpanel-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 0;
+            font-size: 13px;
+            color: var(--panel-text, #1e293b);
+          }
+          .xpanel-row label { flex: 1; }
+          .xpanel-row input[type="range"] { flex: 1.4; }
+          .xpanel-row select { flex: 1.4; padding: 6px 8px; border-radius: 7px; border: 1px solid #cbd5e1; background: #fff; color: #0f172a; }
+          .xpanel-row input[type="color"] { width: 52px; height: 30px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 1px; background: #fff; cursor: pointer; }
+          .xpanel-check {
+            position: relative;
+            width: 42px; height: 22px; flex: none;
+            -webkit-appearance: none; appearance: none;
+            background: #cbd5e1; border-radius: 999px; cursor: pointer;
+            transition: background .18s ease; outline: none;
+          }
+          .xpanel-check:checked { background: #2563eb; }
+          .xpanel-check::after {
+            content: ''; position: absolute; top: 2px; left: 2px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #fff; transition: left .18s ease;
+          }
+          .xpanel-check:checked::after { left: 22px; }
+          .xpanel-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+          .xpanel-grid .xpanel-row { flex: 0 0 calc(50% - 4px); min-width: 150px; }
+          .xpanel-sub { font-size: 11px; color: #64748b; margin-top: 4px; }
+          .xpanel-status {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+          }
+          .xpanel-status.ok { background: #dcfce7; color: #15803d; }
+          .xpanel-status.warn { background: #fef3c7; color: #b45309; }
+          .xpanel-status.err { background: #fee2e2; color: #b91c1c; }
+          .xpanel-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+          .xpanel-btn {
+            padding: 8px 14px; border: 1px solid #cbd5e1; border-radius: 8px;
+            background: #fff; color: #0f172a; font-size: 13px; cursor: pointer;
+            transition: background .15s ease, border-color .15s ease;
+          }
+          .xpanel-btn:hover { background: #f1f5f9; border-color: #94a3b8; }
+          .xpanel-btn.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+          .xpanel-btn.primary:hover { background: #1d4ed8; }
+          .xpanel-btn.danger { color: #b91c1c; border-color: #fecaca; }
+          .xpanel-btn.danger:hover { background: #fef2f2; }
+          .xpanel-log {
+            margin-top: 10px; padding: 10px; border-radius: 8px;
+            background: #0f172a; color: #e2e8f0; font: 11px/1.5 ui-monospace, Consolas, monospace;
+            white-space: pre-wrap; max-height: 260px; overflow: auto; display: none;
+          }
+        </style>
+
+        <div class="xpanel-card">
+          <span class="xpanel-status warn" id="conn-status">连接中…</span>
+          <div class="xpanel-actions">
+            <button class="xpanel-btn primary" id="btn-refresh" type="button">刷新状态</button>
+            <button class="xpanel-btn" id="btn-logs" type="button">查看日志</button>
+            <button class="xpanel-btn danger" id="btn-reset" type="button">重置默认</button>
+          </div>
+          <pre class="xpanel-log" id="log-area"></pre>
+        </div>
+
+        <div class="xpanel-card">
+          <h2>沉浸模式</h2>
+          <div class="xpanel-row">
+            <label for="imm-preset">预设方案</label>
+            <select id="imm-preset">
+              <option value="half">半沉浸（隐藏导航与热榜）</option>
+              <option value="minimal">极简沉浸（隐藏全部冗余）</option>
+              <option value="none">默认（不隐藏）</option>
+              <option value="custom">自定义</option>
+            </select>
+          </div>
+          <div class="xpanel-grid" id="imm-regions">
+            <div class="xpanel-row"><label>顶部导航</label><input type="checkbox" class="xpanel-check" data-region="topNav"></div>
+            <div class="xpanel-row"><label>左侧栏</label><input type="checkbox" class="xpanel-check" data-region="leftNav"></div>
+            <div class="xpanel-row"><label>右侧栏（热榜）</label><input type="checkbox" class="xpanel-check" data-region="rightPanel"></div>
+            <div class="xpanel-row"><label>搜索悬浮栏</label><input type="checkbox" class="xpanel-check" data-region="searchBar"></div>
+            <div class="xpanel-row"><label>悬浮提示</label><input type="checkbox" class="xpanel-check" data-region="floatingHints"></div>
+            <div class="xpanel-row"><label>底部推荐</label><input type="checkbox" class="xpanel-check" data-region="bottomFeed"></div>
+          </div>
+          <p class="xpanel-sub">勾选任一区域后，预设方案会自动切为「自定义」。</p>
+        </div>
+
+        <div class="xpanel-card">
+          <h2>手机模式</h2>
+          <div class="xpanel-row"><label>启用手机模式</label><input type="checkbox" class="xpanel-check" id="phone-enable"></div>
+          <div class="xpanel-row">
+            <label>宽度 <span id="phone-width-val">420px</span></label>
+            <input type="range" id="phone-width" min="320" max="600" step="10" value="420">
+          </div>
+          <div class="xpanel-row"><label>居中显示</label><input type="checkbox" class="xpanel-check" id="phone-center"></div>
+        </div>
+
+        <div class="xpanel-card">
+          <h2>背景主题</h2>
+          <div class="xpanel-row">
+            <label for="theme-preset">主题预设</label>
+            <select id="theme-preset">
+              <option value="system">跟随系统</option>
+              <option value="dark">暗色</option>
+              <option value="light">亮色</option>
+            </select>
+          </div>
+          <div class="xpanel-grid" id="bg-regions">
+            <div class="xpanel-row"><label>视频区</label><input type="color" id="bg-video-color" value="#000000"></div>
+            <div class="xpanel-row"><label>视频区透明度 <span id="bg-video-alpha-val">100%</span></label><input type="range" id="bg-video-alpha" min="0" max="100" value="100"></div>
+            <div class="xpanel-row"><label>评论区</label><input type="color" id="bg-comment-color" value="#121212"></div>
+            <div class="xpanel-row"><label>评论区透明度 <span id="bg-comment-alpha-val">100%</span></label><input type="range" id="bg-comment-alpha" min="0" max="100" value="100"></div>
+            <div class="xpanel-row"><label>侧边栏</label><input type="color" id="bg-sidebar-color" value="#0b0b1e"></div>
+            <div class="xpanel-row"><label>侧边栏透明度 <span id="bg-sidebar-alpha-val">100%</span></label><input type="range" id="bg-sidebar-alpha" min="0" max="100" value="100"></div>
+          </div>
+          <p class="xpanel-sub">自定义颜色会覆盖预设主题对应分区；跟随系统时按系统深浅色自动切换。</p>
+        </div>
+
+        <div class="xpanel-card">
+          <h2>视频标签</h2>
+          <div class="xpanel-row"><label>自动隐藏视频标签</label><input type="checkbox" class="xpanel-check" id="label-enable"></div>
+          <div class="xpanel-row">
+            <label>延迟 <span id="label-delay-val">1.5s</span></label>
+            <input type="range" id="label-delay" min="0" max="10" step="0.5" value="1.5">
+          </div>
+          <p class="xpanel-sub">鼠标移入显示、移出后延迟隐藏，聚焦视频画面。</p>
+        </div>
+
+        <div class="xpanel-card">
+          <h2>页面缩放</h2>
+          <div class="xpanel-row"><label>解禁双指缩放</label><input type="checkbox" class="xpanel-check" id="zoom-unlock"></div>
+          <p class="xpanel-sub">移除页面 user-scalable=no 限制，恢复移动端双指缩放。</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-2534-3');
+
+      var REGION_KEYS = ['topNav', 'leftNav', 'rightPanel', 'searchBar', 'floatingHints', 'bottomFeed'];
+      var DEFAULT_SETTINGS = {
+        immersive: { preset: 'half', regions: { topNav: true, leftNav: true, rightPanel: true, searchBar: false, floatingHints: false, bottomFeed: false } },
+        phoneMode: { enabled: false, width: 420, center: true },
+        theme: { preset: 'system', bg: { video: { color: '', alpha: 100 }, comment: { color: '', alpha: 100 }, sidebar: { color: '', alpha: 100 } } },
+        videoLabel: { autoHide: false, delay: 1.5 },
+        zoom: { unlock: false }
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function setStatus(text, cls) {
+        var el = $('conn-status');
+        el.textContent = text;
+        el.className = 'xpanel-status ' + (cls || 'warn');
+      }
+      function toast(str, type) {
+        try { if (typeof PUI !== 'undefined' && PUI.toast) PUI.toast(str, type); } catch (e) {}
+      }
+
+      // 渲染
+      function renderState(s) {
+        s = s || DEFAULT_SETTINGS;
+        $('imm-preset').value = s.immersive.preset || 'half';
+        REGION_KEYS.forEach(function (k) {
+          var cb = document.querySelector('[data-region="' + k + '"]');
+          if (cb) cb.checked = !!(s.immersive.regions && s.immersive.regions[k]);
+        });
+        $('phone-enable').checked = !!s.phoneMode.enabled;
+        var w = Number(s.phoneMode.width) || 420;
+        $('phone-width').value = w;
+        $('phone-width-val').textContent = w + 'px';
+        $('phone-center').checked = s.phoneMode.center !== false;
+        $('theme-preset').value = s.theme.preset || 'system';
+        ['video', 'comment', 'sidebar'].forEach(function (r) {
+          var c = (s.theme.bg && s.theme.bg[r]) || {};
+          $('bg-' + r + '-color').value = c.color || '#000000';
+          $('bg-' + r + '-alpha').value = (typeof c.alpha === 'number') ? c.alpha : 100;
+          $('bg-' + r + '-alpha-val').textContent = ((typeof c.alpha === 'number') ? c.alpha : 100) + '%';
+        });
+        $('label-enable').checked = !!s.videoLabel.autoHide;
+        var d = Number(s.videoLabel.delay);
+        if (isNaN(d)) d = 1.5;
+        $('label-delay').value = d;
+        $('label-delay-val').textContent = d + 's';
+        $('zoom-unlock').checked = !!s.zoom.unlock;
+      }
+
+      // 收集
+      function collectState() {
+        var regions = {};
+        REGION_KEYS.forEach(function (k) {
+          var cb = document.querySelector('[data-region="' + k + '"]');
+          regions[k] = cb ? !!cb.checked : false;
+        });
+        function rgbToHex(v) { return v || ''; }
+        function bgRegion(r) {
+          var c = $('bg-' + r + '-color').value;
+          var a = Number($('bg-' + r + '-alpha').value);
+          if (isNaN(a)) a = 100;
+          return { color: $('bg-' + r + '-color').value === '' ? '' : $('bg-' + r + '-color').value, alpha: a };
+        }
+        return {
+          immersive: { preset: $('imm-preset').value, regions: regions },
+          phoneMode: { enabled: !!$('phone-enable').checked, width: Number($('phone-width').value), center: !!$('phone-center').checked },
+          theme: { preset: $('theme-preset').value, bg: { video: bgRegion('video'), comment: bgRegion('comment'), sidebar: bgRegion('sidebar') } },
+          videoLabel: { autoHide: !!$('label-enable').checked, delay: Number($('label-delay').value) },
+          zoom: { unlock: !!$('zoom-unlock').checked }
+        };
+      }
+
+      function apply() {
+        var payload = collectState();
+        channel.request('applySettings', payload, 5000).then(function (data) {
+          if (data && data.ok) {
+            renderState(data.state);
+            toast('已应用到原页面', 'success');
+          } else {
+            toast('应用失败：' + ((data && data.error) || '未知错误'), 'warn');
+          }
+        }).catch(function (e) {
+          toast('原页面未响应，请确认已打开抖音页面', 'warn');
+        });
+      }
+
+      function refresh() {
+        setStatus('连接中…', 'warn');
+        channel.request('getState', {}, 5000).then(function (data) {
+          if (data && data.state) {
+            renderState(data.state);
+            setStatus('已连接', 'ok');
+            toast('已同步原页面状态', 'success');
+          } else {
+            setStatus('未连接', 'warn');
+          }
+        }).catch(function () {
+          setStatus('未连接（独立模式）', 'err');
+          toast('请从抖音页面的「沉浸优化」按钮打开本面板', 'warn');
+        });
+      }
+
+      function showLogs() {
+        channel.request('getLogs', {}, 5000).then(function (data) {
+          var area = $('log-area');
+          var text = (data && data.logs) || '(暂无日志)';
+          area.textContent = text;
+          area.style.display = 'block';
+          try {
+            if (typeof PUI !== 'undefined' && PUI.modal) {
+              PUI.modal({ title: '脚本日志（点击复制）', content: area.outerHTML });
+            }
+          } catch (e) {}
+          copyText(text);
+          toast('日志已复制到剪贴板', 'success');
+        }).catch(function () {
+          toast('无法读取日志', 'warn');
+        });
+      }
+
+      function copyText(text) {
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text);
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+        } catch (e) { /* ignore */ }
+      }
+
+      function reset() {
+        channel.request('resetSettings', {}, 5000).then(function (data) {
+          if (data && data.ok) { renderState(data.state); toast('已重置为默认', 'success'); }
+          else toast('重置失败：' + ((data && data.error) || '未知错误'), 'warn');
+        }).catch(function () { toast('原页面未响应', 'warn'); });
+      }
+
+      // 事件绑定
+      function bind() {
+        $('btn-refresh').addEventListener('click', refresh);
+        $('btn-logs').addEventListener('click', showLogs);
+        $('btn-reset').addEventListener('click', reset);
+        $('imm-preset').addEventListener('change', function () { apply(); });
+        REGION_KEYS.forEach(function (k) {
+          var cb = document.querySelector('[data-region="' + k + '"]');
+          if (cb) cb.addEventListener('change', function () { $('imm-preset').value = 'custom'; apply(); });
+        });
+        $('phone-enable').addEventListener('change', apply);
+        $('phone-width').addEventListener('input', function () { $('phone-width-val').textContent = $('phone-width').value + 'px'; });
+        $('phone-width').addEventListener('change', apply);
+        $('phone-center').addEventListener('change', apply);
+        $('theme-preset').addEventListener('change', apply);
+        ['video', 'comment', 'sidebar'].forEach(function (r) {
+          $('bg-' + r + '-color').addEventListener('change', apply);
+          $('bg-' + r + '-alpha').addEventListener('input', function () { $('bg-' + r + '-alpha-val').textContent = $('bg-' + r + '-alpha').value + '%'; });
+          $('bg-' + r + '-alpha').addEventListener('change', apply);
+        });
+        $('label-enable').addEventListener('change', apply);
+        $('label-delay').addEventListener('input', function () { $('label-delay-val').textContent = $('label-delay').value + 's'; });
+        $('label-delay').addEventListener('change', apply);
+        $('zoom-unlock').addEventListener('change', apply);
+      }
+
+      // 脚本主动推送状态
+      channel.on('state', function (data) {
+        if (data && data.state) renderState(data.state);
+      });
+
+      bind();
+      renderState(DEFAULT_SETTINGS);
+      refresh();
+    })();
+  </script>
+</body>
+</html>
