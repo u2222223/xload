@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微软积分商城自动签到 - 功能面板</title>
+  <meta name="description" content="自动完成微软积分每日任务">
+  <meta name="keywords" content="微软积分,Microsoft Rewards,自动签到,Bing搜索,积分任务">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>微软积分商城自动签到</h1>
+        <p class="panel-subtitle">自动完成 Microsoft Rewards 每日任务获取积分奖励</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI ==================== -->
+        <style>
+          .mr-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 14px; word-break: break-all; line-height: 1.6; }
+          .mr-status.error { background: #fef2f2; color: #b91c1c; }
+          .mr-status.ok { background: #ecfdf5; color: #047857; }
+          .mr-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 14px 0; }
+          .mr-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; background: #f9fafb; }
+          .mr-card .name { font-size: 13px; color: #6b7280; margin-bottom: 4px; }
+          .mr-card .pt { font-size: 20px; font-weight: 700; color: #111827; }
+          .mr-card .sub { font-size: 12px; color: #9ca3af; }
+          .mr-group { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #eef0f3; }
+          .mr-group:last-of-type { border-bottom: 0; }
+          .mr-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .mr-field { margin-bottom: 10px; }
+          .mr-field > label { display: block; font-size: 13px; color: #4b5563; margin-bottom: 4px; }
+          .mr-field input[type="number"], .mr-field textarea, .mr-field select { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; width: 100%; max-width: 320px; box-sizing: border-box; }
+          .mr-field textarea { height: 66px; resize: vertical; }
+          .mr-field .hint { display: block; font-size: 12px; color: #9ca3af; margin-top: 2px; }
+          .mr-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+          .mr-switch { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #1f2328; cursor: pointer; }
+          .mr-switch input { width: auto; }
+          .mr-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+          .mr-task { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; }
+          .mr-task .tt { font-size: 14px; color: #111827; }
+          .mr-task .st { font-size: 12px; color: #6b7280; }
+          .mr-task .badge { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: #e5e7eb; color: #374151; }
+          .mr-task .badge.on { background: #d1fae5; color: #047857; }
+          .mr-task .badge.doing { background: #dbeafe; color: #1d4ed8; }
+          .mr-progress { height: 8px; background: #e5e7eb; border-radius: 999px; overflow: hidden; flex: 1; }
+          .mr-progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#2563eb,#1d4ed8); transition: width .3s ease; }
+          .mr-hist { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow: auto; }
+          .mr-hist li { padding: 8px 4px; border-bottom: 1px solid #f0f1f3; font-size: 13px; color: #374151; }
+          .mr-hist li:last-child { border-bottom: 0; }
+          .mr-hist .m { color: #9ca3af; font-size: 12px; }
+          .mr-log-line { font-size: 13px; color: #374151; }
+        </style>
+
+        <div class="mr-status" id="mrStatus">等待原页面连接…</div>
+
+        <section class="mr-group">
+          <h2>积分概览</h2>
+          <div class="mr-cards" id="mrCards">
+            <div class="mr-card"><div class="name">今日已获积分</div><div class="pt" id="mrTodayPoint">—</div></div>
+            <div class="mr-card"><div class="name">电脑搜索</div><div class="pt" id="mrPcSearch">—</div><div class="sub" id="mrPcSub"></div></div>
+            <div class="mr-card"><div class="name">移动端搜索</div><div class="pt" id="mrMobileSearch">—</div><div class="sub" id="mrMobileSub"></div></div>
+            <div class="mr-card"><div class="name">授权状态</div><div class="pt" id="mrAuthStat">—</div></div>
+          </div>
+        </section>
+
+        <section class="mr-group">
+          <h2>任务进度</h2>
+          <div id="mrTasks">
+            <div class="mr-task"><span class="tt">签入</span><div class="mr-progress"><i style="width:0"></i></div><span class="badge">待执行</span></div>
+            <div class="mr-task"><span class="tt">阅读文章</span><div class="mr-progress"><i style="width:0"></i></div><span class="badge">待执行</span></div>
+            <div class="mr-task"><span class="tt">每日活动</span><div class="mr-progress"><i style="width:0"></i></div><span class="badge">待执行</span></div>
+            <div class="mr-task"><span class="tt">搜索任务</span><div class="mr-progress"><i style="width:0"></i></div><span class="badge">待执行</span></div>
+          </div>
+        </section>
+
+        <section class="mr-group">
+          <h2>操作</h2>
+          <div class="mr-actions">
+            <button type="button" id="mrRun" class="pui-btn pui-btn-primary">立即执行</button>
+            <button type="button" id="mrRefresh" class="pui-btn">刷新状态</button>
+            <button type="button" id="mrLogs" class="pui-btn">查看日志</button>
+          </div>
+        </section>
+
+        <section class="mr-group">
+          <h2>设置</h2>
+          <div class="mr-field">
+            <label>任务开关</label>
+            <div class="mr-row">
+              <label class="mr-switch"><input type="checkbox" id="mrSignEnabled" checked> 签入</label>
+              <label class="mr-switch"><input type="checkbox" id="mrReadEnabled" checked> 阅读</label>
+              <label class="mr-switch"><input type="checkbox" id="mrPromosEnabled" checked> 活动</label>
+              <label class="mr-switch"><input type="checkbox" id="mrSearchEnabled" checked> 搜索</label>
+            </div>
+          </div>
+          <div class="mr-field">
+            <label>PC 搜索目标次数（默认 30）</label>
+            <input type="number" id="mrPcCount" min="1" max="200" value="30">
+          </div>
+          <div class="mr-field">
+            <label>移动端搜索目标次数（默认 20）</label>
+            <input type="number" id="mrMobileCount" min="1" max="200" value="20">
+          </div>
+          <div class="mr-field">
+            <label>风控等级（对应搜索随机延迟区间）</label>
+            <select id="mrRiskLevel">
+              <option value="loose">宽松（8~20 秒）</option>
+              <option value="standard" selected>标准（15~45 秒）</option>
+              <option value="strict">严格（30~90 秒）</option>
+            </select>
+          </div>
+          <div class="mr-field">
+            <label>搜索间隔最小 / 最大（毫秒）</label>
+            <div class="mr-row">
+              <input type="number" id="mrIntervalMin" min="1000" max="300000" value="15000" style="max-width:140px">
+              <span>~</span>
+              <input type="number" id="mrIntervalMax" min="1000" max="300000" value="45000" style="max-width:140px">
+            </div>
+          </div>
+          <div class="mr-field">
+            <label class="mr-switch"><input type="checkbox" id="mrNotify" checked> 任务完成浏览器通知</label>
+          </div>
+          <div class="mr-field">
+            <label class="mr-switch"><input type="checkbox" id="mrAutoRun" checked> 每日自动执行（页面保持打开时触发）</label>
+          </div>
+          <div class="mr-field">
+            <label>授权码 / 授权链接（可选，用于登录失败时手动授权）</label>
+            <textarea id="mrAuthCode" placeholder="https://login.live.com/oauth20_desktop.srf?code=M.…"></textarea>
+            <span class="hint">请在 rewards.bing.com 登录微软账号后，如脚本无法自动授权，把授权链接粘贴到此处并点击保存授权码。授权码/链接请勿分享。</span>
+          </div>
+          <div class="mr-actions">
+            <button type="button" id="mrSave" class="pui-btn pui-btn-primary">保存设置</button>
+            <button type="button" id="mrSaveAuth" class="pui-btn">保存授权码</button>
+            <button type="button" id="mrReset" class="pui-btn pui-btn-danger">恢复默认</button>
+          </div>
+        </section>
+
+        <section class="mr-group">
+          <h2>执行历史</h2>
+          <ul class="mr-hist" id="mrHistory"><li>暂无记录</li></ul>
+        </section>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('scriptcat-1703-1');
+
+      // ==================== 功能逻辑 ====================
+      var DEFAULT_SETTINGS = {
+        searchEnabled: true, signEnabled: true, readEnabled: true, promosEnabled: true,
+        pcSearchCount: 30, mobileSearchCount: 20, searchLimit: 60,
+        intervalMin: 15000, intervalMax: 45000, riskLevel: 'standard',
+        notify: true, autoRun: true, autoDelayMin: 30, autoDelayMax: 90,
+        lockCN: false, region: 'CN', authCode: ''
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function mergeObj(a, b) {
+        var o = {}, k;
+        for (k in a) if (Object.prototype.hasOwnProperty.call(a, k)) o[k] = a[k];
+        if (b && typeof b === 'object') for (k in b) if (Object.prototype.hasOwnProperty.call(b, k)) o[k] = b[k];
+        return o;
+      }
+
+      var TASK_META = {
+        sign: { label: '签入' },
+        read: { label: '阅读文章' },
+        promos: { label: '每日活动' },
+        search: { label: '搜索任务' }
+      };
+
+      function setStatus(text, kind) {
+        var s = $('mrStatus');
+        s.textContent = text;
+        s.className = 'mr-status' + (kind ? ' ' + kind : '');
+      }
+
+      var progressBars = {};
+      function renderTasks(state) {
+        var box = $('mrTasks');
+        box.innerHTML = '';
+        Object.keys(TASK_META).forEach(function (key) {
+          var meta = TASK_META[key];
+          var row = document.createElement('div');
+          row.className = 'mr-task';
+          var tt = document.createElement('span');
+          tt.className = 'tt';
+          tt.textContent = meta.label;
+          var bar = document.createElement('div');
+          bar.className = 'mr-progress';
+          var fill = document.createElement('i');
+          bar.appendChild(fill);
+          var badge = document.createElement('span');
+          badge.className = 'badge';
+          badge.textContent = badgeText(key);
+          row.appendChild(tt);
+          row.appendChild(bar);
+          row.appendChild(badge);
+          box.appendChild(row);
+          progressBars[key] = { fill: fill, badge: badge };
+          var st = state && state.states && state.states[key];
+          if (st) applyTask(key, st);
+        });
+      }
+
+      function badgeText(key) {
+        var map = { sign: '待执行', read: '待执行', promos: '待执行', search: '待执行' };
+        return map[key];
+      }
+
+      function applyTask(key, st) {
+        var p = progressBars[key];
+        if (!p) return;
+        if (st && st.done) {
+          p.fill.style.width = '100%';
+          p.badge.textContent = '已完成';
+          p.badge.className = 'badge on';
+        } else if (st && st.doing) {
+          var pct = Math.min(100, Math.round(((st.num || 0) / (st.total || 1)) * 100));
+          p.fill.style.width = pct + '%';
+          p.badge.textContent = '执行中 ' + (st.num || 0) + '/' + (st.total || '?');
+          p.badge.className = 'badge doing';
+        } else {
+          p.fill.style.width = '0%';
+          p.badge.textContent = '待执行';
+          p.badge.className = 'badge';
+        }
+      }
+
+      var taskState = { sign: {}, read: {}, promos: {}, search: {} };
+      function resetTaskState() {
+        taskState = {
+          sign: { done: false }, read: { done: false },
+          promos: { done: false }, search: { done: false }
+        };
+        Object.keys(taskState).forEach(function (k) { applyTask(k, taskState[k]); });
+      }
+
+      function renderCards(counters, hasToken) {
+        if (counters) {
+          $('mrTodayPoint').textContent = counters.dailyPoint || 0;
+          $('mrPcSearch').textContent = (counters.pc ? counters.pc.progress : 0) + '/' + (counters.pc ? counters.pc.max : 0);
+          $('mrPcSub').textContent = '';
+          $('mrMobileSearch').textContent = (counters.mobile ? counters.mobile.progress : 0) + '/' + (counters.mobile ? counters.mobile.max : 0);
+          $('mrMobileSub').textContent = '';
+        }
+        if (typeof hasToken === 'boolean') {
+          $('mrAuthStat').textContent = hasToken ? '已登录' : '未授权';
+          $('mrAuthStat').style.color = hasToken ? '#047857' : '#b91c1c';
+        }
+      }
+
+      function renderHistory(hist) {
+        var box = $('mrHistory');
+        box.innerHTML = '';
+        if (!hist || !hist.length) { box.appendChild(document.createElement('li')).textContent = '暂无记录'; return; }
+        hist.forEach(function (h) {
+          var li = document.createElement('li');
+          var t = document.createElement('span');
+          t.textContent = (h.day || '') + ' · ' + (h.time ? h.time.slice(0, 19).replace('T', ' ') : '');
+          var m = document.createElement('span');
+          m.className = 'm';
+          m.textContent = ' · 积分 ' + (h.points || 0) + ' · 搜索 ' + (h.searchers || 0) + ' 次 · ' + (h.status === 'ok' ? '成功' : ('出错：' + (h.note || '')));
+          li.appendChild(t);
+          li.appendChild(m);
+          box.appendChild(li);
+        });
+      }
+
+      function readSettingsForm() {
+        return {
+          signEnabled: $('mrSignEnabled').checked,
+          readEnabled: $('mrReadEnabled').checked,
+          promosEnabled: $('mrPromosEnabled').checked,
+          searchEnabled: $('mrSearchEnabled').checked,
+          pcSearchCount: parseInt($('mrPcCount').value, 10) || 30,
+          mobileSearchCount: parseInt($('mrMobileCount').value, 10) || 20,
+          riskLevel: $('mrRiskLevel').value,
+          intervalMin: parseInt($('mrIntervalMin').value, 10) || 15000,
+          intervalMax: parseInt($('mrIntervalMax').value, 10) || 45000,
+          notify: $('mrNotify').checked,
+          autoRun: $('mrAutoRun').checked,
+          authCode: $('mrAuthCode').value
+        };
+      }
+
+      function fillSettingsForm(s) {
+        s = s || {};
+        $('mrSignEnabled').checked = s.signEnabled !== false;
+        $('mrReadEnabled').checked = s.readEnabled !== false;
+        $('mrPromosEnabled').checked = s.promosEnabled !== false;
+        $('mrSearchEnabled').checked = s.searchEnabled !== false;
+        $('mrPcCount').value = s.pcSearchCount || 30;
+        $('mrMobileCount').value = s.mobileSearchCount || 20;
+        $('mrRiskLevel').value = s.riskLevel || 'standard';
+        $('mrIntervalMin').value = s.intervalMin || 15000;
+        $('mrIntervalMax').value = s.intervalMax || 45000;
+        $('mrNotify').checked = s.notify !== false;
+        $('mrAutoRun').checked = s.autoRun !== false;
+        $('mrAuthCode').value = s.authCode || '';
+      }
+
+      function copyText(text) {
+        if (!text) { PUI.toast('暂无内容可复制', 'warn'); return; }
+        var done = function () { PUI.toast('已复制到剪贴板', 'success'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+        } else { fallbackCopy(text); done(); }
+      }
+      function fallbackCopy(text) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (e) { /* ignore */ }
+      }
+
+      function refreshStatus() {
+        channel.request('command', { action: 'getState' }, 5000)
+          .then(function (d) {
+            if (!d) return;
+            fillSettingsForm(d.settings);
+            renderCards(d.lastSummary && d.lastSummary.counters ? d.lastSummary.counters : null, d.hasToken);
+            renderHistory(d.history);
+            if (d.lastRunDay) setStatus('已同步 · 上次执行：' + d.lastRunDay + (d.lastRunAt ? ' ' + d.lastRunAt.slice(0, 19).replace('T', ' ') : ''), 'ok');
+            else setStatus('原页面已同步 · ' + (d.hasToken ? '已授权' : '尚未授权（请先登录 rewards.bing.com 或填写授权码）'), d.hasToken ? 'ok' : '');
+            channel.request('command', { action: 'refreshStatus' }, 6000)
+              .then(function (r) {
+                if (r && r.ok) { renderCards(r.counters, d.hasToken); setStatus('积分已刷新', 'ok'); }
+              }).catch(function () { /* 静默 */ });
+          })
+          .catch(function () {
+            setStatus('未连接原页面（独立模式）：请在任意页面点击右下角「微软积分签到」按钮打开本面板', 'error');
+          });
+      }
+
+      function runNow() {
+        resetTaskState();
+        setStatus('正在执行任务…', '');
+        channel.request('command', { action: 'runTasks' }, 5000)
+          .then(function (d) {
+            if (d && d.ok) { setStatus('任务已启动，正在后台执行…', ''); PUI.toast('任务已启动', 'success'); }
+          })
+          .catch(function () {
+            setStatus('未连接原页面（独立模式）：请从目标页面打开面板后执行', 'error');
+            PUI.toast('原页面未响应', 'warn');
+          });
+      }
+
+      function saveSettings() {
+        var s = readSettingsForm();
+        channel.request('command', { action: 'setConfig', settings: s }, 4000)
+          .then(function () { PUI.toast('设置已保存', 'success'); refreshStatus(); })
+          .catch(function () { PUI.toast('原页面未响应，设置未同步', 'warn'); });
+      }
+
+      // 监听原页面进度
+      channel.on('progress', function (d) {
+        d = d || {};
+        if (d.stage === 'start') { setStatus('开始执行任务…', ''); return; }
+        if (d.stage === 'auth') { setStatus('授权中…', ''); return; }
+        if (d.stage === 'task') {
+          if (taskState[d.task]) {
+            taskState[d.task].doing = true;
+            applyTask(d.task, taskState[d.task]);
+          }
+          setStatus('执行中：' + (TASK_META[d.task] ? TASK_META[d.task].label : d.task) + ' · ' + (d.message || ''), '');
+          return;
+        }
+        if (d.stage === 'search') {
+          taskState.search.doing = true;
+          taskState.search.num = d.done;
+          taskState.search.total = d.total;
+          applyTask('search', taskState.search);
+          return;
+        }
+        if (d.stage === 'taskDone') {
+          if (taskState[d.task]) {
+            taskState[d.task].done = true;
+            taskState[d.task].doing = false;
+            applyTask(d.task, taskState[d.task]);
+          }
+          return;
+        }
+      });
+      channel.on('done', function (d) {
+        d = d || {};
+        if (d.error) { setStatus('执行出错：' + d.error, 'error'); PUI.toast('执行出错', 'error'); }
+        else { setStatus('执行完成 · 今日积分 ' + (d.points || 0) + ' · 搜索 ' + (d.searchers || 0) + ' 次', 'ok'); PUI.toast('任务完成', 'success'); }
+        refreshStatus();
+      });
+
+      $('mrRun').addEventListener('click', runNow);
+      $('mrRefresh').addEventListener('click', refreshStatus);
+      $('mrSave').addEventListener('click', saveSettings);
+      $('mrSaveAuth').addEventListener('click', function () {
+        var code = $('mrAuthCode').value.trim();
+        var s = readSettingsForm();
+        s.authCode = code;
+        channel.request('command', { action: 'setConfig', settings: s }, 4000)
+          .then(function () { PUI.toast('授权码已保存', 'success'); })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      });
+      $('mrReset').addEventListener('click', function () {
+        channel.request('command', { action: 'resetSettings' }, 4000)
+          .then(function (d) { fillSettingsForm(d.settings || DEFAULT_SETTINGS); PUI.toast('已恢复默认', 'success'); })
+          .catch(function () { fillSettingsForm(DEFAULT_SETTINGS); PUI.toast('已恢复默认（面板本地）', 'warn'); });
+      });
+      $('mrLogs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) {
+            var text = (d && d.text) || '（无日志）';
+            var body = document.createElement('pre');
+            body.textContent = text;
+            body.style.cssText = 'max-height:300px;overflow:auto;white-space:pre-wrap;font-size:12px;';
+            PUI.modal({
+              title: '脚本日志',
+              body: body,
+              buttons: [
+                { text: '复制日志', type: 'primary', onClick: function () { copyText(text); } },
+                { text: '关闭', type: 'default' }
+              ]
+            });
+          })
+          .catch(function () { PUI.toast('原页面未响应，无法读取日志', 'warn'); });
+      });
+
+      // 初始化
+      fillSettingsForm(DEFAULT_SETTINGS);
+      renderTasks(null);
+      refreshStatus();
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>

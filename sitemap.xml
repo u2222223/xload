@@ -6,12 +6,32 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://xload.net/roadmap.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://xload.net/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://xload.net/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xload.net/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://xload.net/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xload.net/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>

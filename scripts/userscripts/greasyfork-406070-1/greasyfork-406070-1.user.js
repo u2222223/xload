@@ -3,7 +3,7 @@
 // @name:zh-CN   通用小说下载器
 // @name:en      NovelFetch - Universal Novel Downloader
 // @namespace    https://github.com/u2222223/xload
-// @version      1.0.3
+// @version      2026.9.9.1
 // @description  一个可扩展的通用型小说下载器：在小说目录页一键抓取章节，自动生成 TXT 纯文本与 EPUB 电子书，支持章节筛选、自定义命名、并发下载与进度实时显示。
 // @author       xload
 // @match        *://*/*

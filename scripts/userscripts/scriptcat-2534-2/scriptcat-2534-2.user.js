@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        抖音播放器增强
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.0
+// @version     2026.9.9.1
 // @description 增强抖音网页版播放器体验：画质记忆、禁止自动播放、自定义全屏与背景色
 // @author      xload
 // @match       *://*.douyin.com/*

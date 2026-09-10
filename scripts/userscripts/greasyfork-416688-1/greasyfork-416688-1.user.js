@@ -3,7 +3,7 @@
 // @name:zh-CN   全局字体渲染增强
 // @name:en      Global Font Rendering Enhancer
 // @namespace    https://github.com/u2222223/xload
-// @version      1.0.0
+// @version      2026.9.9.1
 // @description  无需 MacType，享受细腻网页字体阅读体验。全局字体重写、中英文分字体、抗锯齿平滑、描边阴影、动态缩放，黑白名单过滤与站点个性化。
 // @author       xload
 // @match        *://*/*

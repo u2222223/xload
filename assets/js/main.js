@@ -57,6 +57,7 @@
       nav += navLink("/listing.html?type=" + encodeURIComponent(t), typeById(t).label, active === t);
     });
     nav += navLink("/about.html", "About", active === "about");
+    nav += navLink("/roadmap.html", "Roadmap", active === "roadmap");
     var name = data ? esc(data.site.name) : "xload";
     return (
       '<header class="site-header"><div class="nav-wrap">' +
@@ -84,6 +85,7 @@
       "<li>" + esc(data.site.tagline) + "</li>" +
       '<li><a href="/about.html" target="_blank" rel="noopener">About us</a></li>' +
       '<li><a href="/contact.html" target="_blank" rel="noopener">Contact</a></li>' +
+      '<li><a href="/roadmap.html" target="_blank" rel="noopener">Roadmap</a></li>' +
       "</ul></div>" +
       "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
       "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
@@ -193,6 +195,23 @@
     }
     if (q) { var fi = document.getElementById("filter-q"); if (fi) fi.value = param("q"); }
 
+    // 渐进增强（SSG）：构建时已把卡片写进 HTML，JS 只负责筛选/排序/补漏。
+    // 爬虫不执行 JS 也能看到全部卡片（内容直接进 HTML 源码）。
+    var staticIds = {};
+    Array.prototype.forEach.call(grid.querySelectorAll(".script-card[data-id]"), function (c) {
+      staticIds[c.getAttribute("data-id")] = c;
+    });
+
+    function ensureCard(item) {
+      var el = staticIds[item.id];
+      if (el) return el;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = cardHTML(item);
+      el = tmp.firstChild;
+      staticIds[item.id] = el;
+      return el;
+    }
+
     function apply() {
       var t = document.getElementById("ff-type").value;
       var k = document.getElementById("filter-q").value.toLowerCase().trim();
@@ -211,17 +230,38 @@
       else if (s === "name") list.sort(function (a, b) { return a.title.localeCompare(b.title); });
       else list.sort(function (a, b) { return (Number(b.downloads) || 0) - (Number(a.downloads) || 0); });
 
-      var out = list.length
-        ? list.map(cardHTML).join("")
-        : '<div class="empty">No results found. Try a different search or filter.</div>';
-      grid.innerHTML = out;
+      // 清理旧空态提示
+      var oldEmpty = grid.querySelector(".empty");
+      if (oldEmpty && oldEmpty.parentNode) oldEmpty.parentNode.removeChild(oldEmpty);
+
+      // 补漏：静态卡片之外的条目动态渲染，然后按当前排序重排 DOM
+      list.forEach(function (item, i) {
+        var el = ensureCard(item);
+        if (grid.children[i] !== el) grid.insertBefore(el, grid.children[i] || null);
+      });
+
+      // 隐藏不匹配项（保留静态卡片，控制 display 即可）
+      Object.keys(staticIds).forEach(function (id) {
+        var el = staticIds[id];
+        var matched = list.some(function (it) { return it.id === id; });
+        el.style.display = matched ? "" : "none";
+      });
+
+      if (!list.length) {
+        var empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No results found. Try a different search or filter.";
+        grid.appendChild(empty);
+      }
+
       var cl = document.getElementById("count-line");
       if (cl) cl.textContent = list.length + (list.length === 1 ? " item" : " items");
     }
 
-    document.getElementById("ff-type").addEventListener("change", apply);
+    var tSel = document.getElementById("ff-type");
+    if (tSel) tSel.addEventListener("change", apply);
     if (document.getElementById("ff-sort")) document.getElementById("ff-sort").addEventListener("change", apply);
-    document.getElementById("filter-q").addEventListener("input", apply);
+    if (document.getElementById("filter-q")) document.getElementById("filter-q").addEventListener("input", apply);
     apply();
   }
 

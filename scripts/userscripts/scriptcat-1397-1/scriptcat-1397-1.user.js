@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        学术论文免费下载工具
 // @namespace   https://github.com/u2222223/xload
-// @version     1.0.4
+// @version     2026.9.9.1
 // @description 多平台学术论文一键免费下载：知网、万方、维普、皮书、中华医学会、博看期刊，无需登录付费账号
 // @author      xload
 // @match       *://*.cnki.net/*

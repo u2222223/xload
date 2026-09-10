@@ -213,6 +213,29 @@ main { flex: 1; }
 .empty { text-align: center; color: var(--text-muted); padding: 48px 0; }
 .count-line { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; }
 
+/* ============ Roadmap ============ */
+.legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 20px; font-size: 0.9rem; }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); }
+.badge {
+  display: inline-block; font-size: 0.74rem; font-weight: 600; padding: 3px 10px;
+  border-radius: 999px; border: 1px solid transparent; white-space: nowrap;
+}
+.badge.s-live  { color: #22c55e; border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.1); }
+.badge.s-dev   { color: #38bdf8; border-color: rgba(56,189,248,.35); background: rgba(56,189,248,.1); }
+.badge.s-test  { color: #f59e0b; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.1); }
+.badge.s-queue { color: var(--text-muted); border-color: var(--border); background: transparent; }
+.badge.s-fail  { color: #ef4444; border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.1); }
+.badge.s-skip  { color: var(--text-muted); border-color: transparent; background: rgba(128,128,128,.12); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); }
+.roadmap-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 640px; }
+.roadmap-table th, .roadmap-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.roadmap-table thead th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); background: rgba(128,128,128,.06); }
+.roadmap-table tbody tr:last-child td { border-bottom: none; }
+.roadmap-table tbody tr:hover { background: rgba(34,211,238,.04); }
+.roadmap-table .c-task { font-weight: 600; }
+.roadmap-table .c-feature { color: var(--text-muted); }
+.roadmap-table .c-date { color: var(--text-muted); font-size: 0.85rem; white-space: nowrap; }
+
 /* ============ Detail page ============ */
 .detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 28px; align-items: start; }
 .detail-hero {
