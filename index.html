@@ -1,19 +1,75 @@
-﻿﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home — xload</title>
-  <meta name="description" content="Browse free, open source browser userscripts on xload. Every download is linked to our GitHub releases.">
+  <meta name="description" content="Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://xload.net/listing.html">
-  <meta http-equiv="refresh" content="0; url=/listing.html">
+  <link rel="canonical" href="https://xload.net/">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-  <script>window.location.replace("/listing.html");</script>
+
+  <!-- Google AdSense consent + auto ads (replace ID below) -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", {
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      ad_storage: "denied",
+      analytics_storage: "denied"
+    }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
-<body>
-  <p style="font-family:system-ui,sans-serif;padding:2rem;">Redirecting to <a target="_blank" rel="noopener" href="/listing.html">Home</a>&hellip;</p>
+<body data-nav="home">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><span>Home</span></nav>
+      <div class="page-header">
+        <h1>Home</h1>
+        <p>Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.</p>
+      </div>
+
+      <!-- Filters -->
+      <div class="toolbar">
+        <select id="ff-type" aria-label="Filter by type">
+          <option value="all">All types</option>
+        </select>
+        <input class="f-search" id="filter-q" type="text" placeholder="Filter results by keyword&hellip;" aria-label="Keyword filter">
+        <select id="ff-sort" aria-label="Sort order">
+          <option value="popular">Most popular</option>
+          <option value="newest">Newest</option>
+          <option value="name">Name A&ndash;Z</option>
+        </select>
+      </div>
+
+      <p class="count-line" id="count-line"></p>
+      <div class="card-grid" id="listing">
+        <!-- XLOAD:CARDS:START -->
+        <a class="script-card" data-id="scriptcat-2534-2" data-dl="135348" data-rating="4.8" data-updated="2026-09-09" href="/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>抖音播放器增强</h3></div><p class="desc">画质记忆、禁止自动播放、自定义全屏与背景色</p><div class="tags"><span class="tag">抖音</span><span class="tag">播放器</span><span class="tag">画质</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 135.3k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> 4.8</span></div></a>
+        <a class="script-card" data-id="scriptcat-1397-1" data-dl="318239" data-rating="4.8" data-updated="2026-09-09" href="/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>学术论文免费下载工具</h3></div><p class="desc">多平台学术论文一键免费下载</p><div class="tags"><span class="tag">知网</span><span class="tag">万方</span><span class="tag">维普</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 318.2k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> 4.8</span></div></a>
+        <a class="script-card" data-id="greasyfork-406070-1" data-dl="125956" data-rating="4.5" data-updated="2026-09-09" href="/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>通用小说下载器</h3></div><p class="desc">一键下载全网小说，支持百站解析</p><div class="tags"><span class="tag">小说下载</span><span class="tag">EPUB</span><span class="tag">TXT</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 126k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> 4.5</span></div></a>
+        <a class="script-card" data-id="greasyfork-416688-1" data-dl="123626" data-rating="4.8" data-updated="2026-09-09" href="/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>全局字体渲染增强</h3></div><p class="desc">无需 MacType，享受细腻网页字体阅读体验</p><div class="tags"><span class="tag">字体渲染</span><span class="tag">字体重写</span><span class="tag">抗锯齿</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 123.6k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> 4.8</span></div></a>
+        <a class="script-card" data-id="scriptcat-1703-1" data-dl="152452" data-rating="0" data-updated="2026-09-10" href="/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>微软积分商城自动签到</h3></div><p class="desc">自动完成微软积分每日任务</p><div class="tags"><span class="tag">微软积分</span><span class="tag">Microsoft Rewards</span><span class="tag">自动签到</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 152.5k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> &ndash;</span></div></a>
+        <a class="script-card" data-id="scriptcat-2534-1" data-dl="135348" data-rating="0" data-updated="2026-09-10" href="/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>抖音视频流过滤</h3></div><p class="desc">自定义过滤抖音视频流中的广告、直播和不感兴趣内容</p><div class="tags"><span class="tag">抖音</span><span class="tag">视频过滤</span><span class="tag">广告过滤</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 135.3k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> &ndash;</span></div></a>
+        <a class="script-card" data-id="scriptcat-2534-3" data-dl="135348" data-rating="0" data-updated="2026-09-10" href="/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>抖音界面沉浸优化</h3></div><p class="desc">沉浸模式+手机模式+自定义主题，专注视频内容</p><div class="tags"><span class="tag">抖音</span><span class="tag">沉浸模式</span><span class="tag">手机模式</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 135.3k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> &ndash;</span></div></a>
+        <a class="script-card" data-id="scriptcat-2534-4" data-dl="135348" data-rating="0" data-updated="2026-09-10" href="/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.html" target="_blank" rel="noopener"><div class="card-top"><span class="card-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg></span><h3>抖音互动内容屏蔽</h3></div><p class="desc">弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单</p><div class="tags"><span class="tag">抖音</span><span class="tag">弹幕屏蔽</span><span class="tag">评论屏蔽</span></div><div class="card-meta"><span class="dl"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 3v10l3-3 1.4 1.4L12 16.8l-4.4-4.4L9 10l3 3V3h4a2 2 0 012 2v14a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2h4z"/></svg> 135.3k</span><span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4-4.7-4.6 6.5-.9L12 2.5z"/></svg> &ndash;</span></div></a>
+        <!-- XLOAD:CARDS:END -->
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

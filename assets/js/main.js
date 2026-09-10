@@ -51,13 +51,12 @@
   function buildHeader() {
     var active = document.body.getAttribute("data-nav") || "";
     var nav = "";
-    nav += navLink("/listing.html", "Home", active === "script" || active === "home");
+    nav += navLink("/", "Home", active === "script" || active === "home");
     enabledTypes().forEach(function (t) {
       if (t === "script") return;
-      nav += navLink("/listing.html?type=" + encodeURIComponent(t), typeById(t).label, active === t);
+      nav += navLink("/?type=" + encodeURIComponent(t), typeById(t).label, active === t);
     });
     nav += navLink("/about.html", "About", active === "about");
-    nav += navLink("/roadmap.html", "Roadmap", active === "roadmap");
     var name = data ? esc(data.site.name) : "xload";
     return (
       '<header class="site-header"><div class="nav-wrap">' +
@@ -76,7 +75,7 @@
     var en = enabledTypes();
     var typesCol = en.map(function (id) {
       var t = typeById(id);
-      return '<li><a href="/listing.html?type=' + encodeURIComponent(id) + '" target="_blank" rel="noopener">' + esc(t.label) + "</a></li>";
+      return '<li><a href="/?type=' + encodeURIComponent(id) + '" target="_blank" rel="noopener">' + esc(t.label) + "</a></li>";
     }).join("");
     return (
       '<footer class="site-footer"><div class="container">' +
@@ -85,7 +84,6 @@
       "<li>" + esc(data.site.tagline) + "</li>" +
       '<li><a href="/about.html" target="_blank" rel="noopener">About us</a></li>' +
       '<li><a href="/contact.html" target="_blank" rel="noopener">Contact</a></li>' +
-      '<li><a href="/roadmap.html" target="_blank" rel="noopener">Roadmap</a></li>' +
       "</ul></div>" +
       "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
       "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
