@@ -1,4 +1,4 @@
-/* panel.css —— 功能面板页公共样式（布局 + pui-* UI 组件）—— 极简黑白 */
+/* panel.css —— 功能面板页公共样式（布局 + pui-* UI 组件）—— D+ 极简黑白（简约过渡） */
 
 /* ---------- 布局 ---------- */
 * {
@@ -100,6 +100,146 @@ body {
 
 .ad-slot-top {
   min-height: 90px;
+}
+
+/* ---------- 通用功能组件（D+：pb-* 系列） ---------- */
+.pb-status {
+  padding: 10px 14px;
+  border-radius: 4px;
+  background: #f4f4f4;
+  color: #111;
+  border-left: 3px solid #111;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.pb-group {
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #ececec;
+}
+
+.pb-group:last-of-type {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+.pb-group h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #111;
+}
+
+.pb-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.pb-lbl {
+  font-size: 13px;
+}
+
+.pb-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pb-rate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.pb-rate button {
+  padding: 6px 12px;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  background: #fff;
+  color: #111;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.pb-rate button:hover {
+  border-color: #111;
+}
+
+.pb-rate button.active {
+  background: #111;
+  border-color: #111;
+  color: #fff;
+  font-weight: 600;
+}
+
+.pb-sw {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #111;
+}
+
+.pb-hint {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #a3a3a3;
+}
+
+input[type="range"] {
+  accent-color: #111;
+  cursor: pointer;
+}
+
+/* pui-switch 开关（D+ 黑白） */
+.pui-switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  flex: none;
+}
+
+.pui-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.pui-switch i {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: #d4d4d4;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.pui-switch i:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.pui-switch input:checked + i {
+  background: #111;
+}
+
+.pui-switch input:checked + i:after {
+  transform: translateX(18px);
 }
 
 /* ---------- PUI 组件 ---------- */
@@ -237,7 +377,7 @@ body {
 
 .pui-btn {
   padding: 8px 16px;
-  border: 1px solid transparent;
+  border: 1px solid #d4d4d4;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
