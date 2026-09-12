@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5视频播放增强 - 功能面板</title>
+  <meta name="description" content="全能视频播放增强：倍速/截图/画中画/全屏">
+  <meta name="keywords" content="视频播放,倍速,截图,画中画,网页全屏,快捷键">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>HTML5视频播放增强</h1>
+        <p class="panel-subtitle">全能视频播放增强：倍速/截图/画中画/全屏</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .vpb-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; word-break: break-all; }
+          .vpb-status.vpb-off { background: #fef2f2; color: #b91c1c; }
+          .vpb-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .vpb-group:last-of-type { border-bottom: 0; }
+          .vpb-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .vpb-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+          .vpb-field { display: flex; flex-direction: column; gap: 6px; min-width: 150px; }
+          .vpb-field > label { font-size: 13px; color: #4b5563; }
+          .vpb-field select, .vpb-field input[type="text"], .vpb-field input[type="number"] {
+            padding: 7px 9px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; width: 100%; box-sizing: border-box;
+          }
+          .vpb-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .vpb-check input { width: 16px; height: 16px; }
+          .vpb-check label { font-size: 14px; color: #1f2328; cursor: pointer; }
+          .vpb-hint { margin: 8px 0 0; font-size: 12px; color: #9ca3af; }
+          .vpb-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; margin-top: 6px; }
+          .vpb-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+          .vpb-btns button.pui-btn { margin: 0; }
+          .vpb-rate-quick { display: flex; flex-wrap: wrap; gap: 6px; }
+          .vpb-rate-quick button { padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 8px; background: #fff; color: #334155; font-size: 13px; cursor: pointer; }
+          .vpb-rate-quick button:hover { border-color: #6366f1; color: #4f46e5; }
+          .vpb-rate-quick button.active { background: #eef2ff; border-color: #6366f1; color: #4f46e5; font-weight: 600; }
+          .vpb-sc { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+          .vpb-sc .lbl { width: 130px; font-size: 13px; color: #374151; }
+          .vpb-sc input[type="text"] { flex: 1; min-width: 140px; padding: 6px 9px; border: 1px solid #d1d5db; border-radius: 8px; text-align: center; font-family: monospace; font-size: 13px; }
+          .vpb-sc input[type="text"].recording { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,.15); }
+          .vpb-modal-layer { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+          .vpb-modal { background: #fff; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,.2); width: min(560px, 92vw); max-height: 82vh; display: flex; flex-direction: column; overflow: hidden; }
+          .vpb-modal-head { padding: 14px 18px; border-bottom: 1px solid #eef0f3; font-weight: 600; color: #111827; }
+          .vpb-modal-body { padding: 14px 18px; overflow: auto; }
+          .vpb-modal-foot { padding: 12px 18px; border-top: 1px solid #eef0f3; display: flex; justify-content: flex-end; gap: 10px; }
+          .vpb-modal textarea { width: 100%; min-height: 160px; box-sizing: border-box; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; font-family: monospace; font-size: 12px; }
+          .vpb-logs { white-space: pre-wrap; font-family: monospace; font-size: 12px; color: #374151; background: #f9fafb; padding: 10px; border-radius: 8px; max-height: 320px; overflow: auto; }
+          input[type="range"] { width: 100%; }
+        </style>
+
+        <div class="vpb-status" id="vpbStatus">等待原页面连接…</div>
+
+        <section class="vpb-group">
+          <h2>播放控制</h2>
+          <div class="vpb-btns">
+            <button type="button" class="pui-btn pui-btn-primary" id="btn-play">播放 / 暂停</button>
+            <button type="button" class="pui-btn" id="btn-back">-5s</button>
+            <button type="button" class="pui-btn" id="btn-fwd">+5s</button>
+            <button type="button" class="pui-btn" id="btn-back-lg">-20s</button>
+            <button type="button" class="pui-btn" id="btn-fwd-lg">+20s</button>
+            <button type="button" class="pui-btn" id="btn-next">下一集</button>
+          </div>
+          <div class="vpb-row" style="margin-top:12px;">
+            <div class="vpb-field" style="flex:1;min-width:180px;">
+              <label for="vol-range">音量 <span id="vol-val">100</span>%</label>
+              <input type="range" id="vol-range" min="0" max="100" step="1" value="100">
+            </div>
+            <div class="vpb-field">
+              <label>&nbsp;</label>
+              <button type="button" class="pui-btn" id="btn-mute">静音切换</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="vpb-group">
+          <h2>倍速设置</h2>
+          <div class="vpb-row">
+            <div class="vpb-field" style="flex:1;min-width:200px;">
+              <label for="rate-range">播放速度 <span id="rate-val">1.00</span>x</label>
+              <input type="range" id="rate-range" min="25" max="400" step="5" value="100">
+            </div>
+            <div class="vpb-field">
+              <label>倍速记忆模式</label>
+              <select id="rate-mode">
+                <option value="remember">记住上次倍速</option>
+                <option value="default">固定默认倍速</option>
+                <option value="site">站点级记忆</option>
+                <option value="off">不自动改倍速</option>
+              </select>
+            </div>
+          </div>
+          <div class="vpb-rate-quick" style="margin-top:10px;">
+            <button type="button" data-rate="0.5">0.5x</button>
+            <button type="button" data-rate="1">1x</button>
+            <button type="button" data-rate="1.5">1.5x</button>
+            <button type="button" data-rate="2">2x</button>
+            <button type="button" data-rate="3">3x</button>
+            <button type="button" data-rate="4">4x</button>
+          </div>
+          <div class="vpb-row" style="margin-top:12px;">
+            <div class="vpb-field">
+              <label for="default-rate">默认倍速</label>
+              <input type="number" id="default-rate" step="0.05" min="0.25" max="4">
+            </div>
+            <div class="vpb-field vpb-check">
+              <input type="checkbox" id="longpress-on">
+              <label for="longpress-on">长按加速</label>
+            </div>
+            <div class="vpb-field">
+              <label for="longpress-rate">长按加速倍速</label>
+              <input type="number" id="longpress-rate" step="0.05" min="0.25" max="4">
+            </div>
+          </div>
+          <p class="vpb-hint">摄像倍数在 0.25x~4x 之间；「记住上次」模式会连同 1.0x 一起记忆，解决换集后倍速不还原的问题。</p>
+        </section>
+
+        <section class="vpb-group">
+          <h2>显示效果</h2>
+          <div class="vpb-btns">
+            <button type="button" class="pui-btn" id="btn-pip">画中画</button>
+            <button type="button" class="pui-btn" id="btn-webfs">网页全屏</button>
+            <button type="button" class="pui-btn" id="btn-fs">原生全屏</button>
+            <button type="button" class="pui-btn" id="btn-shot">截图</button>
+          </div>
+          <div class="vpb-row" style="margin-top:12px;">
+            <div class="vpb-field">
+              <label for="shot-format">截图格式</label>
+              <select id="shot-format">
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+              </select>
+            </div>
+            <div class="vpb-field vpb-check">
+              <input type="checkbox" id="pip-on">
+              <label for="pip-on">启用画中画</label>
+            </div>
+            <div class="vpb-field vpb-check">
+              <input type="checkbox" id="webfs-on">
+              <label for="webfs-on">启用网页全屏</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="vpb-group">
+          <h2>快捷键</h2>
+          <div id="sc-list"></div>
+          <div class="vpb-btns" style="margin-top:10px;">
+            <button type="button" class="pui-btn" id="btn-sc-default">恢复默认快捷键</button>
+            <button type="button" class="pui-btn pui-btn-primary" id="btn-sc-apply">应用快捷键</button>
+          </div>
+          <p class="vpb-hint">点击「录制」后按下想要绑定的按键组合即可；Esc 取消录制。修改后需点「应用快捷键」下发到原页面。</p>
+        </section>
+
+        <section class="vpb-group">
+          <h2>当前站点</h2>
+          <div class="vpb-status" id="vpbSite">—</div>
+        </section>
+
+        <div class="vpb-actions">
+          <button type="button" id="btn-logs" class="pui-btn">查看日志</button>
+          <button type="button" id="btn-import" class="pui-btn">导入配置</button>
+          <button type="button" id="btn-export" class="pui-btn">导出配置</button>
+          <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认</button>
+          <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+        </div>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('xload-d5aaecca');
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-vpb-settings';
+
+      var DEFAULT_SHORTCUTS = {
+        playPause: 'Space', forward: 'ArrowRight', backward: 'ArrowLeft',
+        forwardLarge: 'Shift+ArrowRight', backwardLarge: 'Shift+ArrowLeft',
+        volumeUp: 'ArrowUp', volumeDown: 'ArrowDown', mute: 'm',
+        rateUp: 'c', rateDown: 'x', rateReset: 'z', next: 'n',
+        screenshot: 'p', pip: 'i', fullscreen: 'Enter', webFullscreen: 'Shift+Enter',
+        prevFrame: 'd', nextFrame: 'f', exitFullscreen: 'Escape', longPress: 'g'
+      };
+
+      var DEFAULTS = {
+        enabled: true,
+        whitelistMode: false,
+        enabledSites: [],
+        excludeSites: ['xload.net', 'u2222223.github.io'],
+        rateMode: 'remember',
+        defaultRate: 1.0,
+        longPressEnabled: true,
+        longPressRate: 3.0,
+        seekStep: 5,
+        seekStepLarge: 20,
+        volumeStep: 0.1,
+        screenshotFormat: 'png',
+        pipEnabled: true,
+        webFullscreenEnabled: true,
+        shortcuts: DEFAULT_SHORTCUTS,
+        siteRates: {}
+      };
+
+      var SHORTCUT_META = [
+        { id: 'playPause', label: '暂停/播放' },
+        { id: 'forward', label: '快进 5 秒' },
+        { id: 'backward', label: '快退 5 秒' },
+        { id: 'forwardLarge', label: '快进 20 秒' },
+        { id: 'backwardLarge', label: '快退 20 秒' },
+        { id: 'volumeUp', label: '音量 +' },
+        { id: 'volumeDown', label: '音量 -' },
+        { id: 'mute', label: '静音切换' },
+        { id: 'rateUp', label: '加速 0.1x' },
+        { id: 'rateDown', label: '减速 0.1x' },
+        { id: 'rateReset', label: '重置 1.0x' },
+        { id: 'next', label: '下一集' },
+        { id: 'screenshot', label: '截图' },
+        { id: 'pip', label: '画中画' },
+        { id: 'fullscreen', label: '原生全屏' },
+        { id: 'webFullscreen', label: '网页全屏' },
+        { id: 'prevFrame', label: '上一帧' },
+        { id: 'nextFrame', label: '下一帧' },
+        { id: 'exitFullscreen', label: '退出全屏' },
+        { id: 'longPress', label: '长按加速' }
+      ];
+
+      function $(id) { return document.getElementById(id); }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function deepClone(v) {
+        if (Array.isArray(v)) return v.map(deepClone);
+        if (v && typeof v === 'object') { var o = {}, k; for (k in v) if (Object.prototype.hasOwnProperty.call(v, k)) o[k] = deepClone(v[k]); return o; }
+        return v;
+      }
+      function loadLocal() { try { var r = JSON.parse(localStorage.getItem(LS_KEY)); return (r && typeof r === 'object') ? r : {}; } catch (e) { return {}; } }
+      function saveLocal(s) { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+
+      var state = merge(DEFAULTS, loadLocal());
+      var recordingAction = null;
+
+      function panelComboFromEvent(e) {
+        if (!e || e.key == null) return '';
+        var key = e.key;
+        if (key === 'Escape' && !e.ctrlKey && !e.shiftKey && !e.altKey && !e.metaKey) return 'Escape';
+        if (key === 'Control' || key === 'Shift' || key === 'Alt' || key === 'Meta') return '';
+        if (key === ' ' || key === 'Spacebar') key = 'Space';
+        else if (key.length === 1) key = key.toLowerCase();
+        var parts = [];
+        if (e.ctrlKey) parts.push('Ctrl');
+        if (e.shiftKey) parts.push('Shift');
+        if (e.altKey) parts.push('Alt');
+        if (e.metaKey) parts.push('Meta');
+        parts.push(key);
+        return parts.join('+');
+      }
+
+      function setStatus(text, off) {
+        var el = $('vpbStatus');
+        el.textContent = text;
+        el.className = 'vpb-status' + (off ? ' vpb-off' : '');
+      }
+
+      function showConfig(cfg) {
+        var s = merge(DEFAULTS, cfg || {});
+        state = deepClone(s);
+        $('rate-mode').value = s.rateMode || 'remember';
+        $('default-rate').value = String(Number(s.defaultRate) || 1);
+        $('longpress-on').checked = Boolean(s.longPressEnabled);
+        $('longpress-rate').value = String(Number(s.longPressRate) || 3);
+        $('shot-format').value = s.screenshotFormat === 'jpg' ? 'jpg' : 'png';
+        $('pip-on').checked = Boolean(s.pipEnabled);
+        $('webfs-on').checked = Boolean(s.webFullscreenEnabled);
+        renderShortcuts(s.shortcuts);
+        highlightRateQuick((s.defaultRate));
+      }
+
+      function collect() {
+        var shortcuts = {};
+        SHORTCUT_META.forEach(function (m) { shortcuts[m.id] = ($('sc-' + m.id) ? $('sc-' + m.id).value : DEFAULT_SHORTCUTS[m.id]); });
+        return {
+          enabled: true,
+          whitelistMode: Boolean(state.whitelistMode),
+          enabledSites: state.enabledSites || [],
+          excludeSites: state.excludeSites || DEFAULTS.excludeSites,
+          rateMode: $('rate-mode').value,
+          defaultRate: Number($('default-rate').value) || 1,
+          longPressEnabled: $('longpress-on').checked,
+          longPressRate: Number($('longpress-rate').value) || 3,
+          seekStep: state.seekStep || 5,
+          seekStepLarge: state.seekStepLarge || 20,
+          volumeStep: state.volumeStep || 0.1,
+          screenshotFormat: $('shot-format').value,
+          pipEnabled: $('pip-on').checked,
+          webFullscreenEnabled: $('webfs-on').checked,
+          shortcuts: shortcuts,
+          siteRates: state.siteRates || {}
+        };
+      }
+
+      function highlightRateQuick(rate) {
+        var btns = document.querySelectorAll('.vpb-rate-quick button');
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+      }
+
+      function renderShortcuts(shortcuts) {
+        var box = $('sc-list');
+        box.innerHTML = '';
+        var sc = merge(DEFAULT_SHORTCUTS, shortcuts || {});
+        SHORTCUT_META.forEach(function (m) {
+          var row = document.createElement('div');
+          row.className = 'vpb-sc';
+          var lbl = document.createElement('span');
+          lbl.className = 'lbl';
+          lbl.textContent = m.label;
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.id = 'sc-' + m.id;
+          input.value = sc[m.id] || '';
+          input.readOnly = true;
+          var rec = document.createElement('button');
+          rec.type = 'button';
+          rec.className = 'pui-btn';
+          rec.textContent = '录制';
+          rec.style.margin = '0';
+          rec.addEventListener('click', function () { startRecord(m.id); });
+          row.appendChild(lbl);
+          row.appendChild(input);
+          row.appendChild(rec);
+          box.appendChild(row);
+        });
+      }
+
+      function startRecord(actionId) {
+        recordingAction = actionId;
+        var inputs = document.querySelectorAll('#sc-list input');
+        for (var i = 0; i < inputs.length; i++) inputs[i].classList.remove('recording');
+        var input = $('sc-' + actionId);
+        if (input) { input.classList.add('recording'); input.value = '按下按键…'; }
+        PUI.toast('按下要绑定的按键组合（Esc 取消）', 'info');
+      }
+
+      document.addEventListener('keydown', function (e) {
+        if (!recordingAction) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var combo = panelComboFromEvent(e);
+        if (combo === 'Escape') { recordingAction = null; renderShortcuts(state.shortcuts); PUI.toast('已取消录制', 'warn'); return; }
+        if (!combo) return;
+        if (!state.shortcuts) state.shortcuts = merge(DEFAULT_SHORTCUTS, {});
+        state.shortcuts[recordingAction] = combo;
+        recordingAction = null;
+        renderShortcuts(state.shortcuts);
+        PUI.toast('已绑定：' + combo, 'success');
+      }, true);
+
+      function control(op) {
+        return channel.request('command', { action: 'control', control: op }, 5000);
+      }
+
+      function refreshState() {
+        channel.request('command', { action: 'getState' }, 4000).then(function (d) {
+          if (d && d.page) {
+            $('vpbSite').textContent = '站点：' + (d.page.host || '') + '（识别为 ' + (d.page.site || 'generic') + '）' + (d.page.excluded ? ' · 本页已排除' : '');
+          }
+          if (d && d.video && d.video.exists) {
+            var t = d.video;
+            var dur = t.duration != null ? formatSec(t.duration) : (t.live ? '直播' : '—');
+            setStatus('视频已连接 · ' + (t.paused ? '已暂停' : '播放中') + ' · 当前 ' + (t.rate || 1) + 'x · 音量 ' + Math.round((t.volume || 0) * 100) + '% · ' + formatSec(t.currentTime) + ' / ' + dur);
+          } else {
+            setStatus('已连接原页面，但当前页未检测到视频', true);
+          }
+        }).catch(function () { setStatus('未连接原页面（面板独立模式）', true); });
+      }
+
+      function formatSec(sec) {
+        sec = Number(sec) || 0;
+        var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.floor(sec % 60);
+        function p(n) { return (n < 10 ? '0' : '') + n; }
+        return (h > 0 ? h + ':' : '') + p(m) + ':' + p(s);
+      }
+
+      function apply() {
+        var cfg = collect();
+        saveLocal(cfg);
+        showConfig(cfg);
+        channel.request('command', { action: 'applyConfig', config: cfg }, 5000)
+          .then(function (d) { if (d && d.ok) PUI.toast('已应用到原页面', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      }
+
+      function applyShortcuts() {
+        var sc = {};
+        SHORTCUT_META.forEach(function (m) { sc[m.id] = $('sc-' + m.id).value; });
+        state.shortcuts = sc;
+        saveLocal(state);
+        channel.request('command', { action: 'applyShortcuts', shortcuts: sc }, 5000)
+          .then(function (d) { if (d && d.ok) PUI.toast('快捷键已应用', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      }
+
+      function openModal(title, bodyHtml, footHtml) {
+        var layer = document.createElement('div');
+        layer.className = 'vpb-modal-layer';
+        var box = document.createElement('div');
+        box.className = 'vpb-modal';
+        box.innerHTML = '<div class="vpb-modal-head">' + title + '</div><div class="vpb-modal-body">' + bodyHtml + '</div>' + (footHtml ? '<div class="vpb-modal-foot">' + footHtml + '</div>' : '');
+        layer.appendChild(box);
+        document.body.appendChild(layer);
+        layer.addEventListener('click', function (e) { if (e.target === layer) layer.remove(); });
+        return { layer: layer, box: box };
+      }
+
+      function exportConfig() {
+        var json = JSON.stringify(collect(), null, 2);
+        var foot = '<button type="button" class="pui-btn" data-act="copy">复制</button><button type="button" class="pui-btn" data-act="close">关闭</button>';
+        var m = openModal('导出配置', '<textarea readonly>' + json.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</textarea>', foot);
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        m.box.querySelector('[data-act="copy"]').addEventListener('click', function () {
+          var ta = m.box.querySelector('textarea');
+          function fallback() { try { var tmp = document.createElement('textarea'); tmp.value = json; document.body.appendChild(tmp); tmp.select(); document.execCommand('copy'); tmp.remove(); PUI.toast('已复制', 'success'); } catch (e) { PUI.toast('复制失败，请手动选择', 'warn'); } }
+          try { navigator.clipboard.writeText(json).then(function () { PUI.toast('已复制', 'success'); }).catch(fallback); } catch (e) { fallback(); }
+        });
+      }
+
+      function importConfig() {
+        var foot = '<button type="button" class="pui-btn pui-btn-primary" data-act="ok">导入</button><button type="button" class="pui-btn" data-act="close">关闭</button>';
+        var m = openModal('导入配置', '<textarea id="imp-json" placeholder="粘贴 JSON 配置…"></textarea>', foot);
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        m.box.querySelector('[data-act="ok"]').addEventListener('click', function () {
+          try {
+            var cfg = JSON.parse(m.box.querySelector('#imp-json').value);
+            if (!cfg || typeof cfg !== 'object') throw new Error('bad');
+            saveLocal(cfg); showConfig(cfg); m.layer.remove();
+            PUI.toast('导入成功，点击「应用到原页面」生效', 'success');
+            apply();
+          } catch (e) { PUI.toast('JSON 解析失败', 'error'); }
+        });
+      }
+
+      function viewLogs() {
+        var m = openModal('运行日志', '<div class="vpb-logs" id="logBox">正在获取…</div>', '<button type="button" class="pui-btn" data-act="close">关闭</button>');
+        var box = m.box.querySelector('#logBox');
+        m.box.querySelector('[data-act="close"]').addEventListener('click', function () { m.layer.remove(); });
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) { box.textContent = (d && d.logs) ? d.logs : '（无日志）'; })
+          .catch(function () { box.textContent = '无法获取原页面日志（面板独立模式）。'; });
+      }
+
+      function bind() {
+        $('btn-play').addEventListener('click', function () { control({ op: 'togglePlay' }).then(function () { refreshState(); }).catch(function () { PUI.toast('原页面未响应', 'warn'); }); });
+        $('btn-back').addEventListener('click', function () { control({ op: 'seek', value: -5 }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-fwd').addEventListener('click', function () { control({ op: 'seek', value: 5 }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-back-lg').addEventListener('click', function () { control({ op: 'seek', value: -20 }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-fwd-lg').addEventListener('click', function () { control({ op: 'seek', value: 20 }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-next').addEventListener('click', function () { control({ op: 'next' }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-mute').addEventListener('click', function () { control({ op: 'toggleMute' }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-pip').addEventListener('click', function () { control({ op: 'pip' }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-webfs').addEventListener('click', function () { control({ op: 'webFullscreen' }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-fs').addEventListener('click', function () { control({ op: 'nativeFullscreen' }).then(function () { refreshState(); }).catch(function () {}); });
+        $('btn-shot').addEventListener('click', function () { control({ op: 'screenshot' }).then(function () { refreshState(); }).catch(function () {}); });
+
+        $('vol-range').addEventListener('input', function () { $('vol-val').textContent = $('vol-range').value; });
+        $('vol-range').addEventListener('change', function () { control({ op: 'setVolume', value: Number($('vol-range').value) / 100 }).then(function () { refreshState(); }).catch(function () {}); });
+        $('rate-range').addEventListener('input', function () { $('rate-val').textContent = (Number($('rate-range').value) / 100).toFixed(2); });
+        $('rate-range').addEventListener('change', function () { control({ op: 'setRate', value: Number($('rate-range').value) / 100 }).then(function () { refreshState(); }).catch(function () {}); });
+
+        var quickBtns = document.querySelectorAll('.vpb-rate-quick button');
+        for (var i = 0; i < quickBtns.length; i++) {
+          quickBtns[i].addEventListener('click', function (ev) {
+            var r = Number(ev.currentTarget.getAttribute('data-rate'));
+            $('rate-range').value = String(Math.round(r * 100));
+            $('rate-val').textContent = r.toFixed(2);
+            control({ op: 'setRate', value: r }).then(function () { refreshState(); }).catch(function () {});
+          });
+        }
+
+        $('btn-sc-default').addEventListener('click', function () { state.shortcuts = deepClone(DEFAULT_SHORTCUTS); renderShortcuts(state.shortcuts); });
+        $('btn-sc-apply').addEventListener('click', applyShortcuts);
+        $('btn-apply').addEventListener('click', apply);
+        $('btn-reset').addEventListener('click', function () {
+          saveLocal(DEFAULTS); showConfig(DEFAULTS);
+          channel.request('command', { action: 'resetConfig' }, 4000)
+            .then(function (d) { if (d && d.ok) PUI.toast('已恢复默认', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+            .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+        });
+        $('btn-export').addEventListener('click', exportConfig);
+        $('btn-import').addEventListener('click', importConfig);
+        $('btn-logs').addEventListener('click', viewLogs);
+      }
+
+      channel.on('state', function (d) {
+        if (d && d.video && d.video.exists && d.page) {
+          if (d.video.rate) { $('rate-range').value = String(Math.round(d.video.rate * 100)); $('rate-val').textContent = Number(d.video.rate).toFixed(2); }
+          if (d.video.volume != null) { $('vol-range').value = String(Math.round(d.video.volume * 100)); $('vol-val').textContent = String(Math.round(d.video.volume * 100)); }
+        }
+      });
+
+      showConfig(loadLocal());
+      bind();
+
+      channel.request('command', { action: 'getState' }, 4000)
+        .then(function (d) {
+          if (d && d.config) { saveLocal(d.config); showConfig(d.config); }
+          refreshState();
+        })
+        .catch(function () { setStatus('未连接原页面（面板独立模式，配置仅保存在本面板）', true); });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>

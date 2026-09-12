@@ -1,12 +1,12 @@
-﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>通用小说下载器 — xload</title>
-  <meta name="description" content="一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT 与 EPUB 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。">
+  <title>HTML5视频播放增强 — xload</title>
+  <meta name="description" content="一款通用的 HTML5 视频播放增强工具，支持倍速调节、视频截图、画中画、网页全屏、快进快退、音量控制等丰富功能。内置快捷键系统，所有按键可自定义。兼容 B站、YouTube、爱奇艺、腾讯视频等主流视频站点，通用能力对所有 H5 视频页面生效。支持倍速记忆、长按加速、配置导入导出。">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://xload.net/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-d5aaecca/xload-d5aaecca.html">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -28,7 +28,7 @@
 
   <main>
     <div class="container page">
-      <nav class="crumb"><a target="_blank" rel="noopener" href="/">Home</a> &rsaquo; <span>通用小说下载器</span></nav>
+      <nav class="crumb"><a target="_blank" rel="noopener" href="/">Home</a> &rsaquo; <span>HTML5视频播放增强</span></nav>
 
       <div class="detail-grid">
         <!-- ==================== MAIN CONTENT ==================== -->
@@ -39,20 +39,20 @@
               <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
             </span>
             <div>
-              <h1>通用小说下载器</h1>
-              <p class="lead">一键下载全网小说，支持百站解析</p>
+              <h1>HTML5视频播放增强</h1>
+              <p class="lead">全能视频播放增强：倍速/截图/画中画/全屏</p>
             </div>
           </div>
 
           <div class="prose">
             <h2>Overview</h2>
-            <p>一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT 与 EPUB 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。</p>
+            <p>一款通用的 HTML5 视频播放增强工具，支持倍速调节、视频截图、画中画、网页全屏、快进快退、音量控制等丰富功能。内置快捷键系统，所有按键可自定义。兼容 B站、YouTube、爱奇艺、腾讯视频等主流视频站点，通用能力对所有 H5 视频页面生效。支持倍速记忆、长按加速、配置导入导出。</p>
 
             <h2>Key features</h2>
             <ul>
-              <li>支持百余家小说站点一键下载</li>
-              <li>自动生成 TXT 与 EPUB 双格式</li>
-              <li>章节筛选与自定义保存参数</li>
+              <li>倍速调节与记忆</li>
+              <li>一键视频截图</li>
+              <li>画中画模式</li>
             </ul>
 
             <h2>How to install &amp; use</h2>
@@ -63,11 +63,22 @@
             </ol>
 
             <h2>Configuration</h2>
-            <p>REPLACE: explain any options, settings or scripts the user can toggle.</p>
-            <pre><code>REPLACE: optional example config or usage snippet</code></pre>
+            <p>点击页面左下角的悬浮按钮打开功能面板，可调整以下选项：</p>
+            <ul>
+              <li>倍速记忆：按站点（B站 / YouTube / 其他）分别记忆上次播放速度，或关闭记忆保持 1.0x。</li>
+              <li>快捷键：查看默认按键表，点击"录制"可自定义每个动作的快捷键（支持 Shift/Alt/Ctrl 组合）。</li>
+              <li>长按加速：开启后按住左/右键可连续快进/快退。</li>
+              <li>其他开关：网页全屏、画中画、截图命名等。</li>
+            </ul>
+            <p>所有配置保存在浏览器本地（GM 存储），支持一键导出 / 导入配置备份。</p>
+            <pre><code>// 默认快捷键示例
+←/→       快退/快进 5 秒        ↑/↓      音量 ±10%
+Space     播放/暂停            F        网页全屏
+[ / ]     降低/提高倍速        C        视频截图
+I         画中画               M        静音</code></pre>
 
             <h2>Privacy &amp; permissions</h2>
-            <p>REPLACE: be specific about what the tool accesses and why. Transparency helps trust and keeps advertising compliant.</p>
+            <p>脚本在视频页面读取 <code>&lt;video&gt;</code> 元素并注入快捷键与播放控制，仅在 HTML5 视频页面运行。截图与缓存功能完全在本地浏览器完成，不收集、不上传任何个人信息；所有配置保存在本地浏览器存储中，无需注册账号。宿主站点（xload.net 等）页面自动跳过。</p>
 
             <h2>Changelog</h2>
             <p>See the releases page on GitHub for the full history of changes.</p>
@@ -77,7 +88,7 @@
         <!-- ==================== SIDEBAR ==================== -->
         <aside>
           <div class="sidebar-card">
-            <a class="btn btn-block" href="/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js" target="_blank" rel="noopener" data-internal-download>
+            <a class="btn btn-block" href="/scripts/userscripts/xload-d5aaecca/xload-d5aaecca.user.js" target="_blank" rel="noopener" data-internal-download>
               Download / install
             </a>
             <a class="btn btn-block btn-ghost" href="https://github.com/u2222223/xload" target="_blank" rel="noopener">
@@ -91,7 +102,7 @@
               <div class="row"><span class="k">Type</span><span class="v">Userscript</span></div>
               <div class="row"><span class="k">Category</span><span class="v">Userscripts</span></div>
               <div class="row"><span class="k">License</span><span class="v">MIT</span></div>
-              <div class="row"><span class="k">Last updated</span><span class="v">2026-09-11</span></div>
+              <div class="row"><span class="k">Last updated</span><span class="v">2026-09-12</span></div>
               <div class="row"><span class="k">Downloads</span><span class="v">0</span></div>
               <div class="row"><span class="k">GitHub stars</span><span class="v">0</span></div>
             </div>
