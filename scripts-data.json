@@ -365,6 +365,38 @@
       "license": "MIT",
       "featured": false,
       "status": "stable"
+    },
+    {
+      "id": "xload-578db12d",
+      "type": "script",
+      "title": "百度网盘视频播放增强",
+      "short": "百度网盘视频播放增强，倍速字幕画质全免费",
+      "description": "百度网盘视频播放增强工具，完全免费无广告。支持倍速播放（0.25x~4x）、多档画质切换、内嵌/本地字幕加载与样式自定义、音量增益增强、画面比例与色彩调节、播放列表与进度记忆。替换原生播放器，带来极致播放体验。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-578db12d/xload-578db12d.html",
+      "installUrl": "/scripts/userscripts/xload-578db12d/xload-578db12d.user.js",
+      "files": [
+        "panel.html",
+        "xload-578db12d.user.js"
+      ],
+      "tags": [
+        "百度网盘",
+        "视频播放",
+        "倍速",
+        "字幕",
+        "ArtPlayer",
+        "免费"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 237309,
+      "stars": 0,
+      "lastUpdated": "2026-09-12",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }

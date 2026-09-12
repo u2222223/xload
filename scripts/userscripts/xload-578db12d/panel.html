@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>百度网盘视频播放增强 - 功能面板</title>
+  <meta name="description" content="百度网盘视频播放增强，倍速字幕画质全免费">
+  <meta name="keywords" content="百度网盘,视频播放,倍速,字幕,ArtPlayer,免费">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>百度网盘视频播放增强</h1>
+        <p class="panel-subtitle">百度网盘视频播放增强，倍速字幕画质全免费</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ==================== -->
+        <style>
+          .bdv-status { padding: 12px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; line-height: 1.6; }
+          .bdv-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .bdv-group:last-of-type { border-bottom: 0; }
+          .bdv-group h2 { margin: 0 0 14px; font-size: 16px; color: #111827; display: flex; align-items: center; gap: 8px; }
+          .bdv-tag { font-size: 11px; font-weight: 600; color: #6b7280; background: #f3f4f6; padding: 2px 8px; border-radius: 10px; }
+          .bdv-row { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+          .bdv-field { display: flex; flex-direction: column; gap: 6px; min-width: 150px; }
+          .bdv-field > label { font-size: 13px; color: #4b5563; }
+          .bdv-field select, .bdv-field input[type="color"], .bdv-field input[type="text"], .bdv-field input[type="number"] { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+          .bdv-check { flex-direction: row; align-items: center; gap: 8px; min-width: 0; }
+          .bdv-check input { width: 16px; height: 16px; }
+          .bdv-check label { font-size: 14px; color: #1f2328; cursor: pointer; }
+          .bdv-hint { margin: 10px 0 0; font-size: 12px; color: #9ca3af; line-height: 1.5; }
+          .bdv-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; margin-top: 6px; }
+          input[type="range"] { width: 180px; }
+          .bdv-spd-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+          .bdv-spd-btns button { padding: 5px 10px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #1f2328; font-size: 12px; cursor: pointer; }
+          .bdv-spd-btns button.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+          .bdv-plist { list-style: none; margin: 0; padding: 0; max-height: 220px; overflow: auto; border: 1px solid #eef0f3; border-radius: 8px; }
+          .bdv-plist li { padding: 8px 12px; font-size: 13px; color: #1f2328; border-bottom: 1px solid #f3f4f6; cursor: pointer; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+          .bdv-plist li:hover { background: #f3f4f6; }
+          .bdv-plist li:last-child { border-bottom: 0; }
+          .bdv-plist li.empty { color: #9ca3af; cursor: default; text-align: center; }
+          .bdv-file { font-size: 13px; color: #4b5563; }
+          .bdv-val { color: #6b7280; font-size: 12px; margin-left: 4px; }
+          .bdv-pre { white-space: pre-wrap; word-break: break-all; font-size: 12px; color: #1f2328; background: #f9fafb; border: 1px solid #eef0f3; border-radius: 8px; padding: 10px; max-height: 300px; overflow: auto; }
+        </style>
+
+        <div class="bdv-status" id="pdStatus">等待原页面连接…</div>
+
+        <section class="bdv-group">
+          <h2>播放控制 <span class="bdv-tag">倍速 · 快进快退</span></h2>
+          <div class="bdv-field" style="margin-bottom:10px;">
+            <label for="f-speed">播放倍速 <span class="bdv-val" id="f-speed-val">1.00x</span></label>
+            <input type="range" id="f-speed" min="0.25" max="4" step="0.05" value="1">
+          </div>
+          <div class="bdv-spd-btns" id="spd-btns">
+            <button type="button" data-s="0.5">0.5x</button>
+            <button type="button" data-s="0.75">0.75x</button>
+            <button type="button" data-s="1">1x</button>
+            <button type="button" data-s="1.25">1.25x</button>
+            <button type="button" data-s="1.5">1.5x</button>
+            <button type="button" data-s="2">2x</button>
+            <button type="button" data-s="3">3x</button>
+            <button type="button" data-s="4">4x</button>
+          </div>
+          <div class="bdv-row" style="margin-top:14px;">
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-speed-memory"><label for="f-speed-memory">记住上次倍速</label></div>
+            <div class="bdv-field"><label for="f-seek">快进快退步进（秒）</label><input type="number" id="f-seek" min="1" max="120" step="1" value="5"></div>
+          </div>
+          <div class="bdv-row" style="margin-top:12px;">
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-lp"><label for="f-lp">长按加速</label></div>
+            <div class="bdv-field"><label for="f-lp-speed">长按倍速</label>
+              <select id="f-lp-speed">
+                <option value="2">2x</option>
+                <option value="2.5">2.5x</option>
+                <option value="3">3x</option>
+                <option value="4">4x</option>
+              </select>
+            </div>
+            <div class="bdv-field"><label for="f-lp-key">长按触发键</label>
+              <select id="f-lp-key">
+                <option value="KeyA">A</option>
+                <option value="KeyD">D</option>
+                <option value="KeyS">S</option>
+                <option value="KeyW">W</option>
+                <option value="ShiftLeft">Shift</option>
+              </select>
+            </div>
+          </div>
+          <p class="bdv-hint">快捷键：← / → 快退快进（步进可在上方设置）；按住触发键临时加速，松开恢复。倍速与进度会记忆到本地。</p>
+        </section>
+
+        <section class="bdv-group">
+          <h2>音频设置 <span class="bdv-tag">音量增益 · 均衡器</span></h2>
+          <div class="bdv-field" style="margin-bottom:10px;">
+            <label for="f-gain">音量增益 <span class="bdv-val" id="f-gain-val">100%</span></label>
+            <input type="range" id="f-gain" min="100" max="300" step="5" value="100">
+          </div>
+          <div class="bdv-row">
+            <div class="bdv-field"><label for="f-eq">均衡器预设</label>
+              <select id="f-eq">
+                <option value="none">关闭</option>
+                <option value="pop">流行</option>
+                <option value="rock">摇滚</option>
+                <option value="classical">古典</option>
+                <option value="vocal">人声</option>
+              </select>
+            </div>
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-bass"><label for="f-bass">低音增强</label></div>
+          </div>
+          <p class="bdv-hint">建议增益不超过 200%，过高可能导致音质失真。开启增益/均衡器时使用 Web Audio API 处理音频。</p>
+        </section>
+
+        <section class="bdv-group">
+          <h2>画面设置 <span class="bdv-tag">比例 · 色彩 · 旋转</span></h2>
+          <div class="bdv-row">
+            <div class="bdv-field"><label for="f-fit">画面比例</label>
+              <select id="f-fit">
+                <option value="auto">自适应</option>
+                <option value="contain">原始（完整显示）</option>
+                <option value="cover">铺满（裁剪）</option>
+                <option value="16_9">强制 16:9</option>
+                <option value="4_3">强制 4:3</option>
+              </select>
+            </div>
+            <div class="bdv-field"><label for="f-rot">画面旋转</label>
+              <select id="f-rot">
+                <option value="0">0°</option>
+                <option value="90">90°</option>
+                <option value="180">180°</option>
+                <option value="270">270°</option>
+              </select>
+            </div>
+          </div>
+          <div class="bdv-row" style="margin-top:12px;">
+            <div class="bdv-field"><label for="f-bright">亮度 <span class="bdv-val" id="f-bright-val">100%</span></label><input type="range" id="f-bright" min="20" max="300" step="1" value="100"></div>
+            <div class="bdv-field"><label for="f-contrast">对比度 <span class="bdv-val" id="f-contrast-val">100%</span></label><input type="range" id="f-contrast" min="20" max="300" step="1" value="100"></div>
+            <div class="bdv-field"><label for="f-saturate">饱和度 <span class="bdv-val" id="f-saturate-val">100%</span></label><input type="range" id="f-saturate" min="0" max="400" step="1" value="100"></div>
+            <div class="bdv-field"><label for="f-hue">色相 <span class="bdv-val" id="f-hue-val">0°</span></label><input type="range" id="f-hue" min="0" max="360" step="1" value="0"></div>
+          </div>
+          <p class="bdv-hint">画面参数通过 CSS filter 作用于原生播放画面；比例强制裁剪为尽力而为，实际效果受页面容器布局影响。</p>
+        </section>
+
+        <section class="bdv-group">
+          <h2>字幕设置 <span class="bdv-tag">本地字幕 · 样式</span></h2>
+          <div class="bdv-row">
+            <div class="bdv-field"><label for="f-sub-file">加载本地字幕（SRT / VTT / ASS）</label>
+              <input type="file" id="f-sub-file" accept=".srt,.vtt,.ass,.ssa,text/*" class="bdv-file">
+              <span class="bdv-hint" id="sub-info" style="margin:0;">尚未加载字幕</span>
+            </div>
+            <div class="bdv-field"><label for="f-sub-offset">字幕同步（毫秒，负=提前）</label><input type="number" id="f-sub-offset" min="-5000" max="5000" step="50" value="0"></div>
+          </div>
+          <div class="bdv-row" style="margin-top:12px;">
+            <div class="bdv-field"><label for="f-sub-font">字体</label><input type="text" id="f-sub-font" value="inherit" placeholder="例：Microsoft YaHei"></div>
+            <div class="bdv-field"><label for="f-sub-size">字号 <span class="bdv-val" id="f-sub-size-val">24px</span></label><input type="range" id="f-sub-size" min="12" max="80" step="1" value="24"></div>
+            <div class="bdv-field"><label for="f-sub-color">颜色</label><input type="color" id="f-sub-color" value="#ffffff"></div>
+          </div>
+          <div class="bdv-row" style="margin-top:12px;">
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-sub-stroke"><label for="f-sub-stroke">描边</label></div>
+            <div class="bdv-field"><label for="f-sub-stroke-color">描边颜色</label><input type="color" id="f-sub-stroke-color" value="#000000"></div>
+            <div class="bdv-field"><label for="f-sub-stroke-w">描边宽度 <span class="bdv-val" id="f-sub-stroke-w-val">1.5</span></label><input type="range" id="f-sub-stroke-w" min="0" max="6" step="0.5" value="1.5"></div>
+          </div>
+          <div class="bdv-row" style="margin-top:12px;">
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-sub-shadow"><label for="f-sub-shadow">阴影</label></div>
+            <div class="bdv-field"><label for="f-sub-opacity">不透明度 <span class="bdv-val" id="f-sub-opacity-val">100%</span></label><input type="range" id="f-sub-opacity" min="20" max="100" step="1" value="100"></div>
+            <div class="bdv-field"><label for="f-sub-pos">距底部 <span class="bdv-val" id="f-sub-pos-val">40px</span></label><input type="range" id="f-sub-pos" min="0" max="200" step="1" value="40"></div>
+          </div>
+          <div class="bdv-actions">
+            <button type="button" id="btn-sub-clear" class="pui-btn pui-btn-danger">清除字幕</button>
+          </div>
+        </section>
+
+        <section class="bdv-group">
+          <h2>播放列表 <span class="bdv-tag">当前页视频</span></h2>
+          <div class="bdv-row">
+            <button type="button" id="btn-pl-refresh" class="pui-btn pui-btn-primary">刷新列表</button>
+          </div>
+          <ul class="bdv-plist" id="pl-list"><li class="empty">点击「刷新列表」获取当前页面视频文件</li></ul>
+          <p class="bdv-hint">从左到右为当前目录/页面的视频文件（尽力而为，取决于页面结构）。点击条目切换播放。</p>
+        </section>
+
+        <section class="bdv-group">
+          <h2>高级 <span class="bdv-tag">进度 · 配置 · 日志</span></h2>
+          <div class="bdv-row">
+            <div class="bdv-field bdv-check"><input type="checkbox" id="f-progress"><label for="f-progress">进度记忆（下次自动续播）</label></div>
+          </div>
+          <div class="bdv-actions">
+            <button type="button" id="btn-logs" class="pui-btn pui-btn-default">查看日志</button>
+            <button type="button" id="btn-export" class="pui-btn pui-btn-default">导出配置</button>
+            <button type="button" id="btn-import" class="pui-btn pui-btn-default">导入配置</button>
+            <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认并重置</button>
+            <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+          </div>
+        </section>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('xload-578db12d');
+
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      var LS_KEY = 'xload-bdv-panel-settings';
+      var DEFAULTS = {
+        speed: 1, speedMemory: false, longPressEnabled: true, longPressSpeed: 3,
+        longPressKey: 'KeyA', seekStep: 5, volumeGain: 100, eqPreset: 'none', bassBoost: false,
+        fitMode: 'auto', brightness: 100, contrast: 100, saturate: 100, hue: 0, rotation: 0,
+        subtitleEnabled: false, subtitleOffset: 0,
+        subtitleStyle: { fontFamily: 'inherit', fontSize: 24, color: '#ffffff', strokeOn: true, strokeColor: '#000000', strokeWidth: 1.5, shadowOn: false, opacity: 100, positionOffset: 40 },
+        progressMemory: true, autoNext: false
+      };
+
+      function $(id) { return document.getElementById(id); }
+      function merge(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+      function clampNum(v, min, max) { var n = Number(v); if (!isFinite(n)) n = min; return Math.max(min, Math.min(max, n)); }
+      function loadLocal() {
+        try { var r = JSON.parse(localStorage.getItem(LS_KEY)); return r && typeof r === 'object' ? r : {}; } catch (e) { return {}; }
+      }
+      function saveLocal(s) { try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch (e) { /* ignore */ } }
+      function deepMergeStyle(base, patch) {
+        var o = {}, k;
+        for (k in base) if (Object.prototype.hasOwnProperty.call(base, k)) o[k] = base[k];
+        if (patch && typeof patch === 'object') for (k in patch) if (Object.prototype.hasOwnProperty.call(patch, k)) o[k] = patch[k];
+        return o;
+      }
+
+      function showSettings(raw) {
+        var s = merge(DEFAULTS, raw || {});
+        var st = deepMergeStyle(DEFAULTS.subtitleStyle, s.subtitleStyle || {});
+        s.subtitleStyle = st;
+        $('f-speed').value = String(clampNum(s.speed, 0.25, 4));
+        $('f-speed-val').textContent = Number(s.speed).toFixed(2) + 'x';
+        $('f-speed-memory').checked = Boolean(s.speedMemory);
+        $('f-seek').value = String(clampNum(s.seekStep, 1, 120));
+        $('f-lp').checked = Boolean(s.longPressEnabled);
+        $('f-lp-speed').value = String(clampNum(s.longPressSpeed, 0.5, 8));
+        $('f-lp-key').value = String(s.longPressKey || 'KeyA');
+        $('f-gain').value = String(s.volumeGain);
+        $('f-gain-val').textContent = String(s.volumeGain) + '%';
+        $('f-eq').value = String(s.eqPreset || 'none');
+        $('f-bass').checked = Boolean(s.bassBoost);
+        $('f-fit').value = String(s.fitMode || 'auto');
+        $('f-rot').value = String(s.rotation);
+        $('f-bright').value = String(s.brightness); $('f-bright-val').textContent = String(s.brightness) + '%';
+        $('f-contrast').value = String(s.contrast); $('f-contrast-val').textContent = String(s.contrast) + '%';
+        $('f-saturate').value = String(s.saturate); $('f-saturate-val').textContent = String(s.saturate) + '%';
+        $('f-hue').value = String(s.hue); $('f-hue-val').textContent = String(s.hue) + '°';
+        $('f-sub-offset').value = String(clampNum(s.subtitleOffset, -5000, 5000));
+        $('f-sub-font').value = String(st.fontFamily || 'inherit');
+        $('f-sub-size').value = String(clampNum(st.fontSize, 12, 80));
+        $('f-sub-size-val').textContent = String(st.fontSize) + 'px';
+        $('f-sub-color').value = isHex(String(st.color)) ? st.color : '#ffffff';
+        $('f-sub-stroke').checked = Boolean(st.strokeOn);
+        $('f-sub-stroke-color').value = isHex(String(st.strokeColor)) ? st.strokeColor : '#000000';
+        $('f-sub-stroke-w').value = String(clampNum(st.strokeWidth, 0, 6));
+        $('f-sub-stroke-w-val').textContent = String(st.strokeWidth);
+        $('f-sub-shadow').checked = Boolean(st.shadowOn);
+        $('f-sub-opacity').value = String(clampNum(st.opacity, 20, 100));
+        $('f-sub-opacity-val').textContent = String(st.opacity) + '%';
+        $('f-sub-pos').value = String(clampNum(st.positionOffset, 0, 200));
+        $('f-sub-pos-val').textContent = String(st.positionOffset) + 'px';
+        $('f-progress').checked = Boolean(s.progressMemory);
+        highlightSpeed(s.speed);
+      }
+
+      function isHex(c) { return typeof c === 'string' && /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(c); }
+      function highlightSpeed(spd) {
+        var btns = document.querySelectorAll('#spd-btns button');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.toggle('active', Math.abs(Number(btns[i].getAttribute('data-s')) - Number(spd)) < 0.001);
+        }
+      }
+
+      function collect() {
+        var st = {
+          fontFamily: $('f-sub-font').value || 'inherit',
+          fontSize: clampNum($('f-sub-size').value, 12, 80),
+          color: isHex($('f-sub-color').value) ? $('f-sub-color').value : '#ffffff',
+          strokeOn: $('f-sub-stroke').checked,
+          strokeColor: isHex($('f-sub-stroke-color').value) ? $('f-sub-stroke-color').value : '#000000',
+          strokeWidth: clampNum($('f-sub-stroke-w').value, 0, 6),
+          shadowOn: $('f-sub-shadow').checked,
+          opacity: clampNum($('f-sub-opacity').value, 20, 100),
+          positionOffset: clampNum($('f-sub-pos').value, 0, 200)
+        };
+        return {
+          speed: clampNum($('f-speed').value, 0.25, 4),
+          speedMemory: $('f-speed-memory').checked,
+          longPressEnabled: $('f-lp').checked,
+          longPressSpeed: clampNum($('f-lp-speed').value, 0.5, 8),
+          longPressKey: $('f-lp-key').value,
+          seekStep: clampNum($('f-seek').value, 1, 120),
+          volumeGain: clampNum($('f-gain').value, 100, 300),
+          eqPreset: $('f-eq').value,
+          bassBoost: $('f-bass').checked,
+          fitMode: $('f-fit').value,
+          rotation: Number($('f-rot').value),
+          brightness: clampNum($('f-bright').value, 20, 300),
+          contrast: clampNum($('f-contrast').value, 20, 300),
+          saturate: clampNum($('f-saturate').value, 0, 400),
+          hue: clampNum($('f-hue').value, 0, 360),
+          subtitleOffset: clampNum($('f-sub-offset').value, -5000, 5000),
+          subtitleStyle: st,
+          progressMemory: $('f-progress').checked,
+          autoNext: false
+        };
+      }
+
+      var curSubtitle = { name: null, text: null, type: 'auto' };
+
+      function apply() {
+        var settings = collect();
+        saveLocal(settings);
+        showSettings(settings);
+        $('f-speed-val').textContent = Number(settings.speed).toFixed(2) + 'x';
+        channel.request('command', { action: 'applySettings', settings: settings }, 4000)
+          .then(function (d) {
+            if (d && d.ok) PUI.toast('已应用到原页面', 'success');
+            else PUI.toast('原页面返回异常', 'warn');
+          })
+          .catch(function () {
+            PUI.toast('已保存到面板（原页面未响应，可能未在网盘页面打开）', 'warn');
+          });
+      }
+
+      // 非滑块控件变更即应用（滑块已在下方 bindRange 绑定 input+change）
+      ['f-speed-memory', 'f-seek', 'f-lp', 'f-lp-speed', 'f-lp-key',
+       'f-eq', 'f-bass', 'f-fit', 'f-rot', 'f-sub-offset', 'f-sub-font',
+       'f-sub-color', 'f-sub-stroke', 'f-sub-stroke-color', 'f-sub-shadow', 'f-progress'].forEach(function (id) {
+        $(id).addEventListener('change', apply);
+      });
+
+      // 滑块实时显示数值并应用
+      function bindRange(id, valId, fmt) {
+        var el = $(id), v = $(valId);
+        el.addEventListener('input', function () { v.textContent = fmt(el.value); });
+        el.addEventListener('change', apply);
+      }
+      bindRange('f-speed', 'f-speed-val', function (v) { return Number(v).toFixed(2) + 'x'; });
+      bindRange('f-gain', 'f-gain-val', function (v) { return v + '%'; });
+      bindRange('f-bright', 'f-bright-val', function (v) { return v + '%'; });
+      bindRange('f-contrast', 'f-contrast-val', function (v) { return v + '%'; });
+      bindRange('f-saturate', 'f-saturate-val', function (v) { return v + '%'; });
+      bindRange('f-hue', 'f-hue-val', function (v) { return v + '°'; });
+      bindRange('f-sub-size', 'f-sub-size-val', function (v) { return v + 'px'; });
+      bindRange('f-sub-stroke-w', 'f-sub-stroke-w-val', function (v) { return String(v); });
+      bindRange('f-sub-opacity', 'f-sub-opacity-val', function (v) { return v + '%'; });
+      bindRange('f-sub-pos', 'f-sub-pos-val', function (v) { return v + 'px'; });
+
+      // 快捷倍速按钮
+      document.querySelectorAll('#spd-btns button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          $('f-speed').value = b.getAttribute('data-s');
+          highlightSpeed(b.getAttribute('data-s'));
+          apply();
+        });
+      });
+
+      // 字幕文件读取
+      $('f-sub-file').addEventListener('change', function () {
+        var file = this.files && this.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () {
+          var text = String(reader.result || '');
+          var type = 'auto';
+          var name = file.name.toLowerCase();
+          if (/\.vtt$/.test(name)) type = 'vtt';
+          else if (/\.srt$/.test(name)) type = 'srt';
+          else if (/\.(ass|ssa)$/.test(name)) type = 'ass';
+          curSubtitle = { name: file.name, text: text, type: type };
+          channel.request('command', { action: 'loadSubtitle', name: file.name, text: text, type: type }, 8000)
+            .then(function (d) {
+              if (d && d.ok) { $('sub-info').textContent = '已加载：' + file.name + '（' + d.cues + ' 条）'; PUI.toast('字幕已加载', 'success'); }
+              else { $('sub-info').textContent = '字幕解析为空'; PUI.toast('字幕解析为空', 'warn'); }
+            })
+            .catch(function () {
+              $('sub-info').textContent = '已选择：' + file.name + '（原页面未响应）';
+              PUI.toast('原页面未响应，字幕未能下发', 'warn');
+            });
+        };
+        reader.readAsText(file, 'utf-8');
+        this.value = '';
+      });
+
+      $('btn-sub-clear').addEventListener('click', function () {
+        curSubtitle = { name: null, text: null, type: 'auto' };
+        $('sub-info').textContent = '尚未加载字幕';
+        channel.request('command', { action: 'clearSubtitle' }, 4000)
+          .then(function () { PUI.toast('已清除字幕', 'success'); })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      });
+
+      // 播放列表
+      function refreshPlaylist() {
+        channel.request('command', { action: 'getPlaylist' }, 5000)
+          .then(function (d) {
+            var list = (d && d.playlist) || [];
+            var ul = $('pl-list');
+            ul.innerHTML = '';
+            if (!list.length) { ul.innerHTML = '<li class="empty">未发现视频文件（或在分享页/播放页打开）</li>'; return; }
+            list.forEach(function (item) {
+              var li = document.createElement('li');
+              li.textContent = item.name;
+              li.title = item.name;
+              li.addEventListener('click', function () {
+                channel.request('command', { action: 'switchVideo', url: item.url }, 4000)
+                  .catch(function () { /* ignore */ });
+              });
+              ul.appendChild(li);
+            });
+          })
+          .catch(function () { $('pl-list').innerHTML = '<li class="empty">未连接原页面</li>'; });
+      }
+      $('btn-pl-refresh').addEventListener('click', refreshPlaylist);
+
+      // 日志
+      $('btn-logs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) {
+            var txt = d && d.logs ? d.logs : '（无日志）';
+            PUI.modal({
+              title: '脚本日志', body: makePre(txt),
+              buttons: [
+                { text: '复制', type: 'primary', onClick: function () { copyText(txt); PUI.toast('已复制到剪贴板', 'success'); return false; } },
+                { text: '关闭', type: 'default' }
+              ]
+            });
+          })
+          .catch(function () { PUI.toast('未连接原页面，无法获取日志', 'warn'); });
+      });
+
+      function makePre(text) {
+        var pre = document.createElement('pre');
+        pre.className = 'bdv-pre';
+        pre.textContent = text;
+        return pre;
+      }
+      function copyText(text) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (e) { /* ignore */ }
+      }
+
+      // 配置导出 / 导入
+      $('btn-export').addEventListener('click', function () {
+        var json = JSON.stringify(collect(), null, 2);
+        PUI.modal({
+          title: '导出配置（复制保存）', body: makePre(json),
+          buttons: [
+            { text: '复制', type: 'primary', onClick: function () { copyText(json); PUI.toast('已复制', 'success'); return false; } },
+            { text: '关闭', type: 'default' }
+          ]
+        });
+      });
+      $('btn-import').addEventListener('click', function () {
+        PUI.modal({
+          title: '导入配置',
+          body: (function () {
+            var ta = document.createElement('textarea');
+            ta.style.cssText = 'width:100%;height:180px;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;font-size:12px;padding:8px;';
+            ta.placeholder = '粘贴 JSON 配置…';
+            return ta;
+          })(),
+          buttons: [
+            { text: '取消', type: 'default', onClick: function () { return true; } },
+            {
+              text: '导入', type: 'primary',
+              onClick: function (api) {
+                var box = api && api.__ta;
+                // 直接在模态框 DOM 中定位 textarea
+                var ta = document.querySelector('.pui-modal-body textarea');
+                try {
+                  var obj = JSON.parse(ta && ta.value ? ta.value : '{}');
+                  saveLocal(obj);
+                  showSettings(obj);
+                  apply();
+                  PUI.toast('已导入', 'success');
+                } catch (e) {
+                  PUI.toast('JSON 解析失败', 'error');
+                  return false;
+                }
+                return true;
+              }
+            }
+          ]
+        });
+      });
+
+      // 恢复默认
+      $('btn-reset').addEventListener('click', function () {
+        saveLocal(DEFAULTS);
+        showSettings(DEFAULTS);
+        channel.request('command', { action: 'resetSettings' }, 4000)
+          .then(function (d) { if (d && d.ok) PUI.toast('已恢复默认', 'success'); else PUI.toast('原页面返回异常', 'warn'); })
+          .catch(function () { PUI.toast('已恢复默认（原页面未响应）', 'warn'); });
+      });
+
+      $('btn-apply').addEventListener('click', apply);
+
+      // 状态显示
+      function fmtTime(sec) {
+        sec = Math.floor(Number(sec) || 0);
+        var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.floor(sec % 60);
+        function p(n) { return (n < 10 ? '0' : '') + n; }
+        return (h ? h + ':' : '') + p(m) + ':' + p(s);
+      }
+      channel.on('playerState', function (data) {
+        data = data || {};
+        var text = '原页面已连接';
+        if (data.hasVideo === false) text += ' · 未检测到视频';
+        else if (data.hasVideo) {
+          text += ' · ' + (data.paused ? '已暂停' : '播放中');
+          text += ' · ' + fmtTime(data.currentTime) + ' / ' + fmtTime(data.duration);
+          text += ' · 倍速 ' + Number(data.speed).toFixed(2) + 'x';
+        }
+        if (data.quality) text += ' · 实际渲染 ' + data.quality;
+        $('pdStatus').textContent = text;
+      });
+
+      // 初始化：优先从原页面同步，失败则用本地面板缓存
+      showSettings(loadLocal());
+      channel.request('command', { action: 'querySettings' }, 4000)
+        .then(function (d) {
+          if (d && d.settings) { saveLocal(d.settings); showSettings(d.settings); $('pdStatus').textContent = '与原页面同步成功'; }
+          refreshPlaylist();
+        })
+        .catch(function () {
+          $('pdStatus').textContent = '未连接原页面（面板独立模式，设置仅保存在本面板；请在百度网盘视频页打开）';
+        });
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>
