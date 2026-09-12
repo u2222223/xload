@@ -63,21 +63,11 @@
             </ol>
 
             <h2>Configuration</h2>
-            <p>安装后打开 Telegram 网页版（建议 <code>webk</code> 版本），点击右下角「xload 工具」悬浮按钮打开功能面板，可调整以下选项：</p>
-            <ul>
-              <li>连接状态：显示当前是否已识别 Telegram 网页版并建立面板通信。</li>
-              <li>下载队列：展示进行中的视频 / 语音下载与实时进度，可随时取消。</li>
-              <li>下载历史：列出历史下载记录，支持一键重新下载。</li>
-              <li>批量下载：扫描当前已渲染消息中的图片 / 视频 / 语音直链，可按类型过滤后批量入队。</li>
-              <li>设置：并发下载数、命名规则（使用原始文件名 / 自动命名）、是否显示页面下载按钮。</li>
-              <li>查看日志：复制内置环形日志用于排查问题。</li>
-            </ul>
-            <pre><code># 示例：图片 / 视频 / 语音单条下载
-# 在 Telegram 网页版中打开任意媒体（查看器 / Story / 语音播放条），
-# 点击注入的「下载」按钮即可保存；视频下载时右下角显示分片进度。</code></pre>
+            <p>安装后打开 Telegram 网页版（建议 webk 版本），点击右下角「xload」悬浮按钮打开功能面板，可调整：并发下载数、命名规则（原始文件名/自动命名）、是否显示页面下载按钮、批量下载类型过滤等选项。</p>
+            <pre><code>// 在 Telegram 网页版打开任意媒体（查看器 / Story / 语音播放条），点击注入的「下载」按钮即可保存；视频下载时右下角显示分片进度。</code></pre>
 
             <h2>Privacy &amp; permissions</h2>
-            <p>脚本仅在 Telegram 网页版（web.telegram.org / webk / webz / weba.telegram.org）运行，在 xload 自有站点等其他页面不会生效。下载使用浏览器原生分片 <code>Range</code> 请求直接从 Telegram 媒体服务拉取数据，不经过任何第三方服务器；图片、视频、语音的内容不会上传。下载历史、设置与日志保存在浏览器本地存储（localStorage），仅在需要时用于重新下载与排查问题，不会发送给第三方。</p>
+            <p>脚本仅在 Telegram 网页版（web.telegram.org / webk / webz / weba.telegram.org）运行，在其他页面不生效。下载通过浏览器原生 Range 分片直接拉取 Telegram 媒体服务，不经第三方服务器，不上传下载内容；历史、设置与日志保存在浏览器本地存储。</p>
 
             <h2>Changelog</h2>
             <p>See the releases page on GitHub for the full history of changes.</p>
