@@ -334,6 +334,37 @@
       "license": "MIT",
       "featured": false,
       "status": "stable"
+    },
+    {
+      "id": "xload-78d1cd2c",
+      "type": "script",
+      "title": "Telegram网页版媒体下载器",
+      "short": "一键下载Telegram网页版图片视频语音",
+      "description": "在Telegram网页版（webk/webz）一键下载图片、GIF动图、视频和语音消息。支持从限制下载的私密频道/群组中下载媒体文件，支持批量选择下载，带下载进度提示。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-78d1cd2c/xload-78d1cd2c.html",
+      "installUrl": "/scripts/userscripts/xload-78d1cd2c/xload-78d1cd2c.user.js",
+      "files": [
+        "panel.html",
+        "xload-78d1cd2c.user.js"
+      ],
+      "tags": [
+        "Telegram",
+        "媒体下载",
+        "视频下载",
+        "图片下载",
+        "电报"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 3.5,
+      "downloads": 232632,
+      "stars": 206,
+      "lastUpdated": "2026-09-12",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
     }
   ]
 }

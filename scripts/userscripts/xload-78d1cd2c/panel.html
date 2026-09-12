@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram网页版媒体下载器 - 功能面板</title>
+  <meta name="description" content="一键下载Telegram网页版图片视频语音">
+  <meta name="keywords" content="Telegram,媒体下载,视频下载,图片下载,电报">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>Telegram网页版媒体下载器</h1>
+        <p class="panel-subtitle">一键下载Telegram网页版图片视频语音</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="广告"></div>
+
+      <div class="panel-content">
+        <!-- ==================== 功能 UI ==================== -->
+        <style>
+          .tg-status { padding: 10px 14px; border-radius: 8px; background: #eef2ff; color: #3730a3; font-size: 13px; margin-bottom: 16px; word-break: break-all; }
+          .tg-status.err { background: #fef2f2; color: #b91c1c; }
+          .tg-group { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid #eef0f3; }
+          .tg-group:last-of-type { border-bottom: 0; padding-bottom: 0; }
+          .tg-group h2 { margin: 0 0 12px; font-size: 16px; color: #111827; }
+          .tg-kv { font-size: 13px; color: #374151; }
+          .tg-kv b { color: #111827; }
+          .tg-field { margin-bottom: 12px; }
+          .tg-field > label { display: block; font-size: 13px; color: #4b5563; margin-bottom: 4px; }
+          .tg-field select, .tg-field input[type="number"], .tg-field input[type="range"] { width: 100%; max-width: 340px; }
+          .tg-field select, .tg-field input[type="number"] { padding: 6px 8px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+          .tg-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+          .tg-list { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow: auto; }
+          .tg-list li { padding: 10px 8px; border-bottom: 1px solid #f0f1f3; font-size: 13px; color: #374151; }
+          .tg-list li:last-child { border-bottom: 0; }
+          .tg-item-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+          .tg-item-name { color: #111827; word-break: break-all; flex: 1; }
+          .tg-badge { flex: none; font-size: 11px; padding: 1px 8px; border-radius: 999px; background: #eef2ff; color: #3730a3; white-space: nowrap; }
+          .tg-badge.video { background: #fef3c7; color: #92400e; }
+          .tg-badge.audio { background: #ecfdf5; color: #065f46; }
+          .tg-badge.image { background: #e0f2fe; color: #075985; }
+          .tg-meta { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+          .tg-bar { height: 6px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+          .tg-bar > i { display: block; height: 100%; background: #2563eb; width: 0; transition: width .2s ease; }
+          .tg-bar.ok > i { background: #16a34a; }
+          .tg-bar.err > i { background: #dc2626; }
+          .tg-item-actions { flex: none; display: flex; gap: 6px; }
+          .tg-mini-btn { font-size: 12px; padding: 3px 8px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; color: #374151; cursor: pointer; }
+          .tg-mini-btn:hover { border-color: #2563eb; color: #2563eb; }
+          .tg-hint { margin: 4px 0 0; font-size: 12px; color: #9ca3af; }
+          .tg-help { font-size: 13px; color: #4b5563; line-height: 1.7; }
+          .tg-help a { color: #2563eb; }
+        </style>
+
+        <div class="tg-status" id="tgStatus">等待连接 Telegram 网页版…</div>
+
+        <section class="tg-group">
+          <h2>下载队列</h2>
+          <ul class="tg-list" id="tgQueue"><li>暂无下载任务</li></ul>
+        </section>
+
+        <section class="tg-group">
+          <h2>批量下载</h2>
+          <div class="tg-field">
+            <label for="tgFilter">媒体类型过滤</label>
+            <select id="tgFilter">
+              <option value="all" selected>全部</option>
+              <option value="image">仅图片</option>
+              <option value="video">仅视频</option>
+              <option value="audio">仅语音</option>
+            </select>
+          </div>
+          <div class="tg-actions">
+            <button type="button" id="tgBatch" class="pui-btn pui-btn-primary">开始批量下载</button>
+          </div>
+          <p class="tg-hint">批量下载会扫描当前已渲染的消息，尽力提取图片 / 视频 / 语音直链并加入队列。列表中的图片多为缩略图，如需原图请在浏览器中逐条打开后点击下载按钮。语音消息（webk 版本）通常可完整批量下载。</p>
+        </section>
+
+        <section class="tg-group">
+          <h2>下载历史</h2>
+          <ul class="tg-list" id="tgHistory"><li>暂无记录</li></ul>
+        </section>
+
+        <section class="tg-group">
+          <h2>设置</h2>
+          <div class="tg-field">
+            <label for="tgConcurrency">批量下载并发数：<b id="tgConVal">2</b></label>
+            <input type="range" id="tgConcurrency" min="1" max="6" step="1" value="2">
+          </div>
+          <div class="tg-field">
+            <label for="tgNaming">文件命名规则</label>
+            <select id="tgNaming">
+              <option value="auto" selected>智能命名（优先原始文件名）</option>
+              <option value="original">优先原始文件名</option>
+              <option value="hash">短哈希命名</option>
+            </select>
+          </div>
+          <div class="tg-field">
+            <label><input type="checkbox" id="tgShowPageBtn" checked> 在页面注入单条下载按钮</label>
+          </div>
+          <div class="tg-actions">
+            <button type="button" id="tgApplySettings" class="pui-btn pui-btn-primary">保存设置</button>
+            <button type="button" id="tgResetSettings" class="pui-btn">恢复默认</button>
+            <button type="button" id="tgLogs" class="pui-btn">查看日志</button>
+          </div>
+        </section>
+
+        <section class="tg-group">
+          <h2>使用说明</h2>
+          <div class="tg-help">
+            <p>1. 本脚本仅适用于 <b>Telegram 网页版</b>，推荐使用 <a href="https://web.telegram.org/k/" target="_blank" rel="noopener">/k/ 版本（webk）</a>（语音下载完整支持）；<a href="https://web.telegram.org/a/" target="_blank" rel="noopener">/a/ 版本（webz）</a> 亦支持主功能。</p>
+            <p>2. 打开图片 / 视频 / GIF 查看器后，右上方会出现「下载」按钮，点击即可下载当前媒体。</p>
+            <p>3. 播放语音消息时，置顶播放条右侧会出现下载按钮；也可在设置中启用批量下载。</p>
+            <p>4. 视频会分片拉取并合并，因此即使频道禁用了下载也能拿到完整视频（含音轨）。</p>
+            <p>5. 支持的故事页同样会注入下载按钮。</p>
+            <p class="tg-hint">提示：视频分片合并下载受浏览器内存限制，超大视频建议逐个下载；频繁批量下载可能触发平台风控，请合理控制频率。</p>
+          </div>
+        </section>
+
+        <section class="tg-group">
+          <h2>支持版本</h2>
+          <div class="tg-kv">当前页面检测：<b id="tgVersion">—</b></div>
+          <p class="tg-hint">支持 <b>webk</b>（web.telegram.org/k/ 与 webk.telegram.org）和 <b>webz</b>（web.telegram.org/a/、/z/ 与 webz/weba.telegram.org）。语音消息下载建议使用 webk 版本。</p>
+        </section>
+        <!-- ==================== 功能 UI 结束 ==================== -->
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener">工具列表</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener">隐私政策</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var channel = new PanelChannel('xload-78d1cd2c');
+
+      // ==================== 功能逻辑 ====================
+      var state = { queue: [], history: [], version: 'unknown', connected: false };
+
+      function $(id) { return document.getElementById(id); }
+      function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+      var KIND_LABEL = { video: '视频', audio: '语音', image: '图片', gif: 'GIF' };
+      var VERSION_LABEL = { webk: 'webk（/k/ 版本，推荐）', webz: 'webz（/a/ /z/ 版本）', unknown: '未识别' };
+
+      function kindLabel(k) { return KIND_LABEL[k] || '文件'; }
+      function versionLabel(v) { return VERSION_LABEL[v] || '未识别'; }
+      function fmtSize(n) {
+        if (!n || n <= 0) return '—';
+        if (n < 1024) return n + ' B';
+        if (n < 1048576) return (n / 1024).toFixed(1) + ' KB';
+        if (n < 1073741824) return (n / 1048576).toFixed(1) + ' MB';
+        return (n / 1073741824).toFixed(2) + ' GB';
+      }
+
+      function setStatus(text, kind) {
+        var s = $('tgStatus');
+        s.textContent = text;
+        s.className = 'tg-status' + (kind === 'error' ? ' err' : '');
+      }
+      function statusText() {
+        if (!state.connected) return '未连接 Telegram 网页版（独立模式）';
+        return '已连接 Telegram 网页版 · 版本 ' + versionLabel(state.version);
+      }
+
+      function renderQueue() {
+        var box = $('tgQueue');
+        box.innerHTML = '';
+        if (!state.queue || !state.queue.length) {
+          box.appendChild(el('li', null, '暂无下载任务'));
+          return;
+        }
+        state.queue.forEach(function (r) {
+          var li = el('li');
+          var head = el('div', 'tg-item-head');
+          var name = el('span', 'tg-item-name', r.fileName || '未命名');
+          var badge = el('span', 'tg-badge ' + (r.kind || ''), kindLabel(r.kind));
+          head.appendChild(name);
+          head.appendChild(badge);
+          li.appendChild(head);
+
+          var status = r.status;
+          var metaText = fmtSize(r.received) + (r.total ? ' / ' + fmtSize(r.total) : '');
+          if (r.status === 'done') metaText = '已完成 · ' + fmtSize(r.size);
+          else if (r.status === 'error') metaText = '失败：' + (r.error || '未知错误');
+          else if (r.status === 'cancelled') metaText = '已取消';
+          else if (r.status === 'running') metaText += (r.speed ? ' · ' + fmtSize(r.speed) + '/s' : '');
+          var meta = el('div', 'tg-meta', metaText);
+          li.appendChild(meta);
+
+          if (r.status === 'running' || r.status === 'pending') {
+            var bar = el('div', 'tg-bar');
+            var fill = el('i');
+            fill.style.width = (r.percent || 0) + '%';
+            bar.appendChild(fill);
+            li.appendChild(bar);
+            var cancel = el('button', 'tg-mini-btn', '取消');
+            cancel.type = 'button';
+            cancel.addEventListener('click', function () {
+              channel.request('command', { action: 'cancelDownload', id: r.id }, 4000)
+                .then(function () { PUI.toast('已请求取消', 'info'); renderQueue(); })
+                .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+            });
+            var actions = el('div', 'tg-item-actions');
+            actions.appendChild(cancel);
+            head.appendChild(actions);
+          } else if (r.status === 'done') {
+            var bar = el('div', 'tg-bar ok');
+            var fill2 = el('i');
+            fill2.style.width = '100%';
+            bar.appendChild(fill2);
+            li.appendChild(bar);
+          } else if (r.status === 'error' || r.status === 'cancelled') {
+            var bar2 = el('div', 'tg-bar err');
+            var fill3 = el('i');
+            fill3.style.width = '100%';
+            bar2.appendChild(fill3);
+            li.appendChild(bar2);
+          }
+          box.appendChild(li);
+        });
+      }
+
+      function renderHistory() {
+        var box = $('tgHistory');
+        box.innerHTML = '';
+        if (!state.history || !state.history.length) {
+          box.appendChild(el('li', null, '暂无记录'));
+          return;
+        }
+        state.history.forEach(function (h) {
+          var li = el('li');
+          var head = el('div', 'tg-item-head');
+          var name = el('span', 'tg-item-name', h.fileName || '未命名');
+          head.appendChild(name);
+          head.appendChild(el('span', 'tg-badge ' + (h.kind || ''), kindLabel(h.kind)));
+          li.appendChild(head);
+          var meta = el('div', 'tg-meta', fmtSize(h.size) + (h.time ? ' · ' + h.time.slice(0, 19).replace('T', ' ') : ''));
+          li.appendChild(meta);
+          if (h.url) {
+            var redl = el('button', 'tg-mini-btn', '重新下载');
+            redl.type = 'button';
+            redl.addEventListener('click', function () {
+              channel.request('command', { action: 'redownload', item: h }, 4000)
+                .then(function () { PUI.toast('已重新加入队列', 'success'); })
+                .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+            });
+            var actions = el('div', 'tg-item-actions');
+            actions.appendChild(redl);
+            head.appendChild(actions);
+          }
+          box.appendChild(li);
+        });
+      }
+
+      function renderAll() {
+        $('tgVersion').textContent = versionLabel(state.version);
+        renderQueue();
+        renderHistory();
+      }
+
+      function copyText(text) {
+        if (!text) { PUI.toast('暂无内容可复制', 'warn'); return; }
+        var done = function () { PUI.toast('已复制到剪贴板', 'success'); };
+        function fallback() {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          } catch (e) { /* ignore */ }
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () { fallback(); done(); });
+        } else { fallback(); done(); }
+      }
+
+      function refreshState() {
+        channel.request('command', { action: 'getState' }, 4000)
+          .then(function (d) {
+            if (!d) return;
+            state.connected = true;
+            state.version = d.version || 'unknown';
+            state.queue = d.queue || [];
+            state.history = d.history || [];
+            applySettingsUI(d.settings || {});
+            setStatus(statusText());
+            renderAll();
+          })
+          .catch(function () {
+            state.connected = false;
+            setStatus(statusText(), 'error');
+          });
+      }
+
+      function applySettingsUI(s) {
+        s = s || {};
+        $('tgConcurrency').value = String(s.concurrency || 2);
+        $('tgConVal').textContent = String(s.concurrency || 2);
+        $('tgNaming').value = s.namingRule || 'auto';
+        $('tgShowPageBtn').checked = s.showPageButton !== false;
+      }
+
+      function collectSettingsUI() {
+        return {
+          concurrency: parseInt($('tgConcurrency').value, 10) || 2,
+          namingRule: $('tgNaming').value,
+          showPageButton: $('tgShowPageBtn').checked
+        };
+      }
+
+      // 监听油猴推送
+      channel.on('queue', function (d) {
+        d = d || {};
+        if (d.connected) {
+          state.connected = true;
+          state.version = d.version || state.version;
+        }
+        state.queue = d.queue || [];
+        state.history = d.history || state.history || [];
+        renderAll();
+      });
+      channel.on('done', function (d) {
+        d = d || {};
+        PUI.toast('下载完成：' + (d.fileName || ''), 'success');
+      });
+      channel.on('error', function (d) {
+        d = d || {};
+        PUI.toast('下载失败：' + (d.message || ''), 'error');
+      });
+
+      // 交互绑定
+      $('tgBatch').addEventListener('click', function () {
+        var filter = $('tgFilter').value;
+        channel.request('command', { action: 'batchDownload', filter: filter }, 8000)
+          .then(function (d) {
+            if (d && d.ok) { PUI.toast('已加入 ' + (d.count || 0) + ' 个下载任务', d.count > 0 ? 'success' : 'warn'); }
+            else { PUI.toast('批量下载失败：' + (d && d.error || ''), 'error'); }
+          })
+          .catch(function () { PUI.toast('未连接原页面（独立模式）', 'warn'); });
+      });
+      $('tgConcurrency').addEventListener('input', function () {
+        $('tgConVal').textContent = $('tgConcurrency').value;
+      });
+      $('tgApplySettings').addEventListener('click', function () {
+        var s = collectSettingsUI();
+        channel.request('command', { action: 'applySettings', settings: s }, 4000)
+          .then(function () { PUI.toast('设置已保存', 'success'); })
+          .catch(function () { PUI.toast('已保存到面板（原页面未响应）', 'warn'); });
+      });
+      $('tgResetSettings').addEventListener('click', function () {
+        channel.request('command', { action: 'resetSettings' }, 4000)
+          .then(function (d) { applySettingsUI(d.settings || {}); PUI.toast('已恢复默认', 'success'); })
+          .catch(function () { PUI.toast('原页面未响应', 'warn'); });
+      });
+      $('tgLogs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }, 4000)
+          .then(function (d) {
+            var text = (d && d.text) || '（无日志）';
+            var pre = el('pre', null, text);
+            pre.style.cssText = 'max-height:300px;overflow:auto;white-space:pre-wrap;font-size:12px;';
+            PUI.modal({
+              title: '脚本日志',
+              body: pre,
+              buttons: [
+                { text: '复制日志', type: 'primary', onClick: function () { copyText(text); } },
+                { text: '关闭', type: 'default' }
+              ]
+            });
+          })
+          .catch(function () { PUI.toast('原页面未响应，无法读取日志', 'warn'); });
+      });
+
+      // 初始化
+      renderAll();
+      refreshState();
+      // ==================== 功能逻辑 结束 ====================
+    })();
+  </script>
+</body>
+</html>
