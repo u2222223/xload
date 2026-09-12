@@ -199,7 +199,7 @@
             <button type="button" id="btn-export" class="pui-btn pui-btn-default">导出配置</button>
             <button type="button" id="btn-import" class="pui-btn pui-btn-default">导入配置</button>
             <button type="button" id="btn-reset" class="pui-btn pui-btn-danger">恢复默认并重置</button>
-            <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">应用到原页面</button>
+            <button type="button" id="btn-apply" class="pui-btn pui-btn-primary">保存配置</button>
           </div>
         </section>
         <!-- ==================== 功能 UI 结束 ==================== -->
@@ -340,7 +340,7 @@
         $('f-speed-val').textContent = Number(settings.speed).toFixed(2) + 'x';
         channel.request('command', { action: 'applySettings', settings: settings }, 4000)
           .then(function (d) {
-            if (d && d.ok) PUI.toast('已应用到原页面', 'success');
+            if (d && d.ok) PUI.toast('已保存配置', 'success');
             else PUI.toast('原页面返回异常', 'warn');
           })
           .catch(function () {
