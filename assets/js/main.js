@@ -66,7 +66,7 @@
       "</div></header>"
     );
     function navLink(href, label, isActive) {
-      return '<a href="' + href + '" target="_blank" rel="noopener"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
+      return '<a href="' + href + '"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
     }
   }
 
@@ -75,21 +75,21 @@
     var en = enabledTypes();
     var typesCol = en.map(function (id) {
       var t = typeById(id);
-      return '<li><a href="/?type=' + encodeURIComponent(id) + '" target="_blank" rel="noopener">' + esc(t.label) + "</a></li>";
+      return '<li><a href="/?type=' + encodeURIComponent(id) + '">' + esc(t.label) + "</a></li>";
     }).join("");
     return (
       '<footer class="site-footer"><div class="container">' +
       '<div class="footer-grid">' +
       "<div class=\"footer-col\"><h4>" + esc(data.site.name) + "</h4><ul>" +
       "<li>" + esc(data.site.tagline) + "</li>" +
-      '<li><a href="/about.html" target="_blank" rel="noopener">About us</a></li>' +
-      '<li><a href="/contact.html" target="_blank" rel="noopener">Contact</a></li>' +
+      '<li><a href="/about.html">About us</a></li>' +
+      '<li><a href="/contact.html">Contact</a></li>' +
       "</ul></div>" +
       "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
       "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
-      '<li><a href="/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a></li>' +
-      '<li><a href="/terms-of-service.html" target="_blank" rel="noopener">Terms of Service</a></li>' +
-      '<li><a href="/cookie-policy.html" target="_blank" rel="noopener">Cookie Policy</a></li>' +
+      '<li><a href="/privacy-policy.html">Privacy Policy</a></li>' +
+      '<li><a href="/terms-of-service.html">Terms of Service</a></li>' +
+      '<li><a href="/cookie-policy.html">Cookie Policy</a></li>' +
       "</ul></div>" +
       "</div>" +
       '<div class="footer-bottom"><span>&copy; ' + new Date().getFullYear() + " " + esc(data.site.name) + ". All rights reserved.</span>" +
@@ -105,7 +105,7 @@
     banner.setAttribute("role", "dialog");
     banner.innerHTML =
       "<p>We use cookies to personalise content, provide analytics and show ads tailored to you. See our " +
-      '<a href="/cookie-policy.html" target="_blank" rel="noopener">Cookie Policy</a> for details.</p>' +
+      '<a href="/cookie-policy.html">Cookie Policy</a> for details.</p>' +
       '<div class="actions">' +
       '<button class="btn btn-ghost" data-ck="essential">Essential only</button>' +
       '<button class="btn" data-ck="all">Accept all</button>' +
