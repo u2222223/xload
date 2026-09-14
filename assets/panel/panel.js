@@ -86,7 +86,9 @@
         _timer: setTimeout(function () {
           if (self._pending[id]) {
             delete self._pending[id];
-            reject(new Error('原页面未响应：' + type));
+            var error = new Error((typeof self.translate === 'function' ? self.translate('timeout') + ': ' : '原页面未响应：') + type);
+            error.code = 'REQUEST_TIMEOUT';
+            reject(error);
           }
         }, t)
       };
@@ -117,6 +119,10 @@
 
   // ---------- PUI：面板 UI 组件 ----------
   var PUI = {};
+  var translator = null;
+  // 新面板显式接入；旧面板保留现有默认文案。
+  PUI.setTranslator = function (fn) { translator = typeof fn === 'function' ? fn : null; };
+  function uiText(key, fallback) { return translator ? translator(key) : fallback; }
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -179,7 +185,7 @@
     var o = opts || {};
     var mask = el('div', 'pui-modal-mask');
     var box = el('div', 'pui-modal');
-    var head = el('div', 'pui-modal-head', o.title || '提示');
+    var head = el('div', 'pui-modal-head', o.title || uiText('notice', '提示'));
     var body = el('div', 'pui-modal-body');
     if (typeof o.body === 'string') body.textContent = o.body;
     else if (o.body && o.body.nodeType) body.appendChild(o.body);
@@ -189,7 +195,7 @@
         if (mask.parentNode) mask.parentNode.removeChild(mask);
       }
     };
-    var btns = o.buttons && o.buttons.length ? o.buttons : [{ text: '关闭', type: 'default' }];
+    var btns = o.buttons && o.buttons.length ? o.buttons : [{ text: uiText('close', '关闭'), type: 'default' }];
     btns.forEach(function (b) {
       var btn = el('button', 'pui-btn pui-btn-' + (b.type || 'default'), b.text);
       btn.addEventListener('click', function () {
