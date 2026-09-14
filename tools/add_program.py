@@ -43,6 +43,7 @@ Exit code 0 = ok, 1 = error/validation failed.
 
 import argparse
 import datetime
+import html as html_lib
 import json
 import os
 import re
@@ -147,20 +148,21 @@ def fill_page(args, data):
     desc = args.desc or args.short or ""
     mdesc = meta_desc(args.desc, args.short)
     type_label = TYPE_LABEL.get(args.type, args.type.title())
+    esc = lambda value: html_lib.escape(str(value or ""), quote=True)
 
     repl = {
-        "REPLACE_TITLE": args.title,
-        "REPLACE_META_DESCRIPTION (max ~160 chars for SEO)": mdesc,
+        "REPLACE_TITLE": esc(args.title),
+        "REPLACE_META_DESCRIPTION (max ~160 chars for SEO)": esc(mdesc),
         "REPLACE_SLUG": args.id,
-        "REPLACE_ONE_LINE_SUMMARY": args.short or args.title,
-        "REPLACE_GITHUB_RELEASES_URL": args.install or args.github,
-        "REPLACE_GITHUB_REPO_URL": args.github,
-        "REPLACE_CATEGORY": args.category,
-        "REPLACE_LICENSE (e.g. MIT)": args.license or "MIT",
-        "REPLACE_DATE": args.updated,
+        "REPLACE_ONE_LINE_SUMMARY": esc(args.short or args.title),
+        "REPLACE_GITHUB_RELEASES_URL": esc(args.install or args.github),
+        "REPLACE_GITHUB_REPO_URL": esc(args.github),
+        "REPLACE_CATEGORY": esc(args.category),
+        "REPLACE_LICENSE (e.g. MIT)": esc(args.license or "MIT"),
+        "REPLACE_DATE": esc(args.updated),
         "USERCRIPT": type_label,
         "Usercript": type_label,
-        "REPLACE_CANONICAL": args.page,
+        "REPLACE_CANONICAL": esc(args.page),
     }
 
     # feature bullets
@@ -170,13 +172,15 @@ def fill_page(args, data):
         for i, f in enumerate(feats):
             key = "REPLACE: feature %s" % num[i]
             if key in html:
-                html = html.replace(key, f)
+                html = html.replace(key, esc(f))
+        for key_name in num[len(feats):]:
+            html = re.sub(r"\s*<li>REPLACE: feature %s</li>" % key_name, "", html)
 
     # overview paragraph
     overview = desc
     if overview and "REPLACE: a clear paragraph describing what this tool does and who it helps." in html:
         html = html.replace(
-            "REPLACE: a clear paragraph describing what this tool does and who it helps.", overview)
+            "REPLACE: a clear paragraph describing what this tool does and who it helps.", esc(overview))
 
     for k, v in repl.items():
         html = html.replace(k, v)

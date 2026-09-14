@@ -31,6 +31,7 @@
     this._onMsg = function (ev) {
       if (!ev.data || typeof ev.data !== 'object' || !ev.data.type) return;
       if (ev.source === window) return;
+      if (self._opener && ev.source !== self._opener) return;
       if (ev.data._from !== self._id) return;
       self._dispatch(ev.data);
     };
