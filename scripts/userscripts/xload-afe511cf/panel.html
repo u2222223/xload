@@ -78,7 +78,7 @@
           <div class="pb-group">
             <h2 data-i18n="filter.statsTitle">Current page</h2>
             <div class="filter-stats"><div class="filter-stat"><strong id="scanned-count">0</strong><span data-i18n="filter.scanned">Scanned</span></div><div class="filter-stat"><strong id="hidden-count">0</strong><span data-i18n="filter.hidden">Hidden</span></div></div>
-            <div id="recent-output" class="filter-output" data-i18n="filter.empty">No items matched</div>
+            <div id="recent-output" class="filter-output">No items matched</div>
           </div>
           <div class="pb-btns">
             <button id="save" class="pui-btn pui-btn-primary" type="button" data-i18n="control.save">Save settings</button>
@@ -200,6 +200,7 @@
 function createI18n(taskId, dictionary, options) {
     var opts = options || {};
     var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
     var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
     var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
 
@@ -255,10 +256,23 @@ function createI18n(taskId, dictionary, options) {
       });
     }
 
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
     function apply(root) {
       var scope = root || document;
       var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
-      for (var i = 0; i < textNodes.length; i++) textNodes[i].textContent = t(textNodes[i].getAttribute('data-i18n'));
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
       var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
       for (var j = 0; j < attrNodes.length; j++) {
         var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
@@ -280,7 +294,7 @@ function createI18n(taskId, dictionary, options) {
       return locale;
     }
 
-    var api = { taskId: String(taskId || ''), t: t, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
     return api;
   }
 
@@ -363,16 +377,16 @@ function createI18n(taskId, dictionary, options) {
         });
       });
       channel.request('command', { action: 'getState' }).then(function (state) {
-        connectionStatus.textContent = i18n.t('filter.connected');
+        i18n.setText(connectionStatus, 'filter.connected');
         fillForm(state.settings);
         renderStats(state.stats);
         if (state && state.localePreference) {
           i18n.setLocale(state.localePreference);
           languageSelect.value = state.localePreference;
-          connectionStatus.textContent = i18n.t('filter.connected');
+          i18n.setText(connectionStatus, 'filter.connected');
           renderStats(state.stats);
         }
-      }).catch(function () { connectionStatus.textContent = i18n.t('error.pageUnresponsive'); });
+      }).catch(function () { i18n.setText(connectionStatus, 'error.pageUnresponsive'); });
 
       document.getElementById('save').addEventListener('click', function () {
         request('saveSettings', { settings: readForm() }).then(function (result) {

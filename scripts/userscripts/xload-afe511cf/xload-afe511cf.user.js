@@ -4,7 +4,7 @@
 // @name:zh-CN   知乎内容过滤器
 // @name:zh-TW   知乎內容過濾器
 // @namespace    https://xload.net/
-// @version      2026.9.14.2
+// @version      2026.9.14.3
 // @description  Filter Zhihu cards by type, phrases, users, votes, age, and labeled content.
 // @description:en      Filter Zhihu cards by type, phrases, users, votes, age, and labeled content.
 // @description:zh-CN   按类别、短语、用户、赞同数、时间和内容标记过滤知乎卡片。
@@ -100,6 +100,7 @@
 function createI18n(taskId, dictionary, options) {
     var opts = options || {};
     var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
     var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
     var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
 
@@ -155,10 +156,23 @@ function createI18n(taskId, dictionary, options) {
       });
     }
 
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
     function apply(root) {
       var scope = root || document;
       var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
-      for (var i = 0; i < textNodes.length; i++) textNodes[i].textContent = t(textNodes[i].getAttribute('data-i18n'));
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
       var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
       for (var j = 0; j < attrNodes.length; j++) {
         var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
@@ -180,7 +194,7 @@ function createI18n(taskId, dictionary, options) {
       return locale;
     }
 
-    var api = { taskId: String(taskId || ''), t: t, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
     return api;
   }
 
