@@ -165,17 +165,6 @@ def fill_page(args, data):
         "REPLACE_CANONICAL": esc(args.page),
     }
 
-    # feature bullets
-    if args.features:
-        feats = [f.strip() for f in args.features.split(";") if f.strip()]
-        num = ["one", "two", "three", "four", "five"]
-        for i, f in enumerate(feats):
-            key = "REPLACE: feature %s" % num[i]
-            if key in html:
-                html = html.replace(key, esc(f))
-        for key_name in num[len(feats):]:
-            html = re.sub(r"\s*<li>REPLACE: feature %s</li>" % key_name, "", html)
-
     # overview paragraph
     overview = desc
     if overview and "REPLACE: a clear paragraph describing what this tool does and who it helps." in html:
@@ -247,7 +236,6 @@ def main():
     p.add_argument("--short", default="", help="one-line card summary")
     p.add_argument("--desc", default="", help="longer description paragraph")
     p.add_argument("--tags", default="", help="comma-separated keywords")
-    p.add_argument("--features", default="", help="semicolon-separated feature bullets")
     p.add_argument("--license", default="", help="default MIT")
     p.add_argument("--rating", type=float, default=0)
     p.add_argument("--downloads", type=int, default=0)
