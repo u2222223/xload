@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home — xload</title>
-  <meta name="description" content="Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub.">
+  <title data-site-ui="homeTitle">Home — xload</title>
+  <meta name="description" content="Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub." data-site-ui-attr="content:homeDescription">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://xload.net/">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
@@ -33,22 +33,22 @@
 
   <main>
     <div class="container page">
-      <nav class="crumb"><span>Home</span></nav>
+      <nav class="crumb"><span data-site-ui="home">Home</span></nav>
       <div class="page-header">
-        <h1>Home</h1>
-        <p>Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.</p>
+        <h1 data-site-ui="home">Home</h1>
+        <p data-site-ui="homeIntro">Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.</p>
       </div>
 
       <!-- Filters -->
       <div class="toolbar">
-        <select id="ff-type" aria-label="Filter by type">
-          <option value="all">All types</option>
+        <select id="ff-type" aria-label="Filter by type" data-site-ui-attr="aria-label:filterType">
+          <option value="all" data-site-ui="allTypes">All types</option>
         </select>
-        <input class="f-search" id="filter-q" type="text" placeholder="Filter results by keyword&hellip;" aria-label="Keyword filter">
-        <select id="ff-sort" aria-label="Sort order">
-          <option value="popular">Most popular</option>
-          <option value="newest">Newest</option>
-          <option value="name">Name A&ndash;Z</option>
+        <input class="f-search" id="filter-q" type="text" placeholder="Filter results by keyword&hellip;" aria-label="Keyword filter" data-site-ui-attr="placeholder:keywordPlaceholder,aria-label:keywordFilter">
+        <select id="ff-sort" aria-label="Sort order" data-site-ui-attr="aria-label:sortOrder">
+          <option value="popular" data-site-ui="mostPopular">Most popular</option>
+          <option value="newest" data-site-ui="newest">Newest</option>
+          <option value="name" data-site-ui="nameAZ">Name A&ndash;Z</option>
         </select>
       </div>
 
@@ -79,6 +79,6 @@
 
   <div id="chrome-footer"></div>
 
-  <script src="/assets/js/main.js?v=20260916.1"></script>
+  <script src="/assets/js/main.js?v=20260916.2"></script>
 </body>
 </html>

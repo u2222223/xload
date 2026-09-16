@@ -4,10 +4,89 @@
   var data = null;
   var LOCALE_KEY = "xload-release-locale";
   var SITE_UI = {
-    en: { home: "Home", about: "About", language: "Language", auto: "Auto (browser)" },
-    "zh-CN": { home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）" },
-    "zh-TW": { home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）" }
+    en: {
+      home: "Home", about: "About", language: "Language", auto: "Auto (browser)",
+      homeTitle: "Home — xload",
+      homeDescription: "Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub.",
+      homeIntro: "Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.",
+      filterType: "Filter by type", allTypes: "All types", keywordFilter: "Keyword filter",
+      keywordPlaceholder: "Filter results by keyword…", sortOrder: "Sort order",
+      mostPopular: "Most popular", newest: "Newest", nameAZ: "Name A–Z",
+      noResults: "No results found. Try a different search or filter.", item: "item", items: "items",
+      aboutTitle: "About xload",
+      aboutDescription: "Learn what xload is, who it is for and how our downloads work. Every tool is open source and hosted on GitHub.",
+      aboutIntro: "Making great browser tools easy to find, easy to trust and easy to install.",
+      aboutLead: "xload is a catalog of userscripts, browser extensions and desktop tools that we either build ourselves or maintain as open-source projects. Our goal is simple: <strong>give people fast, free and safe access to powerful tools</strong> without shady download buttons, fake \"installers\" or bundled adware.",
+      downloadsHeading: "How downloads work",
+      downloadsLead: "We never store script or program files on our servers. Instead, every download button links directly to our <strong>official GitHub repository releases</strong>. This has three big benefits:",
+      transparency: "<strong>Transparency</strong> — every line of code is public and auditable.",
+      safety: "<strong>Safety</strong> — you always receive the official, signed release, never a third-party re-pack.",
+      versioning: "<strong>Versioning</strong> — you can see update history, changelogs and releases at a glance.",
+      audienceHeading: "Who is it for",
+      audienceBody: "Power users, developers, students and anyone who wants to customize their web experience. Whether you want to save time on repetitive tasks, improve privacy, or just make websites look better, you will likely find a tool for it here.",
+      valuesHeading: "Our values",
+      openSource: "<strong>Open source first.</strong> If we build it, you can read it.",
+      freeForever: "<strong>Free forever.</strong> No paywalls, no \"pro\" upsells hiding core features.",
+      honestAds: "<strong>Independent and honest advertising.</strong> The site is supported by respectful Google ads, clearly labelled.",
+      contactHeading: "Contact",
+      contactBody: "Questions, feedback or a feature idea? Reach out via our <a href=\"/contact.html\">contact page</a>."
+    },
+    "zh-CN": {
+      home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
+      homeTitle: "首页 — xload",
+      homeDescription: "浏览和搜索 xload 收录的浏览器用户脚本，按关键词和类别筛选，并从 GitHub 直接安装。",
+      homeIntro: "浏览目录中的全部用户脚本。使用搜索、筛选和排序快速找到所需工具，我们也会持续添加新工具。",
+      filterType: "按类型筛选", allTypes: "全部类型", keywordFilter: "关键词筛选",
+      keywordPlaceholder: "按关键词筛选结果…", sortOrder: "排序方式",
+      mostPopular: "最热门", newest: "最新", nameAZ: "名称 A–Z",
+      noResults: "没有找到结果，请尝试其他搜索词或筛选条件。", item: "项", items: "项",
+      aboutTitle: "关于 xload",
+      aboutDescription: "了解 xload、它适合哪些用户以及下载方式。所有工具均开源并托管在 GitHub。",
+      aboutIntro: "让优秀的浏览器工具更容易被发现、信任和安装。",
+      aboutLead: "xload 是一个用户脚本、浏览器扩展和桌面工具目录，其中的项目由我们自行开发或作为开源项目维护。我们的目标很简单：<strong>让每个人都能快速、免费、安全地使用强大工具</strong>，远离可疑下载按钮、虚假“安装器”和捆绑广告软件。",
+      downloadsHeading: "下载方式",
+      downloadsLead: "我们不会在自己的服务器上存储脚本或程序文件。每个下载按钮都会直接链接到<strong>官方 GitHub 仓库的发行版本</strong>，这样做有三大好处：",
+      transparency: "<strong>透明</strong> — 每一行代码都公开且可审查。",
+      safety: "<strong>安全</strong> — 你获得的始终是官方签名版本，而不是第三方重新打包的文件。",
+      versioning: "<strong>版本清晰</strong> — 更新历史、变更日志和发行版本一目了然。",
+      audienceHeading: "适合谁使用",
+      audienceBody: "适合高级用户、开发者、学生，以及所有希望自定义网页体验的人。无论你想减少重复操作、改善隐私，还是让网站更美观，都有机会在这里找到合适的工具。",
+      valuesHeading: "我们的价值观",
+      openSource: "<strong>开源优先。</strong>我们开发的内容，你都可以查看源码。",
+      freeForever: "<strong>永久免费。</strong>没有付费墙，也不会用“专业版”隐藏核心功能。",
+      honestAds: "<strong>独立、诚实的广告。</strong>网站由克制且标识清晰的 Google 广告提供支持。",
+      contactHeading: "联系我们",
+      contactBody: "有问题、反馈或功能建议？欢迎通过<a href=\"/contact.html\">联系页面</a>告诉我们。"
+    },
+    "zh-TW": {
+      home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
+      homeTitle: "首頁 — xload",
+      homeDescription: "瀏覽和搜尋 xload 收錄的瀏覽器使用者腳本，依關鍵字和類別篩選，並從 GitHub 直接安裝。",
+      homeIntro: "瀏覽目錄中的全部使用者腳本。使用搜尋、篩選和排序快速找到所需工具，我們也會持續加入新工具。",
+      filterType: "依類型篩選", allTypes: "全部類型", keywordFilter: "關鍵字篩選",
+      keywordPlaceholder: "依關鍵字篩選結果…", sortOrder: "排序方式",
+      mostPopular: "最熱門", newest: "最新", nameAZ: "名稱 A–Z",
+      noResults: "找不到結果，請嘗試其他搜尋詞或篩選條件。", item: "項", items: "項",
+      aboutTitle: "關於 xload",
+      aboutDescription: "了解 xload、它適合哪些使用者以及下載方式。所有工具均開源並託管於 GitHub。",
+      aboutIntro: "讓優秀的瀏覽器工具更容易被發現、信任和安裝。",
+      aboutLead: "xload 是一個使用者腳本、瀏覽器擴充功能和桌面工具目錄，其中的專案由我們自行開發或作為開源專案維護。我們的目標很簡單：<strong>讓每個人都能快速、免費、安全地使用強大工具</strong>，遠離可疑下載按鈕、虛假「安裝程式」和綑綁廣告軟體。",
+      downloadsHeading: "下載方式",
+      downloadsLead: "我們不會在自己的伺服器上儲存腳本或程式檔案。每個下載按鈕都會直接連結到<strong>官方 GitHub 儲存庫的發行版本</strong>，這樣做有三大好處：",
+      transparency: "<strong>透明</strong> — 每一行程式碼都公開且可審查。",
+      safety: "<strong>安全</strong> — 你取得的始終是官方簽署版本，而不是第三方重新封裝的檔案。",
+      versioning: "<strong>版本清楚</strong> — 更新歷史、變更記錄和發行版本一目了然。",
+      audienceHeading: "適合誰使用",
+      audienceBody: "適合進階使用者、開發者、學生，以及所有希望自訂網頁體驗的人。無論你想減少重複操作、改善隱私，還是讓網站更美觀，都有機會在這裡找到合適的工具。",
+      valuesHeading: "我們的價值觀",
+      openSource: "<strong>開源優先。</strong>我們開發的內容，你都可以查看原始碼。",
+      freeForever: "<strong>永久免費。</strong>沒有付費牆，也不會用「專業版」隱藏核心功能。",
+      honestAds: "<strong>獨立、誠實的廣告。</strong>網站由克制且標示清楚的 Google 廣告提供支持。",
+      contactHeading: "聯絡我們",
+      contactBody: "有問題、意見或功能建議？歡迎透過<a href=\"/contact.html\">聯絡頁面</a>告訴我們。"
+    }
   };
+  var activeSiteLocale = "en";
 
   /* ---------------- icons ---------------- */
   function icon(name) {
@@ -75,13 +154,32 @@
   function applySiteLocale(value) {
     var locale = resolvedLocale(value);
     var ui = SITE_UI[locale] || SITE_UI.en;
+    activeSiteLocale = locale;
+    document.documentElement.lang = locale;
     document.querySelectorAll("[data-site-ui]").forEach(function (el) {
       var key = el.getAttribute("data-site-ui");
       if (ui[key]) el.textContent = ui[key];
     });
+    document.querySelectorAll("[data-site-ui-html]").forEach(function (el) {
+      var key = el.getAttribute("data-site-ui-html");
+      if (ui[key]) el.innerHTML = ui[key];
+    });
+    document.querySelectorAll("[data-site-ui-attr]").forEach(function (el) {
+      String(el.getAttribute("data-site-ui-attr") || "").split(",").forEach(function (spec) {
+        var pair = spec.split(":");
+        var attr = pair.shift();
+        var key = pair.join(":");
+        if (attr && ui[key]) el.setAttribute(attr, ui[key]);
+      });
+    });
     var select = document.getElementById("release-locale");
     if (select) select.value = ["auto", "en", "zh-CN", "zh-TW"].indexOf(value) >= 0 ? value : "auto";
     if (typeof window.xloadApplyReleaseLocale === "function") window.xloadApplyReleaseLocale(value);
+    if (typeof window.xloadApplyListingLocale === "function") window.xloadApplyListingLocale();
+  }
+
+  function siteText(key) {
+    return (SITE_UI[activeSiteLocale] && SITE_UI[activeSiteLocale][key]) || SITE_UI.en[key] || key;
   }
 
   /* ---------------- chrome (header / footer) ---------------- */
@@ -250,7 +348,7 @@
 
     var typeSel = document.getElementById("ff-type");
     if (typeSel) {
-      typeSel.innerHTML = '<option value="all">All types</option>' + enabledTypes().map(function (id) {
+      typeSel.innerHTML = '<option value="all">' + esc(siteText("allTypes")) + '</option>' + enabledTypes().map(function (id) {
         return '<option value="' + esc(id) + '">' + esc(typeById(id).label) + "</option>";
       }).join("");
       typeSel.value = activeType;
@@ -278,6 +376,7 @@
       var t = document.getElementById("ff-type").value;
       var k = document.getElementById("filter-q").value.toLowerCase().trim();
       var s = document.getElementById("ff-sort").value;
+      if (typeSel && typeSel.options.length) typeSel.options[0].textContent = siteText("allTypes");
 
       var list = storeAll.filter(function (it) {
         if (t !== "all" && it.type !== t) return false;
@@ -312,18 +411,19 @@
       if (!list.length) {
         var empty = document.createElement("div");
         empty.className = "empty";
-        empty.textContent = "No results found. Try a different search or filter.";
+        empty.textContent = siteText("noResults");
         grid.appendChild(empty);
       }
 
       var cl = document.getElementById("count-line");
-      if (cl) cl.textContent = list.length + (list.length === 1 ? " item" : " items");
+      if (cl) cl.textContent = list.length + " " + siteText(list.length === 1 ? "item" : "items");
     }
 
     var tSel = document.getElementById("ff-type");
     if (tSel) tSel.addEventListener("change", apply);
     if (document.getElementById("ff-sort")) document.getElementById("ff-sort").addEventListener("change", apply);
     if (document.getElementById("filter-q")) document.getElementById("filter-q").addEventListener("input", apply);
+    window.xloadApplyListingLocale = apply;
     apply();
   }
 
