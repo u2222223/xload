@@ -2,6 +2,12 @@
   "use strict";
 
   var data = null;
+  var LOCALE_KEY = "xload-release-locale";
+  var SITE_UI = {
+    en: { home: "Home", about: "About", language: "Language", auto: "Auto (browser)" },
+    "zh-CN": { home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）" },
+    "zh-TW": { home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）" }
+  };
 
   /* ---------------- icons ---------------- */
   function icon(name) {
@@ -37,6 +43,47 @@
     return new URLSearchParams(window.location.search).get(name) || "";
   }
 
+  function resolvedLocale(value) {
+    if (value !== "auto") return SITE_UI[value] ? value : "en";
+    var languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+    for (var i = 0; i < languages.length; i++) {
+      var name = String(languages[i]).replace(/_/g, "-").toLowerCase();
+      if (name.indexOf("zh") === 0) return /(?:hant|tw|hk|mo)/.test(name) ? "zh-TW" : "zh-CN";
+    }
+    return "en";
+  }
+
+  function savedLocale() {
+    try { return localStorage.getItem(LOCALE_KEY) || "auto"; } catch (e) { return "auto"; }
+  }
+
+  function languageControl() {
+    return '<section class="release-language" data-release-i18n-controls>' +
+      '<label class="pui-field" for="release-locale"><span class="pui-label" data-site-ui="language">Language</span>' +
+      '<select class="pui-input" id="release-locale"><option value="auto" data-site-ui="auto">Auto (browser)</option>' +
+      '<option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label></section>';
+  }
+
+  function ensurePanelStyles() {
+    if (document.querySelector('link[href="/assets/panel/panel.css"]')) return;
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "/assets/panel/panel.css";
+    document.head.insertBefore(link, document.head.firstChild);
+  }
+
+  function applySiteLocale(value) {
+    var locale = resolvedLocale(value);
+    var ui = SITE_UI[locale] || SITE_UI.en;
+    document.querySelectorAll("[data-site-ui]").forEach(function (el) {
+      var key = el.getAttribute("data-site-ui");
+      if (ui[key]) el.textContent = ui[key];
+    });
+    var select = document.getElementById("release-locale");
+    if (select) select.value = ["auto", "en", "zh-CN", "zh-TW"].indexOf(value) >= 0 ? value : "auto";
+    if (typeof window.xloadApplyReleaseLocale === "function") window.xloadApplyReleaseLocale(value);
+  }
+
   /* ---------------- chrome (header / footer) ---------------- */
   function enabledTypes() {
     if (!data) return ["script"];
@@ -51,22 +98,26 @@
   function buildHeader() {
     var active = document.body.getAttribute("data-nav") || "";
     var nav = "";
-    nav += navLink("/", "Home", active === "script" || active === "home");
+    nav += navLink("/", "Home", active === "script" || active === "home", "home");
     enabledTypes().forEach(function (t) {
       if (t === "script") return;
       nav += navLink("/?type=" + encodeURIComponent(t), typeById(t).label, active === t);
     });
-    nav += navLink("/about.html", "About", active === "about");
+    nav += navLink("/about.html", "About", active === "about", "about");
     var name = data ? esc(data.site.name) : "xload";
+    var existingLanguage = document.querySelector(".release-language");
+    var legacyDetail = location.pathname.indexOf("/scripts/userscripts/") === 0 && !existingLanguage;
+    var language = existingLanguage || legacyDetail ? "" : languageControl();
     return (
       '<header class="site-header"><div class="nav-wrap">' +
       '<a class="logo" href="/"><img class="logo-img" src="/assets/img/xload_logo.png" alt="' + name + ' logo"><span>' + name + "</span></a>" +
       '<nav class="main-nav" id="main-nav">' + nav + "</nav>" +
+      language +
       '<button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button>' +
       "</div></header>"
     );
-    function navLink(href, label, isActive) {
-      return '<a href="' + href + '"' + (isActive ? ' class="active"' : "") + ">" + label + "</a>";
+    function navLink(href, label, isActive, localeKey) {
+      return '<a href="' + href + '"' + (isActive ? ' class="active"' : "") + (localeKey ? ' data-site-ui="' + localeKey + '"' : '') + ">" + label + "</a>";
     }
   }
 
@@ -150,6 +201,16 @@
     var language = document.querySelector(".release-language");
     var navWrap = h && h.querySelector(".nav-wrap");
     if (language && navWrap) navWrap.insertBefore(language, toggle || null);
+    var localeSelect = document.getElementById("release-locale");
+    var localeValue = savedLocale();
+    if (localeSelect) {
+      localeSelect.value = ["auto", "en", "zh-CN", "zh-TW"].indexOf(localeValue) >= 0 ? localeValue : "auto";
+      localeSelect.addEventListener("change", function () {
+        try { localStorage.setItem(LOCALE_KEY, localeSelect.value); } catch (e) {}
+        applySiteLocale(localeSelect.value);
+      });
+    }
+    applySiteLocale(localeValue);
     if (toggle && nav) {
       toggle.addEventListener("click", function () { nav.classList.toggle("open"); });
     }
@@ -268,6 +329,7 @@
 
   /* ---------------- init ---------------- */
   function init() {
+    ensurePanelStyles();
     fetch("/scripts-data.json")
       .then(function (r) { if (!r.ok) throw new Error("data"); return r.json(); })
       .then(function (d) {
