@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">Discord bulk delete messages with preview and stop controls - Panel</title>
+  <meta name="description" content="Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">Discord bulk delete messages with preview and stop controls</h1>
+        <p class="panel-subtitle" data-i18n="short">Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ====================
+             组件目录：/_preview/fab-panel-preview.html（仓库路径 _preview/fab-panel-preview.html）。
+             样式统一 D0 极简黑白（静态）：黑 header、白卡、黑白按钮/开关/滑条，无动画/过渡。
+             只能组合共享 panel.css 已定义的 pui-*/pb-* 组件；不得复制组件 CSS、另建主题，
+             或重定义颜色、圆角、阴影、动效及基础控件外观。业务 class 仅补组件无法表达的布局。
+             内联 <style> 仅黑白（#111/#fff/#d4d4d4/#e5e5e5/#ececec/#f4f4f4/#fafafa，
+             次要文字 #555/#888/#a3a3a3），禁止任何彩色系（#2563eb 等）。
+             把设置下发给油猴的主按钮文案一律用「保存配置」（toast「已保存配置」）。
+        ==================== -->
+        <section class="pui-card">
+          <h2 class="pui-card-title" data-i18n="scope"></h2>
+          <p class="pui-help" data-i18n="help"></p>
+          <p id="connection" class="pb-status" role="status" data-i18n="status.connecting"></p>
+          <div class="pui-form-grid">
+            <label class="pui-field"><span class="pui-label" data-i18n="scope"></span><select id="scopeType" class="pui-input"><option value="channel" data-i18n="scope.channel"></option><option value="dm" data-i18n="scope.dm"></option><option value="server" data-i18n="scope.server"></option></select></label>
+            <label class="pui-field"><span class="pui-label" data-i18n="author"></span><input id="authorId" class="pui-input" inputmode="numeric" autocomplete="off" maxlength="20"></label>
+            <label class="pui-field"><span class="pui-label" data-i18n="guild"></span><input id="guildId" class="pui-input" autocomplete="off" maxlength="20"></label>
+            <label class="pui-field"><span class="pui-label" data-i18n="conversation"></span><input id="channelId" class="pui-input" inputmode="numeric" autocomplete="off" maxlength="20"></label>
+          </div>
+          <div class="pb-btns"><button id="identify" class="pui-btn pui-btn-default" disabled data-i18n="identify"></button><button id="scan" class="pui-btn pui-btn-primary" disabled data-i18n="scan"></button></div>
+        </section>
+        <section class="pui-card">
+          <label class="pui-field"><span class="pui-label" data-i18n="delayLabel"></span><input id="delayMs" class="pui-input" type="number" min="1000" max="60000" step="100" value="1500"><span class="pui-help" data-i18n="delayHelp"></span></label>
+          <button id="save" class="pui-btn pui-btn-primary" disabled data-i18n="control.save"></button>
+        </section>
+        <section class="pui-card">
+          <h2 class="pui-card-title" data-i18n="preview"></h2>
+          <p id="preview-count" class="pui-help" data-i18n="noPreview"></p>
+          <ul id="samples" class="pui-list"></ul>
+          <label class="pb-sw"><span data-i18n="confirm"></span><span class="pui-switch"><input id="confirmed" type="checkbox" disabled><i></i></span></label>
+          <p class="pui-help" data-i18n="risk"></p>
+          <div class="pb-btns"><button id="start" class="pui-btn pui-btn-danger" disabled data-i18n="erase"></button><button id="stop" class="pui-btn pui-btn-default" disabled data-i18n="stop"></button><button id="resume" class="pui-btn pui-btn-default" hidden data-i18n="resume"></button></div>
+          <p id="phase" class="pb-status" role="status" data-i18n="noPreview"></p>
+          <p id="counts" class="pui-help"></p>
+          <p id="error" class="pui-help" role="alert"></p>
+        </section>
+        <section class="pui-card">
+          <div class="pb-btns"><button id="logs" class="pui-btn pui-btn-default" disabled data-i18n="logs"></button><button id="copy-logs" class="pui-btn pui-btn-default" data-i18n="copyLogs"></button></div>
+          <pre id="log-output" class="pui-log" tabindex="0" data-i18n-attr="aria-label:logs"></pre>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "Discord bulk delete messages with preview and stop controls",
+    "short": "Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.",
+    "panel.documentTitle": "Discord bulk delete messages with preview and stop controls - Panel",
+    "fab.label": "Discord bulk delete messages with preview and stop controls",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "scope": "Message scope",
+    "scope.channel": "Server channel",
+    "scope.dm": "Direct message",
+    "scope.server": "Entire server (explicit scope)",
+    "author": "Author ID",
+    "guild": "Server ID (@me for DMs)",
+    "conversation": "Channel / DM ID",
+    "identify": "Use current account and conversation",
+    "scan": "Preview messages",
+    "erase": "Delete confirmed messages",
+    "stop": "Stop deletion / scan",
+    "resume": "Skip failed message and continue",
+    "help": "Preview the scope before deleting. Server scope includes all accessible channels. Other authors still require deletion permission.",
+    "confirm": "Deleted messages cannot be restored. I confirm this preview and scope.",
+    "risk": "User-account automation may put your account at risk. Stop prevents new requests; an in-flight request may still finish.",
+    "delayLabel": "Delay between deletions (ms)",
+    "delayHelp": "1000–60000 ms; default 1500 ms. This is not a platform safety guarantee.",
+    "preview": "Preview",
+    "previewCount": "{count} eligible messages in the frozen preview. Up to 20 timestamps below; no message bodies.",
+    "empty": "No matching messages",
+    "noPreview": "Preview the selected scope to enable deletion.",
+    "counts": "Found {found} · Deleted {deleted} · Failed {failed} · Already missing {missing}",
+    "status.connected": "Connected to Discord",
+    "status.offline": "Disconnected — reopen from the Discord page",
+    "status.connecting": "Connecting to the original page…",
+    "status.scan": "Scanning messages…",
+    "status.delete": "Deleting the confirmed preview…",
+    "status.delay": "Waiting between deletions ({seconds} s)",
+    "status.rate": "Waiting for Discord rate limit ({seconds} s)",
+    "status.indexing": "Waiting for Discord search indexing ({seconds} s)",
+    "status.retry": "Retrying after a network/server error ({seconds} s)",
+    "status.paused": "Paused after a failed message. Stop or explicitly skip it and continue.",
+    "status.stopped": "Stopped. No further deletion requests will be sent.",
+    "status.complete": "Finished",
+    "status.error": "Stopped because of an error",
+    "logs": "View logs",
+    "copyLogs": "Copy logs",
+    "copied": "Logs copied",
+    "copyFailed": "Copy failed; select the log text and copy manually.",
+    "error.PARAMS": "Check scope IDs and the 1000–60000 ms delay.",
+    "error.AUTH": "Sign in again to continue. Account credentials could not be read or were rejected.",
+    "error.PERMISSION": "Discord denied access or deletion permission. No further deletions were requested.",
+    "error.ROUTE": "Open a Discord channel or DM, or enter a scope manually.",
+    "error.RESPONSE": "Discord returned an unexpected search response. Preview was discarded.",
+    "error.NO_PROGRESS": "Search pagination made no progress. No partial preview can be deleted; try a new preview.",
+    "error.INDEX_TIMEOUT": "Search indexing did not finish after five waits. Try a new preview later.",
+    "error.RATE_LIMIT": "Discord kept rate-limiting the operation. Stop or continue later.",
+    "error.NETWORK": "Network/server request failed after three retries. A timed-out deletion may already have completed.",
+    "error.MISSING": "The search scope was not found or is inaccessible.",
+    "error.HTTP": "Discord rejected the request. Check the diagnostic log.",
+    "error.BUSY": "A job is already running. Stop it before starting another.",
+    "error.STALE": "The page, account or preview changed. Identify the scope and preview again.",
+    "error.STOPPED": "Stopped"
+  },
+  "zh-CN": {
+    "title": "Discord 批量删除消息：预览范围与可停止清理",
+    "short": "预览并删除 Discord 频道或私信中的消息，支持调整删除间隔、查看进度计数和随时停止后续请求。",
+    "panel.documentTitle": "Discord 批量删除消息：预览范围与可停止清理 - 功能面板",
+    "fab.label": "Discord 批量删除消息：预览范围与可停止清理",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "scope": "消息范围",
+    "scope.channel": "服务器频道",
+    "scope.dm": "私信",
+    "scope.server": "整个服务器（明确范围）",
+    "author": "作者 ID",
+    "guild": "服务器 ID（私信为 @me）",
+    "conversation": "频道／私信 ID",
+    "identify": "识别当前账号与会话",
+    "scan": "预览消息",
+    "erase": "删除已确认消息",
+    "stop": "停止删除／扫描",
+    "resume": "跳过失败消息并继续",
+    "help": "删除前请预览范围。服务器范围包含所有可访问频道，删除其他作者的消息仍需相应权限。",
+    "confirm": "删除的消息无法恢复。我确认此预览及范围。",
+    "risk": "用户账号自动化可能带来账号风险。停止会阻止新请求，已发出的请求仍可能完成。",
+    "delayLabel": "删除请求间隔（毫秒）",
+    "delayHelp": "1000–60000 毫秒，默认 1500 毫秒，不代表平台安全限额。",
+    "preview": "候选预览",
+    "previewCount": "冻结预览中有 {count} 条可处理消息。下方最多显示 20 个时间，不显示正文。",
+    "empty": "没有匹配消息",
+    "noPreview": "预览所选范围后才能删除。",
+    "counts": "发现 {found} · 已删除 {deleted} · 失败 {failed} · 已不存在 {missing}",
+    "status.connected": "已连接 Discord",
+    "status.offline": "连接已断开，请从 Discord 页面重新打开",
+    "status.connecting": "正在连接原页面…",
+    "status.scan": "正在扫描消息…",
+    "status.delete": "正在删除已确认的候选…",
+    "status.delay": "等待删除间隔（{seconds} 秒）",
+    "status.rate": "正在等待 Discord 限流恢复（{seconds} 秒）",
+    "status.indexing": "正在等待 Discord 搜索索引（{seconds} 秒）",
+    "status.retry": "网络或服务器异常，等待重试（{seconds} 秒）",
+    "status.paused": "一条消息失败后已暂停。可停止，或明确跳过并继续。",
+    "status.stopped": "已停止，不再发送删除请求。",
+    "status.complete": "已完成",
+    "status.error": "因错误停止",
+    "logs": "查看日志",
+    "copyLogs": "复制日志",
+    "copied": "已复制日志",
+    "copyFailed": "复制失败，请选择日志文本手动复制。",
+    "error.PARAMS": "请检查范围标识及 1000–60000 毫秒间隔。",
+    "error.AUTH": "请重新登录后继续，账号凭据无法读取或被拒绝。",
+    "error.PERMISSION": "Discord 拒绝访问或删除权限，已停止后续删除。",
+    "error.ROUTE": "请打开 Discord 频道或私信，也可手填范围。",
+    "error.RESPONSE": "Discord 搜索结果格式异常，预览已作废。",
+    "error.NO_PROGRESS": "搜索分页无进展，不允许删除不完整预览，请重新预览。",
+    "error.INDEX_TIMEOUT": "搜索索引在五次等待后仍未就绪，请稍后重新预览。",
+    "error.RATE_LIMIT": "Discord 持续限流，请停止或稍后继续。",
+    "error.NETWORK": "网络或服务器请求在三次重试后失败，超时的删除可能已经完成。",
+    "error.MISSING": "搜索范围不存在或无法访问。",
+    "error.HTTP": "Discord 拒绝请求，请查看诊断日志。",
+    "error.BUSY": "已有任务运行，请先停止。",
+    "error.STALE": "页面、账号或预览已变化，请识别范围并重新预览。",
+    "error.STOPPED": "已停止"
+  },
+  "zh-TW": {
+    "title": "Discord 批次刪除訊息：預覽範圍與可停止清理",
+    "short": "預覽並刪除 Discord 頻道或私訊中的訊息，支援調整刪除間隔、查看進度計數和隨時停止後續請求。",
+    "panel.documentTitle": "Discord 批次刪除訊息：預覽範圍與可停止清理 - 功能面板",
+    "fab.label": "Discord 批次刪除訊息：預覽範圍與可停止清理",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "scope": "訊息範圍",
+    "scope.channel": "伺服器頻道",
+    "scope.dm": "私訊",
+    "scope.server": "整個伺服器（明確範圍）",
+    "author": "作者 ID",
+    "guild": "伺服器 ID（私訊為 @me）",
+    "conversation": "頻道／私訊 ID",
+    "identify": "辨識目前帳號與對話",
+    "scan": "預覽訊息",
+    "erase": "刪除已確認訊息",
+    "stop": "停止刪除／掃描",
+    "resume": "略過失敗訊息並繼續",
+    "help": "刪除前請預覽範圍。伺服器範圍包含所有可存取頻道，刪除其他作者的訊息仍需相應權限。",
+    "confirm": "刪除的訊息無法復原。我確認此預覽及範圍。",
+    "risk": "使用者帳號自動化可能帶來帳號風險。停止會阻止新請求，已送出的請求仍可能完成。",
+    "delayLabel": "刪除請求間隔（毫秒）",
+    "delayHelp": "1000–60000 毫秒，預設 1500 毫秒，不代表平台安全限額。",
+    "preview": "候選預覽",
+    "previewCount": "凍結預覽中有 {count} 則可處理訊息。下方最多顯示 20 個時間，不顯示本文。",
+    "empty": "沒有符合的訊息",
+    "noPreview": "預覽所選範圍後才能刪除。",
+    "counts": "找到 {found} · 已刪除 {deleted} · 失敗 {failed} · 已不存在 {missing}",
+    "status.connected": "已連接 Discord",
+    "status.offline": "連線已中斷，請從 Discord 頁面重新開啟",
+    "status.connecting": "正在連接原頁面…",
+    "status.scan": "正在掃描訊息…",
+    "status.delete": "正在刪除已確認的候選…",
+    "status.delay": "等待刪除間隔（{seconds} 秒）",
+    "status.rate": "正在等待 Discord 速率限制解除（{seconds} 秒）",
+    "status.indexing": "正在等待 Discord 搜尋索引（{seconds} 秒）",
+    "status.retry": "網路或伺服器異常，等待重試（{seconds} 秒）",
+    "status.paused": "一則訊息失敗後已暫停。可停止，或明確略過並繼續。",
+    "status.stopped": "已停止，不再送出刪除請求。",
+    "status.complete": "已完成",
+    "status.error": "因錯誤停止",
+    "logs": "檢視記錄",
+    "copyLogs": "複製記錄",
+    "copied": "已複製記錄",
+    "copyFailed": "複製失敗，請選取記錄文字手動複製。",
+    "error.PARAMS": "請檢查範圍識別碼及 1000–60000 毫秒間隔。",
+    "error.AUTH": "請重新登入後繼續，帳號憑證無法讀取或遭拒。",
+    "error.PERMISSION": "Discord 拒絕存取或刪除權限，已停止後續刪除。",
+    "error.ROUTE": "請開啟 Discord 頻道或私訊，也可手填範圍。",
+    "error.RESPONSE": "Discord 搜尋結果格式異常，預覽已作廢。",
+    "error.NO_PROGRESS": "搜尋分頁無進展，不允許刪除不完整預覽，請重新預覽。",
+    "error.INDEX_TIMEOUT": "搜尋索引在五次等待後仍未就緒，請稍後重新預覽。",
+    "error.RATE_LIMIT": "Discord 持續限制速率，請停止或稍後繼續。",
+    "error.NETWORK": "網路或伺服器請求在三次重試後失敗，逾時的刪除可能已經完成。",
+    "error.MISSING": "搜尋範圍不存在或無法存取。",
+    "error.HTTP": "Discord 拒絕請求，請檢視診斷記錄。",
+    "error.BUSY": "已有工作執行中，請先停止。",
+    "error.STALE": "頁面、帳號或預覽已變更，請辨識範圍並重新預覽。",
+    "error.STOPPED": "已停止"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-d401bffa', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-d401bffa:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-d401bffa:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-d401bffa');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      var connected = false;
+      var pending = false;
+      var busy = false;
+      var currentJob = null;
+      var currentPreview = null;
+      var firstState = true;
+      var polling = false;
+      var formEdited = false;
+      var fieldNames = ['scopeType', 'authorId', 'guildId', 'channelId'];
+      function element(id) { return document.getElementById(id); }
+      function draftScope() {
+        var value = {};
+        fieldNames.forEach(function (name) { value[name] = element(name).value.trim(); });
+        if (value.scopeType === 'dm') value.guildId = '@me';
+        if (value.scopeType === 'server') value.channelId = '';
+        return value;
+      }
+      function sameScope(left, right) {
+        return left && right && fieldNames.every(function (key) { return left[key] === right[key]; });
+      }
+      function updateControls() {
+        fieldNames.forEach(function (name) { element(name).disabled = busy || pending; });
+        element('guildId').disabled = busy || pending || element('scopeType').value === 'dm';
+        element('channelId').disabled = busy || pending || element('scopeType').value === 'server';
+        ['identify', 'scan', 'save'].forEach(function (id) { element(id).disabled = !connected || busy || pending; });
+        element('logs').disabled = !connected || pending;
+        element('delayMs').disabled = busy || pending;
+        var ready = !!currentPreview && currentPreview.found > 0 && sameScope(draftScope(), currentPreview.scope);
+        element('confirmed').disabled = !connected || busy || pending || !ready;
+        element('start').disabled = element('confirmed').disabled || !element('confirmed').checked;
+        element('stop').disabled = !connected || !busy;
+        element('resume').hidden = !(currentJob && currentJob.phase === 'paused');
+        element('resume').disabled = !connected || pending;
+      }
+      function clearError() { element('error').removeAttribute('data-i18n'); element('error').textContent = ''; }
+      function showError(code) {
+        var key = Object.prototype.hasOwnProperty.call(I18N_DICT.en, 'error.' + code) ? 'error.' + code : 'error.HTTP';
+        i18n.setText(element('error'), key);
+      }
+      function renderPreview(value) {
+        if ((!value && currentPreview) || (value && (!currentPreview || value.previewId !== currentPreview.previewId))) element('confirmed').checked = false;
+        currentPreview = value;
+        element('samples').replaceChildren();
+        if (!value) i18n.setText(element('preview-count'), 'noPreview');
+        else {
+          i18n.setText(element('preview-count'), value.found ? 'previewCount' : 'empty', { count: value.found });
+          (value.samples || []).slice(0, 20).forEach(function (row) {
+            var item = document.createElement('li');
+            item.textContent = String(row.number) + ' · ' + (row.timestamp || '—');
+            element('samples').appendChild(item);
+          });
+        }
+        updateControls();
+      }
+      function renderJob(value, active) {
+        currentJob = value;
+        busy = !!active;
+        if (value) {
+          i18n.setText(element('phase'), 'status.' + value.phase, { seconds: Math.ceil((value.waitingMs || 0) / 1000) });
+          i18n.setText(element('counts'), 'counts', value);
+          if (value.code && !['COMPLETE', 'STOPPED'].includes(value.code)) showError(value.code);
+        }
+        updateControls();
+      }
+      async function request(action, extra) {
+        var result;
+        try { result = await channel.request('command', Object.assign({ action: action }, extra || {})); }
+        catch (error) {
+          connected = false;
+          i18n.setText(element('connection'), 'status.offline');
+          updateControls();
+          throw error;
+        }
+        connected = true;
+        i18n.setText(element('connection'), 'status.connected');
+        if (!result || result.ok === false) { showError(result && result.code); throw new Error('command'); }
+        return result;
+      }
+      async function refreshState() {
+        if (polling || pending) return;
+        polling = true;
+        try {
+          var state = await request('getState');
+          if (firstState) {
+            firstState = false;
+            i18n.setLocale(state.localePreference || 'auto');
+            languageSelect.value = i18n.getPreference();
+            element('delayMs').value = state.delayMs;
+            if (state.preview && !formEdited) fieldNames.forEach(function (name) { element(name).value = state.preview.scope[name]; });
+          }
+          renderPreview(state.preview);
+          renderJob(state.job, state.active);
+        } catch (error) { /* connection status remains visible */ }
+        finally { polling = false; updateControls(); }
+      }
+      async function runCommand(action, values, apply) {
+        if (pending) return;
+        pending = true;
+        clearError();
+        updateControls();
+        try {
+          var result = await request(action, values);
+          if (apply) apply(result);
+        } catch (error) { /* localized status is set by request */ }
+        finally { pending = false; updateControls(); refreshState(); }
+      }
+      fieldNames.forEach(function (name) {
+        element(name).addEventListener('input', function () {
+          formEdited = true;
+          if (element('scopeType').value === 'dm') element('guildId').value = '@me';
+          renderPreview(null);
+          // Invalidation also prevents a delayed/repeated start from using an old preview.
+          request('invalidate').catch(function () {});
+          updateControls();
+        });
+      });
+      element('confirmed').addEventListener('change', updateControls);
+      element('identify').addEventListener('click', function () {
+        runCommand('identify', null, function (result) {
+          fieldNames.forEach(function (name) { element(name).value = result.scope[name]; });
+          formEdited = true;
+          renderPreview(null);
+        });
+      });
+      element('save').addEventListener('click', function () {
+        runCommand('saveSettings', { delayMs: Number(element('delayMs').value) }, function () { PUI.toast(i18n.t('control.saved'), 'success'); });
+      });
+      element('scan').addEventListener('click', function () {
+        runCommand('scan', draftScope(), function (result) { renderPreview(null); busy = true; currentJob = { jobId: result.jobId, phase: 'scan' }; });
+      });
+      element('start').addEventListener('click', function () {
+        if (!currentPreview || !element('confirmed').checked || !sameScope(draftScope(), currentPreview.scope)) return;
+        runCommand('start', { previewId: currentPreview.previewId, confirmed: true, delayMs: Number(element('delayMs').value) }, function (result) { renderPreview(null); busy = true; currentJob = { jobId: result.jobId, phase: 'delete' }; });
+      });
+      element('stop').addEventListener('click', function () {
+        // Stop is deliberately available even while a different command is pending.
+        if (currentJob) request('stop', { jobId: currentJob.jobId }).then(refreshState).catch(function () {});
+      });
+      element('resume').addEventListener('click', function () {
+        if (currentJob) runCommand('resume', { jobId: currentJob.jobId, confirmed: true });
+      });
+      element('logs').addEventListener('click', function () {
+        runCommand('getLogs', null, function (result) { element('log-output').textContent = JSON.stringify(result.logs, null, 2); });
+      });
+      element('copy-logs').addEventListener('click', async function () {
+        try { await navigator.clipboard.writeText(element('log-output').textContent); PUI.toast(i18n.t('copied'), 'success'); }
+        catch (error) { PUI.toast(i18n.t('copyFailed'), 'warn'); }
+      });
+      channel.on('preview', renderPreview);
+      channel.on('progress', function (data) { renderJob(data, true); });
+      channel.on('error', function (data) { renderJob(data, !!data.recoverable); });
+      channel.on('done', function (data) { renderJob(data, false); refreshState(); });
+      refreshState();
+      setInterval(refreshState, 2500);
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      // 约定消息类型：
+      //   panel -> 油猴： channel.send('command', {...}) 或 channel.request('command', {...})
+      //   油猴 -> panel： channel.send('progress', {...}) / channel.send('done', {...})
+      // 监听油猴消息： channel.on('progress', function(data){ ... })
+      // 动态本地化状态（连接中/已连接/错误/含变量的进度等）必须用
+      //   i18n.setText(element, 'status.connected', { count: data.count });
+      // 它会同步当前词条和变量，之后 setLocale() 可正确重译当前状态。
+      // 用户输入、网址、日志、计数结果等原始数据输出不要带 data-i18n，直接用 textContent。
+      //
+      // 跨源说明：面板(xload.net)与脚本(目标站点)跨源，BroadcastChannel 同源才互通；
+      //   共用壳 panel.js 的 PanelChannel 已封装跨源通道（有 window.opener 走 postMessage，
+      //   同源才走 BroadcastChannel），本页无需区分；油猴侧须配套 window.message 监听 +
+      //   三级回包（panelWin → event.source → BroadcastChannel） + setPanelWin/getPanelWin。
+      //   油猴侧 createChannel 直接用共享模板 templates/channel.js，勿自行重写。
+      //
+      // 示例（按需删除）：
+      // channel.request('greet', { name: 'xload' }, 5000).then(function (data) {
+      //   PUI.toast('收到回复：' + data.message, 'success');
+      // }).catch(function (e) {
+      //   PUI.toast('原页面未响应：' + e.message, 'warn');
+      // });
+    })();
+  </script>
+</body>
+</html>

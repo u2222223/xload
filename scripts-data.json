@@ -11,7 +11,7 @@
     "contactEmail": "contact@xload.net",
     "phone": "",
     "address": "",
-    "lastUpdated": "2026-09-15"
+    "lastUpdated": "2026-09-16"
   },
   "enabledTypes": [
     "script"
@@ -367,6 +367,65 @@
       "status": "beta"
     },
     {
+      "id": "xload-8ce5e45a",
+      "type": "script",
+      "title": "Zhihu Dark Reading Helper",
+      "short": "Apply a configurable dark reading theme to Zhihu pages and dynamic surfaces.",
+      "description": "This helper applies a reversible dark reading theme to major Zhihu page surfaces. It supports system-following, light, and dark modes, with optional dimming for bright images and tuned code-block contrast. Use the xload panel to select the appearance, save it, or restore the default Zhihu presentation.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.html",
+      "installUrl": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.user.js",
+      "files": [
+        "panel.html",
+        "xload-8ce5e45a.user.js"
+      ],
+      "tags": [
+        "Zhihu",
+        "dark mode",
+        "night reading",
+        "theme"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-15",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
+      "id": "xload-2c12e291",
+      "type": "script",
+      "title": "YouTube Ad Controls",
+      "short": "Manage targeted ad handling on YouTube with an immediate off switch.",
+      "description": "Open the floating button to configure page-ad hiding and player-ad handling in a separate panel. Enable each behavior separately and inspect recent actions. Turn handling off and restore elements hidden by the script when needed.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.html",
+      "installUrl": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.user.js",
+      "files": [
+        "panel.html",
+        "xload-2c12e291.user.js"
+      ],
+      "tags": [
+        "YouTube",
+        "Ads",
+        "Playback"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-15",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
       "id": "greasyfork-406070-1",
       "type": "script",
       "title": "通用小说下载器",
@@ -391,9 +450,9 @@
         "Userscripts"
       ],
       "rating": 0,
-      "downloads": 15,
+      "downloads": 18,
       "stars": 0,
-      "lastUpdated": "2026-09-15",
+      "lastUpdated": "2026-09-16",
       "license": "MIT",
       "featured": false,
       "status": "stable"
@@ -424,7 +483,7 @@
       "rating": 0,
       "downloads": 6,
       "stars": 0,
-      "lastUpdated": "2026-09-15",
+      "lastUpdated": "2026-09-16",
       "license": "MIT",
       "featured": false,
       "status": "stable"
@@ -455,29 +514,28 @@
       "rating": 0,
       "downloads": 3,
       "stars": 0,
-      "lastUpdated": "2026-09-15",
+      "lastUpdated": "2026-09-16",
       "license": "MIT",
       "featured": false,
       "status": "stable"
     },
     {
-      "id": "xload-8ce5e45a",
+      "id": "xload-d401bffa",
       "type": "script",
-      "title": "Zhihu Dark Reading Helper",
-      "short": "Apply a configurable dark reading theme to Zhihu pages and dynamic surfaces.",
-      "description": "This helper applies a reversible dark reading theme to major Zhihu page surfaces. It supports system-following, light, and dark modes, with optional dimming for bright images and tuned code-block contrast. Use the xload panel to select the appearance, save it, or restore the default Zhihu presentation.",
+      "title": "Discord bulk delete messages with preview and stop controls",
+      "short": "Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.",
+      "description": "Clean up message history in Discord channels or delete Discord DMs from the browser. Preview the selected scope, confirm deletion, and follow progress with adjustable delays and a stop control. Open the independent panel from the floating button or userscript menu. A signed-in account with the required permissions is necessary, deletion cannot be undone, and account automation may risk account termination. Searches and deletions go to Discord, while the panel receives scope details and progress without message bodies or credentials.",
       "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.html",
-      "installUrl": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.user.js",
+      "page": "/scripts/userscripts/xload-d401bffa/xload-d401bffa.html",
+      "installUrl": "/scripts/userscripts/xload-d401bffa/xload-d401bffa.user.js",
       "files": [
         "panel.html",
-        "xload-8ce5e45a.user.js"
+        "xload-d401bffa.user.js"
       ],
       "tags": [
-        "Zhihu",
-        "dark mode",
-        "night reading",
-        "theme"
+        "Discord",
+        "bulk deletion",
+        "direct messages"
       ],
       "categories": [
         "Userscripts"
@@ -485,7 +543,7 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-15",
+      "lastUpdated": "2026-09-16",
       "license": "MIT",
       "featured": false,
       "status": "release-candidate"
