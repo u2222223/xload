@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">YouTube SponsorBlock Controls - Panel</title>
+  <meta name="description" content="Control SponsorBlock skipping and replay skipped segments on YouTube.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">YouTube SponsorBlock Controls</h1>
+        <p class="panel-subtitle" data-i18n="short">Control SponsorBlock skipping and replay skipped segments on YouTube.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ====================
+             组件目录：/_preview/fab-panel-preview.html（仓库路径 _preview/fab-panel-preview.html）。
+             样式统一 D0 极简黑白（静态）：黑 header、白卡、黑白按钮/开关/滑条，无动画/过渡。
+             只能组合共享 panel.css 已定义的 pui-*/pb-* 组件；不得复制组件 CSS、另建主题，
+             或重定义颜色、圆角、阴影、动效及基础控件外观。业务 class 仅补组件无法表达的布局。
+             内联 <style> 仅黑白（#111/#fff/#d4d4d4/#e5e5e5/#ececec/#f4f4f4/#fafafa，
+             次要文字 #555/#888/#a3a3a3），禁止任何彩色系（#2563eb 等）。
+             把设置下发给油猴的主按钮文案一律用「保存配置」（toast「已保存配置」）。
+        ==================== -->
+        <section class="pui-card">
+          <p id="connection" class="pb-status" role="status" data-i18n="status.connecting"></p>
+          <label class="pui-field" for="mode"><span class="pui-label" data-i18n="segment.mode"></span>
+            <select id="mode" class="pui-input"><option value="manual" data-i18n="segment.manual"></option><option value="auto" data-i18n="segment.auto"></option><option value="off" data-i18n="segment.off"></option></select>
+          </label>
+          <fieldset><legend data-i18n="segment.categoryLabel"></legend><div id="categories" class="pui-form-grid"></div></fieldset>
+          <p class="pui-help" data-i18n="segment.savedOffline"></p>
+          <div class="pb-btns"><button id="save" type="button" class="pui-btn pui-btn-primary" data-i18n="control.save"></button><button id="refresh" type="button" class="pui-btn pui-btn-default" data-i18n="segment.refresh"></button></div>
+        </section>
+        <section class="pui-card">
+          <p id="video" class="pb-status"></p><p id="result" role="status"></p><p id="playback"></p>
+          <label for="segments" data-i18n="segment.list"></label><select id="segments" class="pui-input" size="7"></select>
+          <p id="empty" class="pui-empty" data-i18n="segment.empty"></p>
+          <div class="pb-btns"><button id="skip" type="button" class="pui-btn pui-btn-default" data-i18n="segment.skip" disabled></button><button id="replay" type="button" class="pui-btn pui-btn-default" data-i18n="segment.replay" disabled></button></div>
+          <p id="protection"></p><p id="last-action"></p><p id="error" role="alert"></p>
+          <p class="pui-help" data-i18n="segment.help"></p>
+        </section>
+        <section class="pui-card">
+          <div class="pb-btns"><button id="logs-show" type="button" class="pui-btn pui-btn-default" data-i18n="logs.show"></button><button id="logs-copy" type="button" class="pui-btn pui-btn-default" data-i18n="logs.copy"></button></div>
+          <pre id="logs" class="pui-log" tabindex="0"></pre>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "YouTube SponsorBlock Controls",
+    "short": "Control SponsorBlock skipping and replay skipped segments on YouTube.",
+    "panel.documentTitle": "YouTube SponsorBlock Controls - Panel",
+    "fab.label": "YouTube SponsorBlock Controls",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "segment.mode": "Skipping mode",
+    "segment.auto": "Automatic",
+    "segment.manual": "Manual",
+    "segment.off": "Off",
+    "segment.categoryLabel": "Choose segment categories",
+    "category.sponsor": "Sponsor",
+    "category.intro": "Intro",
+    "category.outro": "Outro",
+    "category.selfpromo": "Self promotion",
+    "category.interaction": "Interaction reminder",
+    "segment.refresh": "Refresh segments",
+    "segment.skip": "Skip selected segment",
+    "segment.replay": "Replay last segment",
+    "segment.empty": "No segments found",
+    "segment.fetchError": "Could not load segments. Refresh to retry.",
+    "segment.help": "Replay protects the entire merged segment until you leave it. Adjacent or overlapping segments are skipped together. Playback stays paused if you paused it.",
+    "segment.notReady": "The active player has no valid duration or seekable range. Live streams cannot be skipped.",
+    "segment.invalid": "Invalid settings or command",
+    "segment.stale": "The video or settings changed. Refresh the list and try again.",
+    "segment.disabled": "Skipping is off",
+    "segment.failed": "The operation failed; check the original page and retry.",
+    "status.idle": "Open a YouTube video to load segments",
+    "status.fetching": "Loading segments…",
+    "status.ready": "Loaded {count} segments",
+    "status.off": "Off — requests and skipping are stopped",
+    "status.error": "Could not load segments",
+    "status.connecting": "Connecting to the original page…",
+    "status.disconnected": "Original page disconnected; your unsaved choices remain here",
+    "segment.list": "Available segments",
+    "segment.video": "Video: {id}",
+    "segment.protected": "Replay protection is active",
+    "segment.unprotected": "No replay protection",
+    "action.none": "No skip action yet",
+    "action.skipped": "Last action: skipped a segment",
+    "action.replayed": "Last action: replayed a segment",
+    "logs.show": "View logs",
+    "logs.copy": "Copy logs",
+    "logs.copied": "Logs copied",
+    "logs.failed": "Could not copy logs; select and copy the text below",
+    "player.paused": "Paused",
+    "player.playing": "Playing",
+    "segment.savedOffline": "Choose settings here; keep the original YouTube page open to save or control playback."
+  },
+  "zh-CN": {
+    "title": "YouTube SponsorBlock 片段控制",
+    "short": "控制 YouTube 的 SponsorBlock 跳过行为，并重看片段。",
+    "panel.documentTitle": "YouTube SponsorBlock 片段控制 - 功能面板",
+    "fab.label": "YouTube SponsorBlock 片段控制",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "segment.mode": "跳过模式",
+    "segment.auto": "自动",
+    "segment.manual": "手动",
+    "segment.off": "关闭",
+    "segment.categoryLabel": "选择片段类别",
+    "category.sponsor": "赞助广告",
+    "category.intro": "开场",
+    "category.outro": "结尾",
+    "category.selfpromo": "自我推广",
+    "category.interaction": "互动提醒",
+    "segment.refresh": "刷新片段",
+    "segment.skip": "跳过选中片段",
+    "segment.replay": "重看上次片段",
+    "segment.empty": "未发现片段",
+    "segment.fetchError": "无法加载片段，请刷新重试。",
+    "segment.help": "重看保护覆盖整个合并区间，直到离开该区间。相邻或重叠片段会一起跳过；已暂停的播放会保持暂停。",
+    "segment.notReady": "当前播放器没有有效时长或可跳转区间，直播无法跳过。",
+    "segment.invalid": "配置或命令无效",
+    "segment.stale": "视频或配置已变更，请刷新列表后重试。",
+    "segment.disabled": "跳过功能已关闭",
+    "segment.failed": "操作失败，请检查原页面后重试。",
+    "status.idle": "打开 YouTube 视频以加载片段",
+    "status.fetching": "正在加载片段…",
+    "status.ready": "已加载 {count} 个片段",
+    "status.off": "已关闭 — 请求和跳过均已停止",
+    "status.error": "无法加载片段",
+    "status.connecting": "正在连接原页面…",
+    "status.disconnected": "原页面已断开，未保存的选择仍保留在此",
+    "segment.list": "可用片段",
+    "segment.video": "视频：{id}",
+    "segment.protected": "重看保护生效中",
+    "segment.unprotected": "未启用重看保护",
+    "action.none": "尚未跳过片段",
+    "action.skipped": "最近操作：跳过片段",
+    "action.replayed": "最近操作：重看片段",
+    "logs.show": "查看日志",
+    "logs.copy": "复制日志",
+    "logs.copied": "日志已复制",
+    "logs.failed": "无法复制日志，请选中下方文本手动复制",
+    "player.paused": "已暂停",
+    "player.playing": "播放中",
+    "segment.savedOffline": "可在此编辑配置；保存或控制播放时请保持原 YouTube 页面打开。"
+  },
+  "zh-TW": {
+    "title": "YouTube SponsorBlock 片段控制",
+    "short": "控制 YouTube 的 SponsorBlock 跳過行為，並重看片段。",
+    "panel.documentTitle": "YouTube SponsorBlock 片段控制 - 功能面板",
+    "fab.label": "YouTube SponsorBlock 片段控制",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "segment.mode": "跳過模式",
+    "segment.auto": "自動",
+    "segment.manual": "手動",
+    "segment.off": "關閉",
+    "segment.categoryLabel": "選擇片段類別",
+    "category.sponsor": "贊助廣告",
+    "category.intro": "開場",
+    "category.outro": "結尾",
+    "category.selfpromo": "自我推廣",
+    "category.interaction": "互動提醒",
+    "segment.refresh": "重新整理片段",
+    "segment.skip": "跳過選取片段",
+    "segment.replay": "重看上次片段",
+    "segment.empty": "未發現片段",
+    "segment.fetchError": "無法載入片段，請重新整理再試。",
+    "segment.help": "重看保護涵蓋整個合併區間，直到離開該區間。相鄰或重疊片段會一起跳過；已暫停的播放會保持暫停。",
+    "segment.notReady": "目前播放器沒有有效時長或可跳轉區間，直播無法跳過。",
+    "segment.invalid": "設定或命令無效",
+    "segment.stale": "影片或設定已變更，請重新整理清單後再試。",
+    "segment.disabled": "跳過功能已關閉",
+    "segment.failed": "操作失敗，請檢查原頁面後再試。",
+    "status.idle": "開啟 YouTube 影片以載入片段",
+    "status.fetching": "正在載入片段…",
+    "status.ready": "已載入 {count} 個片段",
+    "status.off": "已關閉 — 請求和跳過均已停止",
+    "status.error": "無法載入片段",
+    "status.connecting": "正在連接原頁面…",
+    "status.disconnected": "原頁面已中斷，未儲存的選擇仍保留在此",
+    "segment.list": "可用片段",
+    "segment.video": "影片：{id}",
+    "segment.protected": "重看保護生效中",
+    "segment.unprotected": "未啟用重看保護",
+    "action.none": "尚未跳過片段",
+    "action.skipped": "最近操作：跳過片段",
+    "action.replayed": "最近操作：重看片段",
+    "logs.show": "檢視日誌",
+    "logs.copy": "複製日誌",
+    "logs.copied": "日誌已複製",
+    "logs.failed": "無法複製日誌，請選取下方文字手動複製",
+    "player.paused": "已暫停",
+    "player.playing": "播放中",
+    "segment.savedOffline": "可在此編輯設定；儲存或控制播放時請保持原 YouTube 頁面開啟。"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-d7e6bded', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-d7e6bded:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-d7e6bded:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-d7e6bded');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        renderState(latestState, false);
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      channel.request('command', { action: 'getState' }).then(function (state) {
+        if (state && state.localePreference) {
+          i18n.setLocale(state.localePreference);
+          languageSelect.value = state.localePreference;
+        }
+        renderState(state, true);
+      }).catch(function () { markDisconnected(); });
+      var categoryKeys = ['sponsor', 'intro', 'outro', 'selfpromo', 'interaction'];
+      var categoryTranslationKeys = { sponsor: 'category.sponsor', intro: 'category.intro', outro: 'category.outro', selfpromo: 'category.selfpromo', interaction: 'category.interaction' };
+      var latestState = null, dirtyPolicy = false, connected = false, commandBusy = false;
+      var categoryRoot = document.getElementById('categories');
+      categoryKeys.forEach(function (key) {
+        var label = document.createElement('label'); label.className = 'pb-sw';
+        var title = document.createElement('span'); i18n.setText(title, categoryTranslationKeys[key]);
+        var shell = document.createElement('span'); shell.className = 'pui-switch';
+        var input = document.createElement('input'); input.type = 'checkbox'; input.value = key; input.checked = true;
+        input.setAttribute('data-i18n-attr', 'aria-label:' + categoryTranslationKeys[key]); input.setAttribute('aria-label', i18n.t(categoryTranslationKeys[key]));
+        shell.append(input, document.createElement('i')); label.append(title, shell); categoryRoot.append(label);
+        input.addEventListener('change', function () { dirtyPolicy = true; });
+      });
+      document.getElementById('mode').addEventListener('change', function () { dirtyPolicy = true; });
+
+      function markDisconnected() {
+        connected = false;
+        i18n.setText(document.getElementById('connection'), 'status.disconnected');
+        updateButtons();
+      }
+      function updateButtons() {
+        var enabled = connected && !commandBusy && latestState && latestState.policy.mode !== 'off' && latestState.playbackState.ready;
+        document.getElementById('skip').disabled = !enabled || !document.getElementById('segments').value;
+        document.getElementById('replay').disabled = !enabled || !latestState.canReplay;
+      }
+      function clockText(seconds) {
+        return Math.floor(seconds / 60) + ':' + String(Math.floor(seconds % 60)).padStart(2, '0');
+      }
+      function renderState(state, applyPolicy) {
+        if (!state || !state.policy || !Array.isArray(state.segments)) return;
+        if (latestState && state.contextRevision < latestState.contextRevision) return;
+        latestState = state; connected = true;
+        i18n.setText(document.getElementById('connection'), 'status.' + state.fetchState, { count: state.segments.length });
+        i18n.setText(document.getElementById('video'), 'segment.video', { id: state.videoId || '—' });
+        i18n.setText(document.getElementById('result'), 'status.' + state.fetchState, { count: state.segments.length });
+        i18n.setText(document.getElementById('playback'), state.playbackState.paused ? 'player.paused' : 'player.playing');
+        i18n.setText(document.getElementById('protection'), state.replayProtected ? 'segment.protected' : 'segment.unprotected');
+        i18n.setText(document.getElementById('last-action'), state.lastAction);
+        var error = document.getElementById('error');
+        if (state.messageKey) i18n.setText(error, state.messageKey);
+        else { error.removeAttribute('data-i18n'); error.textContent = ''; }
+        if (applyPolicy && !dirtyPolicy) {
+          document.getElementById('mode').value = state.policy.mode;
+          categoryRoot.querySelectorAll('input').forEach(function (input) { input.checked = state.policy.categories.includes(input.value); });
+        }
+        var list = document.getElementById('segments'), selected = list.value;
+        list.replaceChildren();
+        state.segments.forEach(function (row) {
+          var option = document.createElement('option'); option.value = row.id;
+          option.textContent = clockText(row.start) + '–' + clockText(row.end) + ' · ' + i18n.t(categoryTranslationKeys[row.category]);
+          list.append(option);
+        });
+        if (state.segments.some(function (row) { return row.id === selected; })) list.value = selected;
+        else if (list.options.length) list.selectedIndex = 0;
+        document.getElementById('empty').hidden = state.segments.length > 0 || state.fetchState !== 'ready';
+        updateButtons();
+      }
+      async function runCommand(action, extra) {
+        if (commandBusy && action !== 'setPolicy') return null;
+        commandBusy = true; updateButtons();
+        try {
+          var result = await channel.request('command', Object.assign({ action: action }, extra || {}), 20000);
+          if (!result || !result.ok) {
+            i18n.setText(document.getElementById('error'), result && result.messageKey || 'segment.failed');
+            return null;
+          }
+          if (action === 'setPolicy') { dirtyPolicy = false; PUI.toast(i18n.t('control.saved'), 'success'); }
+          renderState(result, true); return result;
+        } catch (e) { markDisconnected(); return null; }
+        finally { commandBusy = false; updateButtons(); }
+      }
+      document.getElementById('save').addEventListener('click', function () {
+        runCommand('setPolicy', { mode: document.getElementById('mode').value, categories: Array.from(categoryRoot.querySelectorAll('input:checked')).map(function (input) { return input.value; }) });
+      });
+      document.getElementById('refresh').addEventListener('click', function () { runCommand('getSegments'); });
+      document.getElementById('segments').addEventListener('change', updateButtons);
+      document.getElementById('skip').addEventListener('click', function () {
+        if (latestState) runCommand('skipSegment', { segmentId: document.getElementById('segments').value, videoId: latestState.videoId, contextRevision: latestState.contextRevision });
+      });
+      document.getElementById('replay').addEventListener('click', function () {
+        if (latestState) runCommand('replayLast', { videoId: latestState.videoId, contextRevision: latestState.contextRevision });
+      });
+      document.getElementById('logs-show').addEventListener('click', async function () {
+        var result = await runCommand('getLogs');
+        if (result) document.getElementById('logs').textContent = JSON.stringify(result.logs, null, 2);
+      });
+      document.getElementById('logs-copy').addEventListener('click', async function () {
+        try { await navigator.clipboard.writeText(document.getElementById('logs').textContent); PUI.toast(i18n.t('logs.copied'), 'success'); }
+        catch (e) { PUI.toast(i18n.t('logs.failed'), 'warn'); }
+      });
+      channel.on('done', function (state) {
+        if (state.localePreference && state.localePreference !== i18n.getPreference()) { i18n.setLocale(state.localePreference); languageSelect.value = state.localePreference; }
+        renderState(state, true);
+      });
+      channel.on('progress', function () { i18n.setText(document.getElementById('result'), 'status.fetching'); });
+      channel.on('error', function (data) { i18n.setText(document.getElementById('error'), data.messageKey || 'segment.fetchError'); });
+      window.setInterval(function () {
+        if (commandBusy) return;
+        channel.request('command', { action: 'getState' }, 4000).then(function (state) { renderState(state, true); }).catch(markDisconnected);
+      }, 5000);
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      // 约定消息类型：
+      //   panel -> 油猴： channel.send('command', {...}) 或 channel.request('command', {...})
+      //   油猴 -> panel： channel.send('progress', {...}) / channel.send('done', {...})
+      // 监听油猴消息： channel.on('progress', function(data){ ... })
+      // 动态本地化状态（连接中/已连接/错误/含变量的进度等）必须用
+      //   i18n.setText(element, 'status.connected', { count: data.count });
+      // 它会同步当前词条和变量，之后 setLocale() 可正确重译当前状态。
+      // 用户输入、网址、日志、计数结果等原始数据输出不要带 data-i18n，直接用 textContent。
+      //
+      // 跨源说明：面板(xload.net)与脚本(目标站点)跨源，BroadcastChannel 同源才互通；
+      //   共用壳 panel.js 的 PanelChannel 已封装跨源通道（有 window.opener 走 postMessage，
+      //   同源才走 BroadcastChannel），本页无需区分；油猴侧须配套 window.message 监听 +
+      //   三级回包（panelWin → event.source → BroadcastChannel） + setPanelWin/getPanelWin。
+      //   油猴侧 createChannel 直接用共享模板 templates/channel.js，勿自行重写。
+      //
+      // 示例（按需删除）：
+      // channel.request('greet', { name: 'xload' }, 5000).then(function (data) {
+      //   PUI.toast('收到回复：' + data.message, 'success');
+      // }).catch(function (e) {
+      //   PUI.toast('原页面未响应：' + e.message, 'warn');
+      // });
+    })();
+  </script>
+</body>
+</html>

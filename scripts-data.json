@@ -397,35 +397,6 @@
       "status": "beta"
     },
     {
-      "id": "xload-2c12e291",
-      "type": "script",
-      "title": "YouTube Ad Controls",
-      "short": "Manage targeted ad handling on YouTube with an immediate off switch.",
-      "description": "Open the floating button to configure page-ad hiding and player-ad handling in a separate panel. Enable each behavior separately and inspect recent actions. Turn handling off and restore elements hidden by the script when needed.",
-      "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.html",
-      "installUrl": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.user.js",
-      "files": [
-        "panel.html",
-        "xload-2c12e291.user.js"
-      ],
-      "tags": [
-        "YouTube",
-        "Ads",
-        "Playback"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-15",
-      "license": "MIT",
-      "featured": false,
-      "status": "release-candidate"
-    },
-    {
       "id": "greasyfork-406070-1",
       "type": "script",
       "title": "通用小说下载器",
@@ -520,6 +491,35 @@
       "status": "stable"
     },
     {
+      "id": "xload-2c12e291",
+      "type": "script",
+      "title": "YouTube Ad Controls",
+      "short": "Manage targeted ad handling on YouTube with an immediate off switch.",
+      "description": "Open the floating button to configure page-ad hiding and player-ad handling in a separate panel. Enable each behavior separately and inspect recent actions. Turn handling off and restore elements hidden by the script when needed.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.html",
+      "installUrl": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.user.js",
+      "files": [
+        "panel.html",
+        "xload-2c12e291.user.js"
+      ],
+      "tags": [
+        "YouTube",
+        "Ads",
+        "Playback"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-16",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
       "id": "xload-d401bffa",
       "type": "script",
       "title": "Discord bulk delete messages with preview and stop controls",
@@ -536,6 +536,35 @@
         "Discord",
         "bulk deletion",
         "direct messages"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-16",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
+      "id": "xload-d7e6bded",
+      "type": "script",
+      "title": "YouTube SponsorBlock Controls",
+      "short": "Control SponsorBlock skipping and replay skipped segments on YouTube.",
+      "description": "Open the floating button to inspect SponsorBlock segments in a separate panel. Choose automatic, manual, or disabled skipping and select segment categories. Replay a skipped segment without immediately skipping it again.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.html",
+      "installUrl": "/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.user.js",
+      "files": [
+        "panel.html",
+        "xload-d7e6bded.user.js"
+      ],
+      "tags": [
+        "YouTube",
+        "SponsorBlock",
+        "Playback"
       ],
       "categories": [
         "Userscripts"

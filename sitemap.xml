@@ -61,11 +61,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://xload.net/scripts/userscripts/xload-2c12e291/xload-2c12e291.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://xload.net/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -81,7 +76,17 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://xload.net/scripts/userscripts/xload-2c12e291/xload-2c12e291.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://xload.net/scripts/userscripts/xload-d401bffa/xload-d401bffa.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xload.net/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
