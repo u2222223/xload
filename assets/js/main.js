@@ -147,6 +147,9 @@
 
     var toggle = document.querySelector(".nav-toggle");
     var nav = document.getElementById("main-nav");
+    var language = document.querySelector(".release-language");
+    var navWrap = h && h.querySelector(".nav-wrap");
+    if (language && navWrap) navWrap.insertBefore(language, toggle || null);
     if (toggle && nav) {
       toggle.addEventListener("click", function () { nav.classList.toggle("open"); });
     }
