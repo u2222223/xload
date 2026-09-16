@@ -1,156 +1,18 @@
-# How to add a program to xload
+# 网站生成工具边界
 
-This is the **single source of truth** for adding new programs (userscripts now;
-extensions / apps / other later) to the site. Automated and safe.
+此页说明 tools/add_program.py 的低层接口。油猴生产流程以父项目 .opencode/skills/userscript-research-and-build/SKILL.md 为唯一权威。
 
-> Every page **and every program file** is served from `website/`. There is no
-> build step. Adding a program = put a page + program file into a category
-> folder, register one JSON row, validate.
+## 正常生产路径
 
----
+1. 经用户选择、开发节点实现和 check-output 校验。
+2. 主流程 pipeline postdev 调用 release.js，读取 DB release_json、分配版本并调用本站生成器。
+3. release.js 核验复制后的源码与面板，转义填满 config/usage/privacy 契约，清除 REPLACE 占位后运行生成器 --check。
+4. build-site 从 DB/实际 release 更新聚合数据；pipeline ship 核验部署后才进入人工测试。
 
-## 1) The one-command way (recommended)
+不要手工新增 scripts-data.json 条目，不用示例安装量或评分，不把生成的骨架当作完成品。只有底层生成器 --check 通过也不代表生产门禁、人工测试或部署已经完成。
 
-Run the scaffolder. It creates the full HTML page, stores the actual program
-file inside `website/scripts/`, and registers the entry in the catalog. You never
-touch HTML by hand.
+## 维护生成器
 
-```bash
-cd website
-python tools/add_program.py \
-    --id my-tool \
-    --title "My Tool" \
-    --type script \
-    --category Productivity \
-    --github https://github.com/you/my-tool \
-    --short "One-line card summary shown on cards/SEO." \
-    --desc "Longer paragraph for the Overview section." \
-    --tags "keyword1,keyword2" \
-    --features "Feature A;Feature B;Feature C" \
-    --file "path/to/your/real.user.js" \
-    --license MIT \
-    --apply
-```
+python tools/add_program.py --help 查看实际参数，--check 仅验证本站文件。--apply 是写操作，生产中由 release.js 传入真实制品及文案。单独排查生成器应在隔离 fixture 中进行，避免修改当前网站目录或绕过父项目状态机。
 
-What it writes (all inside `website/scripts/`):
-
-```
-scripts/<category>/<id>/
-   <id>.html        the detail page
-   <id>.user.js     the program file
-```
-
-- **`--file PATH[,PATH...]`** copies your real program file(s) into the folder
-  and the **Download / install** button points at the local `.user.js`. Omit it
-  and a `.user.js` stub is generated for you.
-- **`--install URL`** (optional) overrides the install button to point elsewhere
-  (e.g. a GitHub release) instead of the local file.
-- **`--github URL`** identifies the repository used by the catalog metadata.
-- **`--apply`** inserts the entry into `scripts-data.json`.
-- **`--category`** must be a value that exists in the `categories` array of
-  `scripts-data.json`. Same for `--type` vs the `types` array.
-- **`--id`** must be `lowercase-letters-digits-hyphens`.
-
-The category folder name is derived from the category automatically
-(e.g. `Media & Entertainment` → `media-entertainment`).
-
-### Flags cheat-sheet
-| Flag | Meaning |
-|---|---|
-| `--apply` | write the JSON entry too (idempotent — safe to rerun) |
-| `--file "a.user.js,b.zip"` | store real program file(s) inside the site |
-| `--install URL` | force the download link (defaults to the local file) |
-| `--print-json` | just print the JSON row, write nothing |
-| `--check` | validate only (safe to run anytime) |
-| `--features "A;B;C"` | fill the "Key features" bullets |
-| `--featured` | show in the homepage featured grid |
-| `--type` | `script` (default) \| `extension` \| `app` \| `other` |
-
-> After scaffolding, review `scripts/<category>/<id>/<id>.html`. A few optional
-> content hooks are left as `REPLACE: ...` markers (install steps, config,
-> privacy notes, ad slot id) — the tool prints them as a WARNING. Fill in what
-> you have; leave the rest.
-
-## 2) Manual way (edit-by-hand, same contract)
-
-If you edit files directly, keep three things consistent:
-
-**(a) The page** — copy `scripts/_template.html` to
-`scripts/<category>/<id>/<id>.html` and fill in the `REPLACE_*` values. Keep the
-`chrome-header` / `chrome-footer` divs and the `main.js` script tag (they inject
-the shared header/footer/cookie banner).
-
-**(b) The program file** — place the real file (e.g. `<id>.user.js`) next to the
-page inside the same folder, and point `files` at it.
-
-**(c) The catalog entry** — add a row to the `scripts` array in
-`scripts-data.json`:
-
-```json
-{
-  "id": "my-tool",
-  "type": "script",
-  "title": "My Tool",
-  "short": "One-line card summary.",
-  "description": "Longer description used by search.",
-  "github": "https://github.com/you/my-tool",
-  "page": "/scripts/productivity/my-tool/my-tool.html",
-  "installUrl": "/scripts/productivity/my-tool/my-tool.user.js",
-  "files": ["my-tool.user.js"],
-  "tags": ["k1", "k2"],
-  "categories": ["Productivity"],
-  "rating": 0,
-  "downloads": 0,
-  "stars": 0,
-  "lastUpdated": "2026-08-30",
-  "license": "MIT",
-  "featured": false,
-  "status": "stable"
-}
-```
-
-**Rules**
-- `id` must be lowercase-hyphens.
-- `type` must be one of `data.types[*].id`.
-- every `categories[]` value must exist in `data.categories`.
-- `page` must point to a real file under `scripts/`.
-- every `files[]` filename must exist in the same folder as `page`.
-
-## 3) Always validate before you're done
-
-```bash
-cd website
-python tools/add_program.py --check
-```
-
-Exit `0` = catalog is consistent (all rows valid, all pages exist, no duplicate
-ids, no bad type/category). Exit `1` lists every problem. **Run it, don't skip it.**
-
----
-
-## Where things live
-
-```
-website/
-├─ scripts-data.json        catalog registry (add rows here)
-├─ scripts/
-│  ├─ _template.html        copy this for each new program
-│  └─ <category>/<id>/      one folder per program
-│       ├─ <id>.html        the detail page
-│       └─ <id>.user.js     the actual program file (hosted here)
-└─ tools/
-   └─ add_program.py        the scaffolder + validator
-```
-
-Program files are served from the site itself (e.g. `/scripts/productivity/
-clean-tabs/clean-tabs.user.js`). Browsers with a userscript manager will install
-directly from that URL.
-
-## Enabling extensions / apps / other later
-
-The catalog already supports the other types. To surface them now (they are
-currently hidden on purpose):
-
-1. In `scripts-data.json`, set `"enabledTypes": ["script", "extension", "app", "other"]`.
-2. Save. The nav, homepage type cards, and listing filter appear automatically —
-   no other change needed.
+程序发布文件位于 scripts/userscripts/<task_id>/，包含 <task_id>.html、<task_id>.user.js 与 panel.html。网站部署副本与开发源码各有用途，不因内容相同删除其中一份；应由构建保持一致。
