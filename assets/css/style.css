@@ -235,7 +235,7 @@ main { flex: 1; }
 .roadmap-table .c-date { color: var(--text-muted); font-size: 0.85rem; white-space: nowrap; }
 
 /* ============ Detail page ============ */
-.detail-grid { display: grid; grid-template-columns: 1fr 320px; gap: 28px; align-items: start; }
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
 .detail-hero {
   display: flex; gap: 18px; align-items: flex-start; margin-bottom: 26px;
   padding-bottom: 26px; border-bottom: 1px solid var(--border);
