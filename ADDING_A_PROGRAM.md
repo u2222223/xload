@@ -45,7 +45,7 @@ scripts/<category>/<id>/
   and a `.user.js` stub is generated for you.
 - **`--install URL`** (optional) overrides the install button to point elsewhere
   (e.g. a GitHub release) instead of the local file.
-- **`--github URL`** identifies the repository. The source button is derived as a direct link to the generated script file; use `--source URL` to override it.
+- **`--github URL`** identifies the repository used by the catalog metadata.
 - **`--apply`** inserts the entry into `scripts-data.json`.
 - **`--category`** must be a value that exists in the `categories` array of
   `scripts-data.json`. Same for `--type` vs the `types` array.

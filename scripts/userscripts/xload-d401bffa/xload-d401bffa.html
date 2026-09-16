@@ -26,6 +26,9 @@
 <body data-nav="script">
 
   <div id="chrome-header"></div>
+  <section class="release-language" data-release-i18n-controls>
+            <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
+          </section>
 
   <main>
     <div class="container page">
@@ -63,9 +66,6 @@
 
             <h2 data-release-ui="privacy">Privacy &amp; permissions</h2>
             <p data-release-i18n="privacy">The script reads account and conversation identifiers and matching message metadata on Discord, and sends authenticated search and deletion requests to Discord. Credentials remain in page memory; language and delay are stored in userscript storage. The independent panel loads from xload.net and receives necessary scope identifiers, timestamp summaries, counts, and errors in memory, but not message bodies or credentials; chat content is not submitted to the xload server.</p>
-
-            <h2 data-release-ui="changelog">Changelog</h2>
-            <p data-release-ui="history">See the releases page on GitHub for the full history of changes.</p>
           </div>
         </div>
 
@@ -75,14 +75,7 @@
             <a class="btn btn-block" href="/scripts/userscripts/xload-d401bffa/xload-d401bffa.user.js" target="_blank" rel="noopener" data-internal-download>
               <span data-release-ui="download">Download / install</span>
             </a>
-            <a class="btn btn-block btn-ghost" href="https://github.com/u2222223/xload/blob/main/website/scripts/userscripts/xload-d401bffa/xload-d401bffa.user.js" target="_blank" rel="noopener" data-source-link>
-              <span data-release-ui="source">View source on GitHub</span>
-            </a>
           </div>
-
-          <section class="pui-card" data-release-i18n-controls>
-            <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
-          </section>
 
           <div class="sidebar-card">
             <h3 data-release-ui="details">Details</h3>

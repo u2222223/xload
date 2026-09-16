@@ -26,6 +26,9 @@
 <body data-nav="script">
 
   <div id="chrome-header"></div>
+  <section class="release-language" data-release-i18n-controls>
+            <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
+          </section>
 
   <main>
     <div class="container page">
@@ -70,9 +73,6 @@
 
             <h2 data-release-ui="privacy">Privacy &amp; permissions</h2>
             <p data-release-i18n="privacy">The script reads the browser color-scheme preference and Zhihu page structure to apply local styles. Theme settings are stored in userscript storage. It does not transmit page content; configuration commands and status are exchanged only with the associated xload panel.</p>
-
-            <h2 data-release-ui="changelog">Changelog</h2>
-            <p data-release-ui="history">See the releases page on GitHub for the full history of changes.</p>
           </div>
         </div>
 
@@ -82,14 +82,7 @@
             <a class="btn btn-block" href="/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.user.js" target="_blank" rel="noopener" data-internal-download>
               <span data-release-ui="download">Download / install</span>
             </a>
-            <a class="btn btn-block btn-ghost" href="https://github.com/u2222223/xload/blob/main/website/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.user.js" target="_blank" rel="noopener" data-source-link>
-              <span data-release-ui="source">View source on GitHub</span>
-            </a>
           </div>
-
-          <section class="pui-card" data-release-i18n-controls>
-            <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
-          </section>
 
           <div class="sidebar-card">
             <h3 data-release-ui="details">Details</h3>
