@@ -139,6 +139,14 @@ def build_page_rel(cat_slug, program_id):
     return "scripts/%s/%s/%s.html" % (cat_slug, program_id, program_id)
 
 
+def build_source_url(github, cat_slug, program_id):
+    repo = (github or "").rstrip("/")
+    if repo.endswith(".git"):
+        repo = repo[:-4]
+    return "%s/blob/main/website/scripts/%s/%s/%s.user.js" % (
+        repo, cat_slug, program_id, program_id)
+
+
 def fill_page(args, data):
     if not os.path.exists(TEMPLATE):
         die("template not found: %s" % TEMPLATE)
@@ -156,7 +164,7 @@ def fill_page(args, data):
         "REPLACE_SLUG": args.id,
         "REPLACE_ONE_LINE_SUMMARY": esc(args.short or args.title),
         "REPLACE_GITHUB_RELEASES_URL": esc(args.install or args.github),
-        "REPLACE_GITHUB_REPO_URL": esc(args.github),
+        "REPLACE_GITHUB_SOURCE_URL": esc(args.source),
         "REPLACE_CATEGORY": esc(args.category),
         "REPLACE_LICENSE (e.g. MIT)": esc(args.license or "MIT"),
         "REPLACE_DATE": esc(args.updated),
@@ -230,7 +238,8 @@ def main():
     p.add_argument("--title", default="")
     p.add_argument("--type", default="script", help="script|extension|app|other")
     p.add_argument("--category", default="", help="a valid category from scripts-data.json")
-    p.add_argument("--github", default="", help="GitHub repo URL (view source)")
+    p.add_argument("--github", default="", help="GitHub repository URL")
+    p.add_argument("--source", default="", help="direct GitHub URL for the program source file")
     p.add_argument("--install", default="", help="force download/install URL; else points at local file")
     p.add_argument("--file", default="", help="comma-separated paths of real program file(s) to copy in")
     p.add_argument("--short", default="", help="one-line card summary")
@@ -267,6 +276,8 @@ def main():
     cat_slug = slugify(args.category) if args.category else "misc"
     args.page = build_page_rel(cat_slug, args.id)
     args.local_files = []
+    if not args.source and args.github:
+        args.source = build_source_url(args.github, cat_slug, args.id)
 
     if args.print_json:
         if not (args.install or args.github):
