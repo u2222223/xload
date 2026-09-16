@@ -20,6 +20,7 @@
     this._bc = null;
     this._opener = null;
     this._onMsg = null;
+    this._closed = false;
     var self = this;
 
     // 优先跨源通道：面板由脚本 window.open 打开时 window.opener 指向目标页面
@@ -77,6 +78,11 @@
   // 请求-响应：panel -> 油猴，等待油猴回包（沿用同 type + 原 _id）。默认超时 8000ms。
   PanelChannel.prototype.request = function (type, data, timeout) {
     var self = this;
+    if (this._closed) {
+      var closedError = new Error('Panel channel is closed: ' + type);
+      closedError.code = 'CHANNEL_CLOSED';
+      return Promise.reject(closedError);
+    }
     var id = ++this._seq;
     var t = typeof timeout === 'number' && timeout > 0 ? timeout : 8000;
     return new Promise(function (resolve, reject) {
@@ -109,8 +115,18 @@
   };
 
   PanelChannel.prototype.close = function () {
+    if (this._closed) return;
+    this._closed = true;
     if (this._onMsg) { try { window.removeEventListener('message', this._onMsg); } catch (e) { /* ignore */ } }
     if (this._bc) { try { this._bc.close(); } catch (e) { /* ignore */ } }
+    var ids = Object.keys(this._pending);
+    for (var i = 0; i < ids.length; i++) {
+      var pending = this._pending[ids[i]];
+      if (pending._timer) clearTimeout(pending._timer);
+      var error = new Error('Panel channel is closed');
+      error.code = 'CHANNEL_CLOSED';
+      pending.reject(error);
+    }
     this._bc = null;
     this._opener = null;
     this._handlers = {};
