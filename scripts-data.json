@@ -484,34 +484,6 @@
       "status": "beta"
     },
     {
-      "id": "xload-0157d469",
-      "type": "script",
-      "title": "X Long Post Expander — Read Available Full Text",
-      "short": "X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.",
-      "description": "Repeatedly expanding long posts can interrupt reading on X. The script can automatically expand long posts with supported text controls. Open the panel to enable automatic expansion or apply it to the current page once. It does not unlock unavailable text or bypass account access restrictions.",
-      "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/xload-0157d469/xload-0157d469.html",
-      "installUrl": "/scripts/userscripts/xload-0157d469/xload-0157d469.user.js",
-      "files": [
-        "panel.html",
-        "xload-0157d469.user.js"
-      ],
-      "tags": [
-        "Twitter",
-        "X long post expander"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-16",
-      "license": "MIT",
-      "featured": false,
-      "status": "release-candidate"
-    },
-    {
       "id": "greasyfork-406070-1",
       "type": "script",
       "title": "通用小说下载器",
@@ -606,6 +578,34 @@
       "status": "stable"
     },
     {
+      "id": "xload-0157d469",
+      "type": "script",
+      "title": "X Long Post Expander — Read Available Full Text",
+      "short": "X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.",
+      "description": "Repeatedly expanding long posts can interrupt reading on X. The script can automatically expand long posts with supported text controls. Open the panel to enable automatic expansion or apply it to the current page once. It does not unlock unavailable text or bypass account access restrictions.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-0157d469/xload-0157d469.html",
+      "installUrl": "/scripts/userscripts/xload-0157d469/xload-0157d469.user.js",
+      "files": [
+        "panel.html",
+        "xload-0157d469.user.js"
+      ],
+      "tags": [
+        "Twitter",
+        "X long post expander"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
       "id": "xload-01b8f240",
       "type": "script",
       "title": "Pixiv Artist UID, Profile Media, and Work Type Labels",
@@ -632,7 +632,7 @@
       "lastUpdated": "2026-09-17",
       "license": "MIT",
       "featured": false,
-      "status": "release-candidate"
+      "status": "beta"
     },
     {
       "id": "xload-1b4011f3",
@@ -664,7 +664,7 @@
       "lastUpdated": "2026-09-17",
       "license": "MIT",
       "featured": false,
-      "status": "release-candidate"
+      "status": "beta"
     }
   ]
 }
