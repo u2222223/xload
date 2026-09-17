@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">X Long Post Expander — Read Available Full Text - Panel</title>
+  <meta name="description" content="X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">X Long Post Expander — Read Available Full Text</h1>
+        <p class="panel-subtitle" data-i18n="short">X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ====================
+             组件目录：/_preview/fab-panel-preview.html（仓库路径 _preview/fab-panel-preview.html）。
+             样式统一 D0 极简黑白（静态）：黑 header、白卡、黑白按钮/开关/滑条，无动画/过渡。
+             只能组合共享 panel.css 已定义的 pui-*/pb-* 组件；不得复制组件 CSS、另建主题，
+             或重定义颜色、圆角、阴影、动效及基础控件外观。业务 class 仅补组件无法表达的布局。
+             内联 <style> 仅黑白（#111/#fff/#d4d4d4/#e5e5e5/#ececec/#f4f4f4/#fafafa，
+             次要文字 #555/#888/#a3a3a3），禁止任何彩色系（#2563eb 等）。
+             把设置下发给油猴的主按钮文案一律用「保存配置」（toast「已保存配置」）。
+        ==================== -->
+        <section class="pui-card">
+          <h2 class="pui-card-title" data-i18n="longText.enabled"></h2>
+          <p id="connection" class="pb-status" role="status" data-i18n="status.working"></p>
+          <label class="pb-sw"><span data-i18n="longText.enabled"></span><span class="pui-switch"><input id="enabled" type="checkbox" checked><i></i></span></label>
+          <div class="pb-btns">
+            <button id="save" type="button" class="pui-btn pui-btn-primary" data-i18n="control.save"></button>
+            <button id="once" type="button" class="pui-btn pui-btn-default" data-i18n="longText.once"></button>
+          </div>
+          <p id="counts" class="pui-help" aria-live="polite"></p>
+          <p class="pui-help" data-i18n="longText.help"></p>
+          <p class="pui-help" data-i18n="longText.scope"></p>
+        </section>
+        <section class="pui-card">
+          <h2 class="pui-card-title" data-i18n="logs.title"></h2>
+          <div class="pb-btns">
+            <button id="logs-show" type="button" class="pui-btn pui-btn-default" data-i18n="logs.show"></button>
+            <button id="logs-copy" type="button" class="pui-btn pui-btn-default" data-i18n="logs.copy"></button>
+          </div>
+          <pre id="logs" class="pui-log" tabindex="0" data-i18n="logs.empty"></pre>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "X Long Post Expander — Read Available Full Text",
+    "short": "X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.",
+    "panel.documentTitle": "X Long Post Expander — Read Available Full Text - Panel",
+    "fab.label": "X Long Post Expander — Read Available Full Text",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "error.command": "Unsupported command or invalid settings",
+    "error.storage": "Settings could not be saved",
+    "error.copy": "Copy failed; select the log text to copy it",
+    "error.busy": "A scan is already running",
+    "longText.empty": "No expandable posts",
+    "longText.failed": "Text could not be expanded",
+    "longText.help": "Navigation links require manual opening",
+    "longText.enabled": "Automatically expand long posts",
+    "longText.once": "Expand once",
+    "longText.counts": "Expanded: {expanded} · Manual opening: {manual} · Failed: {failed}",
+    "longText.scope": "Counts apply to this page session. Only supported controls beside the main post text are used; quoted posts and reply loaders are skipped.",
+    "status.working": "Working",
+    "status.ready": "Connected to the original page",
+    "status.offline": "Return to X and open this panel from the script button",
+    "status.paused": "Automatic expansion paused",
+    "action.apply": "Apply",
+    "action.restore": "Restore",
+    "a11y.openPanel": "Open controls",
+    "logs.title": "Diagnostics",
+    "logs.show": "View logs",
+    "logs.copy": "Copy logs",
+    "logs.copied": "Logs copied",
+    "logs.empty": "No logs yet"
+  },
+  "zh-CN": {
+    "title": "X 长文展开：自动显示可用正文",
+    "short": "X 长文展开自动触发支持的正文展开入口，让你减少重复点击并阅读当前可访问的长帖子内容。",
+    "panel.documentTitle": "X 长文展开：自动显示可用正文 - 功能面板",
+    "fab.label": "X 长文展开：自动显示可用正文",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "error.command": "不支持的命令或无效配置",
+    "error.storage": "配置无法保存",
+    "error.copy": "复制失败，请选中日志文本后复制",
+    "error.busy": "正在执行扫描",
+    "longText.empty": "没有可展开帖子",
+    "longText.failed": "正文无法展开",
+    "longText.help": "跳转链接需要手动打开",
+    "longText.enabled": "自动展开长帖子",
+    "longText.once": "单次展开",
+    "longText.counts": "已展开：{expanded} · 需手动打开：{manual} · 失败：{failed}",
+    "longText.scope": "计数仅限本次页面会话。只处理主帖正文旁受支持的控件，跳过引用帖与回复加载入口。",
+    "status.working": "处理中",
+    "status.ready": "已连接原页面",
+    "status.offline": "请返回 X，从脚本按钮打开此面板",
+    "status.paused": "已暂停自动展开",
+    "action.apply": "应用",
+    "action.restore": "恢复",
+    "a11y.openPanel": "打开控制面板",
+    "logs.title": "诊断日志",
+    "logs.show": "查看日志",
+    "logs.copy": "复制日志",
+    "logs.copied": "已复制日志",
+    "logs.empty": "暂无日志"
+  },
+  "zh-TW": {
+    "title": "X 長文展開：自動顯示可用內文",
+    "short": "X 長文展開自動觸發支援的內文展開入口，讓你減少重複點擊並閱讀目前可存取的長貼文內容。",
+    "panel.documentTitle": "X 長文展開：自動顯示可用內文 - 功能面板",
+    "fab.label": "X 長文展開：自動顯示可用內文",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "error.command": "不支援的命令或無效設定",
+    "error.storage": "設定無法儲存",
+    "error.copy": "複製失敗，請選取日誌文字後複製",
+    "error.busy": "正在執行掃描",
+    "longText.empty": "沒有可展開貼文",
+    "longText.failed": "內文無法展開",
+    "longText.help": "導覽連結需要手動開啟",
+    "longText.enabled": "自動展開長貼文",
+    "longText.once": "單次展開",
+    "longText.counts": "已展開：{expanded} · 需手動開啟：{manual} · 失敗：{failed}",
+    "longText.scope": "計數僅限本次頁面工作階段。只處理主貼文內文旁受支援的控制項，略過引用貼文與回覆載入入口。",
+    "status.working": "處理中",
+    "status.ready": "已連接原頁面",
+    "status.offline": "請返回 X，從腳本按鈕開啟此面板",
+    "status.paused": "已暫停自動展開",
+    "action.apply": "套用",
+    "action.restore": "還原",
+    "a11y.openPanel": "開啟控制面板",
+    "logs.title": "診斷日誌",
+    "logs.show": "查看日誌",
+    "logs.copy": "複製日誌",
+    "logs.copied": "已複製日誌",
+    "logs.empty": "尚無日誌"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-0157d469', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-0157d469:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-0157d469:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-0157d469');
+      var connection = document.getElementById('connection');
+      var enabledInput = document.getElementById('enabled');
+      var onceButton = document.getElementById('once');
+      var saveButton = document.getElementById('save');
+      var logOutput = document.getElementById('logs');
+      var settingsDirty = false;
+      var connected = false;
+      var pending = false;
+
+      function panelLog(tag) {
+        try {
+          var rows = JSON.parse(localStorage.getItem('xload-0157d469:panel-logs') || '[]');
+          rows.push({ at: new Date().toISOString(), tag: tag });
+          localStorage.setItem('xload-0157d469:panel-logs', JSON.stringify(rows.slice(-60)));
+        } catch (e) { /* diagnostics cannot block controls */ }
+        console.log('[xload-0157d469:panel]', tag);
+      }
+
+      function failureKey(code) {
+        if (code === 'STORAGE_FAILED') return 'error.storage';
+        if (code === 'BUSY') return 'error.busy';
+        return 'error.command';
+      }
+
+      function displayState(state) {
+        if (!state || !state.ok) return;
+        connected = true;
+        if (!settingsDirty) enabledInput.checked = state.enabled;
+        onceButton.disabled = !!state.working || pending;
+        saveButton.disabled = pending;
+        var statusKey = state.working ? 'status.working' : !state.enabled ? 'status.paused' :
+          state.outcome === 'UNVERIFIED' ? 'longText.failed' : state.outcome === 'EMPTY' ? 'longText.empty' : 'status.ready';
+        i18n.setText(connection, statusKey);
+        if (state.counts) i18n.setText(document.getElementById('counts'), 'longText.counts', state.counts);
+      }
+
+      async function requestAction(data) {
+        panelLog('command.' + data.action);
+        try {
+          var result = await channel.request('command', data);
+          if (!result || !result.ok) {
+            i18n.setText(connection, failureKey(result && result.errorCode));
+            return null;
+          }
+          connected = true;
+          return result;
+        } catch (e) {
+          connected = false;
+          panelLog('connection.timeout');
+          i18n.setText(connection, 'status.offline');
+          return null;
+        }
+      }
+
+      enabledInput.addEventListener('change', function () { settingsDirty = true; });
+      saveButton.addEventListener('click', async function () {
+        pending = true;
+        saveButton.disabled = true;
+        onceButton.disabled = true;
+        var result = await requestAction({ action: 'longText.configure', enabled: enabledInput.checked });
+        pending = false;
+        saveButton.disabled = false;
+        onceButton.disabled = false;
+        if (result) {
+          settingsDirty = false;
+          displayState(result);
+          PUI.toast(i18n.t('control.saved'));
+        }
+      });
+      onceButton.addEventListener('click', async function () {
+        pending = true;
+        onceButton.disabled = true;
+        i18n.setText(connection, 'status.working');
+        var result = await requestAction({ action: 'longText.expand', once: true });
+        pending = false;
+        onceButton.disabled = false;
+        if (result) {
+          displayState(result);
+          if (!result.attempted) i18n.setText(connection, 'longText.empty');
+        }
+      });
+      document.getElementById('logs-show').addEventListener('click', async function () {
+        var result = await requestAction({ action: 'getLogs' });
+        var localRows = [];
+        try { localRows = JSON.parse(localStorage.getItem('xload-0157d469:panel-logs') || '[]'); } catch (e) { /* empty */ }
+        logOutput.removeAttribute('data-i18n');
+        logOutput.textContent = JSON.stringify({ page: result ? result.logs : [], panel: localRows }, null, 2);
+      });
+      document.getElementById('logs-copy').addEventListener('click', async function () {
+        try { await navigator.clipboard.writeText(logOutput.textContent); PUI.toast(i18n.t('logs.copied')); }
+        catch (e) { PUI.toast(i18n.t('error.copy')); }
+      });
+      channel.on('progress', displayState);
+      channel.on('done', displayState);
+      channel.on('error', function (data) { i18n.setText(connection, failureKey(data.errorCode)); });
+      window.addEventListener('error', function () { panelLog('window.error'); });
+      window.addEventListener('unhandledrejection', function (event) { panelLog('window.unhandledrejection'); event.preventDefault(); });
+      setInterval(async function () {
+        if (!pending && !document.hidden) {
+          var state = await requestAction({ action: 'longText.status' });
+          if (state) displayState(state);
+        }
+      }, 5000);
+      panelLog('init');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      requestAction({ action: 'getState' }).then(function (state) {
+        if (state && state.localePreference) {
+          i18n.setLocale(state.localePreference);
+          languageSelect.value = state.localePreference;
+        }
+        displayState(state);
+      }).catch(function () { /* panel preference remains usable independently */ });
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      // 约定消息类型：
+      //   panel -> 油猴： channel.send('command', {...}) 或 channel.request('command', {...})
+      //   油猴 -> panel： channel.send('progress', {...}) / channel.send('done', {...})
+      // 监听油猴消息： channel.on('progress', function(data){ ... })
+      // 动态本地化状态（连接中/已连接/错误/含变量的进度等）必须用
+      //   i18n.setText(element, 'status.connected', { count: data.count });
+      // 它会同步当前词条和变量，之后 setLocale() 可正确重译当前状态。
+      // 用户输入、网址、日志、计数结果等原始数据输出不要带 data-i18n，直接用 textContent。
+      //
+      // 跨源说明：面板(xload.net)与脚本(目标站点)跨源，BroadcastChannel 同源才互通；
+      //   共用壳 panel.js 的 PanelChannel 已封装跨源通道（有 window.opener 走 postMessage，
+      //   同源才走 BroadcastChannel），本页无需区分；油猴侧须配套 window.message 监听 +
+      //   三级回包（panelWin → event.source → BroadcastChannel） + setPanelWin/getPanelWin。
+      //   油猴侧 createChannel 直接用共享模板 templates/channel.js，勿自行重写。
+      //
+      // 示例（按需删除）：
+      // channel.request('greet', { name: 'xload' }, 5000).then(function (data) {
+      //   PUI.toast('收到回复：' + data.message, 'success');
+      // }).catch(function (e) {
+      //   PUI.toast('原页面未响应：' + e.message, 'warn');
+      // });
+    })();
+  </script>
+</body>
+</html>

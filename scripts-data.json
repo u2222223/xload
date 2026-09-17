@@ -11,7 +11,7 @@
     "contactEmail": "contact@xload.net",
     "phone": "",
     "address": "",
-    "lastUpdated": "2026-09-16"
+    "lastUpdated": "2026-09-17"
   },
   "enabledTypes": [
     "script"
@@ -397,100 +397,6 @@
       "status": "beta"
     },
     {
-      "id": "greasyfork-406070-1",
-      "type": "script",
-      "title": "通用小说下载器",
-      "short": "一键下载全网小说，支持百站解析",
-      "description": "一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT、EPUB 与 HTML ZIP 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。",
-      "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html",
-      "installUrl": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js",
-      "files": [
-        "greasyfork-406070-1.user.js",
-        "panel.html"
-      ],
-      "tags": [
-        "小说下载",
-        "EPUB",
-        "TXT",
-        "笔趣阁",
-        "起点",
-        "晋江"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 18,
-      "stars": 0,
-      "lastUpdated": "2026-09-16",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "scriptcat-1703-1",
-      "type": "script",
-      "title": "微软积分商城自动签到",
-      "short": "自动完成微软积分每日任务",
-      "description": "自动完成 Microsoft Rewards 每日任务获取积分奖励，支持 PC 搜索、移动端搜索、每日活动、阅读文章等任务类型。后台定时运行，进度可视化，积分明细一目了然。",
-      "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html",
-      "installUrl": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.user.js",
-      "files": [
-        "panel.html",
-        "scriptcat-1703-1.user.js"
-      ],
-      "tags": [
-        "微软积分",
-        "Microsoft Rewards",
-        "自动签到",
-        "Bing搜索",
-        "积分任务"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 6,
-      "stars": 0,
-      "lastUpdated": "2026-09-16",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "scriptcat-2534-1",
-      "type": "script",
-      "title": "抖音视频流过滤",
-      "short": "自定义过滤抖音视频流中的广告、直播和不感兴趣内容",
-      "description": "支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。",
-      "github": "https://github.com/u2222223/xload",
-      "page": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html",
-      "installUrl": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.user.js",
-      "files": [
-        "panel.html",
-        "scriptcat-2534-1.user.js"
-      ],
-      "tags": [
-        "抖音",
-        "视频过滤",
-        "广告过滤",
-        "关键词屏蔽",
-        "沉浸式浏览"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 3,
-      "stars": 0,
-      "lastUpdated": "2026-09-16",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
       "id": "xload-2c12e291",
       "type": "script",
       "title": "YouTube Ad Controls",
@@ -573,6 +479,189 @@
       "downloads": 0,
       "stars": 0,
       "lastUpdated": "2026-09-16",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
+      "id": "xload-0157d469",
+      "type": "script",
+      "title": "X Long Post Expander — Read Available Full Text",
+      "short": "X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.",
+      "description": "Repeatedly expanding long posts can interrupt reading on X. The script can automatically expand long posts with supported text controls. Open the panel to enable automatic expansion or apply it to the current page once. It does not unlock unavailable text or bypass account access restrictions.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-0157d469/xload-0157d469.html",
+      "installUrl": "/scripts/userscripts/xload-0157d469/xload-0157d469.user.js",
+      "files": [
+        "panel.html",
+        "xload-0157d469.user.js"
+      ],
+      "tags": [
+        "Twitter",
+        "X long post expander"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-16",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
+      "id": "greasyfork-406070-1",
+      "type": "script",
+      "title": "通用小说下载器",
+      "short": "一键下载全网小说，支持百站解析",
+      "description": "一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT、EPUB 与 HTML ZIP 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html",
+      "installUrl": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js",
+      "files": [
+        "greasyfork-406070-1.user.js",
+        "panel.html"
+      ],
+      "tags": [
+        "小说下载",
+        "EPUB",
+        "TXT",
+        "笔趣阁",
+        "起点",
+        "晋江"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 22,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "scriptcat-1703-1",
+      "type": "script",
+      "title": "微软积分商城自动签到",
+      "short": "自动完成微软积分每日任务",
+      "description": "自动完成 Microsoft Rewards 每日任务获取积分奖励，支持 PC 搜索、移动端搜索、每日活动、阅读文章等任务类型。后台定时运行，进度可视化，积分明细一目了然。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html",
+      "installUrl": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.user.js",
+      "files": [
+        "panel.html",
+        "scriptcat-1703-1.user.js"
+      ],
+      "tags": [
+        "微软积分",
+        "Microsoft Rewards",
+        "自动签到",
+        "Bing搜索",
+        "积分任务"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 8,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "scriptcat-2534-1",
+      "type": "script",
+      "title": "抖音视频流过滤",
+      "short": "自定义过滤抖音视频流中的广告、直播和不感兴趣内容",
+      "description": "支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html",
+      "installUrl": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.user.js",
+      "files": [
+        "panel.html",
+        "scriptcat-2534-1.user.js"
+      ],
+      "tags": [
+        "抖音",
+        "视频过滤",
+        "广告过滤",
+        "关键词屏蔽",
+        "沉浸式浏览"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 3,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-01b8f240",
+      "type": "script",
+      "title": "Pixiv Artist UID, Profile Media, and Work Type Labels",
+      "short": "Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira",
+      "description": "Pixiv artist pages do not always keep IDs, profile media, and work types visible together. This script adds Pixiv copy artist ID controls, validated avatar and background links, and Pixiv single multi ugoira labels on loaded work cards. Open the panel on an artist or work page to inspect the detected context and toggle labels. It uses only profile and work information available to the current Pixiv session.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-01b8f240/xload-01b8f240.html",
+      "installUrl": "/scripts/userscripts/xload-01b8f240/xload-01b8f240.user.js",
+      "files": [
+        "panel.html",
+        "xload-01b8f240.user.js"
+      ],
+      "tags": [
+        "Pixiv artist",
+        "artist UID",
+        "work type labels"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
+      "id": "xload-1b4011f3",
+      "type": "script",
+      "title": "Product price history tracker & browsing insights for shopping sites",
+      "short": "Tracks product prices you view on supported stores and shows the price trend so you can decide when to buy.",
+      "description": "Deciding whether a current price is a good deal is hard without knowing the history. This script records the product prices you view on supported store pages such as AliExpress, eBay, Amazon and Lazada, and shows the price trend for those products. Open the panel from the floating button to review your browsing history and the recorded price points for each product. Price history is built from pages you actually visit and is stored locally, so it only covers products you have viewed.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-1b4011f3/xload-1b4011f3.html",
+      "installUrl": "/scripts/userscripts/xload-1b4011f3/xload-1b4011f3.user.js",
+      "files": [
+        "panel.html",
+        "xload-1b4011f3.user.js"
+      ],
+      "tags": [
+        "price history",
+        "price tracker",
+        "price trend",
+        "price drop",
+        "aliexpress price",
+        "browsing history"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-17",
       "license": "MIT",
       "featured": false,
       "status": "release-candidate"

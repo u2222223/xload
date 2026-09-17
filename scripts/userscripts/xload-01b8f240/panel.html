@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">Pixiv Artist UID, Profile Media, and Work Type Labels - Panel</title>
+  <meta name="description" content="Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">Pixiv Artist UID, Profile Media, and Work Type Labels</h1>
+        <p class="panel-subtitle" data-i18n="short">Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="artist.cardTitle">Artist context</h2>
+              <p class="pui-card-desc" data-i18n="short">Show artist details and validated media links.</p>
+            </div>
+          </div>
+          <div id="connection-status" class="pb-status" data-i18n="status.connecting">Reading the Pixiv page…</div>
+          <div id="artist-empty" class="pui-empty">
+            <strong data-i18n="artist.unavailable">Not available on this page</strong>
+          </div>
+          <ul id="artist-list" class="pui-list" hidden>
+            <li id="uid-row"><span data-i18n="artist.uid">Artist UID</span><strong id="artist-uid"></strong></li>
+            <li id="avatar-row"><span data-i18n="artist.avatar">Avatar image</span><a id="artist-avatar" target="_blank" rel="noopener" data-i18n="artist.open">Open</a></li>
+            <li id="background-row"><span data-i18n="artist.background">Profile background</span><a id="artist-background" target="_blank" rel="noopener" data-i18n="artist.open">Open</a></li>
+          </ul>
+          <div class="pb-btns">
+            <button id="copy-uid" type="button" class="pui-btn pui-btn-default" data-i18n="artist.copyUid">Copy UID</button>
+            <button id="copy-avatar" type="button" class="pui-btn pui-btn-default" data-i18n="artist.copyAvatar">Copy avatar URL</button>
+            <button id="copy-background" type="button" class="pui-btn pui-btn-default" data-i18n="artist.copyBackground">Copy background URL</button>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head"><div><h2 class="pui-card-title" data-i18n="settings.title">Display settings</h2></div></div>
+          <label class="pb-sw"><span><strong data-i18n="settings.uid">Show artist UID</strong><small data-i18n="settings.uidHelp">Keep the detected artist ID visible beside the page content.</small></span><span class="pui-switch"><input id="setting-uid" type="checkbox"><i></i></span></label>
+          <label class="pb-sw"><span><strong data-i18n="settings.assets">Show profile media links</strong><small data-i18n="settings.assetsHelp">Only validated Pixiv or Pximg HTTP(S) links are shown.</small></span><span class="pui-switch"><input id="setting-assets" type="checkbox"><i></i></span></label>
+          <label class="pb-sw"><span><strong data-i18n="settings.badges">Show work type labels</strong><small data-i18n="settings.badgesHelp">Label loaded works from Pixiv metadata.</small></span><span class="pui-switch"><input id="setting-badges" type="checkbox"><i></i></span></label>
+          <div class="pb-actions">
+            <button id="refresh-state" type="button" class="pui-btn pui-btn-default" data-i18n="control.refresh">Refresh page data</button>
+            <button id="save-settings" type="button" class="pui-btn pui-btn-primary" data-i18n="control.save">Save settings</button>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head"><div><h2 class="pui-card-title" data-i18n="work.title">Loaded work types</h2></div><span id="work-total" class="pui-badge"></span></div>
+          <ul class="pui-list">
+            <li><span data-i18n="work.single">Single</span><strong id="count-single">0</strong></li>
+            <li><span data-i18n="work.multi">Multi-page</span><strong id="count-multi">0</strong></li>
+            <li><span data-i18n="work.ugoira">Ugoira</span><strong id="count-ugoira">0</strong></li>
+            <li><span data-i18n="work.unknown">Unknown</span><strong id="count-unknown">0</strong></li>
+          </ul>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head"><div><h2 class="pui-card-title" data-i18n="logs.title">Diagnostics</h2></div></div>
+          <div class="pb-btns">
+            <button id="view-logs" type="button" class="pui-btn pui-btn-default" data-i18n="control.viewLogs">View logs</button>
+            <button id="copy-logs" type="button" class="pui-btn pui-btn-default" data-i18n="control.copyLogs">Copy logs</button>
+          </div>
+          <pre id="log-output" class="pui-log" hidden></pre>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "Pixiv Artist UID, Profile Media, and Work Type Labels",
+    "short": "Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira",
+    "panel.documentTitle": "Pixiv Artist UID, Profile Media, and Work Type Labels - Panel",
+    "fab.label": "Pixiv Artist UID, Profile Media, and Work Type Labels",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "error.unsupported": "Unsupported command",
+    "artist.cardTitle": "Artist context",
+    "artist.uid": "Artist UID",
+    "artist.avatar": "Avatar image",
+    "artist.background": "Profile background",
+    "artist.unavailable": "Not available on this page",
+    "artist.copyUid": "Copy UID",
+    "artist.copyAvatar": "Copy avatar URL",
+    "artist.copyBackground": "Copy background URL",
+    "artist.open": "Open",
+    "artist.copied": "Copied",
+    "artist.copyFailed": "Copy failed",
+    "settings.title": "Display settings",
+    "settings.uid": "Show artist UID",
+    "settings.uidHelp": "Keep the detected artist ID visible beside the page content.",
+    "settings.assets": "Show profile media links",
+    "settings.assetsHelp": "Only validated Pixiv or Pximg HTTP(S) links are shown.",
+    "settings.badges": "Show work type labels",
+    "settings.badgesHelp": "Label loaded works from Pixiv metadata.",
+    "work.title": "Loaded work types",
+    "work.single": "Single",
+    "work.multi": "Multi-page",
+    "work.ugoira": "Ugoira",
+    "work.unknown": "Unknown",
+    "work.count": "{count} works",
+    "status.connecting": "Reading the Pixiv page…",
+    "status.ready": "Ready · {count} works labeled",
+    "status.error": "Could not read this page",
+    "control.refresh": "Refresh page data",
+    "control.viewLogs": "View logs",
+    "control.copyLogs": "Copy logs",
+    "logs.title": "Diagnostics",
+    "logs.empty": "No logs yet"
+  },
+  "zh-CN": {
+    "title": "Pixiv 画师 UID、资料图片与作品类型标记",
+    "short": "显示并复制 Pixiv 画师 ID，提供有效资料图片链接，并标记单图、多图或动图作品",
+    "panel.documentTitle": "Pixiv 画师 UID、资料图片与作品类型标记 - 功能面板",
+    "fab.label": "Pixiv 画师 UID、资料图片与作品类型标记",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "error.unsupported": "不支持的命令",
+    "artist.cardTitle": "画师资料",
+    "artist.uid": "画师 UID",
+    "artist.avatar": "头像图片",
+    "artist.background": "主页背景",
+    "artist.unavailable": "当前页面暂无资料",
+    "artist.copyUid": "复制 UID",
+    "artist.copyAvatar": "复制头像地址",
+    "artist.copyBackground": "复制背景地址",
+    "artist.open": "打开",
+    "artist.copied": "已复制",
+    "artist.copyFailed": "复制失败",
+    "settings.title": "显示配置",
+    "settings.uid": "显示画师 UID",
+    "settings.uidHelp": "在页面内容旁显示识别到的画师 ID。",
+    "settings.assets": "显示资料图片链接",
+    "settings.assetsHelp": "只显示已校验的 Pixiv 或 Pximg HTTP(S) 链接。",
+    "settings.badges": "显示作品类型标记",
+    "settings.badgesHelp": "依据 Pixiv 元数据标记已加载作品。",
+    "work.title": "已加载作品类型",
+    "work.single": "单图",
+    "work.multi": "多图",
+    "work.ugoira": "动图",
+    "work.unknown": "未知类型",
+    "work.count": "{count} 个作品",
+    "status.connecting": "正在读取 Pixiv 页面…",
+    "status.ready": "已就绪 · 已标记 {count} 个作品",
+    "status.error": "无法读取当前页面",
+    "control.refresh": "刷新页面资料",
+    "control.viewLogs": "查看日志",
+    "control.copyLogs": "复制日志",
+    "logs.title": "诊断日志",
+    "logs.empty": "暂无日志"
+  },
+  "zh-TW": {
+    "title": "Pixiv 繪師 UID、資料圖片與作品類型標記",
+    "short": "顯示並複製 Pixiv 繪師 ID，提供有效資料圖片連結，並標記單圖、多圖或動圖作品",
+    "panel.documentTitle": "Pixiv 繪師 UID、資料圖片與作品類型標記 - 功能面板",
+    "fab.label": "Pixiv 繪師 UID、資料圖片與作品類型標記",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "error.unsupported": "不支援的命令",
+    "artist.cardTitle": "繪師資料",
+    "artist.uid": "繪師 UID",
+    "artist.avatar": "頭像圖片",
+    "artist.background": "首頁背景",
+    "artist.unavailable": "目前頁面暫無資料",
+    "artist.copyUid": "複製 UID",
+    "artist.copyAvatar": "複製頭像網址",
+    "artist.copyBackground": "複製背景網址",
+    "artist.open": "開啟",
+    "artist.copied": "已複製",
+    "artist.copyFailed": "複製失敗",
+    "settings.title": "顯示設定",
+    "settings.uid": "顯示繪師 UID",
+    "settings.uidHelp": "在頁面內容旁顯示辨識到的繪師 ID。",
+    "settings.assets": "顯示資料圖片連結",
+    "settings.assetsHelp": "只顯示已驗證的 Pixiv 或 Pximg HTTP(S) 連結。",
+    "settings.badges": "顯示作品類型標記",
+    "settings.badgesHelp": "依據 Pixiv 中繼資料標記已載入作品。",
+    "work.title": "已載入作品類型",
+    "work.single": "單圖",
+    "work.multi": "多圖",
+    "work.ugoira": "動圖",
+    "work.unknown": "未知類型",
+    "work.count": "{count} 個作品",
+    "status.connecting": "正在讀取 Pixiv 頁面…",
+    "status.ready": "已就緒 · 已標記 {count} 個作品",
+    "status.error": "無法讀取目前頁面",
+    "control.refresh": "重新整理頁面資料",
+    "control.viewLogs": "檢視日誌",
+    "control.copyLogs": "複製日誌",
+    "logs.title": "診斷日誌",
+    "logs.empty": "暫無日誌"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-01b8f240', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-01b8f240:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-01b8f240:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-01b8f240');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var currentState = null;
+      var languageSelect = document.getElementById('xload-language');
+      var statusElement = document.getElementById('connection-status');
+      var artistEmpty = document.getElementById('artist-empty');
+      var artistList = document.getElementById('artist-list');
+      var logOutput = document.getElementById('log-output');
+
+      function safeHttpUrl(value) {
+        try {
+          var parsed = new URL(String(value || ''), window.location.href);
+          return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : '';
+        } catch (e) { return ''; }
+      }
+
+      function setLink(id, value) {
+        var link = document.getElementById(id);
+        var safe = safeHttpUrl(value);
+        if (safe) link.href = safe;
+        else link.removeAttribute('href');
+        return !!safe;
+      }
+
+      function renderState(nextState) {
+        currentState = nextState || currentState || {};
+        var artist = currentState.artist || {};
+        var counts = currentState.counts || {};
+        var total = Number(counts.single || 0) + Number(counts.multi || 0) + Number(counts.ugoira || 0) + Number(counts.unknown || 0);
+        if (currentState.status === 'error') i18n.setText(statusElement, 'status.error');
+        else if (currentState.status === 'ready') i18n.setText(statusElement, 'status.ready', { count: total });
+        else i18n.setText(statusElement, 'status.connecting');
+
+        artistEmpty.hidden = !!artist.id;
+        artistList.hidden = !artist.id;
+        document.getElementById('artist-uid').textContent = artist.id || '';
+        document.getElementById('uid-row').hidden = !artist.id;
+        document.getElementById('avatar-row').hidden = !setLink('artist-avatar', artist.avatarUrl);
+        document.getElementById('background-row').hidden = !setLink('artist-background', artist.backgroundUrl);
+        document.getElementById('copy-uid').disabled = !artist.id;
+        document.getElementById('copy-avatar').disabled = !artist.avatarUrl;
+        document.getElementById('copy-background').disabled = !artist.backgroundUrl;
+
+        document.getElementById('count-single').textContent = String(counts.single || 0);
+        document.getElementById('count-multi').textContent = String(counts.multi || 0);
+        document.getElementById('count-ugoira').textContent = String(counts.ugoira || 0);
+        document.getElementById('count-unknown').textContent = String(counts.unknown || 0);
+        document.getElementById('work-total').textContent = i18n.t('work.count', { count: total });
+
+        if (currentState.settings) {
+          document.getElementById('setting-uid').checked = currentState.settings.showUid !== false;
+          document.getElementById('setting-assets').checked = currentState.settings.showAssets !== false;
+          document.getElementById('setting-badges').checked = currentState.settings.showBadges !== false;
+        }
+      }
+
+      function requestState() {
+        i18n.setText(statusElement, 'status.connecting');
+        return channel.request('command', { action: 'getState' }).then(function (state) {
+          if (state && state.localePreference) {
+            i18n.setLocale(state.localePreference);
+            languageSelect.value = state.localePreference;
+          }
+          renderState(state);
+          return state;
+        }).catch(function () {
+          i18n.setText(statusElement, 'error.pageUnresponsive');
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      }
+
+      function copyField(field) {
+        channel.request('command', { action: 'copy', field: field }).then(function (result) {
+          PUI.toast(result && result.ok ? i18n.t('artist.copied') : i18n.t('artist.copyFailed'), result && result.ok ? 'success' : 'warn');
+        }).catch(function () { PUI.toast(i18n.t('artist.copyFailed'), 'warn'); });
+      }
+
+      function formatLogs(rows) {
+        if (!Array.isArray(rows) || !rows.length) return i18n.t('logs.empty');
+        return rows.map(function (row) {
+          return '[' + String(row.at || '') + '] ' + String(row.tag || '') + ' ' + JSON.stringify(row.data == null ? '' : row.data);
+        }).join('\n');
+      }
+
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        renderState(currentState);
+        channel.request('command', { action: 'setLanguage', locale: preference }).then(renderState).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      document.getElementById('copy-uid').addEventListener('click', function () { copyField('uid'); });
+      document.getElementById('copy-avatar').addEventListener('click', function () { copyField('avatar'); });
+      document.getElementById('copy-background').addEventListener('click', function () { copyField('background'); });
+      document.getElementById('save-settings').addEventListener('click', function () {
+        var nextSettings = {
+          showUid: document.getElementById('setting-uid').checked,
+          showAssets: document.getElementById('setting-assets').checked,
+          showBadges: document.getElementById('setting-badges').checked
+        };
+        channel.request('command', { action: 'setSettings', settings: nextSettings }).then(function (state) {
+          renderState(state);
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function () { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      });
+      document.getElementById('refresh-state').addEventListener('click', function () {
+        channel.request('command', { action: 'refresh' }).then(renderState).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      document.getElementById('view-logs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }).then(function (result) {
+          logOutput.textContent = formatLogs(result && result.logs);
+          logOutput.hidden = false;
+        }).catch(function () { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      });
+      document.getElementById('copy-logs').addEventListener('click', function () {
+        channel.request('command', { action: 'getLogs' }).then(function (result) {
+          var text = formatLogs(result && result.logs);
+          if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') throw new Error('Clipboard unavailable');
+          return navigator.clipboard.writeText(text);
+        }).then(function () { PUI.toast(i18n.t('artist.copied'), 'success'); })
+          .catch(function () { PUI.toast(i18n.t('artist.copyFailed'), 'warn'); });
+      });
+      channel.on('progress', renderState);
+      channel.on('done', renderState);
+      channel.on('error', renderState);
+      requestState();
+    })();
+  </script>
+</body>
+</html>
