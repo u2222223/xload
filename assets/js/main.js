@@ -33,7 +33,8 @@
       footerAbout: "About us", footerContact: "Contact", footerTypes: "Types", footerLegal: "Legal",
       privacyPolicy: "Privacy Policy", termsOfService: "Terms of Service", cookiePolicy: "Cookie Policy",
       rightsReserved: "All rights reserved.",
-      downloadsNote: "Downloads are linked to our GitHub releases &mdash; we never host files directly."
+      downloadsNote: "Downloads are linked to our GitHub releases &mdash; we never host files directly.",
+      footerTagline: "Fast, free and safe downloads for browser userscripts"
     },
     "zh-CN": {
       home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
@@ -64,7 +65,8 @@
       footerAbout: "关于我们", footerContact: "联系我们", footerTypes: "分类", footerLegal: "法律",
       privacyPolicy: "隐私政策", termsOfService: "服务条款", cookiePolicy: "Cookie 政策",
       rightsReserved: "保留所有权利。",
-      downloadsNote: "下载链接到我们的 GitHub 发行版 &mdash; 我们从不直接托管文件。"
+      downloadsNote: "下载链接到我们的 GitHub 发行版 &mdash; 我们从不直接托管文件。",
+      footerTagline: "快速、免费、安全地下载浏览器用户脚本"
     },
     "zh-TW": {
       home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
@@ -95,7 +97,8 @@
       footerAbout: "關於我們", footerContact: "聯絡我們", footerTypes: "分類", footerLegal: "法律",
       privacyPolicy: "隱私政策", termsOfService: "服務條款", cookiePolicy: "Cookie 政策",
       rightsReserved: "保留所有權利。",
-      downloadsNote: "下載連結到我們的 GitHub 發行版 &mdash; 我們從不直接託管檔案。"
+      downloadsNote: "下載連結到我們的 GitHub 發行版 &mdash; 我們從不直接託管檔案。",
+      footerTagline: "快速、免費、安全地下載瀏覽器使用者腳本"
     }
   };
   var activeSiteLocale = "en";
@@ -242,7 +245,7 @@
       '<footer class="site-footer"><div class="container">' +
       '<div class="footer-grid">' +
       "<div class=\"footer-col\"><h4>" + esc(data.site.name) + "</h4><ul>" +
-      "<li>" + esc(data.site.tagline) + "</li>" +
+      '<li data-site-ui="footerTagline">' + esc(data.site.tagline) + "</li>" +
       '<li><a href="/about.html" data-site-ui="footerAbout">About us</a></li>' +
       '<li><a href="/contact.html" data-site-ui="footerContact">Contact</a></li>' +
       "</ul></div>" +
