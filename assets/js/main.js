@@ -29,7 +29,11 @@
       freeForever: "<strong>Free forever.</strong> No paywalls, no \"pro\" upsells hiding core features.",
       honestAds: "<strong>Independent and honest advertising.</strong> The site is supported by respectful Google ads, clearly labelled.",
       contactHeading: "Contact",
-      contactBody: "Questions, feedback or a feature idea? Reach out via our <a href=\"/contact.html\">contact page</a>."
+      contactBody: "Questions, feedback or a feature idea? Reach out via our <a href=\"/contact.html\">contact page</a>.",
+      footerAbout: "About us", footerContact: "Contact", footerTypes: "Types", footerLegal: "Legal",
+      privacyPolicy: "Privacy Policy", termsOfService: "Terms of Service", cookiePolicy: "Cookie Policy",
+      rightsReserved: "All rights reserved.",
+      downloadsNote: "Downloads are linked to our GitHub releases &mdash; we never host files directly."
     },
     "zh-CN": {
       home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
@@ -56,7 +60,11 @@
       freeForever: "<strong>永久免费。</strong>没有付费墙，也不会用“专业版”隐藏核心功能。",
       honestAds: "<strong>独立、诚实的广告。</strong>网站由克制且标识清晰的 Google 广告提供支持。",
       contactHeading: "联系我们",
-      contactBody: "有问题、反馈或功能建议？欢迎通过<a href=\"/contact.html\">联系页面</a>告诉我们。"
+      contactBody: "有问题、反馈或功能建议？欢迎通过<a href=\"/contact.html\">联系页面</a>告诉我们。",
+      footerAbout: "关于我们", footerContact: "联系我们", footerTypes: "分类", footerLegal: "法律",
+      privacyPolicy: "隐私政策", termsOfService: "服务条款", cookiePolicy: "Cookie 政策",
+      rightsReserved: "保留所有权利。",
+      downloadsNote: "下载链接到我们的 GitHub 发行版 &mdash; 我们从不直接托管文件。"
     },
     "zh-TW": {
       home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
@@ -83,7 +91,11 @@
       freeForever: "<strong>永久免費。</strong>沒有付費牆，也不會用「專業版」隱藏核心功能。",
       honestAds: "<strong>獨立、誠實的廣告。</strong>網站由克制且標示清楚的 Google 廣告提供支持。",
       contactHeading: "聯絡我們",
-      contactBody: "有問題、意見或功能建議？歡迎透過<a href=\"/contact.html\">聯絡頁面</a>告訴我們。"
+      contactBody: "有問題、意見或功能建議？歡迎透過<a href=\"/contact.html\">聯絡頁面</a>告訴我們。",
+      footerAbout: "關於我們", footerContact: "聯絡我們", footerTypes: "分類", footerLegal: "法律",
+      privacyPolicy: "隱私政策", termsOfService: "服務條款", cookiePolicy: "Cookie 政策",
+      rightsReserved: "保留所有權利。",
+      downloadsNote: "下載連結到我們的 GitHub 發行版 &mdash; 我們從不直接託管檔案。"
     }
   };
   var activeSiteLocale = "en";
@@ -231,18 +243,18 @@
       '<div class="footer-grid">' +
       "<div class=\"footer-col\"><h4>" + esc(data.site.name) + "</h4><ul>" +
       "<li>" + esc(data.site.tagline) + "</li>" +
-      '<li><a href="/about.html">About us</a></li>' +
-      '<li><a href="/contact.html">Contact</a></li>' +
+      '<li><a href="/about.html" data-site-ui="footerAbout">About us</a></li>' +
+      '<li><a href="/contact.html" data-site-ui="footerContact">Contact</a></li>' +
       "</ul></div>" +
-      "<div class=\"footer-col\"><h4>Types</h4><ul>" + typesCol + "</ul></div>" +
-      "<div class=\"footer-col\"><h4>Legal</h4><ul>" +
-      '<li><a href="/privacy-policy.html">Privacy Policy</a></li>' +
-      '<li><a href="/terms-of-service.html">Terms of Service</a></li>' +
-      '<li><a href="/cookie-policy.html">Cookie Policy</a></li>' +
+      "<div class=\"footer-col\"><h4 data-site-ui=\"footerTypes\">Types</h4><ul>" + typesCol + "</ul></div>" +
+      "<div class=\"footer-col\"><h4 data-site-ui=\"footerLegal\">Legal</h4><ul>" +
+      '<li><a href="/privacy-policy.html" data-site-ui="privacyPolicy">Privacy Policy</a></li>' +
+      '<li><a href="/terms-of-service.html" data-site-ui="termsOfService">Terms of Service</a></li>' +
+      '<li><a href="/cookie-policy.html" data-site-ui="cookiePolicy">Cookie Policy</a></li>' +
       "</ul></div>" +
       "</div>" +
-      '<div class="footer-bottom"><span>&copy; ' + new Date().getFullYear() + " " + esc(data.site.name) + ". All rights reserved.</span>" +
-      '<span>Downloads are linked to our GitHub releases &mdash; we never host files directly.</span></div>' +
+      '<div class="footer-bottom"><span>&copy; ' + new Date().getFullYear() + " " + esc(data.site.name) + ' <span data-site-ui="rightsReserved">All rights reserved.</span></span>' +
+      '<span data-site-ui-html="downloadsNote">Downloads are linked to our GitHub releases &mdash; we never host files directly.</span></div>' +
       "</div></footer>"
     );
   }
