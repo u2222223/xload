@@ -11,7 +11,7 @@
     "contactEmail": "contact@xload.net",
     "phone": "",
     "address": "",
-    "lastUpdated": "2026-09-17"
+    "lastUpdated": "2026-09-18"
   },
   "enabledTypes": [
     "script"
@@ -665,6 +665,36 @@
       "license": "MIT",
       "featured": false,
       "status": "beta"
+    },
+    {
+      "id": "xload-2fd44db0",
+      "type": "script",
+      "title": "123pan Download Limit Unlock",
+      "short": "Download large files from 123pan drive and share pages without the size limit.",
+      "description": "123pan restricts free downloads to smaller files and forces extra steps for larger ones. This script unlocks the 123pan download limit so files over 1 GB can be downloaded from your drive and share pages. It uses the official browser download flow, so the browser's own download manager keeps working. Open a file list, start a download from the userscript panel, and check the real URL or server error in the panel.",
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-2fd44db0/xload-2fd44db0.html",
+      "installUrl": "/scripts/userscripts/xload-2fd44db0/xload-2fd44db0.user.js",
+      "files": [
+        "panel.html",
+        "xload-2fd44db0.user.js"
+      ],
+      "tags": [
+        "123pan",
+        "download unlock",
+        "large file download",
+        "share page download"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
     }
   ]
 }
