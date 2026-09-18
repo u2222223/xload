@@ -415,14 +415,15 @@
       var list = storeAll.filter(function (it) {
         if (t !== "all" && it.type !== t) return false;
         if (k) {
-          var hay = (it.title + " " + (it.description || "") + " " + (it.tags || []).join(" ") + " " + (it.categories || []).join(" ")).toLowerCase();
+          var loc = (it.i18n && it.i18n[activeSiteLocale]) || null;
+          var hay = (it.title + " " + (it.description || "") + " " + (loc && loc.title || "") + " " + (loc && loc.short || "") + " " + (it.tags || []).join(" ") + " " + (it.categories || []).join(" ")).toLowerCase();
           if (hay.indexOf(k) < 0) return false;
         }
         return true;
       });
 
       if (s === "newest") list.sort(function (a, b) { return (b.lastUpdated || "").localeCompare(a.lastUpdated || ""); });
-      else if (s === "name") list.sort(function (a, b) { return a.title.localeCompare(b.title); });
+      else if (s === "name") list.sort(function (a, b) { return cardLocaleText(a, "title").localeCompare(cardLocaleText(b, "title")); });
       else list.sort(function (a, b) { return (Number(b.downloads) || 0) - (Number(a.downloads) || 0); });
 
       // 清理旧空态提示
