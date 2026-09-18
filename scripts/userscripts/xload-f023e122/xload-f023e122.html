@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube CPU Tamer – Reduce CPU Usage and Battery Drain — xload</title>
+  <meta name="description" content="YouTube pages keep running background timers that waste CPU and battery even when nothing is visible, so long sessions can spin fans and drain laptops. Thi">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-f023e122/xload-f023e122.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"></div>
+  <section class="release-language" data-release-i18n-controls>
+    <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
+  </section>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/">Home</a> &rsaquo; <span data-release-i18n="title">YouTube CPU Tamer – Reduce CPU Usage and Battery Drain</span></nav>
+
+      <div class="detail-grid">
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <div>
+          <div class="detail-hero">
+            <!-- Swap the SVG below for your tool's icon if you have one -->
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1 data-release-i18n="title">YouTube CPU Tamer – Reduce CPU Usage and Battery Drain</h1>
+              <p class="lead" data-release-i18n="short">Reduces YouTube&#x27;s CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser&#x27;s rendering cycle.</p>
+            </div>
+          </div>
+
+          <p><strong data-release-ui="tags">Tags</strong>: <span data-release-i18n-tags>youtube · cpu usage · performance · battery saver · userscript</span></p>
+          <div class="prose">
+            <h2 data-release-ui="overview">Overview</h2>
+            <p data-release-i18n="desc">YouTube pages keep running background timers that waste CPU and battery even when nothing is visible, so long sessions can spin fans and drain laptops. This script reduces YouTube CPU usage by rescheduling setTimeout and setInterval calls to align with the browser’s rendering frame, cutting unnecessary task execution. Install it as a userscript for Tampermonkey, Violentmonkey, or FireMonkey, then just open YouTube; no settings are needed. It works on watch, home, embedded, and YouTube Music pages in browsers that support Graphics Acceleration, while prioritizing video-related work to keep playback stable.</p>
+
+            <h2 data-release-ui="install">How to install &amp; use</h2>
+            <ol>
+              <li data-release-ui="installManager">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-release-ui="installScript">Click the "Download / install" button and confirm in the manager.</li>
+              <li data-release-ui="openTarget">Open the target site and use the script as documented below.</li>
+            </ol>
+
+            <h2 data-release-ui="configuration">Configuration</h2>
+            <p data-release-i18n="config">No configuration is required: the timer optimization activates automatically on matching YouTube pages when the browser supports Graphics Acceleration. The panel shows the current page scope and throttle state, and lets you turn the module on or off or adjust throttle strength (low, medium, high). All settings are stored locally by the userscript manager.</p>
+            <pre><code data-release-i18n="usage">1. Install the script with Tampermonkey, Violentmonkey, or FireMonkey on a desktop browser that has Graphics Acceleration enabled. 2. Open any YouTube page, such as a watch page, home, embedded video, or YouTube Music. 3. Open the panel from the floating button to confirm the timer optimization is active. 4. Adjust throttle strength or disable the module from the panel if you notice any page issue.</code></pre>
+
+            <h2 data-release-ui="privacy">Privacy &amp; permissions</h2>
+            <p data-release-i18n="privacy">The script runs entirely inside YouTube pages and does not read or transmit personal data. It only observes page timers and rendering activity needed for scheduling, so nothing leaves the browser. It does not access account information, and the panel and settings are stored only in the local userscript manager. The only external network activity is the update check performed by your userscript manager itself.</p>
+
+          </div>
+        </div>
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="/scripts/userscripts/xload-f023e122/xload-f023e122.user.js" target="_blank" rel="noopener" data-internal-download>
+              <span data-release-ui="download">Download / install</span>
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-release-ui="details">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-release-ui="type">Type</span><span class="v">Userscript</span></div>
+              <div class="row"><span class="k" data-release-ui="updated">Last updated</span><span class="v">2026-09-18</span></div>
+              <div class="row"><span class="k" data-release-ui="downloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+<script type="application/json" id="release-i18n-data">{"release":{"version":1,"defaultLocale":"en","locales":{"en":{"title":"YouTube CPU Tamer – Reduce CPU Usage and Battery Drain","short":"Reduces YouTube's CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser's rendering cycle.","desc":"YouTube pages keep running background timers that waste CPU and battery even when nothing is visible, so long sessions can spin fans and drain laptops. This script reduces YouTube CPU usage by rescheduling setTimeout and setInterval calls to align with the browser’s rendering frame, cutting unnecessary task execution. Install it as a userscript for Tampermonkey, Violentmonkey, or FireMonkey, then just open YouTube; no settings are needed. It works on watch, home, embedded, and YouTube Music pages in browsers that support Graphics Acceleration, while prioritizing video-related work to keep playback stable.","tags":["youtube","cpu usage","performance","battery saver","userscript"],"config":"No configuration is required: the timer optimization activates automatically on matching YouTube pages when the browser supports Graphics Acceleration. The panel shows the current page scope and throttle state, and lets you turn the module on or off or adjust throttle strength (low, medium, high). All settings are stored locally by the userscript manager.","usage":"1. Install the script with Tampermonkey, Violentmonkey, or FireMonkey on a desktop browser that has Graphics Acceleration enabled. 2. Open any YouTube page, such as a watch page, home, embedded video, or YouTube Music. 3. Open the panel from the floating button to confirm the timer optimization is active. 4. Adjust throttle strength or disable the module from the panel if you notice any page issue.","privacy":"The script runs entirely inside YouTube pages and does not read or transmit personal data. It only observes page timers and rendering activity needed for scheduling, so nothing leaves the browser. It does not access account information, and the panel and settings are stored only in the local userscript manager. The only external network activity is the update check performed by your userscript manager itself."},"zh-CN":{"title":"YouTube CPU Tamer：降低 YouTube CPU 占用与耗电","short":"通过把定时器与浏览器渲染帧对齐，减少 YouTube 页面后台任务执行，从而降低 CPU 占用与电池消耗。","desc":"YouTube 页面即使没有可见内容，也会运行大量后台定时器，持续消耗 CPU 与电量，造成 YouTube 耗电与发热。本脚本会把 setTimeout 与 setInterval 的执行调度与浏览器渲染帧对齐，减少不必要的任务执行，从而降低 CPU 占用。安装为 Tampermonkey、Violentmonkey 或 FireMonkey 用户脚本后，直接打开 YouTube 即可生效，无需额外设置。适用于观看页、首页、嵌入式视频和 YouTube Music 页面，要求浏览器开启图形加速。","tags":["youtube","cpu 占用","性能优化","省电","油猴脚本"],"config":"安装后无需配置：在浏览器支持图形加速时，脚本会在匹配的 YouTube 页面自动启用定时器优化。面板显示当前页面作用域与节流状态，可单独开关本模块或调整节流强度（低、中、高）。所有设置仅保存在本地用户脚本管理器中。","usage":"1. 在支持图形加速的桌面浏览器中用 Tampermonkey、Violentmonkey 或 FireMonkey 安装本脚本。2. 打开任意 YouTube 页面（观看页、首页、嵌入式视频或 YouTube Music）。3. 从悬浮按钮打开面板，确认定时器优化已生效。4. 若发现页面异常，可在面板中调整节流强度或关闭本模块。","privacy":"脚本只在 YouTube 页面内部运行，不会读取或上传个人数据，也不访问账号信息。它仅观察页面定时器与渲染活动以便调度，数据不会离开浏览器。悬浮面板与设置仅保存在本地用户脚本管理器中。唯一的外部网络活动是用户脚本管理器自带的更新检查。"},"zh-TW":{"title":"YouTube CPU Tamer：降低 YouTube CPU 占用與耗電","short":"透過將計時器與瀏覽器渲染幀對齊，減少 YouTube 頁面背景任務執行，進而降低 CPU 占用與電池消耗。","desc":"YouTube 頁面即使沒有可見內容，也會執行大量背景計時器，持續消耗 CPU 與電力，造成 YouTube 耗電與發熱。本腳本會將 setTimeout 與 setInterval 的執行排程對齊瀏覽器渲染幀，減少不必要的任務執行，以降低 CPU 占用。安裝為 Tampermonkey、Violentmonkey 或 FireMonkey 使用者腳本後，直接開啟 YouTube 即可生效，不需額外設定。適用於觀看頁、首頁、嵌入式影片與 YouTube Music 頁面，且瀏覽器需開啟圖形加速。","tags":["youtube","cpu 占用","效能最佳化","省電","使用者腳本"],"config":"安裝後不需設定：在瀏覽器支援圖形加速時，腳本會在符合的 YouTube 頁面自動啟用計時器最佳化。面板顯示目前作用頁面與節流狀態，可個別開關本模組或調整節流強度（低、中、高）。所有設定僅保存在本機使用者腳本管理器中。","usage":"1. 在支援圖形加速的桌面瀏覽器，用 Tampermonkey、Violentmonkey 或 FireMonkey 安裝本腳本。2. 開啟任意 YouTube 頁面（觀看頁、首頁、嵌入式影片或 YouTube Music）。3. 從浮動按鈕開啟面板，確認計時器最佳化已生效。4. 若發現頁面異常，可在面板中調整節流強度或關閉本模組。","privacy":"腳本只在 YouTube 頁面內部執行，不會讀取或上傳個人資料，也不會存取帳號資訊。它僅觀察頁面計時器與渲染活動以便排程，資料不會離開瀏覽器。浮動面板與設定僅保存在本機使用者腳本管理器中。唯一的外部網路活動是使用者腳本管理器自帶的更新檢查。"}}},"ui":{"en":{"language":"Language","auto":"Auto (browser)","tags":"Tags","overview":"Overview","install":"How to install & use","configuration":"Configuration","privacy":"Privacy & permissions","installManager":"Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.","installScript":"Click the “Download / install” button and confirm in the manager.","openTarget":"Open the target site and use the script as documented below.","download":"Download / install","details":"Details","type":"Type","updated":"Last updated","downloads":"Downloads"},"zh-CN":{"language":"语言","auto":"自动（浏览器）","tags":"标签","overview":"概览","install":"安装与使用","configuration":"配置","privacy":"隐私与权限","installManager":"请先为浏览器安装 Tampermonkey 或 Violentmonkey 等用户脚本管理器。","installScript":"点击“下载 / 安装”按钮，并在脚本管理器中确认。","openTarget":"打开目标网站，按下方说明使用脚本。","download":"下载 / 安装","details":"详情","type":"类型","updated":"最近更新","downloads":"下载量"},"zh-TW":{"language":"語言","auto":"自動（瀏覽器）","tags":"標籤","overview":"概覽","install":"安裝與使用","configuration":"設定","privacy":"隱私與權限","installManager":"請先為瀏覽器安裝 Tampermonkey 或 Violentmonkey 等使用者腳本管理器。","installScript":"點擊「下載 / 安裝」按鈕，並在腳本管理器中確認。","openTarget":"開啟目標網站，依下方說明使用腳本。","download":"下載 / 安裝","details":"詳細資料","type":"類型","updated":"最近更新","downloads":"下載量"}}}</script><script>(function(){var p=JSON.parse(document.getElementById('release-i18n-data').textContent),d=p.release,s=document.getElementById('release-locale'),k='xload-release-locale';function locale(v){if(v!=='auto')return v;var a=[];try{a=navigator.languages||[]}catch(e){}if(!a.length)a=[navigator.language||''];for(var i=0;i<a.length;i++){var n=String(a[i]).replace(/_/g,'-').toLowerCase();if(n.indexOf('zh')===0)return /(?:hant|tw|hk|mo)/.test(n)?'zh-TW':'zh-CN'}return'en'}function read(){try{return localStorage.getItem(k)||'auto'}catch(e){return'auto'}}function save(v){try{localStorage.setItem(k,v)}catch(e){}}function apply(v){var l=locale(v),c=d.locales[l]||d.locales.en,u=p.ui[l]||p.ui.en,m=document.querySelector('meta[name="description"]');document.documentElement.lang=l;document.querySelectorAll('[data-release-i18n]').forEach(function(el){el.textContent=c[el.getAttribute('data-release-i18n')]});document.querySelectorAll('[data-release-ui]').forEach(function(el){el.textContent=u[el.getAttribute('data-release-ui')]||p.ui.en[el.getAttribute('data-release-ui')]});document.querySelector('[data-release-i18n-tags]').textContent=c.tags.join(' · ');if(m)m.content=c.desc;document.title=c.title+' — xload'}var saved=read();s.value=['auto','en','zh-CN','zh-TW'].indexOf(saved)>=0?saved:'auto';s.addEventListener('change',function(){save(s.value);apply(s.value)});apply(s.value)})();</script>
+</body>
+</html>

@@ -58,6 +58,7 @@
       "title": "Telegram网页版媒体下载器",
       "short": "一键下载Telegram网页版图片视频语音",
       "description": "在Telegram网页版（webk/webz）一键下载图片、GIF动图、视频和语音消息。支持从限制下载的私密频道/群组中下载媒体文件，支持批量选择下载，带下载进度提示。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-78d1cd2c/xload-78d1cd2c.html",
       "installUrl": "/scripts/userscripts/xload-78d1cd2c/xload-78d1cd2c.user.js",
@@ -89,6 +90,7 @@
       "title": "抖音播放器增强",
       "short": "画质记忆、禁止自动播放、自定义全屏与背景色",
       "description": "增强抖音网页版播放器体验，支持画质自动记忆、禁止自动播放、双击/单击全屏可配置、视频区背景自定义、移动端进度条拖拽优化。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html",
       "installUrl": "/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.user.js",
@@ -120,6 +122,7 @@
       "title": "抖音界面沉浸优化",
       "short": "沉浸模式+手机模式+自定义主题，专注视频内容",
       "description": "隐藏顶部导航、侧边栏等冗余元素打造沉浸浏览，支持手机模式模拟移动端布局，视频区/评论区/侧边栏背景色自由定制，支持暗色亮色主题切换。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.html",
       "installUrl": "/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.user.js",
@@ -151,6 +154,7 @@
       "title": "抖音互动内容屏蔽",
       "short": "弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单",
       "description": "统一管理抖音直播弹幕、评论区、礼物特效的屏蔽规则，支持关键词过滤、用户黑名单，被屏蔽内容可选折叠或完全隐藏，规则跨场景复用。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.html",
       "installUrl": "/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.user.js",
@@ -182,6 +186,7 @@
       "title": "全局字体渲染增强",
       "short": "无需 MacType，享受细腻网页字体阅读体验",
       "description": "通过智能 CSS 注入实现全局字体重写，支持中英文分字体设置、抗锯齿平滑、描边阴影、动态缩放等高级渲染效果。内置黑白名单过滤与站点个性化配置，兼容主流浏览器，让网页文字在任何屏幕上都清晰美观。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html",
       "installUrl": "/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.user.js",
@@ -214,6 +219,7 @@
       "title": "学术论文免费下载工具",
       "short": "多平台学术论文一键免费下载",
       "description": "支持知网、万方、维普、皮书、中华医学会、博看期刊等多大学术数据库，在论文详情页一键获取免费下载链接，无需登录付费账号。聚合多站点资源解析通道，智能切换可用接口，提升下载成功率。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.html",
       "installUrl": "/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.user.js",
@@ -246,6 +252,7 @@
       "title": "HTML5视频播放增强",
       "short": "全能视频播放增强：倍速/截图/画中画/全屏",
       "description": "一款通用的 HTML5 视频播放增强工具，支持倍速调节、视频截图、画中画、网页全屏、快进快退、音量控制等丰富功能。内置快捷键系统，所有按键可自定义。兼容 B站、YouTube、爱奇艺、腾讯视频等主流视频站点，通用能力对所有 H5 视频页面生效。支持倍速记忆、长按加速、配置导入导出。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-d5aaecca/xload-d5aaecca.html",
       "installUrl": "/scripts/userscripts/xload-d5aaecca/xload-d5aaecca.user.js",
@@ -278,6 +285,7 @@
       "title": "百度网盘视频播放增强",
       "short": "百度网盘视频播放增强，倍速字幕画质全免费",
       "description": "百度网盘视频播放增强工具，完全免费无广告。支持倍速播放（0.25x~4x）、多档画质切换、内嵌/本地字幕加载与样式自定义、音量增益增强、画面比例与色彩调节、播放列表与进度记忆。替换原生播放器，带来极致播放体验。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-578db12d/xload-578db12d.html",
       "installUrl": "/scripts/userscripts/xload-578db12d/xload-578db12d.user.js",
@@ -310,6 +318,7 @@
       "title": "通用无限滚动翻页",
       "short": "自动加载下一页，无缝瀑布流浏览",
       "description": "自动检测页面下一页链接，滚动到底部时无缝加载并追加内容，像瀑布流一样连续浏览。支持论坛、社交、资讯、漫画、小说、搜索引擎等各类网站，内置常用站点规则，可自定义添加新站点。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-b79c77d9/xload-b79c77d9.html",
       "installUrl": "/scripts/userscripts/xload-b79c77d9/xload-b79c77d9.user.js",
@@ -341,6 +350,16 @@
       "title": "Zhihu Content Filter",
       "short": "Filter Zhihu cards by type, phrases, users, votes, age, and labeled content.",
       "description": "This filter evaluates loaded Zhihu answers, articles, videos, and other labeled cards with rules you control. It supports phrases containing spaces, user rules, vote thresholds, time windows, and switches for Zhihu Direct or Yanxuan content. The xload panel shows editable rules, match reasons, and reversible page statistics without reloading the page.",
+      "i18n": {
+        "zh-CN": {
+          "title": "知乎内容过滤器",
+          "short": "按类别、短语、用户、赞同数、时间和内容标记过滤知乎卡片。"
+        },
+        "zh-TW": {
+          "title": "知乎內容過濾器",
+          "short": "依類別、片語、使用者、贊同數、時間和內容標記過濾知乎卡片。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-afe511cf/xload-afe511cf.html",
       "installUrl": "/scripts/userscripts/xload-afe511cf/xload-afe511cf.user.js",
@@ -372,6 +391,16 @@
       "title": "Zhihu Dark Reading Helper",
       "short": "Apply a configurable dark reading theme to Zhihu pages and dynamic surfaces.",
       "description": "This helper applies a reversible dark reading theme to major Zhihu page surfaces. It supports system-following, light, and dark modes, with optional dimming for bright images and tuned code-block contrast. Use the xload panel to select the appearance, save it, or restore the default Zhihu presentation.",
+      "i18n": {
+        "zh-CN": {
+          "title": "知乎暗色阅读助手",
+          "short": "为知乎页面和动态界面应用可配置的暗色阅读主题。"
+        },
+        "zh-TW": {
+          "title": "知乎深色閱讀助手",
+          "short": "為知乎頁面和動態介面套用可設定的深色閱讀主題。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.html",
       "installUrl": "/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.user.js",
@@ -402,6 +431,16 @@
       "title": "YouTube Ad Controls",
       "short": "Manage targeted ad handling on YouTube with an immediate off switch.",
       "description": "Open the floating button to configure page-ad hiding and player-ad handling in a separate panel. Enable each behavior separately and inspect recent actions. Turn handling off and restore elements hidden by the script when needed.",
+      "i18n": {
+        "zh-CN": {
+          "title": "YouTube 广告控制",
+          "short": "管理 YouTube 的定向广告处理，支持立即关闭。"
+        },
+        "zh-TW": {
+          "title": "YouTube 廣告控制",
+          "short": "管理 YouTube 的定向廣告處理，支援立即關閉。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.html",
       "installUrl": "/scripts/userscripts/xload-2c12e291/xload-2c12e291.user.js",
@@ -431,6 +470,16 @@
       "title": "Discord bulk delete messages with preview and stop controls",
       "short": "Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.",
       "description": "Clean up message history in Discord channels or delete Discord DMs from the browser. Preview the selected scope, confirm deletion, and follow progress with adjustable delays and a stop control. Open the independent panel from the floating button or userscript menu. A signed-in account with the required permissions is necessary, deletion cannot be undone, and account automation may risk account termination. Searches and deletions go to Discord, while the panel receives scope details and progress without message bodies or credentials.",
+      "i18n": {
+        "zh-CN": {
+          "title": "Discord 批量删除消息：预览范围与可停止清理",
+          "short": "预览并删除 Discord 频道或私信中的消息，支持调整删除间隔、查看进度计数和随时停止后续请求。"
+        },
+        "zh-TW": {
+          "title": "Discord 批次刪除訊息：預覽範圍與可停止清理",
+          "short": "預覽並刪除 Discord 頻道或私訊中的訊息，支援調整刪除間隔、查看進度計數和隨時停止後續請求。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-d401bffa/xload-d401bffa.html",
       "installUrl": "/scripts/userscripts/xload-d401bffa/xload-d401bffa.user.js",
@@ -460,6 +509,16 @@
       "title": "YouTube SponsorBlock Controls",
       "short": "Control SponsorBlock skipping and replay skipped segments on YouTube.",
       "description": "Open the floating button to inspect SponsorBlock segments in a separate panel. Choose automatic, manual, or disabled skipping and select segment categories. Replay a skipped segment without immediately skipping it again.",
+      "i18n": {
+        "zh-CN": {
+          "title": "YouTube SponsorBlock 片段控制",
+          "short": "控制 YouTube 的 SponsorBlock 跳过行为，并重看片段。"
+        },
+        "zh-TW": {
+          "title": "YouTube SponsorBlock 片段控制",
+          "short": "控制 YouTube 的 SponsorBlock 跳過行為，並重看片段。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.html",
       "installUrl": "/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.user.js",
@@ -489,6 +548,7 @@
       "title": "通用小说下载器",
       "short": "一键下载全网小说，支持百站解析",
       "description": "一款可扩展的通用型小说下载器，支持起点、晋江、笔趣阁等上百家小说站点。在小说目录页一键下载，自动生成 TXT、EPUB 与 HTML ZIP 文件，支持章节筛选、自定义保存格式、并发下载等高级功能。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html",
       "installUrl": "/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.user.js",
@@ -521,6 +581,7 @@
       "title": "微软积分商城自动签到",
       "short": "自动完成微软积分每日任务",
       "description": "自动完成 Microsoft Rewards 每日任务获取积分奖励，支持 PC 搜索、移动端搜索、每日活动、阅读文章等任务类型。后台定时运行，进度可视化，积分明细一目了然。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html",
       "installUrl": "/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.user.js",
@@ -552,6 +613,7 @@
       "title": "抖音视频流过滤",
       "short": "自定义过滤抖音视频流中的广告、直播和不感兴趣内容",
       "description": "支持按关键词、作者、视频类型（广告/直播）等多维度过滤抖音推荐流内容，过滤后自动加载更多保持浏览连续性，规则可导入导出。",
+      "i18n": {},
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html",
       "installUrl": "/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.user.js",
@@ -583,6 +645,16 @@
       "title": "X Long Post Expander — Read Available Full Text",
       "short": "X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.",
       "description": "Repeatedly expanding long posts can interrupt reading on X. The script can automatically expand long posts with supported text controls. Open the panel to enable automatic expansion or apply it to the current page once. It does not unlock unavailable text or bypass account access restrictions.",
+      "i18n": {
+        "zh-CN": {
+          "title": "X 长文展开：自动显示可用正文",
+          "short": "X 长文展开自动触发支持的正文展开入口，让你减少重复点击并阅读当前可访问的长帖子内容。"
+        },
+        "zh-TW": {
+          "title": "X 長文展開：自動顯示可用內文",
+          "short": "X 長文展開自動觸發支援的內文展開入口，讓你減少重複點擊並閱讀目前可存取的長貼文內容。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-0157d469/xload-0157d469.html",
       "installUrl": "/scripts/userscripts/xload-0157d469/xload-0157d469.user.js",
@@ -611,6 +683,16 @@
       "title": "Pixiv Artist UID, Profile Media, and Work Type Labels",
       "short": "Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira",
       "description": "Pixiv artist pages do not always keep IDs, profile media, and work types visible together. This script adds Pixiv copy artist ID controls, validated avatar and background links, and Pixiv single multi ugoira labels on loaded work cards. Open the panel on an artist or work page to inspect the detected context and toggle labels. It uses only profile and work information available to the current Pixiv session.",
+      "i18n": {
+        "zh-CN": {
+          "title": "Pixiv 画师 UID、资料图片与作品类型标记",
+          "short": "显示并复制 Pixiv 画师 ID，提供有效资料图片链接，并标记单图、多图或动图作品"
+        },
+        "zh-TW": {
+          "title": "Pixiv 繪師 UID、資料圖片與作品類型標記",
+          "short": "顯示並複製 Pixiv 繪師 ID，提供有效資料圖片連結，並標記單圖、多圖或動圖作品"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-01b8f240/xload-01b8f240.html",
       "installUrl": "/scripts/userscripts/xload-01b8f240/xload-01b8f240.user.js",
@@ -640,6 +722,16 @@
       "title": "Product price history tracker & browsing insights for shopping sites",
       "short": "Tracks product prices you view on supported stores and shows the price trend so you can decide when to buy.",
       "description": "Deciding whether a current price is a good deal is hard without knowing the history. This script records the product prices you view on supported store pages such as AliExpress, eBay, Amazon and Lazada, and shows the price trend for those products. Open the panel from the floating button to review your browsing history and the recorded price points for each product. Price history is built from pages you actually visit and is stored locally, so it only covers products you have viewed.",
+      "i18n": {
+        "zh-CN": {
+          "title": "商品价格历史追踪与浏览洞察：判断最佳购买时机",
+          "short": "记录你在支持的购物网站浏览过的商品价格，展示价格走势，帮你判断何时购买更划算。"
+        },
+        "zh-TW": {
+          "title": "商品價格歷史追蹤與瀏覽洞察：判斷最佳購買時機",
+          "short": "記錄你在支援的購物網站瀏覽過的商品價格，顯示價格走勢，幫你判斷何時購買更划算。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-1b4011f3/xload-1b4011f3.html",
       "installUrl": "/scripts/userscripts/xload-1b4011f3/xload-1b4011f3.user.js",
@@ -672,6 +764,16 @@
       "title": "123pan Download Limit Unlock",
       "short": "Download large files from 123pan drive and share pages without the size limit.",
       "description": "123pan restricts free downloads to smaller files and forces extra steps for larger ones. This script unlocks the 123pan download limit so files over 1 GB can be downloaded from your drive and share pages. It uses the official browser download flow, so the browser's own download manager keeps working. Open a file list, start a download from the userscript panel, and check the real URL or server error in the panel.",
+      "i18n": {
+        "zh-CN": {
+          "title": "123云盘下载限制突破",
+          "short": "突破123云盘1GB下载大小限制，在个人网盘和分享页直接下载大文件。"
+        },
+        "zh-TW": {
+          "title": "123雲盤下載限制突破",
+          "short": "突破123雲盤1GB下載大小限制，在個人網盤與分享頁直接下載大檔案。"
+        }
+      },
       "github": "https://github.com/u2222223/xload",
       "page": "/scripts/userscripts/xload-2fd44db0/xload-2fd44db0.html",
       "installUrl": "/scripts/userscripts/xload-2fd44db0/xload-2fd44db0.user.js",
@@ -684,6 +786,47 @@
         "download unlock",
         "large file download",
         "share page download"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "beta"
+    },
+    {
+      "id": "xload-f023e122",
+      "type": "script",
+      "title": "YouTube CPU Tamer – Reduce CPU Usage and Battery Drain",
+      "short": "Reduces YouTube's CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser's rendering cycle.",
+      "description": "YouTube pages keep running background timers that waste CPU and battery even when nothing is visible, so long sessions can spin fans and drain laptops. This script reduces YouTube CPU usage by rescheduling setTimeout and setInterval calls to align with the browser’s rendering frame, cutting unnecessary task execution. Install it as a userscript for Tampermonkey, Violentmonkey, or FireMonkey, then just open YouTube; no settings are needed. It works on watch, home, embedded, and YouTube Music pages in browsers that support Graphics Acceleration, while prioritizing video-related work to keep playback stable.",
+      "i18n": {
+        "zh-CN": {
+          "title": "YouTube CPU Tamer：降低 YouTube CPU 占用与耗电",
+          "short": "通过把定时器与浏览器渲染帧对齐，减少 YouTube 页面后台任务执行，从而降低 CPU 占用与电池消耗。"
+        },
+        "zh-TW": {
+          "title": "YouTube CPU Tamer：降低 YouTube CPU 占用與耗電",
+          "short": "透過將計時器與瀏覽器渲染幀對齊，減少 YouTube 頁面背景任務執行，進而降低 CPU 占用與電池消耗。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-f023e122/xload-f023e122.html",
+      "installUrl": "/scripts/userscripts/xload-f023e122/xload-f023e122.user.js",
+      "files": [
+        "panel.html",
+        "xload-f023e122.user.js"
+      ],
+      "tags": [
+        "youtube",
+        "cpu usage",
+        "performance",
+        "battery saver",
+        "userscript"
       ],
       "categories": [
         "Userscripts"

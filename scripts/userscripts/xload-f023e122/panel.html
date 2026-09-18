@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">YouTube CPU Tamer – Reduce CPU Usage and Battery Drain - Panel</title>
+  <meta name="description" content="Reduces YouTube&#39;s CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser&#39;s rendering cycle.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">YouTube CPU Tamer – Reduce CPU Usage and Battery Drain</h1>
+        <p class="panel-subtitle" data-i18n="short">Reduces YouTube&#39;s CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser&#39;s rendering cycle.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ====================
+             组件目录：/_preview/fab-panel-preview.html（仓库路径 _preview/fab-panel-preview.html）。
+             样式统一 D0 极简黑白（静态）：黑 header、白卡、黑白按钮/开关/滑条，无动画/过渡。
+             只能组合共享 panel.css 已定义的 pui-*/pb-* 组件；不得复制组件 CSS、另建主题，
+             或重定义颜色、圆角、阴影、动效及基础控件外观。业务 class 仅补组件无法表达的布局。
+             内联 <style> 仅黑白（#111/#fff/#d4d4d4/#e5e5e5/#ececec/#f4f4f4/#fafafa，
+             次要文字 #555/#888/#a3a3a3），禁止任何彩色系（#2563eb 等）。
+             把设置下发给油猴的主按钮文案一律用「保存配置」（toast「已保存配置」）。
+        ==================== -->
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="cpuTamer.title">Timer throttling</h2>
+              <p class="pui-card-desc" data-i18n="cpuTamer.desc">Reduces YouTube CPU usage by aligning short, high-frequency page timers with the browser rendering frame.</p>
+            </div>
+          </div>
+
+          <div class="pb-sw">
+            <span>
+              <strong data-i18n="cpuTamer.toggle.general">Enable timer throttling</strong>
+              <small data-i18n="cpuTamer.toggle.generalDesc">Turn the module on or off. Disabling restores YouTube's original setTimeout and setInterval.</small>
+            </span>
+            <span class="pui-switch">
+              <input type="checkbox" id="cpu-tamer-enabled">
+              <i></i>
+            </span>
+          </div>
+
+          <div class="pui-divider"></div>
+
+          <div class="pb-row">
+            <span class="pb-lbl" data-i18n="cpuTamer.throttleLevel">Throttle strength</span>
+            <div class="pb-rate" id="cpu-tamer-level">
+              <button type="button" data-level="low" data-i18n="cpuTamer.level.low">Low</button>
+              <button type="button" data-level="medium" data-i18n="cpuTamer.level.medium">Medium</button>
+              <button type="button" data-level="high" data-i18n="cpuTamer.level.high">High</button>
+            </div>
+            <span class="pui-help" data-i18n="cpuTamer.throttleDesc">Lower is closer to native behavior; higher skips more rendering frames to save CPU.</span>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div><h2 class="pui-card-title" data-i18n="cpuTamer.status">Throttle status</h2></div>
+          </div>
+          <div class="pb-status" id="cpu-tamer-status" data-i18n="status.unconnected">Not connected</div>
+          <ul class="pui-list">
+            <li>
+              <span data-i18n="cpuTamer.scope">Page scope</span>
+              <strong id="cpu-tamer-scope">—</strong>
+            </li>
+            <li>
+              <span data-i18n="status.label">Connection</span>
+              <strong id="cpu-tamer-connection">—</strong>
+            </li>
+          </ul>
+          <p class="pb-hint" id="cpu-tamer-noraf" data-i18n="cpuTamer.error.noRaf" hidden>Graphics acceleration is unavailable, so timer throttling is disabled. Enable hardware acceleration in your browser settings.</p>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div><h2 class="pui-card-title" data-i18n="cpuTamer.logs">Runtime log</h2></div>
+            <span class="pui-badge" id="cpu-tamer-logcount">0</span>
+          </div>
+          <pre class="pui-log" id="cpu-tamer-logbox"></pre>
+          <div class="pb-actions">
+            <button type="button" class="pui-btn pui-btn-default" id="cpu-tamer-logcopy" data-i18n="cpuTamer.logs.copy">Copy log</button>
+          </div>
+        </section>
+
+        <div class="pb-actions">
+          <button type="button" class="pui-btn pui-btn-danger" id="cpu-tamer-restore" data-i18n="cpuTamer.action.restore">Restore native timers</button>
+          <button type="button" class="pui-btn pui-btn-primary" id="cpu-tamer-save" data-i18n="control.save">Save settings</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "YouTube CPU Tamer – Reduce CPU Usage and Battery Drain",
+    "short": "Reduces YouTube's CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser's rendering cycle.",
+    "panel.documentTitle": "YouTube CPU Tamer – Reduce CPU Usage and Battery Drain - Panel",
+    "fab.label": "YouTube CPU Tamer – Reduce CPU Usage and Battery Drain",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "cpuTamer.title": "Timer throttling",
+    "cpuTamer.desc": "Reduces YouTube CPU usage by aligning short, high-frequency page timers with the browser rendering frame.",
+    "cpuTamer.toggle.general": "Enable timer throttling",
+    "cpuTamer.toggle.generalDesc": "Turn the module on or off. Disabling restores YouTube's original setTimeout and setInterval.",
+    "cpuTamer.throttleLevel": "Throttle strength",
+    "cpuTamer.throttleDesc": "Lower is closer to native behavior; higher skips more rendering frames to save CPU.",
+    "cpuTamer.level.low": "Low",
+    "cpuTamer.level.medium": "Medium",
+    "cpuTamer.level.high": "High",
+    "cpuTamer.scope": "Page scope",
+    "cpuTamer.scope.watch": "Watch page",
+    "cpuTamer.scope.home": "Home / browse",
+    "cpuTamer.scope.embed": "Embedded player",
+    "cpuTamer.scope.music": "YouTube Music",
+    "cpuTamer.scope.chat": "Live chat",
+    "cpuTamer.scope.other": "Other",
+    "cpuTamer.status": "Throttle status",
+    "cpuTamer.status.active": "Active",
+    "cpuTamer.status.inactive": "Inactive",
+    "cpuTamer.status.unavailable": "Unavailable",
+    "cpuTamer.error.noRaf": "Graphics acceleration is unavailable, so timer throttling is disabled. Enable hardware acceleration in your browser settings.",
+    "cpuTamer.action.restore": "Restore native timers",
+    "cpuTamer.action.restored": "Native timers restored",
+    "cpuTamer.logs": "Runtime log",
+    "cpuTamer.logs.copy": "Copy log",
+    "cpuTamer.logs.copied": "Log copied",
+    "status.label": "Connection",
+    "status.connected": "Connected",
+    "status.unconnected": "Not connected"
+  },
+  "zh-CN": {
+    "title": "YouTube CPU Tamer：降低 YouTube CPU 占用与耗电",
+    "short": "通过把定时器与浏览器渲染帧对齐，减少 YouTube 页面后台任务执行，从而降低 CPU 占用与电池消耗。",
+    "panel.documentTitle": "YouTube CPU Tamer：降低 YouTube CPU 占用与耗电 - 功能面板",
+    "fab.label": "YouTube CPU Tamer：降低 YouTube CPU 占用与耗电",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "cpuTamer.title": "定时器节流",
+    "cpuTamer.desc": "把短延迟、高频的页面定时器对齐到浏览器渲染帧，降低 YouTube CPU 占用。",
+    "cpuTamer.toggle.general": "启用定时器节流",
+    "cpuTamer.toggle.generalDesc": "开或关本模块。关闭后恢复 YouTube 原生的 setTimeout 与 setInterval。",
+    "cpuTamer.throttleLevel": "节流强度",
+    "cpuTamer.throttleDesc": "越低越接近原生行为；越高跳过越多渲染帧以节省 CPU。",
+    "cpuTamer.level.low": "低",
+    "cpuTamer.level.medium": "中",
+    "cpuTamer.level.high": "高",
+    "cpuTamer.scope": "页面作用域",
+    "cpuTamer.scope.watch": "观看页",
+    "cpuTamer.scope.home": "首页 / 浏览",
+    "cpuTamer.scope.embed": "嵌入式播放器",
+    "cpuTamer.scope.music": "YouTube Music",
+    "cpuTamer.scope.chat": "直播聊天",
+    "cpuTamer.scope.other": "其他",
+    "cpuTamer.status": "节流状态",
+    "cpuTamer.status.active": "已启用",
+    "cpuTamer.status.inactive": "已关闭",
+    "cpuTamer.status.unavailable": "不可用",
+    "cpuTamer.error.noRaf": "图形加速不可用，因此定时器节流已禁用。请在浏览器设置中开启硬件加速。",
+    "cpuTamer.action.restore": "恢复原生定时器",
+    "cpuTamer.action.restored": "已恢复原生定时器",
+    "cpuTamer.logs": "运行日志",
+    "cpuTamer.logs.copy": "复制日志",
+    "cpuTamer.logs.copied": "日志已复制",
+    "status.label": "连接状态",
+    "status.connected": "已连接",
+    "status.unconnected": "未连接"
+  },
+  "zh-TW": {
+    "title": "YouTube CPU Tamer：降低 YouTube CPU 占用與耗電",
+    "short": "透過將計時器與瀏覽器渲染幀對齊，減少 YouTube 頁面背景任務執行，進而降低 CPU 占用與電池消耗。",
+    "panel.documentTitle": "YouTube CPU Tamer：降低 YouTube CPU 占用與耗電 - 功能面板",
+    "fab.label": "YouTube CPU Tamer：降低 YouTube CPU 占用與耗電",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "cpuTamer.title": "計時器節流",
+    "cpuTamer.desc": "把短延遲、高頻的頁面計時器對齊到瀏覽器渲染幀，降低 YouTube CPU 占用。",
+    "cpuTamer.toggle.general": "啟用計時器節流",
+    "cpuTamer.toggle.generalDesc": "開或關本模組。關閉後恢復 YouTube 原生的 setTimeout 與 setInterval。",
+    "cpuTamer.throttleLevel": "節流強度",
+    "cpuTamer.throttleDesc": "越低越接近原生行為；越高跳過越多渲染幀以節省 CPU。",
+    "cpuTamer.level.low": "低",
+    "cpuTamer.level.medium": "中",
+    "cpuTamer.level.high": "高",
+    "cpuTamer.scope": "頁面作用域",
+    "cpuTamer.scope.watch": "觀看頁",
+    "cpuTamer.scope.home": "首頁 / 瀏覽",
+    "cpuTamer.scope.embed": "嵌入式播放器",
+    "cpuTamer.scope.music": "YouTube Music",
+    "cpuTamer.scope.chat": "直播聊天",
+    "cpuTamer.scope.other": "其他",
+    "cpuTamer.status": "節流狀態",
+    "cpuTamer.status.active": "已啟用",
+    "cpuTamer.status.inactive": "已關閉",
+    "cpuTamer.status.unavailable": "不可用",
+    "cpuTamer.error.noRaf": "圖形加速不可用，因此計時器節流已停用。請在瀏覽器設定中開啟硬體加速。",
+    "cpuTamer.action.restore": "恢復原生計時器",
+    "cpuTamer.action.restored": "已恢復原生計時器",
+    "cpuTamer.logs": "執行紀錄",
+    "cpuTamer.logs.copy": "複製紀錄",
+    "cpuTamer.logs.copied": "紀錄已複製",
+    "status.label": "連線狀態",
+    "status.connected": "已連線",
+    "status.unconnected": "未連線"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-f023e122', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-f023e122:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-f023e122:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-f023e122');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      channel.request('command', { action: 'getState' }).then(function (state) {
+        if (state && state.localePreference) {
+          i18n.setLocale(state.localePreference);
+          languageSelect.value = state.localePreference;
+        }
+      }).catch(function () { /* panel preference remains usable independently */ });
+      // ==================== 功能逻辑：YouTube CPU Tamer ====================
+      var statusEl = document.getElementById('cpu-tamer-status');
+      var scopeEl = document.getElementById('cpu-tamer-scope');
+      var connEl = document.getElementById('cpu-tamer-connection');
+      var norafEl = document.getElementById('cpu-tamer-noraf');
+      var enabledEl = document.getElementById('cpu-tamer-enabled');
+      var levelEl = document.getElementById('cpu-tamer-level');
+      var saveBtn = document.getElementById('cpu-tamer-save');
+      var restoreBtn = document.getElementById('cpu-tamer-restore');
+      var logBox = document.getElementById('cpu-tamer-logbox');
+      var logCount = document.getElementById('cpu-tamer-logcount');
+      var logCopy = document.getElementById('cpu-tamer-logcopy');
+
+      var draftEnabled = true;
+      var draftLevel = 'medium';
+      var initialized = false;
+
+      function scopeKey(scope) {
+        return ['watch', 'home', 'embed', 'music', 'chat'].indexOf(scope) >= 0 ? scope : 'other';
+      }
+
+      function markLevel(level) {
+        var buttons = levelEl.querySelectorAll('button[data-level]');
+        for (var i = 0; i < buttons.length; i++) {
+          var b = buttons[i];
+          if (b.getAttribute('data-level') === level) b.classList.add('active');
+          else b.classList.remove('active');
+        }
+      }
+
+      function renderStatus(status) {
+        if (!status || !status.scope) return;
+        i18n.setText(connEl, 'status.connected');
+        i18n.setText(scopeEl, 'cpuTamer.scope.' + scopeKey(status.scope));
+        if (!status.rafAvailable || !status.gpuAvailable) {
+          i18n.setText(statusEl, 'cpuTamer.status.unavailable');
+          norafEl.hidden = false;
+        } else if (status.general) {
+          i18n.setText(statusEl, 'cpuTamer.status.active');
+          norafEl.hidden = true;
+        } else {
+          i18n.setText(statusEl, 'cpuTamer.status.inactive');
+          norafEl.hidden = true;
+        }
+        if (!initialized) {
+          initialized = true;
+          enabledEl.checked = !!status.general;
+          draftEnabled = !!status.general;
+          if (status.throttleLevel) {
+            draftLevel = status.throttleLevel;
+            markLevel(status.throttleLevel);
+          }
+        }
+      }
+
+      function renderLogs(logs) {
+        var list = logs || [];
+        var lines = [];
+        for (var i = 0; i < list.length; i++) {
+          var e = list[i] || {};
+          var dataStr = '';
+          try { if (e.data != null) dataStr = JSON.stringify(e.data); } catch (e2) { dataStr = String(e.data); }
+          lines.push('[' + (e.at || '') + '] ' + (e.tag || '') + ' ' + dataStr);
+        }
+        logBox.textContent = lines.join('\n');
+        logCount.textContent = String(list.length);
+      }
+
+      function refreshLogs() {
+        channel.request('command', { action: 'getLogs' }, 5000).then(function (resp) {
+          renderLogs((resp && resp.logs) || []);
+        }).catch(function () { renderLogs([]); });
+      }
+
+      function fallbackCopy(text) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        } catch (e) { /* ignore */ }
+      }
+
+      enabledEl.addEventListener('change', function () { draftEnabled = enabledEl.checked; });
+
+      levelEl.addEventListener('click', function (ev) {
+        var btn = ev.target && ev.target.closest ? ev.target.closest('button[data-level]') : null;
+        if (!btn) return;
+        draftLevel = btn.getAttribute('data-level');
+        markLevel(draftLevel);
+      });
+
+      saveBtn.addEventListener('click', function () {
+        Promise.all([
+          channel.request('command', { action: 'setModule', module: 'general', enabled: draftEnabled }, 8000),
+          channel.request('command', { action: 'setThrottleLevel', level: draftLevel }, 8000)
+        ]).then(function () {
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      restoreBtn.addEventListener('click', function () {
+        channel.request('command', { action: 'restore' }, 8000).then(function () {
+          draftEnabled = false;
+          enabledEl.checked = false;
+          PUI.toast(i18n.t('cpuTamer.action.restored'), 'success');
+        }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      logCopy.addEventListener('click', function () {
+        var text = logBox.textContent || '';
+        var done = function () { PUI.toast(i18n.t('cpuTamer.logs.copied'), 'success'); };
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+        } else { fallbackCopy(text); done(); }
+      });
+
+      channel.on('done', function (data) {
+        if (data && data.scope) renderStatus(data);
+      });
+      channel.on('error', function () {
+        PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+      });
+
+      channel.request('command', { action: 'getStatus' }, 5000).then(function (status) {
+        if (status && status.ok && status.scope) {
+          renderStatus(status);
+          refreshLogs();
+        } else {
+          i18n.setText(connEl, 'status.unconnected');
+          i18n.setText(statusEl, 'cpuTamer.status.unavailable');
+        }
+      }).catch(function () {
+        i18n.setText(connEl, 'status.unconnected');
+        i18n.setText(statusEl, 'cpuTamer.status.unavailable');
+        norafEl.hidden = false;
+      });
+    })();
+  </script>
+</body>
+</html>
