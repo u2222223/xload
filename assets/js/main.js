@@ -6,8 +6,9 @@
   var SITE_UI = {
     en: {
       home: "Home", about: "About", language: "Language", auto: "Auto (browser)",
-      homeTitle: "Home — xload",
-      homeDescription: "Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub.",
+      homeTitle: "Free Browser Userscripts Catalog — xload",
+      homeH1: "Free Browser Userscripts",
+      homeDescription: "Browse a growing catalog of free, open-source browser userscripts for Chrome, Firefox and Edge. Filter by site or feature, then install in one click.",
       homeIntro: "Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.",
       filterType: "Filter by type", allTypes: "All types", keywordFilter: "Keyword filter",
       keywordPlaceholder: "Filter results by keyword…", sortOrder: "Sort order",
@@ -38,8 +39,9 @@
     },
     "zh-CN": {
       home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
-      homeTitle: "首页 — xload",
-      homeDescription: "浏览和搜索 xload 收录的浏览器用户脚本，按关键词和类别筛选，并从 GitHub 直接安装。",
+      homeTitle: "免费浏览器用户脚本目录 — xload",
+      homeH1: "免费浏览器用户脚本",
+      homeDescription: "浏览不断更新的免费开源浏览器用户脚本目录，覆盖 Chrome、Firefox 与 Edge，可按站点或功能筛选，一键安装。",
       homeIntro: "浏览目录中的全部用户脚本。使用搜索、筛选和排序快速找到所需工具，我们也会持续添加新工具。",
       filterType: "按类型筛选", allTypes: "全部类型", keywordFilter: "关键词筛选",
       keywordPlaceholder: "按关键词筛选结果…", sortOrder: "排序方式",
@@ -70,8 +72,9 @@
     },
     "zh-TW": {
       home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
-      homeTitle: "首頁 — xload",
-      homeDescription: "瀏覽和搜尋 xload 收錄的瀏覽器使用者腳本，依關鍵字和類別篩選，並從 GitHub 直接安裝。",
+      homeTitle: "免費瀏覽器使用者腳本目錄 — xload",
+      homeH1: "免費瀏覽器使用者腳本",
+      homeDescription: "瀏覽持續更新的免費開源瀏覽器使用者腳本目錄，涵蓋 Chrome、Firefox 與 Edge，可依網站或功能篩選，一鍵安裝。",
       homeIntro: "瀏覽目錄中的全部使用者腳本。使用搜尋、篩選和排序快速找到所需工具，我們也會持續加入新工具。",
       filterType: "依類型篩選", allTypes: "全部類型", keywordFilter: "關鍵字篩選",
       keywordPlaceholder: "依關鍵字篩選結果…", sortOrder: "排序方式",

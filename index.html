@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-site-ui="homeTitle">Home — xload</title>
-  <meta name="description" content="Browse and search every browser userscript listed on xload. Filter by keyword and category, then install directly from GitHub." data-site-ui-attr="content:homeDescription">
+  <title data-site-ui="homeTitle">Free Browser Userscripts Catalog — xload</title>
+  <meta name="description" content="Browse a growing catalog of free, open-source browser userscripts for Chrome, Firefox and Edge. Filter by site or feature, then install in one click." data-site-ui-attr="content:homeDescription">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://xload.net/">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
@@ -26,16 +26,29 @@
   <!-- End Google AdSense -->
 
   <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+  <!--XLOAD:SEO:START-->
+  <meta property="og:site_name" content="xload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free Browser Userscripts Catalog — xload">
+  <meta property="og:description" content="Browse a growing catalog of free, open-source browser userscripts for Chrome, Firefox and Edge. Filter by site or feature, then install in one click.">
+  <meta property="og:url" content="https://xload.net/">
+  <meta property="og:image" content="https://xload.net/assets/img/xload_logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Browser Userscripts Catalog — xload">
+  <meta name="twitter:description" content="Browse a growing catalog of free, open-source browser userscripts for Chrome, Firefox and Edge. Filter by site or feature, then install in one click.">
+  <meta name="twitter:image" content="https://xload.net/assets/img/xload_logo.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://xload.net/#organization","name":"xload","url":"https://xload.net/","logo":"https://xload.net/assets/img/xload_logo.png","sameAs":["https://github.com/u2222223/xload"]},{"@type":"WebSite","@id":"https://xload.net/#website","url":"https://xload.net/","name":"xload","description":"Fast, free and safe downloads for browser userscripts","publisher":{"@id":"https://xload.net/#organization"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://xload.net/?q={search_term_string}"},"query-input":"required name=search_term_string"}}]}</script>
+  <!--XLOAD:SEO:END-->
 </head>
 <body data-nav="home">
 
-  <div id="chrome-header"></div>
+  <div id="chrome-header"><!--XLOAD:CHROME:HEADER:START--><header class="site-header"><div class="nav-wrap"><a class="logo" href="/"><img class="logo-img" src="/assets/img/xload_logo.png" alt="xload logo"><span>xload</span></a><nav class="main-nav" id="main-nav"><a href="/" data-site-ui="home" class="active">Home</a><a href="/about.html" data-site-ui="about">About</a></nav><button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button></div></header><!--XLOAD:CHROME:HEADER:END--></div>
 
   <main>
     <div class="container page">
       <nav class="crumb"><span data-site-ui="home">Home</span></nav>
       <div class="page-header">
-        <h1 data-site-ui="home">Home</h1>
+        <h1 data-site-ui="homeH1">Free Browser Userscripts</h1>
         <p data-site-ui="homeIntro">Every userscript in the catalog. Use the search, filters and sort to find what you need. New tools are added regularly.</p>
       </div>
 
@@ -82,7 +95,7 @@
     </div>
   </main>
 
-  <div id="chrome-footer"></div>
+  <div id="chrome-footer"><!--XLOAD:CHROME:FOOTER:START--><footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>xload</h4><ul><li data-site-ui="footerTagline">Fast, free and safe downloads for browser userscripts</li><li><a href="/about.html" data-site-ui="footerAbout">About us</a></li><li><a href="/contact.html" data-site-ui="footerContact">Contact</a></li></ul></div><div class="footer-col"><h4 data-site-ui="footerTypes">Types</h4><ul><li><a href="/?type=script">Userscripts</a></li></ul></div><div class="footer-col"><h4 data-site-ui="footerLegal">Legal</h4><ul><li><a href="/privacy-policy.html" data-site-ui="privacyPolicy">Privacy Policy</a></li><li><a href="/terms-of-service.html" data-site-ui="termsOfService">Terms of Service</a></li><li><a href="/cookie-policy.html" data-site-ui="cookiePolicy">Cookie Policy</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 xload <span data-site-ui="rightsReserved">All rights reserved.</span></span><span data-site-ui-html="downloadsNote">Downloads are linked to our GitHub releases &mdash; we never host files directly.</span></div></div></footer><!--XLOAD:CHROME:FOOTER:END--></div>
 
   <script src="/assets/js/main.js?v=20260917.1"></script>
 </body>
