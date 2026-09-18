@@ -343,14 +343,33 @@
     return (
       '<a class="script-card" href="' + esc(item.page) + '" target="_blank" rel="noopener">' +
       '<div class="card-top"><span class="card-badge">' + icon(tm.icon) + "</span>" +
-      "<h3>" + esc(item.title) + "</h3></div>" +
-      '<p class="desc">' + esc(item.short || item.description) + "</p>" +
+      "<h3>" + esc(cardLocaleText(item, "title")) + "</h3></div>" +
+      '<p class="desc">' + esc(cardLocaleText(item, "short") || cardLocaleText(item, "description")) + "</p>" +
       '<div class="tags">' + tags + "</div>" +
       '<div class="card-meta">' +
       '<span class="dl">' + icon("download") + " " + fmt(item.downloads) + "</span>" +
       '<span>' + icon("star") + " " + (item.rating ? Number(item.rating).toFixed(1) : "&ndash;") + "</span>" +
       "</div></a>"
     );
+  }
+
+  function cardLocaleText(item, field) {
+    var loc = (item && item.i18n && item.i18n[activeSiteLocale]) || null;
+    if (loc && loc[field]) return loc[field];
+    return (item && item[field]) || "";
+  }
+
+  function applyCardLocale(grid) {
+    var byId = {};
+    (data.scripts || []).forEach(function (it) { byId[it.id] = it; });
+    Array.prototype.forEach.call(grid.querySelectorAll(".script-card[data-id]"), function (el) {
+      var item = byId[el.getAttribute("data-id")];
+      if (!item) return;
+      var h = el.querySelector("h3");
+      if (h) h.textContent = cardLocaleText(item, "title");
+      var p = el.querySelector(".desc");
+      if (p) p.textContent = cardLocaleText(item, "short") || cardLocaleText(item, "description");
+    });
   }
 
   function renderListing() {
@@ -438,7 +457,8 @@
     if (tSel) tSel.addEventListener("change", apply);
     if (document.getElementById("ff-sort")) document.getElementById("ff-sort").addEventListener("change", apply);
     if (document.getElementById("filter-q")) document.getElementById("filter-q").addEventListener("input", apply);
-    window.xloadApplyListingLocale = apply;
+    window.xloadApplyListingLocale = function () { applyCardLocale(grid); apply(); };
+    applyCardLocale(grid);
     apply();
   }
 
