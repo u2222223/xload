@@ -4,15 +4,25 @@
 // @name:zh-CN   123云盘下载限制突破
 // @name:zh-TW   123雲盤下載限制突破
 // @namespace    https://xload.net/
-// @version      2026.9.18.1
+// @version      2026.9.18.2
 // @description  Download large files from 123pan drive and share pages without the size limit.
 // @description:en      Download large files from 123pan drive and share pages without the size limit.
 // @description:zh-CN   突破123云盘1GB下载大小限制，在个人网盘和分享页直接下载大文件。
 // @description:zh-TW   突破123雲盤1GB下載大小限制，在個人網盤與分享頁直接下載大檔案。
 // @homepageURL  https://xload.net/scripts/userscripts/xload-2fd44db0/
 // @supportURL   https://github.com/u2222223/xload/issues
-// @match        *://www.123pan.com/*
-// @match        *://*.www.123pan.com/*
+// @match        *://123pan.com/*
+// @match        *://*.123pan.com/*
+// @match        *://123pan.cn/*
+// @match        *://*.123pan.cn/*
+// @match        *://123684.com/*
+// @match        *://*.123684.com/*
+// @match        *://123865.com/*
+// @match        *://*.123865.com/*
+// @match        *://123952.com/*
+// @match        *://*.123952.com/*
+// @match        *://123912.com/*
+// @match        *://*.123912.com/*
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        unsafeWindow
