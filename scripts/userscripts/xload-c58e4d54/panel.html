@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">GitHub Git Clone Accelerator and SSH Address Copy - Panel</title>
+  <meta name="description" content="Adds accelerated HTTPS and SSH clone addresses to the GitHub clone panel and copies a complete git clone command in one click.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">GitHub Git Clone Accelerator and SSH Address Copy</h1>
+        <p class="panel-subtitle" data-i18n="short">Adds accelerated HTTPS and SSH clone addresses to the GitHub clone panel and copies a complete git clone command in one click.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="clone.command_preview">Command preview</h2>
+              <p class="pui-card-desc" data-i18n="clone.copy">Copy command</p>
+            </div>
+            <span id="mirror-count" class="pui-badge">0</span>
+          </div>
+          <div id="preview-status" class="pb-status" data-i18n="err.page_not_ready">Clone panel not ready</div>
+          <label class="pui-field">
+            <span class="pui-label" data-i18n="state.preview">Preview</span>
+            <textarea id="command-preview" class="pui-input" readonly></textarea>
+          </label>
+          <div class="pb-btns">
+            <button id="copy-command" type="button" class="pui-btn pui-btn-primary" data-i18n="clone.copy">Copy command</button>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="clone.protocol_https">Protocol</h2>
+              <p class="pui-card-desc">HTTPS / SSH</p>
+            </div>
+          </div>
+          <div class="pb-rate" role="radiogroup" aria-label="Protocol">
+            <button type="button" data-protocol="https" data-i18n="clone.protocol_https">HTTPS</button>
+            <button type="button" data-protocol="ssh" data-i18n="clone.protocol_ssh">SSH</button>
+          </div>
+          <div class="pui-divider"></div>
+          <label class="pb-sw">
+            <span>
+              <strong data-i18n="clone.auto_copy">Auto prepend git clone</strong>
+              <small data-i18n="help.clone">Click any address to copy. The panel lets you switch protocol, toggle auto copy, and manage mirrors.</small>
+            </span>
+            <span class="pui-switch">
+              <input id="auto-copy" type="checkbox" checked>
+              <i></i>
+            </span>
+          </label>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="clone.accelerated">Accelerated</h2>
+              <p class="pui-card-desc" data-i18n="mirror.enable">Enable</p>
+            </div>
+          </div>
+          <ul id="mirror-list" class="pui-list"></ul>
+          <div id="mirror-empty" class="pui-empty">
+            <strong data-i18n="state.noMirrors">No mirrors enabled</strong>
+            <span data-i18n="help.mirror">Enter a HTTPS proxy base URL or a SSH prefix.</span>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="mirror.custom">Custom mirror</h2>
+              <p class="pui-card-desc" data-i18n="mirror.add">Add mirror</p>
+            </div>
+          </div>
+          <div class="pui-form-grid">
+            <label class="pui-field">
+              <span class="pui-label" data-i18n="mirror.custom">Custom mirror</span>
+              <input id="custom-label" class="pui-input" type="text" placeholder="ghproxy">
+            </label>
+            <label class="pui-field">
+              <span class="pui-label" data-i18n="mirror.region">Region</span>
+              <input id="custom-region" class="pui-input" type="text" placeholder="US">
+            </label>
+          </div>
+          <label class="pui-field">
+            <span class="pui-label">URL</span>
+            <input id="custom-prefix" class="pui-input" type="text" placeholder="https://ghproxy.org">
+          </label>
+          <div class="pb-btns">
+            <button id="add-mirror" type="button" class="pui-btn pui-btn-primary" data-i18n="mirror.add">Add mirror</button>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title">Logs</h2>
+              <p class="pui-card-desc">Recent events</p>
+            </div>
+          </div>
+          <pre id="log-panel" class="pui-log"></pre>
+        </section>
+
+        <div class="pb-actions">
+          <button id="reset-config" type="button" class="pui-btn pui-btn-danger" data-i18n="control.reset">Reset defaults</button>
+          <button id="save-config" type="button" class="pui-btn pui-btn-primary" data-i18n="control.save">Save settings</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "GitHub Git Clone Accelerator and SSH Address Copy",
+    "short": "Adds accelerated HTTPS and SSH clone addresses to the GitHub clone panel and copies a complete git clone command in one click.",
+    "panel.documentTitle": "GitHub Git Clone Accelerator and SSH Address Copy - Panel",
+    "fab.label": "GitHub Git Clone Accelerator and SSH Address Copy",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "control.reset": "Reset defaults",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "clone.protocol_https": "HTTPS",
+    "clone.protocol_ssh": "SSH",
+    "clone.original": "Original",
+    "clone.accelerated": "Accelerated",
+    "clone.copy": "Copy command",
+    "clone.auto_copy": "Auto prepend git clone",
+    "clone.command_preview": "Command preview",
+    "mirror.add": "Add mirror",
+    "mirror.custom": "Custom mirror",
+    "mirror.delete": "Delete",
+    "mirror.enable": "Enable",
+    "mirror.disable": "Disable",
+    "mirror.region": "Region",
+    "state.copied": "Copied",
+    "state.preview": "Preview",
+    "state.noMirrors": "No mirrors enabled",
+    "err.clipboard_denied": "Clipboard permission denied",
+    "err.page_not_ready": "Clone panel not ready",
+    "err.invalidUrl": "Invalid URL",
+    "err.noRepo": "Cannot detect repository path",
+    "help.clone": "Click any address to copy. The panel lets you switch protocol, toggle auto copy, and manage mirrors.",
+    "help.mirror": "Enter a HTTPS proxy base URL (e.g. https://ghproxy.org) or a SSH prefix (e.g. ssh://git@host:443/)."
+  },
+  "zh-CN": {
+    "title": "GitHub 克隆加速：一键复制 git clone 命令与 SSH 地址",
+    "short": "在 GitHub 克隆面板中提供加速的 HTTPS 与 SSH 地址，并一键复制完整 git clone 命令。",
+    "panel.documentTitle": "GitHub 克隆加速：一键复制 git clone 命令与 SSH 地址 - 功能面板",
+    "fab.label": "GitHub 克隆加速：一键复制 git clone 命令与 SSH 地址",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "control.reset": "恢复默认",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "clone.protocol_https": "HTTPS",
+    "clone.protocol_ssh": "SSH",
+    "clone.original": "原始地址",
+    "clone.accelerated": "加速地址",
+    "clone.copy": "复制命令",
+    "clone.auto_copy": "自动添加 git clone",
+    "clone.command_preview": "命令预览",
+    "mirror.add": "添加镜像",
+    "mirror.custom": "自定义镜像",
+    "mirror.delete": "删除",
+    "mirror.enable": "启用",
+    "mirror.disable": "停用",
+    "mirror.region": "地区",
+    "state.copied": "已复制",
+    "state.preview": "预览",
+    "state.noMirrors": "没有启用的镜像",
+    "err.clipboard_denied": "剪贴板权限被拒绝",
+    "err.page_not_ready": "克隆面板未就绪",
+    "err.invalidUrl": "地址格式无效",
+    "err.noRepo": "无法识别仓库路径",
+    "help.clone": "点击任意地址即可复制。面板可切换协议、开关自动复制、管理镜像。",
+    "help.mirror": "输入 HTTPS 代理基础地址（如 https://ghproxy.org）或 SSH 前缀（如 ssh://git@host:443/）。"
+  },
+  "zh-TW": {
+    "title": "GitHub Clone 加速：一鍵複製 git clone 命令與 SSH 位址",
+    "short": "在 GitHub 複製面板中提供加速的 HTTPS 與 SSH 位址，並一鍵複製完整 git clone 命令。",
+    "panel.documentTitle": "GitHub Clone 加速：一鍵複製 git clone 命令與 SSH 位址 - 功能面板",
+    "fab.label": "GitHub Clone 加速：一鍵複製 git clone 命令與 SSH 位址",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "control.reset": "恢復預設",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "clone.protocol_https": "HTTPS",
+    "clone.protocol_ssh": "SSH",
+    "clone.original": "原始位址",
+    "clone.accelerated": "加速位址",
+    "clone.copy": "複製命令",
+    "clone.auto_copy": "自動加入 git clone",
+    "clone.command_preview": "命令預覽",
+    "mirror.add": "加入鏡像",
+    "mirror.custom": "自訂鏡像",
+    "mirror.delete": "刪除",
+    "mirror.enable": "啟用",
+    "mirror.disable": "停用",
+    "mirror.region": "地區",
+    "state.copied": "已複製",
+    "state.preview": "預覽",
+    "state.noMirrors": "沒有啟用的鏡像",
+    "err.clipboard_denied": "剪貼簿權限被拒絕",
+    "err.page_not_ready": "複製面板未就緒",
+    "err.invalidUrl": "位址格式無效",
+    "err.noRepo": "無法識別倉庫路徑",
+    "help.clone": "點擊任意位址即可複製。面板可切換協定、開關自動複製、管理鏡像。",
+    "help.mirror": "輸入 HTTPS 代理基礎位址（如 https://ghproxy.org）或 SSH 前綴（如 ssh://git@host:443/）。"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-c58e4d54', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-c58e4d54:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-c58e4d54:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-c58e4d54');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+
+      var state = {
+        protocol: 'https',
+        autoCopy: true,
+        mirrors: [],
+        original: {}
+      };
+
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      function log(text) {
+        var el = document.getElementById('log-panel');
+        if (!el) return;
+        var line = '[' + new Date().toLocaleTimeString() + '] ' + text;
+        el.textContent = (el.textContent ? el.textContent + '\n' : '') + line;
+        el.scrollTop = el.scrollHeight;
+      }
+
+      function renderProtocol() {
+        var buttons = document.querySelectorAll('[data-protocol]');
+        buttons.forEach(function (btn) {
+          if (btn.getAttribute('data-protocol') === state.protocol) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+      }
+
+      function renderPreview() {
+        var preview = document.getElementById('command-preview');
+        var status = document.getElementById('preview-status');
+        var mirrors = state.mirrors.filter(function (m) { return m.protocol === state.protocol; });
+        document.getElementById('mirror-count').textContent = mirrors.length;
+        if (!state.original || (!state.original.https && !state.original.ssh)) {
+          status.textContent = i18n.t('err.page_not_ready');
+          preview.value = '';
+          return;
+        }
+        if (mirrors.length === 0) {
+          status.textContent = i18n.t('state.noMirrors');
+          preview.value = '';
+          return;
+        }
+        var first = mirrors[0];
+        status.textContent = first.label + ' · ' + first.region;
+        preview.value = first.command || '';
+      }
+
+      function renderMirrors() {
+        var list = document.getElementById('mirror-list');
+        var empty = document.getElementById('mirror-empty');
+        list.innerHTML = '';
+        var filtered = state.mirrors.filter(function (m) { return m.protocol === state.protocol; });
+        if (filtered.length === 0) {
+          empty.style.display = 'flex';
+        } else {
+          empty.style.display = 'none';
+          filtered.forEach(function (m) {
+            var li = document.createElement('li');
+            var left = document.createElement('span');
+            left.textContent = m.label + ' (' + m.region + ')';
+            var right = document.createElement('span');
+            right.style.display = 'flex';
+            right.style.gap = '8px';
+            right.style.alignItems = 'center';
+
+            var copyBtn = document.createElement('button');
+            copyBtn.type = 'button';
+            copyBtn.className = 'pui-btn pui-btn-default';
+            copyBtn.textContent = i18n.t('clone.copy');
+            copyBtn.addEventListener('click', function () {
+              channel.request('command', { action: 'copyCloneCommand', protocol: state.protocol, mirrorId: m.id }).then(function (res) {
+                if (res.ok) PUI.toast(i18n.t('state.copied'), 'success');
+                else PUI.toast(res.error || i18n.t('err.clipboard_denied'), 'warn');
+              }).catch(function (e) {
+                PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+              });
+            });
+            right.appendChild(copyBtn);
+
+            if (m.isCustom) {
+              var delBtn = document.createElement('button');
+              delBtn.type = 'button';
+              delBtn.className = 'pui-btn pui-btn-danger';
+              delBtn.textContent = i18n.t('mirror.delete');
+              delBtn.addEventListener('click', function () {
+                channel.request('command', { action: 'removeMirror', id: m.id }).then(refresh).catch(function (e) {
+                  PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+                });
+              });
+              right.appendChild(delBtn);
+            }
+
+            li.appendChild(left);
+            li.appendChild(right);
+            list.appendChild(li);
+          });
+        }
+      }
+
+      function refresh() {
+        channel.request('command', { action: 'getState' }).then(function (s) {
+          state.protocol = s.protocol || 'https';
+          state.autoCopy = s.autoCopy !== false;
+          state.mirrors = s.mirrors || [];
+          state.original = s.original || {};
+          document.getElementById('auto-copy').checked = state.autoCopy;
+          renderProtocol();
+          renderPreview();
+          renderMirrors();
+          log('state refreshed');
+        }).catch(function (e) {
+          log('refresh failed: ' + (e.message || e));
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      }
+
+      document.querySelectorAll('[data-protocol]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var protocol = btn.getAttribute('data-protocol');
+          channel.request('command', { action: 'setProtocol', protocol: protocol }).then(function () {
+            state.protocol = protocol;
+            renderProtocol();
+            renderPreview();
+            renderMirrors();
+          }).catch(function (e) {
+            PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+          });
+        });
+      });
+
+      document.getElementById('auto-copy').addEventListener('change', function () {
+        var enabled = document.getElementById('auto-copy').checked;
+        channel.request('command', { action: 'setAutoCopy', enabled: enabled }).then(function () {
+          state.autoCopy = enabled;
+          refresh();
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) {
+          PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      document.getElementById('copy-command').addEventListener('click', function () {
+        channel.request('command', { action: 'copyCloneCommand', protocol: state.protocol }).then(function (res) {
+          if (res.ok) PUI.toast(i18n.t('state.copied'), 'success');
+          else PUI.toast(res.error || i18n.t('err.clipboard_denied'), 'warn');
+        }).catch(function (e) {
+          PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      document.getElementById('add-mirror').addEventListener('click', function () {
+        var label = document.getElementById('custom-label').value.trim();
+        var region = document.getElementById('custom-region').value.trim();
+        var prefix = document.getElementById('custom-prefix').value.trim();
+        if (!prefix) {
+          PUI.toast(i18n.t('err.invalidUrl'), 'warn');
+          return;
+        }
+        channel.request('command', { action: 'addCustomMirror', label: label, region: region, prefix: prefix, protocol: state.protocol }).then(function () {
+          document.getElementById('custom-label').value = '';
+          document.getElementById('custom-region').value = '';
+          document.getElementById('custom-prefix').value = '';
+          refresh();
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) {
+          PUI.toast(e.message || i18n.t('err.invalidUrl'), 'warn');
+        });
+      });
+
+      document.getElementById('save-config').addEventListener('click', function () {
+        PUI.toast(i18n.t('control.saved'), 'success');
+        log('settings saved');
+      });
+
+      document.getElementById('reset-config').addEventListener('click', function () {
+        PUI.modal({
+          title: i18n.t('control.reset'),
+          body: i18n.t('help.clone'),
+          buttons: [
+            { text: i18n.t('control.close'), type: 'default' },
+            { text: i18n.t('control.reset'), type: 'danger', onClick: function () {
+              channel.request('command', { action: 'resetConfig' }).then(function () {
+                refresh();
+                PUI.toast(i18n.t('control.saved'), 'success');
+              }).catch(function (e) {
+                PUI.toast(e.message || i18n.t('error.pageUnresponsive'), 'warn');
+              });
+            }}
+          ]
+        });
+      });
+
+      channel.on('progress', function (data) {
+        log('progress: ' + (data.phase || '') + (data.ok != null ? ' ok=' + data.ok : ''));
+      });
+      channel.on('done', function (data) {
+        log('done: ' + (data.command || ''));
+      });
+      channel.on('error', function (data) {
+        log('error: ' + (data.code || '') + ' ' + (data.message || ''));
+      });
+
+      channel.request('command', { action: 'getState' }).then(function (s) {
+        if (s && s.localePreference) {
+          i18n.setLocale(s.localePreference);
+          languageSelect.value = s.localePreference;
+        }
+        state.protocol = s.protocol || 'https';
+        state.autoCopy = s.autoCopy !== false;
+        state.mirrors = s.mirrors || [];
+        state.original = s.original || {};
+        document.getElementById('auto-copy').checked = state.autoCopy;
+        renderProtocol();
+        renderPreview();
+        renderMirrors();
+      }).catch(function () { /* panel preference remains usable independently */ });
+    })();
+  </script>
+</body>
+</html>

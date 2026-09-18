@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Download Accelerator for Release, Raw and ZIP Files — xload</title>
+  <meta name="description" content="Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside ">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+  <!--XLOAD:SEO:START-->
+  <meta property="og:site_name" content="xload">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GitHub Download Accelerator for Release, Raw and ZIP Files">
+  <meta property="og:description" content="Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to…">
+  <meta property="og:url" content="https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html">
+  <meta property="og:image" content="https://xload.net/assets/img/xload_logo.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GitHub Download Accelerator for Release, Raw and ZIP Files">
+  <meta name="twitter:description" content="Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to…">
+  <meta name="twitter:image" content="https://xload.net/assets/img/xload_logo.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://xload.net/#organization","name":"xload","url":"https://xload.net/","logo":"https://xload.net/assets/img/xload_logo.png","sameAs":["https://github.com/u2222223/xload"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://xload.net/"},{"@type":"ListItem","position":2,"name":"GitHub Download Accelerator for Release, Raw and ZIP Files","item":"https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html"}]},{"@type":"WebApplication","name":"GitHub Download Accelerator for Release, Raw and ZIP Files","description":"Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to reorder mirrors, disable the ones that stopped working, or add your own proxy node. Mirror availability and speed change over time, so a failed download can be retried with another mirror from the panel. The script runs only on GitHub pages and stores your mirror list and settings in your browser.","url":"https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html","downloadUrl":"https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.user.js","dateModified":"2026-09-18","applicationCategory":"BrowserApplication","operatingSystem":"Any (requires a userscript manager)","browserRequirements":"Requires JavaScript. A userscript manager such as Tampermonkey or Violentmonkey is required.","keywords":"github, download accelerator, release download, raw file, zip archive","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@id":"https://xload.net/#organization"},"publisher":{"@id":"https://xload.net/#organization"}}]}</script>
+  <!--XLOAD:SEO:END-->
+</head>
+<body data-nav="script">
+
+  <div id="chrome-header"><!--XLOAD:CHROME:HEADER:START--><header class="site-header"><div class="nav-wrap"><a class="logo" href="/"><img class="logo-img" src="/assets/img/xload_logo.png" alt="xload logo"><span>xload</span></a><nav class="main-nav" id="main-nav"><a href="/" data-site-ui="home" class="active">Home</a><a href="/about.html" data-site-ui="about">About</a></nav><button class="nav-toggle" type="button" aria-label="Menu">&#9776;</button></div></header><!--XLOAD:CHROME:HEADER:END--></div>
+  <section class="release-language" data-release-i18n-controls>
+    <label class="pui-field" for="release-locale"><span class="pui-label" data-release-ui="language">Language</span><select class="pui-input" id="release-locale"><option value="auto" data-release-ui="auto">Auto (browser)</option><option value="en">English</option><option value="zh-CN">简体中文</option><option value="zh-TW">繁體中文</option></select></label>
+  </section>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/">Home</a> &rsaquo; <span data-release-i18n="title">GitHub Download Accelerator for Release, Raw and ZIP Files</span></nav>
+
+      <div class="detail-grid">
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <div>
+          <div class="detail-hero">
+            <!-- Swap the SVG below for your tool's icon if you have one -->
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1 data-release-i18n="title">GitHub Download Accelerator for Release, Raw and ZIP Files</h1>
+              <p class="lead" data-release-i18n="short">Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.</p>
+            </div>
+          </div>
+
+          <p><strong data-release-ui="tags">Tags</strong>: <span data-release-i18n-tags>github · download accelerator · release download · raw file · zip archive</span></p>
+          <div class="prose">
+            <h2 data-release-ui="overview">Overview</h2>
+            <p data-release-i18n="desc">Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to reorder mirrors, disable the ones that stopped working, or add your own proxy node. Mirror availability and speed change over time, so a failed download can be retried with another mirror from the panel. The script runs only on GitHub pages and stores your mirror list and settings in your browser.</p>
+
+            <h2 data-release-ui="install">How to install &amp; use</h2>
+            <ol>
+              <li data-release-ui="installManager">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-release-ui="installScript">Click the "Download / install" button and confirm in the manager.</li>
+              <li data-release-ui="openTarget">Open the target site and use the script as documented below.</li>
+            </ol>
+
+            <h2 data-release-ui="configuration">Configuration</h2>
+            <p data-release-i18n="config">Open the panel from the floating button on any GitHub page. Enable or disable each download type (release assets, raw files, ZIP archives), reorder or disable mirrors, and add a self-hosted proxy prefix. Settings are stored locally and reused after script updates.</p>
+            <pre><code data-release-i18n="usage">1. Open a GitHub repository, release page or file page. 2. Find the accelerated entry next to the original download link. 3. If a mirror fails, open the panel, disable that mirror and retry with another one.</code></pre>
+
+            <h2 data-release-ui="privacy">Privacy &amp; permissions</h2>
+            <p data-release-i18n="privacy">The script reads the GitHub pages you open to detect release, raw and ZIP download links, and stores your mirror list, disabled mirrors and link type switches locally in your browser. Download requests are sent to the third-party mirror you select, which can see the repository address and your IP address; no GitHub account credentials or tokens are read or transmitted.</p>
+
+          </div>
+        </div>
+
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.user.js" target="_blank" rel="noopener" data-internal-download>
+              <span data-release-ui="download">Download / install</span>
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-release-ui="details">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-release-ui="type">Type</span><span class="v">Userscript</span></div>
+              <div class="row"><span class="k" data-release-ui="updated">Last updated</span><span class="v">2026-09-18</span></div>
+              <div class="row"><span class="k" data-release-ui="downloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"><!--XLOAD:CHROME:FOOTER:START--><footer class="site-footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>xload</h4><ul><li data-site-ui="footerTagline">Fast, free and safe downloads for browser userscripts</li><li><a href="/about.html" data-site-ui="footerAbout">About us</a></li><li><a href="/contact.html" data-site-ui="footerContact">Contact</a></li></ul></div><div class="footer-col"><h4 data-site-ui="footerTypes">Types</h4><ul><li><a href="/?type=script">Userscripts</a></li></ul></div><div class="footer-col"><h4 data-site-ui="footerLegal">Legal</h4><ul><li><a href="/privacy-policy.html" data-site-ui="privacyPolicy">Privacy Policy</a></li><li><a href="/terms-of-service.html" data-site-ui="termsOfService">Terms of Service</a></li><li><a href="/cookie-policy.html" data-site-ui="cookiePolicy">Cookie Policy</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2026 xload <span data-site-ui="rightsReserved">All rights reserved.</span></span><span data-site-ui-html="downloadsNote">Downloads are linked to our GitHub releases &mdash; we never host files directly.</span></div></div></footer><!--XLOAD:CHROME:FOOTER:END--></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+<script type="application/json" id="release-i18n-data">{"release":{"version":1,"defaultLocale":"en","locales":{"en":{"title":"GitHub Download Accelerator for Release, Raw and ZIP Files","short":"Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.","desc":"Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to reorder mirrors, disable the ones that stopped working, or add your own proxy node. Mirror availability and speed change over time, so a failed download can be retried with another mirror from the panel. The script runs only on GitHub pages and stores your mirror list and settings in your browser.","tags":["github","download accelerator","release download","raw file","zip archive"],"config":"Open the panel from the floating button on any GitHub page. Enable or disable each download type (release assets, raw files, ZIP archives), reorder or disable mirrors, and add a self-hosted proxy prefix. Settings are stored locally and reused after script updates.","usage":"1. Open a GitHub repository, release page or file page. 2. Find the accelerated entry next to the original download link. 3. If a mirror fails, open the panel, disable that mirror and retry with another one.","privacy":"The script reads the GitHub pages you open to detect release, raw and ZIP download links, and stores your mirror list, disabled mirrors and link type switches locally in your browser. Download requests are sent to the third-party mirror you select, which can see the repository address and your IP address; no GitHub account credentials or tokens are read or transmitted."},"zh-CN":{"title":"GitHub 下载加速：Release、Raw 与 Code ZIP 镜像加速","short":"为 GitHub 的 Release 附件、Raw 文件与 ZIP 归档添加镜像下载入口，不必离开仓库页面即可更快下载大文件。","desc":"GitHub 大文件下载经常速度很慢甚至中断。本脚本在 Release 附件、Raw 文件与 ZIP 归档旁增加「release 下载加速」入口，同时保留原始 GitHub 链接。从浮动按钮打开面板，可以调整镜像顺序、停用已失效的镜像，或添加自建代理节点。镜像可用性与速度会随时间变化，下载失败时可在面板中换一个镜像重试。脚本只在 GitHub 页面运行，镜像清单与设置保存在你的浏览器本地。","tags":["github","github 加速","release 下载","raw 下载","zip 下载"],"config":"在任意 GitHub 页面点击浮动按钮打开面板。可开关各类下载入口（Release 附件、Raw 文件、ZIP 归档），调整镜像顺序或停用镜像，并添加自建代理前缀。设置保存在本地，脚本更新后仍然生效。","usage":"1. 打开 GitHub 仓库页、Release 页或文件页。2. 在原始下载链接旁使用加速入口。3. 若某个镜像失败，打开面板停用该镜像并换一个重试。","privacy":"脚本读取你打开的 GitHub 页面以识别 Release、Raw 与 ZIP 下载链接，并把镜像清单、停用状态与入口开关保存在浏览器本地。下载请求会发送到你选择的第三方镜像，该镜像可以看到仓库地址与你的 IP 地址；脚本不会读取或传输 GitHub 账号凭据与令牌。"},"zh-TW":{"title":"GitHub 下載加速：Release、Raw 與 Code ZIP 鏡像加速","short":"為 GitHub 的 Release 附件、Raw 檔案與 ZIP 壓縮檔加入鏡像下載入口，不必離開倉庫頁面就能更快下載大檔案。","desc":"GitHub 大檔案下載常常很慢甚至中斷。本腳本在 Release 附件、Raw 檔案與 ZIP 壓縮檔旁加入「release 下載加速」入口，同時保留原始 GitHub 連結。從浮動按鈕開啟面板，可以調整鏡像順序、停用失效的鏡像，或加入自建代理節點。鏡像可用性與速度會隨時間改變，下載失敗時可在面板換一個鏡像重試。腳本只在 GitHub 頁面執行，鏡像清單與設定保存在你的瀏覽器本機。","tags":["github","github 加速","release 下載","raw 下載","zip 下載"],"config":"在任一 GitHub 頁面點擊浮動按鈕開啟面板。可開關各類下載入口（Release 附件、Raw 檔案、ZIP 壓縮檔），調整鏡像順序或停用鏡像，並加入自建代理前綴。設定保存在本機，腳本更新後仍然有效。","usage":"1. 開啟 GitHub 倉庫頁、Release 頁或檔案頁。2. 在原始下載連結旁使用加速入口。3. 若某個鏡像失敗，開啟面板停用該鏡像並換一個重試。","privacy":"腳本讀取你開啟的 GitHub 頁面以辨識 Release、Raw 與 ZIP 下載連結，並把鏡像清單、停用狀態與入口開關保存在瀏覽器本機。下載請求會傳送到你選擇的第三方鏡像，該鏡像可以看到倉庫位址與你的 IP 位址；腳本不會讀取或傳送 GitHub 帳號憑證與權杖。"}}},"ui":{"en":{"language":"Language","auto":"Auto (browser)","tags":"Tags","overview":"Overview","install":"How to install & use","configuration":"Configuration","privacy":"Privacy & permissions","installManager":"Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.","installScript":"Click the “Download / install” button and confirm in the manager.","openTarget":"Open the target site and use the script as documented below.","download":"Download / install","details":"Details","type":"Type","updated":"Last updated","downloads":"Downloads"},"zh-CN":{"language":"语言","auto":"自动（浏览器）","tags":"标签","overview":"概览","install":"安装与使用","configuration":"配置","privacy":"隐私与权限","installManager":"请先为浏览器安装 Tampermonkey 或 Violentmonkey 等用户脚本管理器。","installScript":"点击“下载 / 安装”按钮，并在脚本管理器中确认。","openTarget":"打开目标网站，按下方说明使用脚本。","download":"下载 / 安装","details":"详情","type":"类型","updated":"最近更新","downloads":"下载量"},"zh-TW":{"language":"語言","auto":"自動（瀏覽器）","tags":"標籤","overview":"概覽","install":"安裝與使用","configuration":"設定","privacy":"隱私與權限","installManager":"請先為瀏覽器安裝 Tampermonkey 或 Violentmonkey 等使用者腳本管理器。","installScript":"點擊「下載 / 安裝」按鈕，並在腳本管理器中確認。","openTarget":"開啟目標網站，依下方說明使用腳本。","download":"下載 / 安裝","details":"詳細資料","type":"類型","updated":"最近更新","downloads":"下載量"}}}</script><script>(function(){var p=JSON.parse(document.getElementById('release-i18n-data').textContent),d=p.release,s=document.getElementById('release-locale'),k='xload-release-locale';function locale(v){if(v!=='auto')return v;var a=[];try{a=navigator.languages||[]}catch(e){}if(!a.length)a=[navigator.language||''];for(var i=0;i<a.length;i++){var n=String(a[i]).replace(/_/g,'-').toLowerCase();if(n.indexOf('zh')===0)return /(?:hant|tw|hk|mo)/.test(n)?'zh-TW':'zh-CN'}return'en'}function read(){try{return localStorage.getItem(k)||'auto'}catch(e){return'auto'}}function save(v){try{localStorage.setItem(k,v)}catch(e){}}function apply(v){var l=locale(v),c=d.locales[l]||d.locales.en,u=p.ui[l]||p.ui.en,m=document.querySelector('meta[name="description"]');document.documentElement.lang=l;document.querySelectorAll('[data-release-i18n]').forEach(function(el){el.textContent=c[el.getAttribute('data-release-i18n')]});document.querySelectorAll('[data-release-ui]').forEach(function(el){el.textContent=u[el.getAttribute('data-release-ui')]||p.ui.en[el.getAttribute('data-release-ui')]});document.querySelector('[data-release-i18n-tags]').textContent=c.tags.join(' · ');if(m)m.content=c.desc;document.title=c.title+' — xload'}var saved=read();s.value=['auto','en','zh-CN','zh-TW'].indexOf(saved)>=0?saved:'auto';s.addEventListener('change',function(){save(s.value);apply(s.value)});apply(s.value)})();</script>
+</body>
+</html>

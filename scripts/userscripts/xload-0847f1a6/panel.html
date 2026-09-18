@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">GitHub Download Accelerator for Release, Raw and ZIP Files - Panel</title>
+  <meta name="description" content="Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">GitHub Download Accelerator for Release, Raw and ZIP Files</h1>
+        <p class="panel-subtitle" data-i18n="short">Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="panel.status">Status</h2>
+              <p class="pui-card-desc" data-i18n="state.connecting">Connecting to page...</p>
+            </div>
+          </div>
+          <div id="xload-status" class="pb-status" data-i18n="state.connecting">Connecting to page...</div>
+          <div id="xload-detected-empty" class="pui-empty" style="display:none;">
+            <strong data-i18n="state.none">No downloadable entry detected on this page.</strong>
+          </div>
+          <ul id="xload-detected-list" class="pui-list" style="display:none;"></ul>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <h2 class="pui-card-title" data-i18n="panel.linkTypes">Link types</h2>
+          </div>
+          <div class="pb-sw">
+            <span>
+              <span data-i18n="linktype.release">Release assets</span>
+              <small>github.com/.../releases/download/...</small>
+            </span>
+            <label class="pui-switch" data-i18n-attr="aria-label:mirror.enable">
+              <input type="checkbox" id="xload-toggle-release">
+              <i></i>
+            </label>
+          </div>
+          <div class="pb-sw">
+            <span>
+              <span data-i18n="linktype.raw">Raw files</span>
+              <small>raw.githubusercontent.com</small>
+            </span>
+            <label class="pui-switch" data-i18n-attr="aria-label:mirror.enable">
+              <input type="checkbox" id="xload-toggle-raw">
+              <i></i>
+            </label>
+          </div>
+          <div class="pb-sw">
+            <span>
+              <span data-i18n="linktype.zip">Code ZIP</span>
+              <small>github.com/.../archive/...zip</small>
+            </span>
+            <label class="pui-switch" data-i18n-attr="aria-label:mirror.enable">
+              <input type="checkbox" id="xload-toggle-zip">
+              <i></i>
+            </label>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="panel.mirrors">Mirror sources</h2>
+              <p class="pui-card-desc" data-i18n="help.mirrors">Enable or disable mirrors, change the order to set priority, or add your own gh-proxy style prefix.</p>
+            </div>
+          </div>
+          <ul id="xload-mirror-list" class="pui-list"></ul>
+          <div id="xload-mirror-empty" class="pui-empty" style="display:none;">
+            <strong data-i18n="mirror.noMirrors">No mirror sources available.</strong>
+          </div>
+          <div class="pui-divider"></div>
+          <div class="pui-form-grid">
+            <div class="pui-field">
+              <label for="xload-mirror-label" class="pui-label" data-i18n="mirror.label">Name</label>
+              <input id="xload-mirror-label" class="pui-input" type="text" placeholder="My proxy">
+            </div>
+            <div class="pui-field">
+              <label for="xload-mirror-prefix" class="pui-label" data-i18n="mirror.prefix">Prefix URL</label>
+              <input id="xload-mirror-prefix" class="pui-input" type="url" placeholder="https://ghproxy.net/">
+            </div>
+          </div>
+          <p class="pui-help" data-i18n="help.raw">Raw links use raw.githubusercontent.com; release and ZIP links use github.com.</p>
+          <div class="pb-actions">
+            <button id="xload-add-mirror" class="pui-btn pui-btn-primary" data-i18n="mirror.addBtn">Add</button>
+          </div>
+        </section>
+
+        <section class="pui-card">
+          <div class="pui-card-head">
+            <h2 class="pui-card-title" data-i18n="panel.logs">Logs</h2>
+          </div>
+          <pre id="xload-log-view" class="pui-log" data-i18n="log.empty">No logs yet.</pre>
+          <div class="pb-actions">
+            <button id="xload-copy-logs" class="pui-btn pui-btn-default" data-i18n="action.copy">Copy</button>
+            <button id="xload-refresh-logs" class="pui-btn pui-btn-default" data-i18n="action.refresh">Refresh</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "GitHub Download Accelerator for Release, Raw and ZIP Files",
+    "short": "Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.",
+    "panel.documentTitle": "GitHub Download Accelerator for Release, Raw and ZIP Files - Panel",
+    "fab.label": "GitHub Download Accelerator for Release, Raw and ZIP Files",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "panel.status": "Status",
+    "panel.linkTypes": "Link types",
+    "panel.mirrors": "Mirror sources",
+    "panel.detected": "Detected on this page",
+    "panel.logs": "Logs",
+    "mirror.add": "Add self-hosted mirror",
+    "mirror.label": "Name",
+    "mirror.prefix": "Prefix URL",
+    "mirror.addBtn": "Add",
+    "mirror.builtin": "Built-in",
+    "mirror.custom": "Custom",
+    "mirror.noMirrors": "No mirror sources available.",
+    "mirror.enable": "Enable",
+    "mirror.disable": "Disable",
+    "mirror.move_up": "Move up",
+    "mirror.move_down": "Move down",
+    "mirror.remove": "Remove",
+    "linktype.release": "Release assets",
+    "linktype.raw": "Raw files",
+    "linktype.zip": "Code ZIP",
+    "state.connecting": "Connecting to page...",
+    "state.connected": "Connected",
+    "state.detected": "{count} download entries detected",
+    "state.none": "No downloadable entry detected on this page.",
+    "state.failed": "{count} failed",
+    "action.retry": "Retry with this mirror",
+    "action.copy": "Copy",
+    "action.refresh": "Refresh",
+    "action.save": "Save",
+    "err.invalid_prefix": "Prefix must start with http:// or https:// and must not contain a dangerous protocol.",
+    "err.download_failed": "Download failed: {message}",
+    "err.mirrorNotApplicable": "This mirror does not support {type} links.",
+    "help.mirrors": "Enable or disable mirrors, change the order to set priority, or add your own gh-proxy style prefix. Disabled mirrors are skipped when injecting links.",
+    "help.raw": "Raw links use raw.githubusercontent.com; release and ZIP links use github.com. A gh-proxy prefix works with both when it accepts the full original URL.",
+    "log.empty": "No logs yet."
+  },
+  "zh-CN": {
+    "title": "GitHub 下载加速：Release、Raw 与 Code ZIP 镜像加速",
+    "short": "为 GitHub 的 Release 附件、Raw 文件与 ZIP 归档添加镜像下载入口，不必离开仓库页面即可更快下载大文件。",
+    "panel.documentTitle": "GitHub 下载加速：Release、Raw 与 Code ZIP 镜像加速 - 功能面板",
+    "fab.label": "GitHub 下载加速：Release、Raw 与 Code ZIP 镜像加速",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "panel.status": "状态",
+    "panel.linkTypes": "下载入口",
+    "panel.mirrors": "镜像源",
+    "panel.detected": "当前页面检测到",
+    "panel.logs": "日志",
+    "mirror.add": "添加自建镜像",
+    "mirror.label": "名称",
+    "mirror.prefix": "前缀地址",
+    "mirror.addBtn": "添加",
+    "mirror.builtin": "内置",
+    "mirror.custom": "自建",
+    "mirror.noMirrors": "暂无可用的镜像源。",
+    "mirror.enable": "启用",
+    "mirror.disable": "停用",
+    "mirror.move_up": "上移",
+    "mirror.move_down": "下移",
+    "mirror.remove": "删除",
+    "linktype.release": "Release 附件",
+    "linktype.raw": "Raw 文件",
+    "linktype.zip": "Code ZIP",
+    "state.connecting": "正在连接原页面...",
+    "state.connected": "已连接",
+    "state.detected": "检测到 {count} 个下载入口",
+    "state.none": "当前页面未检测到可下载入口。",
+    "state.failed": "{count} 个失败",
+    "action.retry": "使用该镜像重试",
+    "action.copy": "复制",
+    "action.refresh": "刷新",
+    "action.save": "保存",
+    "err.invalid_prefix": "前缀必须以 http:// 或 https:// 开头，且不能包含危险协议。",
+    "err.download_failed": "下载失败：{message}",
+    "err.mirrorNotApplicable": "该镜像不支持 {type} 类型链接。",
+    "help.mirrors": "启用或停用镜像，调整顺序以设置优先级，或添加自己的 gh-proxy 风格前缀。停用的镜像在注入链接时会被跳过。",
+    "help.raw": "Raw 链接使用 raw.githubusercontent.com；Release 与 ZIP 链接使用 github.com。若 gh-proxy 前缀接受完整原始 URL，则可同时用于两类链接。",
+    "log.empty": "暂无日志。"
+  },
+  "zh-TW": {
+    "title": "GitHub 下載加速：Release、Raw 與 Code ZIP 鏡像加速",
+    "short": "為 GitHub 的 Release 附件、Raw 檔案與 ZIP 壓縮檔加入鏡像下載入口，不必離開倉庫頁面就能更快下載大檔案。",
+    "panel.documentTitle": "GitHub 下載加速：Release、Raw 與 Code ZIP 鏡像加速 - 功能面板",
+    "fab.label": "GitHub 下載加速：Release、Raw 與 Code ZIP 鏡像加速",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "panel.status": "狀態",
+    "panel.linkTypes": "下載入口",
+    "panel.mirrors": "鏡像源",
+    "panel.detected": "目前頁面偵測到",
+    "panel.logs": "日誌",
+    "mirror.add": "新增自建鏡像",
+    "mirror.label": "名稱",
+    "mirror.prefix": "前綴網址",
+    "mirror.addBtn": "新增",
+    "mirror.builtin": "內建",
+    "mirror.custom": "自建",
+    "mirror.noMirrors": "暫無可用的鏡像源。",
+    "mirror.enable": "啟用",
+    "mirror.disable": "停用",
+    "mirror.move_up": "上移",
+    "mirror.move_down": "下移",
+    "mirror.remove": "刪除",
+    "linktype.release": "Release 附件",
+    "linktype.raw": "Raw 檔案",
+    "linktype.zip": "Code ZIP",
+    "state.connecting": "正在連接原頁面...",
+    "state.connected": "已連接",
+    "state.detected": "偵測到 {count} 個下載入口",
+    "state.none": "目前頁面未偵測到可下載入口。",
+    "state.failed": "{count} 個失敗",
+    "action.retry": "使用該鏡像重試",
+    "action.copy": "複製",
+    "action.refresh": "重新整理",
+    "action.save": "儲存",
+    "err.invalid_prefix": "前綴必須以 http:// 或 https:// 開頭，且不能包含危險協定。",
+    "err.download_failed": "下載失敗：{message}",
+    "err.mirrorNotApplicable": "該鏡像不支援 {type} 類型連結。",
+    "help.mirrors": "啟用或停用鏡像，調整順序以設定優先順序，或新增自己的 gh-proxy 風格前綴。停用的鏡像在注入連結時會被跳過。",
+    "help.raw": "Raw 連結使用 raw.githubusercontent.com；Release 與 ZIP 連結使用 github.com。若 gh-proxy 前綴接受完整原始 URL，則可同時用於兩類連結。",
+    "log.empty": "暫無日誌。"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-0847f1a6', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-0847f1a6:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-0847f1a6:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-0847f1a6');
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+
+      var statusEl = document.getElementById('xload-status');
+      var detectedEmpty = document.getElementById('xload-detected-empty');
+      var detectedList = document.getElementById('xload-detected-list');
+      var mirrorList = document.getElementById('xload-mirror-list');
+      var mirrorEmpty = document.getElementById('xload-mirror-empty');
+      var toggleRelease = document.getElementById('xload-toggle-release');
+      var toggleRaw = document.getElementById('xload-toggle-raw');
+      var toggleZip = document.getElementById('xload-toggle-zip');
+      var mirrorLabelInput = document.getElementById('xload-mirror-label');
+      var mirrorPrefixInput = document.getElementById('xload-mirror-prefix');
+      var addMirrorBtn = document.getElementById('xload-add-mirror');
+      var logView = document.getElementById('xload-log-view');
+      var copyLogsBtn = document.getElementById('xload-copy-logs');
+      var refreshLogsBtn = document.getElementById('xload-refresh-logs');
+
+      var mirrors = [];
+      var disabledIds = [];
+      var linkTypes = { release: true, raw: true, zip: true };
+      var detectedEntries = [];
+
+      function isDisabled(id) { return disabledIds.indexOf(id) !== -1; }
+
+      function setStatus(key, vars) { i18n.setText(statusEl, key, vars); }
+
+      function makeButton(textKey, fallback, onClick) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pui-btn pui-btn-default';
+        btn.textContent = i18n.t(textKey, fallback);
+        btn.addEventListener('click', onClick);
+        return btn;
+      }
+
+      function renderMirrors() {
+        mirrorList.innerHTML = '';
+        if (!mirrors.length) {
+          mirrorList.style.display = 'none';
+          mirrorEmpty.style.display = '';
+          return;
+        }
+        mirrorList.style.display = '';
+        mirrorEmpty.style.display = 'none';
+        mirrors.forEach(function (m, idx) {
+          var li = document.createElement('li');
+          li.style.cssText = 'align-items:flex-start;';
+          var left = document.createElement('div');
+          left.style.cssText = 'display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;';
+          var title = document.createElement('strong');
+          title.textContent = m.label;
+          var sub = document.createElement('span');
+          sub.className = 'pui-help';
+          sub.style.cssText = 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+          sub.textContent = m.prefix;
+          var badges = document.createElement('div');
+          badges.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;';
+          var typeBadge = document.createElement('span');
+          typeBadge.className = 'pui-badge';
+          typeBadge.textContent = (m.applies || []).join(', ').toUpperCase();
+          var kindBadge = document.createElement('span');
+          kindBadge.className = 'pui-badge';
+          kindBadge.textContent = i18n.t(m.builtin ? 'mirror.builtin' : 'mirror.custom');
+          badges.appendChild(typeBadge);
+          badges.appendChild(kindBadge);
+          left.appendChild(title);
+          left.appendChild(sub);
+          left.appendChild(badges);
+
+          var right = document.createElement('div');
+          right.style.cssText = 'display:flex;gap:6px;align-items:center;flex:none;flex-wrap:wrap;';
+          var swLabel = document.createElement('label');
+          swLabel.className = 'pui-switch';
+          swLabel.setAttribute('aria-label', i18n.t(isDisabled(m.id) ? 'mirror.enable' : 'mirror.disable'));
+          var sw = document.createElement('input');
+          sw.type = 'checkbox';
+          sw.checked = !isDisabled(m.id);
+          (function (mirrorId, checkbox) {
+            checkbox.addEventListener('change', function () {
+              channel.request('command', { action: 'setMirrorEnabled', id: mirrorId, enabled: checkbox.checked }).then(function (res) {
+                mirrors = res.mirrors || mirrors;
+                disabledIds = res.disabledIds || disabledIds;
+                renderMirrors();
+                PUI.toast(i18n.t('control.saved'), 'success');
+              }).catch(function (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+            });
+          })(m.id, sw);
+          var iEl = document.createElement('i');
+          swLabel.appendChild(sw);
+          swLabel.appendChild(iEl);
+          right.appendChild(swLabel);
+          if (idx > 0) right.appendChild(makeButton('mirror.move_up', 'Up', function () { requestMove(m.id, 'up'); }));
+          if (idx < mirrors.length - 1) right.appendChild(makeButton('mirror.move_down', 'Down', function () { requestMove(m.id, 'down'); }));
+          if (!m.builtin) right.appendChild(makeButton('mirror.remove', 'Remove', function () { requestRemove(m.id); }));
+          li.appendChild(left);
+          li.appendChild(right);
+          mirrorList.appendChild(li);
+        });
+      }
+
+      function renderLinkTypes() {
+        toggleRelease.checked = !!linkTypes.release;
+        toggleRaw.checked = !!linkTypes.raw;
+        toggleZip.checked = !!linkTypes.zip;
+      }
+
+      function renderDetected() {
+        detectedList.innerHTML = '';
+        if (!detectedEntries.length) {
+          detectedList.style.display = 'none';
+          detectedEmpty.style.display = '';
+          return;
+        }
+        detectedList.style.display = '';
+        detectedEmpty.style.display = 'none';
+        detectedEntries.forEach(function (entry) {
+          var li = document.createElement('li');
+          li.style.cssText = 'align-items:flex-start;';
+          var left = document.createElement('div');
+          left.style.cssText = 'display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;';
+          var typeBadge = document.createElement('span');
+          typeBadge.className = 'pui-badge';
+          typeBadge.textContent = (entry.type || '').toUpperCase();
+          var orig = document.createElement('span');
+          orig.className = 'pui-help';
+          orig.style.cssText = 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+          orig.textContent = entry.original || '';
+          var acc = document.createElement('a');
+          acc.className = 'pui-help';
+          acc.href = entry.accelerated || '#';
+          acc.target = '_blank';
+          acc.rel = 'noopener noreferrer';
+          acc.textContent = entry.mirror + ' → ' + (entry.accelerated || '');
+          acc.style.cssText = 'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;';
+          left.appendChild(typeBadge);
+          left.appendChild(orig);
+          left.appendChild(acc);
+          var right = document.createElement('div');
+          right.style.cssText = 'flex:none;';
+          var dl = document.createElement('a');
+          dl.className = 'pui-btn pui-btn-primary';
+          dl.href = entry.accelerated || '#';
+          dl.target = '_blank';
+          dl.rel = 'noopener noreferrer';
+          dl.textContent = i18n.t('action.retry');
+          right.appendChild(dl);
+          li.appendChild(left);
+          li.appendChild(right);
+          detectedList.appendChild(li);
+        });
+      }
+
+      function renderAll() {
+        renderMirrors();
+        renderLinkTypes();
+        renderDetected();
+      }
+
+      function requestMove(id, direction) {
+        channel.request('command', { action: 'moveMirror', id: id, direction: direction }).then(function (res) {
+          mirrors = res.mirrors || mirrors;
+          disabledIds = res.disabledIds || disabledIds;
+          renderMirrors();
+        }).catch(function (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      }
+
+      function requestRemove(id) {
+        channel.request('command', { action: 'removeMirror', id: id }).then(function (res) {
+          mirrors = res.mirrors || mirrors;
+          disabledIds = res.disabledIds || disabledIds;
+          renderMirrors();
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      }
+
+      function setLinkType(type, enabled) {
+        channel.request('command', { action: 'setLinkType', type: type, enabled: enabled }).then(function (res) {
+          linkTypes = res.types || linkTypes;
+          renderLinkTypes();
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      }
+
+      toggleRelease.addEventListener('change', function () { setLinkType('release', toggleRelease.checked); });
+      toggleRaw.addEventListener('change', function () { setLinkType('raw', toggleRaw.checked); });
+      toggleZip.addEventListener('change', function () { setLinkType('zip', toggleZip.checked); });
+
+      addMirrorBtn.addEventListener('click', function () {
+        var label = mirrorLabelInput.value.trim();
+        var prefix = mirrorPrefixInput.value.trim();
+        if (!label || !prefix) {
+          PUI.toast(i18n.t('err.invalid_prefix'), 'warn');
+          return;
+        }
+        channel.request('command', { action: 'addCustomMirror', label: label, prefix: prefix }).then(function (res) {
+          if (!res.ok) { PUI.toast(res.error || i18n.t('err.invalid_prefix'), 'warn'); return; }
+          mirrors = res.mirrors || mirrors;
+          disabledIds = res.disabledIds || disabledIds;
+          mirrorLabelInput.value = '';
+          mirrorPrefixInput.value = '';
+          renderMirrors();
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+      });
+
+      function fetchLogs() {
+        channel.request('command', { action: 'getLogs' }).then(function (res) {
+          var logs = Array.isArray(res.logs) ? res.logs : [];
+          if (!logs.length) {
+            logView.textContent = i18n.t('log.empty');
+            return;
+          }
+          logView.textContent = logs.map(function (entry) { return entry.at + ' [' + entry.tag + '] ' + JSON.stringify(entry.data); }).join('\n');
+        }).catch(function (e) { logView.textContent = i18n.t('log.empty'); });
+      }
+
+      copyLogsBtn.addEventListener('click', function () {
+        try {
+          navigator.clipboard.writeText(logView.textContent).then(function () { PUI.toast(i18n.t('control.saved'), 'success'); }).catch(function () { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); });
+        } catch (e) { PUI.toast(i18n.t('error.pageUnresponsive'), 'warn'); }
+      });
+      refreshLogsBtn.addEventListener('click', fetchLogs);
+
+      channel.on('progress', function (data) {
+        if (data && data.phase) setStatus('state.connecting');
+      });
+      channel.on('done', function (data) {
+        setStatus('state.detected', { count: (data && data.count) || 0 });
+      });
+      channel.on('error', function (data) {
+        setStatus('err.download_failed', { message: (data && data.message) || '' });
+      });
+
+      channel.request('command', { action: 'getState' }).then(function (state) {
+        if (state && state.localePreference) {
+          i18n.setLocale(state.localePreference);
+          languageSelect.value = state.localePreference;
+        }
+        return Promise.all([
+          channel.request('command', { action: 'getMirrors' }),
+          channel.request('command', { action: 'getLinkTypes' }),
+          channel.request('command', { action: 'getPageState' })
+        ]);
+      }).then(function (results) {
+        mirrors = (results[0] && results[0].mirrors) || [];
+        disabledIds = (results[0] && results[0].disabledIds) || [];
+        linkTypes = (results[1] && results[1].types) || linkTypes;
+        detectedEntries = (results[2] && results[2].detected) || [];
+        renderAll();
+        setStatus('state.detected', { count: detectedEntries.length });
+        fetchLogs();
+      }).catch(function (e) {
+        setStatus('error.pageUnresponsive');
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -838,6 +838,168 @@
       "license": "MIT",
       "featured": false,
       "status": "beta"
+    },
+    {
+      "id": "xload-0847f1a6",
+      "type": "script",
+      "title": "GitHub Download Accelerator for Release, Raw and ZIP Files",
+      "short": "Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.",
+      "description": "Large GitHub downloads often crawl or stall when the connection to the original host is slow. This script adds a release download accelerator entry beside release assets, raw files and ZIP archives while keeping the original GitHub link available. Open the panel from the floating button to reorder mirrors, disable the ones that stopped working, or add your own proxy node. Mirror availability and speed change over time, so a failed download can be retried with another mirror from the panel. The script runs only on GitHub pages and stores your mirror list and settings in your browser.",
+      "i18n": {
+        "zh-CN": {
+          "title": "GitHub 下载加速：Release、Raw 与 Code ZIP 镜像加速",
+          "short": "为 GitHub 的 Release 附件、Raw 文件与 ZIP 归档添加镜像下载入口，不必离开仓库页面即可更快下载大文件。"
+        },
+        "zh-TW": {
+          "title": "GitHub 下載加速：Release、Raw 與 Code ZIP 鏡像加速",
+          "short": "為 GitHub 的 Release 附件、Raw 檔案與 ZIP 壓縮檔加入鏡像下載入口，不必離開倉庫頁面就能更快下載大檔案。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html",
+      "installUrl": "/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.user.js",
+      "files": [
+        "panel.html",
+        "xload-0847f1a6.user.js"
+      ],
+      "tags": [
+        "github",
+        "download accelerator",
+        "release download",
+        "raw file",
+        "zip archive"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
+      "id": "xload-9eb77cc6",
+      "type": "script",
+      "title": "GitHub Single File Quick Download from the File List",
+      "short": "Adds a quick download action to every file row of a GitHub repository list so single files can be saved without opening the raw page.",
+      "description": "Downloading a single file from a repository normally means opening the file, finding the raw view and saving it. This script adds a quick download action to every file row so you can download file from file list directly. The panel lets you choose direct GitHub download or a configured mirror and enables automatic fallback when a mirror fails. Folder rows are skipped, and rows whose download address cannot be derived are left untouched.",
+      "i18n": {
+        "zh-CN": {
+          "title": "GitHub 单文件快捷下载：文件列表直接下载",
+          "short": "在 GitHub 文件列表的每个文件行添加快捷下载入口，无需打开文件页再找 Raw 按钮。"
+        },
+        "zh-TW": {
+          "title": "GitHub 單檔快速下載：檔案清單直接下載",
+          "short": "在 GitHub 檔案清單的每個檔案列加入快速下載入口，不必開啟檔案頁再找 Raw 按鈕。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-9eb77cc6/xload-9eb77cc6.html",
+      "installUrl": "/scripts/userscripts/xload-9eb77cc6/xload-9eb77cc6.user.js",
+      "files": [
+        "panel.html",
+        "xload-9eb77cc6.user.js"
+      ],
+      "tags": [
+        "github",
+        "file download",
+        "quick download",
+        "raw file"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
+      "id": "xload-c58e4d54",
+      "type": "script",
+      "title": "GitHub Git Clone Accelerator and SSH Address Copy",
+      "short": "Adds accelerated HTTPS and SSH clone addresses to the GitHub clone panel and copies a complete git clone command in one click.",
+      "description": "Cloning from GitHub can be painfully slow or fail completely on unreliable connections. This script adds accelerated HTTPS and SSH clone addresses to the existing clone panel and can copy a complete git clone command with one click. Open the panel to choose HTTPS or SSH, disable clone mirrors that stopped working, or add your own proxy host. The original GitHub address always stays visible, and when clipboard access is blocked the command is shown as selectable text instead. Settings are stored in your browser and the script runs only on GitHub pages.",
+      "i18n": {
+        "zh-CN": {
+          "title": "GitHub 克隆加速：一键复制 git clone 命令与 SSH 地址",
+          "short": "在 GitHub 克隆面板中提供加速的 HTTPS 与 SSH 地址，并一键复制完整 git clone 命令。"
+        },
+        "zh-TW": {
+          "title": "GitHub Clone 加速：一鍵複製 git clone 命令與 SSH 位址",
+          "short": "在 GitHub 複製面板中提供加速的 HTTPS 與 SSH 位址，並一鍵複製完整 git clone 命令。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-c58e4d54/xload-c58e4d54.html",
+      "installUrl": "/scripts/userscripts/xload-c58e4d54/xload-c58e4d54.user.js",
+      "files": [
+        "panel.html",
+        "xload-c58e4d54.user.js"
+      ],
+      "tags": [
+        "github",
+        "git clone",
+        "ssh clone",
+        "clone accelerator",
+        "clone command"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
+    },
+    {
+      "id": "xload-893d3dc8",
+      "type": "script",
+      "title": "GitHub Folder Download as ZIP for Any Subdirectory",
+      "short": "Packages the current GitHub subdirectory into a ZIP archive in the browser so a single folder can be downloaded without cloning the whole repository.",
+      "description": "Getting a single folder out of a GitHub repository usually means cloning everything or downloading the full archive. This script packages the current directory and its contents into a ZIP file directly in the browser, so you can download subdirectory content without cloning the whole repository. Open the panel to set the archive name template, size and file count limits, and the file source (direct or mirror). If some files fail, the panel lists them and lets you retry only those files. Very large directories are rejected with a clear message instead of producing a partial archive.",
+      "i18n": {
+        "zh-CN": {
+          "title": "GitHub 文件夹打包下载：子目录一键导出 ZIP",
+          "short": "把当前 GitHub 子目录在浏览器内打包成 ZIP，无需克隆整个仓库即可下载该文件夹。"
+        },
+        "zh-TW": {
+          "title": "GitHub 資料夾打包下載：子目錄一鍵匯出 ZIP",
+          "short": "在瀏覽器內把目前 GitHub 子目錄打包成 ZIP，不必複製整個倉庫就能下載該資料夾。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload",
+      "page": "/scripts/userscripts/xload-893d3dc8/xload-893d3dc8.html",
+      "installUrl": "/scripts/userscripts/xload-893d3dc8/xload-893d3dc8.user.js",
+      "files": [
+        "panel.html",
+        "xload-893d3dc8.user.js"
+      ],
+      "tags": [
+        "github",
+        "folder download",
+        "subdirectory",
+        "zip archive"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-18",
+      "license": "MIT",
+      "featured": false,
+      "status": "release-candidate"
     }
   ]
 }

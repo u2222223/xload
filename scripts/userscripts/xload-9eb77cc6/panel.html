@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="panel.documentTitle">GitHub Single File Quick Download from the File List - Panel</title>
+  <meta name="description" content="Adds a quick download action to every file row of a GitHub repository list so single files can be saved without opening the raw page.">
+  <meta name="keywords" content="xload">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body>
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1 data-i18n="title">GitHub Single File Quick Download from the File List</h1>
+        <p class="panel-subtitle" data-i18n="short">Adds a quick download action to every file row of a GitHub repository list so single files can be saved without opening the raw page.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <!-- 广告位：预留，后续统一接入。不要改动 class 名 -->
+      <div class="ad-slot ad-slot-top" aria-label="Advertisement" data-i18n-attr="aria-label:ad.label"></div>
+
+      <div class="panel-content">
+        <section class="pui-card" aria-label="Language" data-i18n-attr="aria-label:language.label">
+          <label for="xload-language" data-i18n="language.label">Language</label>
+          <select id="xload-language" class="pui-input">
+            <option value="auto" data-i18n="language.auto">Auto</option>
+            <option value="en" data-i18n="language.en">English</option>
+            <option value="zh-CN" data-i18n="language.zhCN">简体中文</option>
+            <option value="zh-TW" data-i18n="language.zhTW">繁體中文</option>
+          </select>
+        </section>
+        <!-- ==================== 功能 UI：开发节点按脚本功能填写 ====================
+             组件目录：/_preview/fab-panel-preview.html（仓库路径 _preview/fab-panel-preview.html）。
+             样式统一 D0 极简黑白（静态）：黑 header、白卡、黑白按钮/开关/滑条，无动画/过渡。
+             只能组合共享 panel.css 已定义的 pui-*/pb-* 组件；不得复制组件 CSS、另建主题，
+             或重定义颜色、圆角、阴影、动效及基础控件外观。业务 class 仅补组件无法表达的布局。
+             内联 <style> 仅黑白（#111/#fff/#d4d4d4/#e5e5e5/#ececec/#f4f4f4/#fafafa，
+             次要文字 #555/#888/#a3a3a3），禁止任何彩色系（#2563eb 等）。
+             把设置下发给油猴的主按钮文案一律用「保存配置」（toast「已保存配置」）。
+        ==================== -->
+        <section class="pui-card" aria-label="status">
+          <div class="pui-card-head">
+            <div>
+              <h2 class="pui-card-title" data-i18n="status.title">Current repository file list</h2>
+              <p id="current-url" class="pui-card-desc"></p>
+            </div>
+            <span id="count-badge" class="pui-badge">0</span>
+          </div>
+          <p id="status-help" class="pui-help" data-i18n="help.fileList">Open a repository file list on GitHub to use this feature.</p>
+        </section>
+
+        <section class="pui-card" aria-label="settings">
+          <h2 class="pui-card-title" data-i18n="settings.title">Settings</h2>
+
+          <div class="pb-sw">
+            <span>
+              <strong data-i18n="settings.enabled">Show quick download on file rows</strong>
+              <small data-i18n="settings.enabledHint">Add a download icon next to each file row</small>
+            </span>
+            <label class="pui-switch" for="xload-enabled">
+              <input type="checkbox" id="xload-enabled">
+              <i></i>
+            </label>
+          </div>
+
+          <div class="pui-field">
+            <label class="pui-label" for="xload-route" data-i18n="settings.route">Download route</label>
+            <select id="xload-route" class="pui-input">
+              <option value="direct" data-i18n="settings.routeDirect">Direct (GitHub raw)</option>
+              <option value="mirror" data-i18n="settings.routeMirror">Mirror</option>
+            </select>
+          </div>
+
+          <div class="pui-field">
+            <label class="pui-label" for="xload-mirror" data-i18n="settings.mirrorUrl">Mirror prefix</label>
+            <input id="xload-mirror" class="pui-input" type="url" placeholder="https://ghfast.top/https://raw.githubusercontent.com">
+            <div class="pui-help" data-i18n="settings.mirrorHint">Example: https://ghfast.top/https://raw.githubusercontent.com</div>
+          </div>
+
+          <div class="pb-sw">
+            <span>
+              <strong data-i18n="settings.autoFallback">Auto fallback to direct</strong>
+              <small data-i18n="settings.autoFallbackHint">Retry via GitHub raw when the mirror fails</small>
+            </span>
+            <label class="pui-switch" for="xload-fallback">
+              <input type="checkbox" id="xload-fallback">
+              <i></i>
+            </label>
+          </div>
+
+          <div class="pb-actions">
+            <button id="xload-save" class="pui-btn pui-btn-primary" data-i18n="control.save">Save settings</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="panel-footer">
+      <a href="/" target="_blank" rel="noopener">xload</a>
+      <a href="/listing.html" target="_blank" rel="noopener" data-i18n="footer.tools">Tools</a>
+      <a href="/privacy-policy.html" target="_blank" rel="noopener" data-i18n="footer.privacy">Privacy</a>
+    </footer>
+  </div>
+
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var I18N_DICT =
+/* XLOAD-I18N-DICT-START */
+{
+  "en": {
+    "title": "GitHub Single File Quick Download from the File List",
+    "short": "Adds a quick download action to every file row of a GitHub repository list so single files can be saved without opening the raw page.",
+    "panel.documentTitle": "GitHub Single File Quick Download from the File List - Panel",
+    "fab.label": "GitHub Single File Quick Download from the File List",
+    "ad.label": "Advertisement",
+    "language.label": "Language",
+    "language.auto": "Auto (browser)",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "Tools",
+    "footer.privacy": "Privacy",
+    "control.save": "Save settings",
+    "control.saved": "Settings saved",
+    "control.close": "Close",
+    "notice": "Notice",
+    "close": "Close",
+    "timeout": "The original page did not respond",
+    "error.pageUnresponsive": "The original page did not respond",
+    "status.title": "Current repository file list",
+    "status.url": "Current page",
+    "status.count": "{count} file(s) can be downloaded",
+    "status.noRepo": "Not on a repository file list",
+    "settings.title": "Settings",
+    "settings.enabled": "Show quick download on file rows",
+    "settings.enabledHint": "Add a download icon next to each file row",
+    "settings.route": "Download route",
+    "settings.routeDirect": "Direct (GitHub raw)",
+    "settings.routeMirror": "Mirror",
+    "settings.mirrorUrl": "Mirror prefix",
+    "settings.mirrorHint": "Example: https://ghfast.top/https://raw.githubusercontent.com",
+    "settings.autoFallback": "Auto fallback to direct",
+    "settings.autoFallbackHint": "Retry via GitHub raw when the mirror fails",
+    "action.download": "Download",
+    "state.downloading": "Starting download for {name}...",
+    "state.done": "Download started",
+    "err.notDownloadable": "This item cannot be downloaded",
+    "err.mirrorFailed": "Mirror failed, fallback to direct",
+    "err.invalidMirror": "Mirror URL must start with http:// or https://",
+    "help.fileList": "Open a repository file list on GitHub to use this feature.",
+    "file.empty": "No downloadable files on this page",
+    "log.title": "Recent logs",
+    "log.copy": "Copy logs"
+  },
+  "zh-CN": {
+    "title": "GitHub 单文件快捷下载：文件列表直接下载",
+    "short": "在 GitHub 文件列表的每个文件行添加快捷下载入口，无需打开文件页再找 Raw 按钮。",
+    "panel.documentTitle": "GitHub 单文件快捷下载：文件列表直接下载 - 功能面板",
+    "fab.label": "GitHub 单文件快捷下载：文件列表直接下载",
+    "ad.label": "广告",
+    "language.label": "语言",
+    "language.auto": "自动（浏览器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隐私政策",
+    "control.save": "保存配置",
+    "control.saved": "已保存配置",
+    "control.close": "关闭",
+    "notice": "提示",
+    "close": "关闭",
+    "timeout": "原页面未响应",
+    "error.pageUnresponsive": "原页面未响应",
+    "status.title": "当前仓库文件列表",
+    "status.url": "当前页面",
+    "status.count": "有 {count} 个文件可下载",
+    "status.noRepo": "当前不在仓库文件列表页",
+    "settings.title": "设置",
+    "settings.enabled": "在文件行显示快捷下载",
+    "settings.enabledHint": "在每个文件行旁添加下载入口",
+    "settings.route": "下载线路",
+    "settings.routeDirect": "直连（GitHub raw）",
+    "settings.routeMirror": "镜像",
+    "settings.mirrorUrl": "镜像前缀",
+    "settings.mirrorHint": "示例：https://ghfast.top/https://raw.githubusercontent.com",
+    "settings.autoFallback": "镜像失败自动回退直连",
+    "settings.autoFallbackHint": "镜像不可用时改用 GitHub raw 重试",
+    "action.download": "下载",
+    "state.downloading": "正在开始下载 {name}...",
+    "state.done": "已开始下载",
+    "err.notDownloadable": "该项不可下载",
+    "err.mirrorFailed": "镜像失败，已回退直连",
+    "err.invalidMirror": "镜像地址必须以 http:// 或 https:// 开头",
+    "help.fileList": "在 GitHub 打开仓库文件列表后即可使用。",
+    "file.empty": "当前页面没有可下载的文件",
+    "log.title": "最近日志",
+    "log.copy": "复制日志"
+  },
+  "zh-TW": {
+    "title": "GitHub 單檔快速下載：檔案清單直接下載",
+    "short": "在 GitHub 檔案清單的每個檔案列加入快速下載入口，不必開啟檔案頁再找 Raw 按鈕。",
+    "panel.documentTitle": "GitHub 單檔快速下載：檔案清單直接下載 - 功能面板",
+    "fab.label": "GitHub 單檔快速下載：檔案清單直接下載",
+    "ad.label": "廣告",
+    "language.label": "語言",
+    "language.auto": "自動（瀏覽器）",
+    "language.en": "English",
+    "language.zhCN": "简体中文",
+    "language.zhTW": "繁體中文",
+    "footer.tools": "工具列表",
+    "footer.privacy": "隱私政策",
+    "control.save": "儲存設定",
+    "control.saved": "已儲存設定",
+    "control.close": "關閉",
+    "notice": "提示",
+    "close": "關閉",
+    "timeout": "原頁面未回應",
+    "error.pageUnresponsive": "原頁面未回應",
+    "status.title": "目前倉庫檔案清單",
+    "status.url": "目前頁面",
+    "status.count": "有 {count} 個檔案可下載",
+    "status.noRepo": "目前不在倉庫檔案清單頁",
+    "settings.title": "設定",
+    "settings.enabled": "在檔案列顯示快速下載",
+    "settings.enabledHint": "在每個檔案列旁加入下載入口",
+    "settings.route": "下載線路",
+    "settings.routeDirect": "直連（GitHub raw）",
+    "settings.routeMirror": "鏡像",
+    "settings.mirrorUrl": "鏡像前綴",
+    "settings.mirrorHint": "範例：https://ghfast.top/https://raw.githubusercontent.com",
+    "settings.autoFallback": "鏡像失敗自動回退直連",
+    "settings.autoFallbackHint": "鏡像不可用時改用 GitHub raw 重試",
+    "action.download": "下載",
+    "state.downloading": "正在開始下載 {name}...",
+    "state.done": "已開始下載",
+    "err.notDownloadable": "該項無法下載",
+    "err.mirrorFailed": "鏡像失敗，已回退直連",
+    "err.invalidMirror": "鏡像網址必須以 http:// 或 https:// 開頭",
+    "help.fileList": "在 GitHub 開啟倉庫檔案清單後即可使用。",
+    "file.empty": "目前頁面沒有可下載的檔案",
+    "log.title": "最近日誌",
+    "log.copy": "複製日誌"
+  }
+}
+/* XLOAD-I18N-DICT-END */;
+
+function createI18n(taskId, dictionary, options) {
+    var opts = options || {};
+    var memoryLocale = null;
+    var dynamicText = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var allowedLocales = ['auto', 'en', 'zh-CN', 'zh-TW'];
+    var allowedAttributes = { title: true, placeholder: true, 'aria-label': true, alt: true };
+
+    function normalizeLocale(value) {
+      var locale = String(value || '').replace(/_/g, '-').toLowerCase();
+      if (/^zh(?:-|$)/.test(locale)) {
+        if (/^zh-(?:hant|tw|hk|mo)(?:-|$)/.test(locale)) return 'zh-TW';
+        return 'zh-CN';
+      }
+      return 'en';
+    }
+
+    function detectedLocale() {
+      var values = [];
+      try { values = navigator.languages || []; } catch (e) { values = []; }
+      if (!values.length) {
+        try { values = [navigator.language]; } catch (e) { values = []; }
+      }
+      for (var i = 0; i < values.length; i++) {
+        if (/^zh(?:-|$)/i.test(String(values[i] || ''))) return normalizeLocale(values[i]);
+      }
+      return 'en';
+    }
+
+    function readPreference() {
+      if (memoryLocale != null) return memoryLocale;
+      try {
+        var value = opts.get ? opts.get('locale', 'auto') : memoryLocale;
+        memoryLocale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      } catch (e) { memoryLocale = 'auto'; }
+      return memoryLocale;
+    }
+
+    function writePreference(value) {
+      memoryLocale = value;
+      try { if (opts.set) opts.set('locale', value); } catch (e) { /* denied storage uses memory */ }
+    }
+
+    function getLocale() {
+      var preference = readPreference();
+      return preference === 'auto' ? detectedLocale() : preference;
+    }
+
+    function t(key, vars) {
+      var locale = getLocale();
+      var current = dictionary[locale] || {};
+      var english = dictionary.en || {};
+      var value = current[key];
+      if (typeof value !== 'string') value = english[key];
+      if (typeof value !== 'string') value = key;
+      return value.replace(/\{([a-zA-Z0-9_]+)\}/g, function (_, name) {
+        return vars && Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '{' + name + '}';
+      });
+    }
+
+    function setText(element, key, vars) {
+      if (!element || typeof element.setAttribute !== 'function') return element;
+      var normalizedKey = String(key || '');
+      element.setAttribute('data-i18n', normalizedKey);
+      if (dynamicText) dynamicText.set(element, { key: normalizedKey, vars: vars || null });
+      element.textContent = t(normalizedKey, vars);
+      return element;
+    }
+
+    function apply(root) {
+      var scope = root || document;
+      var textNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n]') : [];
+      for (var i = 0; i < textNodes.length; i++) {
+        var saved = dynamicText && dynamicText.get(textNodes[i]);
+        var key = saved ? saved.key : textNodes[i].getAttribute('data-i18n');
+        textNodes[i].textContent = t(key, saved && saved.vars);
+      }
+      var attrNodes = scope.querySelectorAll ? scope.querySelectorAll('[data-i18n-attr]') : [];
+      for (var j = 0; j < attrNodes.length; j++) {
+        var specs = String(attrNodes[j].getAttribute('data-i18n-attr') || '').split(',');
+        for (var k = 0; k < specs.length; k++) {
+          var pair = specs[k].split(':');
+          var attr = String(pair.shift() || '').trim().toLowerCase();
+          var key = pair.join(':').trim();
+          if (allowedAttributes[attr] && key) attrNodes[j].setAttribute(attr, t(key));
+        }
+      }
+      try { if (document.documentElement) document.documentElement.lang = getLocale(); } catch (e) { /* ignore */ }
+      return api;
+    }
+
+    function setLocale(value) {
+      var locale = allowedLocales.indexOf(value) >= 0 ? value : 'auto';
+      writePreference(locale);
+      apply();
+      return locale;
+    }
+
+    var api = { taskId: String(taskId || ''), t: t, setText: setText, apply: apply, getLocale: getLocale, getPreference: readPreference, setLocale: setLocale, normalizeLocale: normalizeLocale };
+    return api;
+  }
+
+      var i18n = createI18n('xload-9eb77cc6', I18N_DICT, {
+        get: function (key, fallback) {
+          try { var value = localStorage.getItem('xload-9eb77cc6:i18n:' + key); return value == null ? fallback : value; }
+          catch (e) { return fallback; }
+        },
+        set: function (key, value) {
+          try { localStorage.setItem('xload-9eb77cc6:i18n:' + key, value); } catch (e) { /* denied storage */ }
+        }
+      });
+      i18n.apply();
+      var channel = new PanelChannel('xload-9eb77cc6');
+      var enabledSwitch = document.getElementById('xload-enabled');
+      var routeSelect = document.getElementById('xload-route');
+      var mirrorInput = document.getElementById('xload-mirror');
+      var fallbackSwitch = document.getElementById('xload-fallback');
+      var saveBtn = document.getElementById('xload-save');
+      var countBadge = document.getElementById('count-badge');
+      var currentUrlEl = document.getElementById('current-url');
+      var statusHelp = document.getElementById('status-help');
+
+      function isValidHttpUrl(value) {
+        try { var u = new URL(value); return u.protocol === 'http:' || u.protocol === 'https:'; } catch (e) { return false; }
+      }
+      function updateMirrorDisabled() { mirrorInput.disabled = routeSelect.value !== 'mirror'; }
+      function renderState(data) {
+        if (!data) return;
+        if (data.config) {
+          enabledSwitch.checked = !!data.config.enabled;
+          routeSelect.value = data.config.route === 'mirror' ? 'mirror' : 'direct';
+          mirrorInput.value = data.config.mirror || '';
+          fallbackSwitch.checked = !!data.config.autoFallback;
+          updateMirrorDisabled();
+        }
+        if (typeof data.url === 'string') currentUrlEl.textContent = data.url;
+        var files = Array.isArray(data.files) ? data.files : [];
+        countBadge.textContent = String(files.length);
+        if (files.length === 0) { i18n.setText(statusHelp, 'file.empty'); }
+        else { i18n.setText(statusHelp, 'status.count', { count: files.length }); }
+      }
+      routeSelect.addEventListener('change', updateMirrorDisabled);
+      saveBtn.addEventListener('click', function () {
+        var mirror = mirrorInput.value.trim();
+        if (routeSelect.value === 'mirror' && !isValidHttpUrl(mirror)) {
+          PUI.toast(i18n.t('err.invalidMirror'), 'error'); return;
+        }
+        var cfg = { enabled: enabledSwitch.checked, route: routeSelect.value, mirror: mirror, autoFallback: fallbackSwitch.checked };
+        channel.request('command', { action: 'setConfig', config: cfg }).then(function (res) {
+          renderState({ config: res.config });
+          PUI.toast(i18n.t('control.saved'), 'success');
+        }).catch(function (e) {
+          PUI.toast(i18n.t('error.pageUnresponsive') + ': ' + e.message, 'warn');
+        });
+      });
+      channel.on('progress', function (data) { if (data && data.path) PUI.toast(i18n.t('state.downloading', { name: data.path }), 'info'); });
+      channel.on('done', function () { PUI.toast(i18n.t('state.done'), 'success'); });
+      channel.on('error', function (data) { PUI.toast(data && data.message ? data.message : i18n.t('error.pageUnresponsive'), 'error'); });
+      channel.request('command', { action: 'getFileListState' }).then(renderState).catch(function (e) {
+        currentUrlEl.textContent = location.href;
+        countBadge.textContent = '0';
+        i18n.setText(statusHelp, 'error.pageUnresponsive');
+      });
+
+      if (typeof PUI.setTranslator === 'function') PUI.setTranslator(i18n.t);
+      channel.translate = i18n.t;
+      var languageSelect = document.getElementById('xload-language');
+      languageSelect.value = i18n.getPreference();
+      languageSelect.addEventListener('change', function () {
+        var preference = i18n.setLocale(languageSelect.value);
+        languageSelect.value = preference;
+        channel.request('command', { action: 'setLanguage', locale: preference }).catch(function () {
+          PUI.toast(i18n.t('error.pageUnresponsive'), 'warn');
+        });
+      });
+      channel.request('command', { action: 'getState' }).then(function (state) {
+        if (state && state.localePreference) {
+          i18n.setLocale(state.localePreference);
+          languageSelect.value = state.localePreference;
+        }
+      }).catch(function () { /* panel preference remains usable independently */ });
+      // ==================== 功能逻辑：开发节点按脚本功能填写 ====================
+      // 约定消息类型：
+      //   panel -> 油猴： channel.send('command', {...}) 或 channel.request('command', {...})
+      //   油猴 -> panel： channel.send('progress', {...}) / channel.send('done', {...})
+      // 监听油猴消息： channel.on('progress', function(data){ ... })
+      // 动态本地化状态（连接中/已连接/错误/含变量的进度等）必须用
+      //   i18n.setText(element, 'status.connected', { count: data.count });
+      // 它会同步当前词条和变量，之后 setLocale() 可正确重译当前状态。
+      // 用户输入、网址、日志、计数结果等原始数据输出不要带 data-i18n，直接用 textContent。
+      //
+      // 跨源说明：面板(xload.net)与脚本(目标站点)跨源，BroadcastChannel 同源才互通；
+      //   共用壳 panel.js 的 PanelChannel 已封装跨源通道（有 window.opener 走 postMessage，
+      //   同源才走 BroadcastChannel），本页无需区分；油猴侧须配套 window.message 监听 +
+      //   三级回包（panelWin → event.source → BroadcastChannel） + setPanelWin/getPanelWin。
+      //   油猴侧 createChannel 直接用共享模板 templates/channel.js，勿自行重写。
+      //
+      // 示例（按需删除）：
+      // channel.request('greet', { name: 'xload' }, 5000).then(function (data) {
+      //   PUI.toast('收到回复：' + data.message, 'success');
+      // }).catch(function (e) {
+      //   PUI.toast('原页面未响应：' + e.message, 'warn');
+      // });
+    })();
+  </script>
+</body>
+</html>
