@@ -256,6 +256,104 @@ textarea.pui-input {
   min-height: 90px;
 }
 
+/* ---------- 状态区（统一框架：waiting/ready/running/done/failed） ---------- */
+.panel-status {
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: #f4f4f4;
+  border-left: 3px solid #111;
+  margin-bottom: 20px;
+}
+
+.panel-status-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #999;
+  flex: none;
+}
+
+.panel-status-text {
+  font-size: 13px;
+  color: #111;
+}
+
+.panel-status[data-state="waiting"] .panel-status-dot {
+  background: #999;
+  animation: panel-status-pulse 1.4s ease-in-out infinite;
+}
+
+.panel-status[data-state="ready"] {
+  border-left-color: #111;
+  background: #f0f0f0;
+}
+
+.panel-status[data-state="ready"] .panel-status-dot {
+  background: #111;
+}
+
+.panel-status[data-state="running"] .panel-status-dot {
+  background: #111;
+  animation: panel-status-pulse 0.9s ease-in-out infinite;
+}
+
+.panel-status[data-state="done"] .panel-status-dot {
+  background: #111;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.panel-status[data-state="failed"] {
+  border-left-color: #111;
+  background: #e8e8e8;
+}
+
+.panel-status[data-state="failed"] .panel-status-dot {
+  background: #111;
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+@keyframes panel-status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.panel-progress {
+  margin-top: 10px;
+}
+
+.panel-progress-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #ddd;
+  overflow: hidden;
+}
+
+.panel-progress-fill {
+  height: 100%;
+  width: 0;
+  background: #111;
+  transition: width 0.25s ease;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
 /* ---------- 通用功能组件（D0：pb-* 系列） ---------- */
 .pb-status {
   padding: 10px 14px;

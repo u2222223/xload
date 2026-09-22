@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>更换背景色 - 功能面板</title>
+  <meta name="description" content="如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-a4a5b91f20da">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>更换背景色</h1>
+        <p class="panel-subtitle">如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="color-settings">
+          <div class="pui-card-head">
+            <div class="pui-card-title">背景色设置</div>
+
+            <div class="pui-card-desc">设置并应用页面背景色，仅对 body 未设置内联背景色的页面生效</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-bgColor">背景颜色（HEX，如 #e8e2d6）</label>
+              <input class="pui-input" id="ctl-bgColor" data-control="bgColor" data-type="text" type="text" value="#e8e2d6">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-autoApply">页面加载时自动应用</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-autoApply" data-control="autoApply" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply">应用背景色</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset">恢复默认颜色</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="site-exclude">
+          <div class="pui-card-head">
+            <div class="pui-card-title">站点排除</div>
+
+            <div class="pui-card-desc">对当前网站禁用或重新启用自动更换背景色</div>
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="toggleExclude">排除/取消排除本站</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"已完成","failed":"执行失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

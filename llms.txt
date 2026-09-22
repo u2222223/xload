@@ -8,29 +8,19 @@ Catalog: https://xload.net/
 
 ## Userscripts
 
-- [Telegram网页版媒体下载器](https://xload.net/scripts/userscripts/xload-78d1cd2c/xload-78d1cd2c.html): 一键下载Telegram网页版图片视频语音
-- [抖音播放器增强](https://xload.net/scripts/userscripts/scriptcat-2534-2/scriptcat-2534-2.html): 画质记忆、禁止自动播放、自定义全屏与背景色
-- [抖音界面沉浸优化](https://xload.net/scripts/userscripts/scriptcat-2534-3/scriptcat-2534-3.html): 沉浸模式+手机模式+自定义主题，专注视频内容
-- [抖音互动内容屏蔽](https://xload.net/scripts/userscripts/scriptcat-2534-4/scriptcat-2534-4.html): 弹幕、评论、礼物特效统一屏蔽，关键词与用户黑名单
-- [全局字体渲染增强](https://xload.net/scripts/userscripts/greasyfork-416688-1/greasyfork-416688-1.html): 无需 MacType，享受细腻网页字体阅读体验
-- [学术论文免费下载工具](https://xload.net/scripts/userscripts/scriptcat-1397-1/scriptcat-1397-1.html): 多平台学术论文一键免费下载
-- [HTML5视频播放增强](https://xload.net/scripts/userscripts/xload-d5aaecca/xload-d5aaecca.html): 全能视频播放增强：倍速/截图/画中画/全屏
-- [百度网盘视频播放增强](https://xload.net/scripts/userscripts/xload-578db12d/xload-578db12d.html): 百度网盘视频播放增强，倍速字幕画质全免费
-- [通用无限滚动翻页](https://xload.net/scripts/userscripts/xload-b79c77d9/xload-b79c77d9.html): 自动加载下一页，无缝瀑布流浏览
-- [Zhihu Content Filter](https://xload.net/scripts/userscripts/xload-afe511cf/xload-afe511cf.html): Filter Zhihu cards by type, phrases, users, votes, age, and labeled content.
-- [Zhihu Dark Reading Helper](https://xload.net/scripts/userscripts/xload-8ce5e45a/xload-8ce5e45a.html): Apply a configurable dark reading theme to Zhihu pages and dynamic surfaces.
-- [YouTube Ad Controls](https://xload.net/scripts/userscripts/xload-2c12e291/xload-2c12e291.html): Manage targeted ad handling on YouTube with an immediate off switch.
-- [Discord bulk delete messages with preview and stop controls](https://xload.net/scripts/userscripts/xload-d401bffa/xload-d401bffa.html): Preview and delete messages in Discord channels or DMs with adjustable delays, progress counts, and a stop control.
-- [YouTube SponsorBlock Controls](https://xload.net/scripts/userscripts/xload-d7e6bded/xload-d7e6bded.html): Control SponsorBlock skipping and replay skipped segments on YouTube.
-- [通用小说下载器](https://xload.net/scripts/userscripts/greasyfork-406070-1/greasyfork-406070-1.html): 一键下载全网小说，支持百站解析
-- [微软积分商城自动签到](https://xload.net/scripts/userscripts/scriptcat-1703-1/scriptcat-1703-1.html): 自动完成微软积分每日任务
-- [抖音视频流过滤](https://xload.net/scripts/userscripts/scriptcat-2534-1/scriptcat-2534-1.html): 自定义过滤抖音视频流中的广告、直播和不感兴趣内容
-- [X Long Post Expander — Read Available Full Text](https://xload.net/scripts/userscripts/xload-0157d469/xload-0157d469.html): X long post expander activates supported expansion controls so you can read available long-form text with fewer repeated clicks.
-- [Pixiv Artist UID, Profile Media, and Work Type Labels](https://xload.net/scripts/userscripts/xload-01b8f240/xload-01b8f240.html): Show and copy Pixiv artist IDs, expose valid profile image links, and label loaded works as single, multi-page, or ugoira
-- [Product price history tracker & browsing insights for shopping sites](https://xload.net/scripts/userscripts/xload-1b4011f3/xload-1b4011f3.html): Tracks product prices you view on supported stores and shows the price trend so you can decide when to buy.
-- [123pan Download Limit Unlock](https://xload.net/scripts/userscripts/xload-2fd44db0/xload-2fd44db0.html): Download large files from 123pan drive and share pages without the size limit.
-- [YouTube CPU Tamer – Reduce CPU Usage and Battery Drain](https://xload.net/scripts/userscripts/xload-f023e122/xload-f023e122.html): Reduces YouTube's CPU usage and battery drain on watch, home, embedded, and Music pages by aligning timers with the browser's rendering cycle.
-- [GitHub Download Accelerator for Release, Raw and ZIP Files](https://xload.net/scripts/userscripts/xload-0847f1a6/xload-0847f1a6.html): Adds mirror download links next to GitHub release assets, raw files and ZIP archives so large files download faster without leaving the repository page.
-- [GitHub Single File Quick Download from the File List](https://xload.net/scripts/userscripts/xload-9eb77cc6/xload-9eb77cc6.html): Adds a quick download action to every file row of a GitHub repository list so single files can be saved without opening the raw page.
-- [GitHub Git Clone Accelerator and SSH Address Copy](https://xload.net/scripts/userscripts/xload-c58e4d54/xload-c58e4d54.html): Adds accelerated HTTPS and SSH clone addresses to the GitHub clone panel and copies a complete git clone command in one click.
-- [GitHub Folder Download as ZIP for Any Subdirectory](https://xload.net/scripts/userscripts/xload-893d3dc8/xload-893d3dc8.html): Packages the current GitHub subdirectory into a ZIP archive in the browser so a single folder can be downloaded without cloning the whole repository.
+<!-- XLOAD:LLMS:ENTRIES:START -->
+- [Telegra.ph 图片打包下载](https://xload.net/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html): 获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。
+- [rbxsnipe](https://xload.net/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html): roblox private server sniper
+- [유튜브 팟 플레이어로 보기 버튼 추가](https://xload.net/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html): 유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.
+- [Bilibili-banned-contents-hider](https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html): Hide banned users' contents on Bilibili. Bilibili may push content created by
+- [RuTracker Full-Text Search in Topics](https://xload.net/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.html): Allows to search for text on all pages of RuTracker topics
+- [更换背景色](https://xload.net/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.html): 如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。
+- [ServiceNow - Update Ticket Number](https://xload.net/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.html): Replace the number input field with a link to the current ticket
+- [查看当前BUFF账号信息插件](https://xload.net/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.html): 查看当前BUFF账号信息插件。
+- [Ed Commerz Dietmar Glage](https://xload.net/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.html): Insert multiple transactions with specified details
+- [Req Commerz Dietmar Glage](https://xload.net/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.html): Insert multiple transactions with specified details and update balance
+- [YouTube: Audio Only](https://xload.net/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.html): No Video Streaming
+- [Bux auto claim](https://xload.net/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.html): Renda Extra
+- [NovelAI Disable Backward](https://xload.net/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.html): Disable Backward on NovelAI's image generation screen. This prevents the
+- [change text](https://xload.net/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.html): меняет выделенный текст на странице
+<!-- XLOAD:LLMS:ENTRIES:END -->

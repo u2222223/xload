@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유튜브 팟 플레이어로 보기 버튼 추가 - 功能面板</title>
+  <meta name="description" content="유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-7cd63676e4c7">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>유튜브 팟 플레이어 컨트롤 패널</h1>
+        <p class="panel-subtitle">유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">스크립트 연결 대기 중…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="potplayer">
+          <div class="pui-card-head">
+            <div class="pui-card-title">팟 플레이어로 열기</div>
+
+            <div class="pui-card-desc">현재 유튜브 영상을 팟 플레이어로 엽니다. 열 때 유튜브 재생은 일시 정지됩니다.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-open-mode">시작 위치</label>
+              <select class="pui-input" id="ctl-open-mode" data-control="open-mode" data-type="select">
+
+                <option value="현재 위치부터" selected>현재 위치부터</option>
+
+                <option value="직접 입력">직접 입력</option>
+
+                <option value="처음부터">처음부터</option>
+
+              </select>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-custom-seconds">직접 입력 시작 시간(초)</label>
+              <input class="pui-input" id="ctl-custom-seconds" data-control="custom-seconds" data-type="number" type="number" value="0">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="open-potplayer">팟 플레이어로 열기</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="playback">
+          <div class="pui-card-head">
+            <div class="pui-card-title">재생 제어</div>
+
+            <div class="pui-card-desc">유튜브 플레이어의 재생 상태를 제어하고 현재 재생 정보를 확인합니다.</div>
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="pause-video">영상 일시 정지</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="video-status">재생 정보 조회</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"스크립트 연결 대기 중…","running":"실행 중…","done":"완료","failed":"실행 실패"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

@@ -231,6 +231,80 @@
     return api;
   };
 
+  // ---------- PanelPage：面板页统一启动器 ----------
+  // 读取 body[data-panel-task] 建立通道；驱动状态机 waiting → ready → running → done/failed。
+  // 操作按钮：点击后以 action.id 为命令发起请求-响应，携带全部 [data-control] 控件值。
+  var PanelPage = {
+    init: function () {
+      var taskId = (document.body && document.body.getAttribute('data-panel-task')) || '';
+      var copy = { connecting: '等待脚本连接…', running: '正在执行…', done: '已完成', failed: '执行失败' };
+      var statusSection = document.getElementById('panel-status');
+      var statusText = document.getElementById('panel-status-text');
+      var progress = document.getElementById('panel-progress');
+      var progressFill = document.getElementById('panel-progress-fill');
+      try {
+        var raw = document.getElementById('panel-loading');
+        if (raw) {
+          var parsed = JSON.parse(raw.textContent || '{}');
+          for (var k in copy) {
+            if (typeof parsed[k] === 'string' && parsed[k]) copy[k] = parsed[k];
+          }
+        }
+      } catch (e) { /* 使用默认文案 */ }
+
+      function setState(state, text) {
+        if (statusSection) statusSection.setAttribute('data-state', state);
+        if (statusText && text != null) statusText.textContent = text;
+        if (progress) progress.hidden = state !== 'running';
+      }
+
+      var channel = new PanelChannel(taskId);
+      channel.on('hello', function () {
+        setState('ready', null);
+        if (statusText) statusText.textContent = '脚本已连接';
+      });
+      channel.on('progress', function (data) {
+        var d = data || {};
+        setState('running', copy.running);
+        if (progressFill && typeof d.pct === 'number') {
+          progressFill.style.width = Math.max(0, Math.min(100, Number(d.pct) || 0)) + '%';
+        }
+      });
+      channel.on('done', function (data) {
+        setState('done', (data && data.text) || copy.done);
+      });
+      channel.on('error', function (data) {
+        setState('failed', (data && data.text) || copy.failed);
+      });
+
+      var controls = document.querySelectorAll('[data-control]');
+      function collectControls() {
+        var out = {};
+        for (var i = 0; i < controls.length; i++) {
+          var el = controls[i];
+          var id = el.getAttribute('data-control');
+          if (!id) continue;
+          out[id] = el.getAttribute('data-type') === 'switch' ? !!el.checked : el.value;
+        }
+        return out;
+      }
+      var buttons = document.querySelectorAll('[data-action]');
+      for (var j = 0; j < buttons.length; j++) {
+        (function (btn) {
+          var actionId = btn.getAttribute('data-action');
+          btn.addEventListener('click', function () {
+            channel.request(actionId, collectControls()).catch(function (err) {
+              PUI.toast((err && err.message) || '操作失败', 'error');
+            });
+          });
+        })(buttons[j]);
+      }
+      setState('waiting', copy.connecting);
+      return channel;
+    }
+  };
+
   window.PanelChannel = PanelChannel;
   window.PUI = PUI;
+  window.PanelPage = PanelPage;
 })();
