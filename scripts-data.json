@@ -3,6 +3,7 @@
     "name": "xload",
     "tagline": "Fast, free and safe downloads for browser userscripts",
     "url": "https://xload.net",
+    "github": "https://github.com/u2222223/xload",
     "adsense": {
       "publisherId": "pub-8681634724543084",
       "enabled": true,
@@ -59,7 +60,7 @@
       "short": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
       "description": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
       "page": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html",
       "installUrl": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
       "files": [
@@ -89,7 +90,7 @@
       "short": "roblox private server sniper",
       "description": "roblox private server sniper",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
       "page": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html",
       "installUrl": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
       "files": [
@@ -119,7 +120,7 @@
       "short": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
       "description": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
       "page": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html",
       "installUrl": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
       "files": [
@@ -149,7 +150,7 @@
       "short": "Hide banned users' contents on Bilibili. Bilibili may push content created by",
       "description": "Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
       "page": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html",
       "installUrl": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
       "files": [
@@ -179,7 +180,7 @@
       "short": "Allows to search for text on all pages of RuTracker topics",
       "description": "Allows to search for text on all pages of RuTracker topics",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
       "page": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.html",
       "installUrl": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
       "files": [
@@ -211,7 +212,7 @@
       "short": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。",
       "description": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。默认颜色 #e8e2d6，现支持通过功能面板动态设置颜色与自动应用开关，无需再修改代码。",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
       "page": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.html",
       "installUrl": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
       "files": [
@@ -241,7 +242,7 @@
       "short": "Replace the number input field with a link to the current ticket",
       "description": "Replace the number input field with a link to the current ticket",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
       "page": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.html",
       "installUrl": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
       "files": [
@@ -271,7 +272,7 @@
       "short": "查看当前BUFF账号信息插件。",
       "description": "查看当前BUFF账号信息插件。",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
       "page": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.html",
       "installUrl": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
       "files": [
@@ -301,7 +302,7 @@
       "short": "Insert multiple transactions with specified details",
       "description": "Insert multiple transactions with specified details",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
       "page": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.html",
       "installUrl": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
       "files": [
@@ -332,7 +333,7 @@
       "short": "Insert multiple transactions with specified details and update balance",
       "description": "Insert multiple transactions with specified details and update balance",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
       "page": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.html",
       "installUrl": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
       "files": [
@@ -362,7 +363,7 @@
       "short": "No Video Streaming",
       "description": "No Video Streaming",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
       "page": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.html",
       "installUrl": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
       "files": [
@@ -394,7 +395,7 @@
       "short": "Renda Extra",
       "description": "Renda Extra",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
       "page": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.html",
       "installUrl": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
       "files": [
@@ -426,7 +427,7 @@
       "short": "Disable Backward on NovelAI's image generation screen. This prevents the",
       "description": "Disable Backward on NovelAI's image generation screen. This prevents the deletion of generated images due to browser backward operations.",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
       "page": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.html",
       "installUrl": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
       "files": [
@@ -456,7 +457,7 @@
       "short": "меняет выделенный текст на странице",
       "description": "меняет выделенный текст на странице",
       "i18n": {},
-      "github": "",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
       "page": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.html",
       "installUrl": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
       "files": [
