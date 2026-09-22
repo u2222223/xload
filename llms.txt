@@ -9,6 +9,8 @@ Catalog: https://xload.net/
 ## Userscripts
 
 <!-- XLOAD:LLMS:ENTRIES:START -->
+- [客優雲庫存清單-功能](https://xload.net/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.html): 客優雲庫存清單 功能
+- [客優雲自動更新安全庫存 on 採購建議](https://xload.net/scripts/userscripts/xload-222085578d29/xload-222085578d29.html): 客優雲自動更新安全庫存 on 採購建議 功能
 - [Telegra.ph 图片打包下载](https://xload.net/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html): 获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。
 - [rbxsnipe](https://xload.net/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html): roblox private server sniper
 - [유튜브 팟 플레이어로 보기 버튼 추가](https://xload.net/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html): 유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.

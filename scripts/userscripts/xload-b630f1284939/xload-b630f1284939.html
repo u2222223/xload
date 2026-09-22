@@ -10,6 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Bilibili-banned-contents-hider","description":"Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html","installUrl":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"B站拉黑内容隐藏","description":"隐藏 B 站拉黑用户发布的内容。B 站可能推送你已拉黑用户创建的内容，本脚本用于移除这些内容，同时移除推广与广告。","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html","installUrl":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"B站封鎖內容隱藏","description":"隱藏 B 站封鎖使用者發布的內容。B 站可能推送你已封鎖使用者建立的內容，本腳本用於移除這些內容，同時移除推廣與廣告。","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html","installUrl":"https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
 
   <!-- Google AdSense consent + auto ads -->
   <script>
@@ -23,13 +24,13 @@
   <link rel="stylesheet" href="/assets/panel/panel.css">
   <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
 </head>
-<body data-nav="script">
+<body data-nav="script" data-script-id="xload-b630f1284939">
 
   <div id="chrome-header"></div>
 
   <main>
     <div class="container page">
-      <nav class="crumb"><a href="/">Home</a> &rsaquo; <span>Bilibili-banned-contents-hider</span></nav>
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>Bilibili-banned-contents-hider</span></nav>
 
       <div class="detail-grid">
         <div>
@@ -44,32 +45,32 @@
           </div>
 
           <div class="prose">
-            <h2>Overview</h2>
+            <h2 data-site-ui="detailOverview">Overview</h2>
             <p>Hide banned users&#39; contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed</p>
 
-            <h2>How to install &amp; use</h2>
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
             <ol>
-              <li>Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
-              <li>Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
-              <li>Open the target site and use the script as documented.</li>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
             </ol>
           </div>
         </div>
 
         <aside>
           <div class="sidebar-card">
-            <a class="btn btn-block" href="https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js" target="_blank" rel="noopener">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
               Download / install
             </a>
           </div>
 
           <div class="sidebar-card">
-            <h3>Details</h3>
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
             <div class="meta-list">
-              <div class="row"><span class="k">Type</span><span class="v">Userscript</span></div>
-              <div class="row"><span class="k">Version</span><span class="v">V0.6.1</span></div>
-              <div class="row"><span class="k">Last updated</span><span class="v">2026-09-21</span></div>
-              <div class="row"><span class="k">Downloads</span><span class="v">0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">V0.6.1</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-21</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
             </div>
           </div>
         </aside>

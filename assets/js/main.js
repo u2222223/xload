@@ -35,7 +35,16 @@
       privacyPolicy: "Privacy Policy", termsOfService: "Terms of Service", cookiePolicy: "Cookie Policy",
       rightsReserved: "All rights reserved.",
       downloadsNote: "Downloads are linked to our GitHub releases &mdash; we never host files directly.",
-      footerTagline: "Fast, free and safe downloads for browser userscripts"
+      footerTagline: "Fast, free and safe downloads for browser userscripts",
+      detailOverview: "Overview",
+      detailInstallHeading: "How to install & use",
+      detailInstallStep1: "Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.",
+      detailInstallStep2: "Click the \"Download / install\" button to open the script source on GitHub and install it with your userscript manager.",
+      detailInstallStep3: "Open the target site and use the script as documented.",
+      detailDetailsHeading: "Details",
+      detailType: "Type", detailTypeValue: "Userscript",
+      detailVersion: "Version", detailLastUpdated: "Last updated", detailDownloads: "Downloads",
+      detailDownloadButton: "Download / install"
     },
     "zh-CN": {
       home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
@@ -68,7 +77,16 @@
       privacyPolicy: "隐私政策", termsOfService: "服务条款", cookiePolicy: "Cookie 政策",
       rightsReserved: "保留所有权利。",
       downloadsNote: "下载链接到我们的 GitHub 发行版 &mdash; 我们从不直接托管文件。",
-      footerTagline: "快速、免费、安全地下载浏览器用户脚本"
+      footerTagline: "快速、免费、安全地下载浏览器用户脚本",
+      detailOverview: "概述",
+      detailInstallHeading: "安装与使用",
+      detailInstallStep1: "为浏览器安装 Tampermonkey 或 Violentmonkey 等用户脚本管理器。",
+      detailInstallStep2: "点击“下载 / 安装”按钮打开脚本源码页（GitHub），并在用户脚本管理器中完成安装。",
+      detailInstallStep3: "打开目标网站，按说明使用脚本。",
+      detailDetailsHeading: "详细信息",
+      detailType: "类型", detailTypeValue: "用户脚本",
+      detailVersion: "版本", detailLastUpdated: "更新时间", detailDownloads: "下载次数",
+      detailDownloadButton: "下载 / 安装"
     },
     "zh-TW": {
       home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
@@ -101,7 +119,16 @@
       privacyPolicy: "隱私政策", termsOfService: "服務條款", cookiePolicy: "Cookie 政策",
       rightsReserved: "保留所有權利。",
       downloadsNote: "下載連結到我們的 GitHub 發行版 &mdash; 我們從不直接託管檔案。",
-      footerTagline: "快速、免費、安全地下載瀏覽器使用者腳本"
+      footerTagline: "快速、免費、安全地下載瀏覽器使用者腳本",
+      detailOverview: "概述",
+      detailInstallHeading: "安裝與使用",
+      detailInstallStep1: "為瀏覽器安裝 Tampermonkey 或 Violentmonkey 等使用者腳本管理器。",
+      detailInstallStep2: "點擊「下載 / 安裝」按鈕開啟腳本原始碼頁面（GitHub），並在使用者腳本管理器中完成安裝。",
+      detailInstallStep3: "開啟目標網站，依說明使用腳本。",
+      detailDetailsHeading: "詳細資訊",
+      detailType: "類型", detailTypeValue: "使用者腳本",
+      detailVersion: "版本", detailLastUpdated: "更新時間", detailDownloads: "下載次數",
+      detailDownloadButton: "下載 / 安裝"
     }
   };
   var activeSiteLocale = "en";
@@ -200,6 +227,36 @@
     return (SITE_UI[activeSiteLocale] && SITE_UI[activeSiteLocale][key]) || SITE_UI.en[key] || key;
   }
 
+  /* ---------------- script detail page ---------------- */
+  function applyDetailLocale(value) {
+    var id = document.body.getAttribute("data-script-id");
+    if (!id) return;
+    var item = null;
+    var scripts = (data && data.scripts) || [];
+    for (var i = 0; i < scripts.length; i++) {
+      if (scripts[i].id === id) { item = scripts[i]; break; }
+    }
+    if (!item) return;
+    var locale = resolvedLocale(value);
+    var loc = (item.i18n && item.i18n[locale]) || {};
+    var title = loc.title || item.title || "";
+    var short = loc.short || item.short || "";
+    var description = loc.description || item.description || "";
+    var siteName = (data && data.site && data.site.name) || "xload";
+    document.title = title + " — " + siteName;
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", short);
+    var crumb = document.querySelector(".crumb span");
+    if (crumb) crumb.textContent = title;
+    var h1 = document.querySelector(".detail-hero h1");
+    if (h1) h1.textContent = title;
+    var lead = document.querySelector(".detail-hero .lead");
+    if (lead) lead.textContent = short;
+    var overview = document.querySelector(".prose h2 + p");
+    if (overview) overview.textContent = description;
+  }
+  window.xloadApplyReleaseLocale = applyDetailLocale;
+
   /* ---------------- chrome (header / footer) ---------------- */
   function enabledTypes() {
     if (!data) return ["script"];
@@ -222,8 +279,7 @@
     nav += navLink("/about.html", "About", active === "about", "about");
     var name = data ? esc(data.site.name) : "xload";
     var existingLanguage = document.querySelector(".release-language");
-    var legacyDetail = location.pathname.indexOf("/scripts/userscripts/") === 0 && !existingLanguage;
-    var language = existingLanguage || legacyDetail ? "" : languageControl();
+    var language = existingLanguage ? "" : languageControl();
     return (
       '<header class="site-header"><div class="nav-wrap">' +
       '<a class="logo" href="/"><img class="logo-img" src="/assets/img/xload_logo.png" alt="' + name + ' logo"><span>' + name + "</span></a>" +

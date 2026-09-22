@@ -54,12 +54,122 @@
   ],
   "scripts": [
     {
+      "id": "xload-760c495cb1f0",
+      "type": "script",
+      "title": "客優雲庫存清單-功能",
+      "short": "客優雲庫存清單 功能",
+      "description": "客優雲庫存清單 功能",
+      "i18n": {
+        "en": {
+          "title": "客優雲庫存清單-功能",
+          "short": "客優雲庫存清單 功能",
+          "description": "客優雲庫存清單 功能"
+        },
+        "zh-CN": {
+          "title": "客優雲庫存清單-功能",
+          "short": "客優雲庫存清單 功能",
+          "description": "客優雲庫存清單 功能"
+        },
+        "zh-TW": {
+          "title": "客優雲庫存清單-功能",
+          "short": "客優雲庫存清單 功能",
+          "description": "客優雲庫存清單 功能"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.user.js",
+      "page": "/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.html",
+      "installUrl": "/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.user.js",
+      "files": [
+        "panel.html",
+        "xload-760c495cb1f0.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-760c495cb1f0/panel.html",
+      "tags": [
+        "erp.keyouyun.com",
+        "world.keyouyun.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-22",
+      "version": "0.2",
+      "license": "",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-222085578d29",
+      "type": "script",
+      "title": "客優雲自動更新安全庫存 on 採購建議",
+      "short": "客優雲自動更新安全庫存 on 採購建議 功能",
+      "description": "客優雲自動更新安全庫存 on 採購建議 功能",
+      "i18n": {
+        "en": {
+          "title": "客優雲自動更新安全庫存 on 採購建議",
+          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
+          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
+        },
+        "zh-CN": {
+          "title": "客優雲自動更新安全庫存 on 採購建議",
+          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
+          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
+        },
+        "zh-TW": {
+          "title": "客優雲自動更新安全庫存 on 採購建議",
+          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
+          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-222085578d29/xload-222085578d29.user.js",
+      "page": "/scripts/userscripts/xload-222085578d29/xload-222085578d29.html",
+      "installUrl": "/scripts/userscripts/xload-222085578d29/xload-222085578d29.user.js",
+      "files": [
+        "panel.html",
+        "xload-222085578d29.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-222085578d29/panel.html",
+      "tags": [
+        "erp.keyouyun.com",
+        "world.keyouyun.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-22",
+      "version": "0.2",
+      "license": "",
+      "featured": false,
+      "status": "stable"
+    },
+    {
       "id": "xload-ce926c298c3a",
       "type": "script",
       "title": "Telegra.ph 图片打包下载",
       "short": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
       "description": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Telegra.ph Image Bulk Downloader",
+          "short": "Grab all image links on a page, save them to a text file and download everything as a local ZIP archive in one click.",
+          "description": "Grab all image links on a page, save them to a text file and download everything as a local ZIP archive in one click."
+        },
+        "zh-CN": {
+          "title": "Telegra.ph 图片打包下载",
+          "short": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
+          "description": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。"
+        },
+        "zh-TW": {
+          "title": "Telegra.ph 圖片打包下載",
+          "short": "取得網頁所有圖片連結，儲存到文字檔並一鍵下載到本機壓縮包。",
+          "description": "取得網頁所有圖片連結，儲存到文字檔並一鍵下載到本機壓縮包。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
       "page": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html",
       "installUrl": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
@@ -89,7 +199,23 @@
       "title": "rbxsnipe",
       "short": "roblox private server sniper",
       "description": "roblox private server sniper",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "rbxsnipe",
+          "short": "roblox private server sniper",
+          "description": "roblox private server sniper"
+        },
+        "zh-CN": {
+          "title": "rbxsnipe",
+          "short": "Roblox 私人服务器狙击工具。",
+          "description": "Roblox 私人服务器狙击工具。"
+        },
+        "zh-TW": {
+          "title": "rbxsnipe",
+          "short": "Roblox 私人伺服器狙擊工具。",
+          "description": "Roblox 私人伺服器狙擊工具。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
       "page": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html",
       "installUrl": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
@@ -119,7 +245,23 @@
       "title": "유튜브 팟 플레이어로 보기 버튼 추가",
       "short": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
       "description": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "YouTube: Open in PotPlayer Button",
+          "short": "Adds a button to open YouTube videos in PotPlayer. The current video pauses automatically.",
+          "description": "Adds a button to open YouTube videos in PotPlayer. The current video pauses automatically."
+        },
+        "zh-CN": {
+          "title": "YouTube 一键用 PotPlayer 打开",
+          "short": "在 YouTube 添加用 PotPlayer 打开视频的按钮，原视频自动暂停。",
+          "description": "在 YouTube 添加用 PotPlayer 打开视频的按钮，原视频自动暂停。"
+        },
+        "zh-TW": {
+          "title": "YouTube 一鍵用 PotPlayer 開啟",
+          "short": "在 YouTube 新增用 PotPlayer 開啟影片的按鈕，原影片自動暫停。",
+          "description": "在 YouTube 新增用 PotPlayer 開啟影片的按鈕，原影片自動暫停。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
       "page": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html",
       "installUrl": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
@@ -149,7 +291,23 @@
       "title": "Bilibili-banned-contents-hider",
       "short": "Hide banned users' contents on Bilibili. Bilibili may push content created by",
       "description": "Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Bilibili-banned-contents-hider",
+          "short": "Hide banned users' contents on Bilibili. Bilibili may push content created by",
+          "description": "Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed"
+        },
+        "zh-CN": {
+          "title": "B站拉黑内容隐藏",
+          "short": "隐藏 B 站拉黑用户发布的内容，并移除推广与广告。",
+          "description": "隐藏 B 站拉黑用户发布的内容。B 站可能推送你已拉黑用户创建的内容，本脚本用于移除这些内容，同时移除推广与广告。"
+        },
+        "zh-TW": {
+          "title": "B站封鎖內容隱藏",
+          "short": "隱藏 B 站封鎖使用者發布的內容，並移除推廣與廣告。",
+          "description": "隱藏 B 站封鎖使用者發布的內容。B 站可能推送你已封鎖使用者建立的內容，本腳本用於移除這些內容，同時移除推廣與廣告。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
       "page": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html",
       "installUrl": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
@@ -179,7 +337,23 @@
       "title": "RuTracker Full-Text Search in Topics",
       "short": "Allows to search for text on all pages of RuTracker topics",
       "description": "Allows to search for text on all pages of RuTracker topics",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "RuTracker Full-Text Search in Topics",
+          "short": "Allows to search for text on all pages of RuTracker topics",
+          "description": "Allows to search for text on all pages of RuTracker topics"
+        },
+        "zh-CN": {
+          "title": "RuTracker 主题全文搜索",
+          "short": "在 RuTracker 主题的全部页面内搜索文本。",
+          "description": "在 RuTracker 主题的全部页面内搜索文本。"
+        },
+        "zh-TW": {
+          "title": "RuTracker 主題全文搜尋",
+          "short": "在 RuTracker 主題的全部頁面內搜尋文字。",
+          "description": "在 RuTracker 主題的全部頁面內搜尋文字。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
       "page": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.html",
       "installUrl": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
@@ -211,7 +385,23 @@
       "title": "更换背景色",
       "short": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。",
       "description": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。默认颜色 #e8e2d6，现支持通过功能面板动态设置颜色与自动应用开关，无需再修改代码。",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Background Color Changer",
+          "short": "Replaces a site's default body background color when none is set; unsuitable sites can be excluded via the context menu.",
+          "description": "Replaces a site's default body background color when none is set; sites that do not suit a changed background can be excluded from the context menu. Default color #e8e2d6. The color and an auto-apply toggle can now be set dynamically from the feature panel without editing code."
+        },
+        "zh-CN": {
+          "title": "更换背景色",
+          "short": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。",
+          "description": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。默认颜色 #e8e2d6，现支持通过功能面板动态设置颜色与自动应用开关，无需再修改代码。"
+        },
+        "zh-TW": {
+          "title": "變更背景色",
+          "short": "若網站 body 未設定預設顏色就變更它；有的網站並不適合變更背景色，可在右鍵選單中將該網站設為排除。",
+          "description": "若網站 body 未設定預設顏色就變更它；有的網站並不適合變更背景色，可在右鍵選單中將該網站設為排除。預設顏色 #e8e2d6，現支援透過功能面板動態設定顏色與自動套用開關，無需再修改程式碼。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
       "page": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.html",
       "installUrl": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
@@ -241,7 +431,23 @@
       "title": "ServiceNow - Update Ticket Number",
       "short": "Replace the number input field with a link to the current ticket",
       "description": "Replace the number input field with a link to the current ticket",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "ServiceNow - Update Ticket Number",
+          "short": "Replace the number input field with a link to the current ticket",
+          "description": "Replace the number input field with a link to the current ticket"
+        },
+        "zh-CN": {
+          "title": "ServiceNow 工单号转链接",
+          "short": "将编号输入框替换为指向当前工单的链接。",
+          "description": "将编号输入框替换为指向当前工单的链接。"
+        },
+        "zh-TW": {
+          "title": "ServiceNow 工單號轉連結",
+          "short": "將編號輸入框替換為指向目前工單的連結。",
+          "description": "將編號輸入框替換為指向目前工單的連結。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
       "page": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.html",
       "installUrl": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
@@ -271,7 +477,23 @@
       "title": "查看当前BUFF账号信息插件",
       "short": "查看当前BUFF账号信息插件。",
       "description": "查看当前BUFF账号信息插件。",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "BUFF Account Info Viewer",
+          "short": "View the current BUFF account information.",
+          "description": "View the current BUFF account information."
+        },
+        "zh-CN": {
+          "title": "查看当前BUFF账号信息插件",
+          "short": "查看当前BUFF账号信息插件。",
+          "description": "查看当前BUFF账号信息插件。"
+        },
+        "zh-TW": {
+          "title": "查看目前 BUFF 帳號資訊外掛",
+          "short": "查看目前 BUFF 帳號資訊外掛。",
+          "description": "查看目前 BUFF 帳號資訊外掛。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
       "page": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.html",
       "installUrl": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
@@ -301,7 +523,23 @@
       "title": "Ed Commerz Dietmar Glage",
       "short": "Insert multiple transactions with specified details",
       "description": "Insert multiple transactions with specified details",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Ed Commerz Dietmar Glage",
+          "short": "Insert multiple transactions with specified details",
+          "description": "Insert multiple transactions with specified details"
+        },
+        "zh-CN": {
+          "title": "Ed Commerz Dietmar Glage 批量录入",
+          "short": "按指定明细批量插入多笔交易。",
+          "description": "按指定明细批量插入多笔交易。"
+        },
+        "zh-TW": {
+          "title": "Ed Commerz Dietmar Glage 大量錄入",
+          "short": "按指定明細大量插入多筆交易。",
+          "description": "按指定明細大量插入多筆交易。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
       "page": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.html",
       "installUrl": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
@@ -332,7 +570,23 @@
       "title": "Req Commerz Dietmar Glage",
       "short": "Insert multiple transactions with specified details and update balance",
       "description": "Insert multiple transactions with specified details and update balance",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Req Commerz Dietmar Glage",
+          "short": "Insert multiple transactions with specified details and update balance",
+          "description": "Insert multiple transactions with specified details and update balance"
+        },
+        "zh-CN": {
+          "title": "Ed Commerz Dietmar Glage 批量录入并更新余额",
+          "short": "按指定明细批量插入多笔交易并更新余额。",
+          "description": "按指定明细批量插入多笔交易并更新余额。"
+        },
+        "zh-TW": {
+          "title": "Ed Commerz Dietmar Glage 大量錄入並更新餘額",
+          "short": "按指定明細大量插入多筆交易並更新餘額。",
+          "description": "按指定明細大量插入多筆交易並更新餘額。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
       "page": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.html",
       "installUrl": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
@@ -362,7 +616,23 @@
       "title": "YouTube: Audio Only",
       "short": "No Video Streaming",
       "description": "No Video Streaming",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "YouTube: Audio Only",
+          "short": "No Video Streaming",
+          "description": "No Video Streaming"
+        },
+        "zh-CN": {
+          "title": "YouTube 仅播放音频",
+          "short": "不加载视频流，仅播放音频。",
+          "description": "不加载视频流，仅播放音频。"
+        },
+        "zh-TW": {
+          "title": "YouTube 僅播放音訊",
+          "short": "不載入影片串流，僅播放音訊。",
+          "description": "不載入影片串流，僅播放音訊。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
       "page": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.html",
       "installUrl": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
@@ -394,7 +664,23 @@
       "title": "Bux auto claim",
       "short": "Renda Extra",
       "description": "Renda Extra",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Bux Auto Claim",
+          "short": "Automatically claims on Bux sites for extra income.",
+          "description": "Automatically claims on Bux sites for extra income."
+        },
+        "zh-CN": {
+          "title": "Bux 自动领取",
+          "short": "自动完成 Bux 站点的领取任务，赚取额外收入。",
+          "description": "自动完成 Bux 站点的领取任务，赚取额外收入。"
+        },
+        "zh-TW": {
+          "title": "Bux 自動領取",
+          "short": "自動完成 Bux 站點的領取任務，賺取額外收入。",
+          "description": "自動完成 Bux 站點的領取任務，賺取額外收入。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
       "page": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.html",
       "installUrl": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
@@ -426,7 +712,23 @@
       "title": "NovelAI Disable Backward",
       "short": "Disable Backward on NovelAI's image generation screen. This prevents the",
       "description": "Disable Backward on NovelAI's image generation screen. This prevents the deletion of generated images due to browser backward operations.",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "NovelAI Disable Backward",
+          "short": "Disable Backward on NovelAI's image generation screen. This prevents the",
+          "description": "Disable Backward on NovelAI's image generation screen. This prevents the deletion of generated images due to browser backward operations."
+        },
+        "zh-CN": {
+          "title": "NovelAI 禁用后退",
+          "short": "在 NovelAI 图像生成界面禁用后退，防止误删已生成图像。",
+          "description": "在 NovelAI 图像生成界面禁用后退操作，防止因浏览器后退而删除已生成的图像。"
+        },
+        "zh-TW": {
+          "title": "NovelAI 停用後退",
+          "short": "在 NovelAI 圖像生成介面停用後退，防止誤刪已生成圖像。",
+          "description": "在 NovelAI 圖像生成介面停用後退操作，防止因瀏覽器後退而刪除已生成的圖像。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
       "page": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.html",
       "installUrl": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
@@ -456,7 +758,23 @@
       "title": "change text",
       "short": "меняет выделенный текст на странице",
       "description": "меняет выделенный текст на странице",
-      "i18n": {},
+      "i18n": {
+        "en": {
+          "title": "Change Selected Text",
+          "short": "Replaces the selected text on the page.",
+          "description": "Replaces the selected text on the page."
+        },
+        "zh-CN": {
+          "title": "页面选中文本替换",
+          "short": "将页面上选中的文本替换为指定内容。",
+          "description": "将页面上选中的文本替换为指定内容。"
+        },
+        "zh-TW": {
+          "title": "頁面選取文字替換",
+          "short": "將頁面上選取的文字替換為指定內容。",
+          "description": "將頁面上選取的文字替換為指定內容。"
+        }
+      },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
       "page": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.html",
       "installUrl": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
