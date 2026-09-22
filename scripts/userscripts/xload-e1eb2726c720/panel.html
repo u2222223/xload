@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raumschüsse Fix für CaveRenderPro - 功能面板</title>
+  <meta name="description" content="Berechnet die Richtung der Raumschüsse neu">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-e1eb2726c720">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>CaveRenderPro Raumschüsse 方向重算</h1>
+        <p class="panel-subtitle">Berechnet die Richtung der Raumschüsse neu</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="daten">
+          <div class="pui-card-head">
+            <div class="pui-card-title">测量数据</div>
+
+            <div class="pui-card-desc">粘贴 CaveRenderPro 导出的制表符分隔数据（含表头行），再重新计算所有 Raumschüsse 行的方向。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-input">导出数据（每行以制表符分隔）</label>
+              <input class="pui-input" id="ctl-input" data-control="input" data-type="text" type="text" value="">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="recalculate">重新计算方向</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="ergebnis">
+          <div class="pui-card-head">
+            <div class="pui-card-title">计算结果</div>
+
+            <div class="pui-card-desc">重新计算完成后，此处显示修正后的导出数据与处理条目数。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-output">修正后的导出数据</label>
+              <input class="pui-input" id="ctl-output" data-control="output" data-type="text" type="text" value="">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-count">处理的测量条目数</label>
+              <input class="pui-input" id="ctl-count" data-control="count" data-type="number" type="number" value="0">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="clear">清空</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在重新计算方向…","done":"计算完成","failed":"计算失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

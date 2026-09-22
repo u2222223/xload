@@ -9,6 +9,9 @@ Catalog: https://xload.net/
 ## Userscripts
 
 <!-- XLOAD:LLMS:ENTRIES:START -->
+- [Generate Metersphere Test Report](https://xload.net/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.html): 生成 Metersphere 测试计划报告
+- [Raumschüsse Fix für CaveRenderPro](https://xload.net/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.html): Berechnet die Richtung der Raumschüsse neu
+- [Inline SVG Replacer](https://xload.net/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.html): Replace all img tags with src as an SVG file into inline SVG tags
 - [客優雲庫存清單-功能](https://xload.net/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.html): 客優雲庫存清單 功能
 - [客優雲自動更新安全庫存 on 採購建議](https://xload.net/scripts/userscripts/xload-222085578d29/xload-222085578d29.html): 客優雲自動更新安全庫存 on 採購建議 功能
 - [Telegra.ph 图片打包下载](https://xload.net/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html): 获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。

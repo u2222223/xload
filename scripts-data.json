@@ -54,6 +54,146 @@
   ],
   "scripts": [
     {
+      "id": "xload-fe250f0d6465",
+      "type": "script",
+      "title": "Generate Metersphere Test Report",
+      "short": "生成 Metersphere 测试计划报告",
+      "description": "生成 Metersphere 测试计划报告",
+      "i18n": {
+        "en": {
+          "title": "Generate Metersphere Test Report",
+          "short": "生成 Metersphere 测试计划报告",
+          "description": "生成 Metersphere 测试计划报告"
+        },
+        "zh-CN": {
+          "title": "Generate Metersphere Test Report",
+          "short": "生成 Metersphere 测试计划报告",
+          "description": "生成 Metersphere 测试计划报告"
+        },
+        "zh-TW": {
+          "title": "Generate Metersphere Test Report",
+          "short": "生成 Metersphere 测试计划报告",
+          "description": "生成 Metersphere 测试计划报告"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.user.js",
+      "page": "/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.html",
+      "installUrl": "/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.user.js",
+      "files": [
+        "panel.html",
+        "xload-fe250f0d6465.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-fe250f0d6465/panel.html",
+      "tags": [
+        "metersphere.gyenno.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-22",
+      "version": "0.0.5",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-e1eb2726c720",
+      "type": "script",
+      "title": "Raumschüsse Fix für CaveRenderPro",
+      "short": "Berechnet die Richtung der Raumschüsse neu",
+      "description": "Berechnet die Richtung der Raumschüsse neu",
+      "i18n": {
+        "en": {
+          "title": "Raumschüsse Fix für CaveRenderPro",
+          "short": "Berechnet die Richtung der Raumschüsse neu",
+          "description": "Berechnet die Richtung der Raumschüsse neu"
+        },
+        "zh-CN": {
+          "title": "Raumschüsse Fix für CaveRenderPro",
+          "short": "Berechnet die Richtung der Raumschüsse neu",
+          "description": "Berechnet die Richtung der Raumschüsse neu"
+        },
+        "zh-TW": {
+          "title": "Raumschüsse Fix für CaveRenderPro",
+          "short": "Berechnet die Richtung der Raumschüsse neu",
+          "description": "Berechnet die Richtung der Raumschüsse neu"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.user.js",
+      "page": "/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.html",
+      "installUrl": "/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.user.js",
+      "files": [
+        "panel.html",
+        "xload-e1eb2726c720.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-e1eb2726c720/panel.html",
+      "tags": [
+        "www.google.com",
+        "www.google.de",
+        "www.google.fr"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-22",
+      "version": "2.0",
+      "license": "",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-634f7674248e",
+      "type": "script",
+      "title": "Inline SVG Replacer",
+      "short": "Replace all img tags with src as an SVG file into inline SVG tags",
+      "description": "Replace all img tags with src as an SVG file into inline SVG tags",
+      "i18n": {
+        "en": {
+          "title": "Inline SVG Replacer",
+          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
+          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
+        },
+        "zh-CN": {
+          "title": "Inline SVG Replacer",
+          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
+          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
+        },
+        "zh-TW": {
+          "title": "Inline SVG Replacer",
+          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
+          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.user.js",
+      "page": "/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.html",
+      "installUrl": "/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.user.js",
+      "files": [
+        "panel.html",
+        "xload-634f7674248e.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-634f7674248e/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-22",
+      "version": "0.1.1",
+      "license": "CC0",
+      "featured": false,
+      "status": "stable"
+    },
+    {
       "id": "xload-760c495cb1f0",
       "type": "script",
       "title": "客優雲庫存清單-功能",
