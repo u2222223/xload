@@ -260,32 +260,28 @@
     if (el && typeof value === "string") el.textContent = value;
   }
 
+  function toggleContentSection(el, visible) {
+    var section = el.closest ? el.closest("[data-content-section]") : null;
+    var target = section || el;
+    target.style.display = visible ? "" : "none";
+  }
+
   function renderContentList(field, items) {
     var el = document.querySelector('[data-content-list="' + field + '"]');
     if (!el) return;
     var list = Array.isArray(items) ? items : [];
-    if (list.length === 0) {
-      el.style.display = "none";
-      el.innerHTML = "";
-      return;
-    }
-    el.style.display = "";
     el.innerHTML = list.map(function (item) { return "<li>" + esc(item) + "</li>"; }).join("");
+    toggleContentSection(el, list.length > 0);
   }
 
   function renderContentFaq(items) {
     var el = document.querySelector("[data-content-faq]");
     if (!el) return;
     var list = Array.isArray(items) ? items : [];
-    if (list.length === 0) {
-      el.style.display = "none";
-      el.innerHTML = "";
-      return;
-    }
-    el.style.display = "";
     el.innerHTML = list.map(function (item) {
       return "<details><summary>" + esc(item.q) + "</summary><p>" + esc(item.a) + "</p></details>";
     }).join("");
+    toggleContentSection(el, list.length > 0);
   }
 
   function applyDetailLocale(value) {
