@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for YouTube — xload</title>
+  <meta name="description" content="Adds a download launcher to YouTube video pages and Shorts, plus an optional">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for YouTube","description":"Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html","installUrl":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for YouTube","description":"Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html","installUrl":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for YouTube","description":"Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html","installUrl":"https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-aea2123f38d9">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for YouTube</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for YouTube</h1>
+              <p class="lead">Adds a download launcher to YouTube video pages and Shorts, plus an optional</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for YouTube is a userscript that adds quick download controls to YouTube. It injects a download button into the video player&#39;s control bar and, on Shorts pages, shows a floating download button when you hover a video. A companion panel page lets you turn the floating button on or off, choose its position, size, icon size and edge offset, and trigger downloads for the current page.</p>
+            <p data-content="problem">YouTube does not provide a built-in way to save videos or Shorts. This script gives you a fast, in-page shortcut: instead of copying the URL by hand and pasting it into a download service, you click or hover a download button that hands the current page URL to an external downloader.</p>
+            <p data-content="audience">People who watch YouTube videos or Shorts and occasionally want to download them, and who already run a userscript manager (such as one that provides GM_openInTab / GM_setValue grants) in a desktop browser.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Adds a download button to the YouTube player control bar that acts on the current page.</li><li>On Shorts pages, shows a floating download button when you hover over a visible, ready video element.</li><li>Floating button can be positioned in 12 screen locations (top/bottom/left/right center and quarter positions).</li><li>Configurable button size, icon size and edge offset.</li><li>A companion panel page can enable or disable the floating button and apply configuration changes live.</li><li>Panel actions let you download the current video or open the download service directly.</li><li>Settings persist across sessions using userscript storage, with a localStorage fallback.</li><li>The current browser language is used to pick the language path of the download service.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>youtube.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the userscript in a userscript-manager-enabled browser and visit a YouTube page.</li><li>On a video page, click the download icon in the player&#39;s control bar to send the current page to the download service.</li><li>On a Shorts page, move the mouse over the video to reveal the floating download button, then click it.</li><li>Open the companion panel page to access the Download Controls section.</li><li>Toggle &#39;Enable floating download button&#39; and pick a button position from the available options.</li><li>Adjust button size, icon size and edge offset if the default appearance does not suit you.</li><li>Use the panel actions &#39;Download current video&#39; or &#39;Open download service&#39; to trigger a download from the panel.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>Only runs on youtube.com pages and only acts on the current page URL; it does not process playlists, channels or batches.</li><li>It does not download files itself: it opens an external download service with the current URL, so the actual download depends on that service.</li><li>The floating hover button is only enabled on pages whose URL contains &#39;/shorts/&#39;; on other pages it is disabled.</li><li>The floating button only appears for video elements that are large enough, visible, and have loaded enough data to be ready.</li><li>The companion panel is opened once and only from the first page load that has not already connected; a stored flag prevents repeat opens.</li><li>In-memory logs are capped at 200 entries and are cleared on refresh; they are not persisted.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Does the script download the video file by itself?</summary><p>No. It adds download buttons that forward the current page URL to an external download service; the actual download is handled by that service.</p></details>
+                
+                <details><summary>Why don&#39;t I see the floating button on a regular video page?</summary><p>The floating hover button is enabled only on pages whose URL contains &#39;/shorts/&#39;. On regular video pages you use the download button in the player&#39;s control bar instead.</p></details>
+                
+                <details><summary>Where do I change the button&#39;s position or size?</summary><p>Open the companion panel page. In the Download Controls section you can toggle the floating button and set its position, button size, icon size and edge offset.</p></details>
+                
+                <details><summary>Are my settings saved?</summary><p>Yes. Configuration values are stored through userscript storage when available, with a localStorage fallback, so they persist across sessions.</p></details>
+                
+                <details><summary>Can I disable the floating button?</summary><p>Yes. Use the &#39;Enable floating download button&#39; switch in the companion panel to turn it off, and it can be re-enabled at any time.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">Permissions requested are limited to opening tabs, adding styles, and reading/writing userscript storage. When you trigger a download, the current page URL (including its language path selection based on your browser language) is sent to the external download service; nothing is sent otherwise. The panel communication channel validates messages by expected origin and source window and suppresses duplicates, and the script does not access your YouTube account or credentials. Running logs are kept only in an in-memory buffer (capped at 200 entries, cleared on refresh) and are not desensitized or persisted, so they may contain page error details during the session.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">29.9 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for X — xload</title>
+  <meta name="description" content="Adds a download control to X (Twitter) posts and media grids, opening a">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for X","description":"Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html","installUrl":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for X","description":"Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html","installUrl":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for X","description":"Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html","installUrl":"https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-90867ea645e8">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for X</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for X</h1>
+              <p class="lead">Adds a download control to X (Twitter) posts and media grids, opening a</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for X adds a one-click download control to posts and media grids on X (formerly Twitter). Each control passes the selected post link to an external download launcher opened in a new tab, and a companion panel page can trigger downloads and show progress. Panel switches let you enable or disable the injected control and automatically reveal sensitive media.</p>
+            <p data-content="problem">Downloading media from an X post normally means copying the post link by hand and switching to a separate download tool. ClipSaver for X places a download button directly in the post action bar and on media grid tiles, so the post link reaches a download launcher in a single click.</p>
+            <p data-content="audience">X / Twitter users who frequently save images or videos and want a quick in-feed download shortcut, including people on the standard web timeline or TweetDeck-style layouts.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Adds a download control to the action bar of every post that contains media.</li><li>Adds a compact download button to media grid tiles, such as profile or search grids.</li><li>Opens a download launcher for the specific post in a new browser tab.</li><li>Companion panel page with switches to enable/disable the injected control and auto-reveal sensitive media.</li><li>Panel actions to download the current post or open the download service.</li><li>Optional automatic reveal of sensitive or age-restricted media before download.</li><li>Selects the downloader language from your browser language.</li><li>Lightweight companion-panel messaging with heartbeat, request/response and de-duplication.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>x.com</li><li>twitter.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the userscript; it runs automatically on x.com and twitter.com.</li><li>Open a post that contains media, or a media grid.</li><li>Click the download control that appears next to the post actions or on the media tile.</li><li>The script opens the download launcher for that post in a new tab.</li><li>On first run a companion panel page opens; use its switches to enable/disable the injected control and toggle sensitive-media reveal.</li><li>Use the panel&#39;s Download current post / Open download service actions when needed.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>The script does not download files itself; it hands the post link to an external download service opened in a new tab.</li><li>It depends on X&#39;s current page structure, so interface changes can temporarily break button injection.</li><li>The download control is only added to posts that contain media.</li><li>The companion panel and its live progress/log features require network access to the panel service.</li><li>In-page run logs exist only in memory, are cleared on refresh, and are not desensitized.</li><li>Media whose post link cannot be detected, such as some TweetDeck items, may not receive a button.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Does the script download the media itself?</summary><p>No. It opens an external download launcher with the post link; the actual download is performed by that service.</p></details>
+                
+                <details><summary>Which sites does it work on?</summary><p>It matches x.com and twitter.com and runs in the top frame only.</p></details>
+                
+                <details><summary>Can I turn the injected button off?</summary><p>Yes. The companion panel provides an &#39;Enable injected download control&#39; switch.</p></details>
+                
+                <details><summary>Why did a panel page open?</summary><p>On first run the script opens its companion panel once and records that it has connected; the panel hosts the switches and download actions.</p></details>
+                
+                <details><summary>Will it reveal sensitive media?</summary><p>Only if the &#39;Auto reveal sensitive media&#39; switch is on (on by default); you can disable it.</p></details>
+                
+                <details><summary>Where are settings and logs stored?</summary><p>Settings use the userscript manager&#39;s GM storage with a localStorage fallback; run logs stay in memory and clear on refresh.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests GM_openInTab, GM_setValue/GM_getValue and GM_addStyle. It stores only a small connection flag and your panel preferences via GM storage, falling back to localStorage; no credentials are collected. In-page run logs are kept in memory only, are not persisted and are not desensitized, and are shared only with the companion panel. Panel communication is restricted to the panel&#39;s own origin and the opener window reference, with message de-duplication. The external download service receives the URL of the post you choose to download, so only trigger downloads for content you intend to fetch.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">21.1 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

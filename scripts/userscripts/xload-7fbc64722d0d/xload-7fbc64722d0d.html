@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for TED — xload</title>
+  <meta name="description" content="Adds a download button to TED talk pages that opens a download launcher for the">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for TED","description":"Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html","installUrl":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for TED","description":"Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html","installUrl":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for TED","description":"Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html","installUrl":"https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-7fbc64722d0d">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for TED</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for TED</h1>
+              <p class="lead">Adds a download button to TED talk pages that opens a download launcher for the</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for TED is a userscript that adds a circular download button to TED talk pages. Clicking the button hands the current talk&#39;s URL to a web-based download service, opened in a new tab. A companion control panel can turn the injected button on or off, trigger a download, and show progress.</p>
+            <p data-content="problem">TED talk pages do not offer a built-in way to save a talk for offline use. This script adds a single, always-available download entry point to the talk page so you do not have to copy the URL and manually feed it to a download service.</p>
+            <p data-content="audience">TED viewers who want a quick, one-click way to send the talk they are watching to a download service, and users who prefer managing this from a small control panel.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Injects a single circular download button into the action row of a TED talk page.</li><li>Opens a web-based download service for the current talk URL in a new tab.</li><li>Picks the download-service language path from the browser language.</li><li>Companion panel can enable or disable the injected button and trigger downloads.</li><li>Panel reports action status as connecting, running, done, or failed.</li><li>Re-injects the button automatically during in-page (SPA) navigation and on page load.</li><li>Keeps an in-memory runtime log and captures uncaught errors and promise rejections for troubleshooting.</li><li>Adds a rainbow hover ring effect to the button using injected styles.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.ted.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the userscript and open any talk page on www.ted.com/talks/.</li><li>Wait for the page to load; a circular download button appears in the talk&#39;s action row near the title.</li><li>Click the button to open the download service for the current talk in a new tab.</li><li>Optionally open the companion control panel to toggle the injected button or start a download from there.</li><li>Watch the panel status line for connecting, running, done, or failed feedback.</li><li>Navigate between talks normally; the button is re-injected automatically without a full reload.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>Only runs on TED talk pages that match www.ted.com/talks/; other pages are unaffected.</li><li>Button injection depends on TED&#39;s current page structure (the talk title&#39;s action container), so a site redesign could break it.</li><li>The script itself does not download media; it delegates to an external web download service.</li><li>Only the current talk can be triggered; there is no bulk or playlist downloading.</li><li>The runtime log is kept in memory only and is cleared when the page is refreshed.</li><li>The companion panel is hosted on an external site and opens in a separate tab/window.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Does the script download the video by itself?</summary><p>No. It sends the current talk URL to an external web-based download service, which handles the actual download in a separate tab.</p></details>
+                
+                <details><summary>Which pages does the button appear on?</summary><p>Only talk pages matching www.ted.com/talks/. It does not run on other TED pages or other sites.</p></details>
+                
+                <details><summary>Can I hide the button?</summary><p>Yes. The companion control panel provides an enable switch for the injected download button; turning it off stops the button from being inserted.</p></details>
+                
+                <details><summary>Why does a panel page open?</summary><p>The script connects to a companion control panel the first time it runs so you can toggle the button and trigger downloads with status feedback. Connection is remembered via stored state.</p></details>
+                
+                <details><summary>What is the runtime log for?</summary><p>It records script events, uncaught errors, and promise rejections in a small in-memory buffer to help diagnose problems. It is not persisted and clears on refresh.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests permissions to open tabs (GM_openInTab), inject styles (GM_addStyle), and read/write stored values (GM_getValue, GM_setValue). It stores only small state such as whether the panel connection has been made, falling back to localStorage if userscript storage is unavailable. Runtime logs are kept in memory only (a bounded ring buffer) and are not uploaded or persisted by the script. Clicking the download button passes the current page URL to an external download service, and the companion panel is loaded from an external site; communication with it is restricted to a trusted origin. The script does not access credentials or transmit personal data.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">20.3 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

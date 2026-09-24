@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for XiaoHongShu — xload</title>
+  <meta name="description" content="Adds a download button to XiaoHongShu note media that opens a download launcher">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for XiaoHongShu","description":"Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html","installUrl":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for XiaoHongShu","description":"Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html","installUrl":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for XiaoHongShu","description":"Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html","installUrl":"https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-d70a33fd5f53">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for XiaoHongShu</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for XiaoHongShu</h1>
+              <p class="lead">Adds a download button to XiaoHongShu note media that opens a download launcher</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for XiaoHongShu is a userscript that overlays a download button on the media area of a XiaoHongShu note and hands the current note to an online download service. A companion panel page can trigger a download and display progress and runtime logs. It runs only on xiaohongshu.com.</p>
+            <p data-content="problem">XiaoHongShu note pages do not provide a built-in way to save a note&#39;s media. This script puts a one-click download control on the note and connects it to an external download service, so you no longer have to copy the note URL and hunt for a downloader yourself.</p>
+            <p data-content="audience">Users who browse notes on xiaohongshu.com and want a convenient way to hand the current note to a download service, and who are comfortable installing a userscript and letting it open the companion panel and download pages.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Adds a floating download button directly over the note&#39;s media container.</li><li>Downloads the note you are currently viewing without copying its URL.</li><li>Shows an animated rainbow hover ring with a built-in download icon; styling is injected only once.</li><li>Companion panel page with a scan-interval setting and download actions.</li><li>Panel actions report running / done / error status back to the panel.</li><li>Uses GM storage when available and falls back to localStorage.</li><li>Runs only on xiaohongshu.com and injects only on /explore/ note pages.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.xiaohongshu.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the userscript in a userscript manager that supports GM_openInTab, GM_addStyle, GM_setValue and GM_getValue.</li><li>Open a XiaoHongShu note page under the /explore/ path.</li><li>Wait for the round download button to appear over the note media.</li><li>Click the button (or use &#34;Download current note&#34; in the panel) to open the download service for that note.</li><li>Open the companion panel to adjust the scan interval or trigger a download.</li><li>Check the panel status line to see running, done, or failed results.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>Only operates on xiaohongshu.com; other sites are untouched.</li><li>Button injection depends on specific selectors (#noteContainer and .media-container) and on /explore/ note pages; layout or DOM changes may stop it working.</li><li>Actual downloading is performed by an external online service, so it requires network access and can fail if that service is unavailable.</li><li>The panel is opened with window.open on first run, which a popup blocker may prevent.</li><li>The panel&#39;s enable switch is written into the script config, but the script still injects the button whenever a note media container is found.</li><li>The injected button scans the page repeatedly at the configured interval (default 777 ms).</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Where does the button appear?</summary><p>It is injected into the media container of a XiaoHongShu note page, near the top-right of the media area.</p></details>
+                
+                <details><summary>Does the script download the file itself?</summary><p>No. It passes the current note URL to an external download service, which performs the download.</p></details>
+                
+                <details><summary>Can I close the button?</summary><p>You can adjust the scan interval in the companion panel; the panel&#39;s enable switch does not currently stop the button from being injected.</p></details>
+                
+                <details><summary>What settings are stored?</summary><p>Only a one-time &#34;panel connected&#34; flag is persisted, using GM storage when available or localStorage otherwise.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script runs only on xiaohongshu.com and is marked @noframes, so it does not execute inside embedded frames. It requests GM_openInTab, GM_addStyle, GM_setValue and GM_getValue: opening tabs is used only to open the download service and the companion panel, styling is injected into the local page, and storage keeps only a one-time connection flag (falling back to localStorage). To complete a download, the current note URL is sent to the external download service. Panel messaging is scoped to a task channel, cross-origin messages are accepted only from the panel origin, and duplicate messages are de-duplicated. Runtime logs are kept in a small in-memory ring buffer (up to 200 entries) that is cleared on reload and is neither persisted nor redacted. The script does not read or transmit account credentials.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">18.1 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

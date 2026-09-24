@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for TikTok — xload</title>
+  <meta name="description" content="Adds a floating download button over TikTok video players that opens a download">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for TikTok","description":"Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html","installUrl":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for TikTok","description":"Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html","installUrl":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for TikTok","description":"Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html","installUrl":"https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-6bea7028d046">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for TikTok</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for TikTok</h1>
+              <p class="lead">Adds a floating download button over TikTok video players that opens a download</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for TikTok is a userscript that adds a floating download button over TikTok video players. Hover the pointer over a video to reveal the button, then click it to open an external download service preloaded with the current clip&#39;s URL. A companion panel page can control the button&#39;s appearance and trigger downloads, reporting progress back to the page.</p>
+            <p data-content="problem">TikTok does not offer a straightforward way to save a clip to disk, and locating the current video&#39;s URL or ID by hand is inconvenient. This script surfaces a one-click download entry point directly on the player.</p>
+            <p data-content="audience">TikTok viewers on desktop browsers who use a userscript manager (such as Tampermonkey or Violentmonkey) and want a quick way to hand the current clip to a download service.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>The floating circular download button appears only while the pointer is over a video player, so normal browsing stays unobstructed.</li><li>Works with TikTok&#39;s xgplayer containers and falls back to standard video elements.</li><li>Button placement adapts to the page: profile pages use bottom-center, while video pages use top-center or right-three-quarter depending on the layout.</li><li>Button size, icon size, edge offset, and any of twelve preset positions are configurable.</li><li>Resolves the current clip&#39;s numeric video ID from the player element and builds a canonical video URL, falling back to the page URL without its query string.</li><li>An optional companion panel page can enable or disable the button, adjust settings, and start downloads, with running/done/error progress reporting.</li><li>Sends the browser language to the download service so its page opens in a matching locale.</li><li>A rainbow ring animation gives visual feedback when hovering the button.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.tiktok.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the script in a userscript manager and make sure it is enabled for tiktok.com.</li><li>Open TikTok in the browser; the script runs automatically as the page loads.</li><li>Move the pointer over a playing video to reveal the floating download button.</li><li>Click the button; the external download service opens in a new tab with the current clip&#39;s URL.</li><li>Optionally open the companion panel page to change the button position or size, toggle the button on or off, or start a download directly.</li><li>On the first run the script connects to its companion panel page once; the connection is remembered so it is not opened again automatically.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>It matches tiktok.com pages only; it does not work on other sites or on non-TikTok embedded players.</li><li>The script is declared with @noframes, so it does not run inside iframes.</li><li>The actual download is performed by an external third-party service; the script only launches it and cannot guarantee service availability or the resulting file.</li><li>The button only appears over players that pass its size and visibility checks (for example, video readyState &gt;= 3), so very small or not-yet-ready players may not show it.</li><li>It needs a userscript manager that supports the declared GM_* APIs; without them, opening tabs falls back to window.open and storage falls back to localStorage.</li><li>Panel communication relies on cross-origin postMessage/BroadcastChannel; if the companion page is unavailable, only the on-page button works.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Does the script download videos by itself?</summary><p>No. It identifies the current clip&#39;s URL and opens an external download service in a new tab; the actual download is performed there.</p></details>
+                
+                <details><summary>Where does the button appear?</summary><p>It appears only while the pointer is over a recognized video player, positioned according to the current TikTok page type and your configured position.</p></details>
+                
+                <details><summary>Can I change the button&#39;s size or position?</summary><p>Yes, through the companion panel (button size, icon size, edge offset, and twelve preset positions), or by editing the defaults.</p></details>
+                
+                <details><summary>Does it collect my personal data?</summary><p>The script stores only a small flag for the one-time panel connection and keeps runtime logs in memory; it does not read account credentials. The current clip URL is passed to the external download service when you click.</p></details>
+                
+                <details><summary>Why don&#39;t I see the button?</summary><p>Make sure the script is enabled for tiktok.com, the video is playing or ready, and the player is large enough; moving the pointer directly over the player should reveal it.</p></details>
+                
+                <details><summary>Does it work in iframes?</summary><p>No, the script is declared @noframes and runs only in the top-level TikTok page.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script runs only on tiktok.com and reads the current page and player to determine the clip URL. When you click the button (or trigger a panel download action), that URL is sent to an external download service in a new tab; nothing is downloaded without your click. Runtime logs (errors and message events) are kept only in a 200-entry in-memory buffer, are not redacted, and are cleared on reload; they are not stored persistently. The only persisted value is a one-time flag indicating the companion panel was connected, kept via userscript storage when available and otherwise in localStorage. The panel bridge trusts cross-origin messages only from the companion panel origin and the current page origin, plus a window reference obtained from window.open; no account credentials or passwords are read or transmitted.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">31.1 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for Threads — xload</title>
+  <meta name="description" content="Adds a download button to Threads posts that contain video, opening a download">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for Threads","description":"Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html","installUrl":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Threads","description":"Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html","installUrl":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Threads","description":"Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html","installUrl":"https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-acec4a250e94">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for Threads</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for Threads</h1>
+              <p class="lead">Adds a download button to Threads posts that contain video, opening a download</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for Threads is a userscript that adds a download button to Threads posts containing video. Clicking it opens a companion download launcher for the selected post, and an optional panel page can trigger downloads and display progress.</p>
+            <p data-content="problem">Threads offers no convenient built-in way to save videos from posts, so users must copy a post link and open an external service by hand. This script places a download entry point directly on each video post.</p>
+            <p data-content="audience">Threads users on desktop browsers who run a userscript manager and want a fast way to hand video posts to an external download service.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Injects a download button beside the action buttons of Threads posts that contain video.</li><li>Resolves the canonical post link and opens a language-aware download launcher for it.</li><li>Provides an optional companion panel page that can trigger downloads and show running/done/failed progress.</li><li>Panel controls expose a scan interval for how often the page is re-scanned for new posts.</li><li>Falls back gracefully between GM storage and localStorage for saved settings.</li><li>Includes an in-memory runtime log that the panel can pull for diagnostics.</li><li>Connects the panel once per browser profile to avoid repeatedly opening tabs.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.threads.com</li><li>www.threads.net</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install a userscript manager and add the script.</li><li>Open threads.com or threads.net and browse posts that contain video.</li><li>Click the download icon added beside the post&#39;s action buttons.</li><li>The script opens the download launcher for that post in a new tab.</li><li>Optionally open the companion panel page to trigger a download for the current post or adjust the scan interval.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>Only posts that contain a video element receive the download button; text- or image-only posts are skipped.</li><li>The script does not download or store videos itself; it hands the post URL to an external download service.</li><li>Only works on threads.com and threads.net.</li><li>Requires a userscript manager that supports GM_openInTab/GM.openInTab; the panel connection is attempted once and remembered per profile.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Where does the video actually get downloaded?</summary><p>The script opens an external download service in a new tab and passes it the post URL; the actual retrieval happens there, not inside the script.</p></details>
+                
+                <details><summary>Why don&#39;t I see a button on some posts?</summary><p>The button is only added to posts that contain video. Posts without a video element are ignored.</p></details>
+                
+                <details><summary>Do I need to log in or give the script an account?</summary><p>No. The script only adds the button and opens the launcher; it does not collect accounts or credentials.</p></details>
+                
+                <details><summary>What does the panel page do?</summary><p>It can request a download for the current post and shows progress states such as running, done and failed.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests the userscript manager permissions GM_openInTab/GM.openInTab, GM_addStyle, GM_setValue and GM_getValue. When a download is triggered, the URL of the current post is sent to the external download service so it can process the request. Runtime logs are held only in an in-memory ring buffer (maximum 200 entries) and are cleared on reload; they are not persisted or uploaded. Panel messages are origin-checked and accepted only from the trusted panel origin and the script&#39;s own page. Saved settings use GM storage with a localStorage fallback.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">17.9 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

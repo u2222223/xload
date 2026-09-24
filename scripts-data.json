@@ -54,6 +54,2652 @@
   ],
   "scripts": [
     {
+      "id": "xload-aea2123f38d9",
+      "type": "script",
+      "title": "ClipSaver for YouTube",
+      "short": "Adds a download launcher to YouTube video pages and Shorts, plus an optional",
+      "description": "Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for YouTube",
+          "short": "Adds a download launcher to YouTube video pages and Shorts, plus an optional",
+          "description": "Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for YouTube",
+          "short": "Adds a download launcher to YouTube video pages and Shorts, plus an optional",
+          "description": "Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for YouTube",
+          "short": "Adds a download launcher to YouTube video pages and Shorts, plus an optional",
+          "description": "Adds a download launcher to YouTube video pages and Shorts, plus an optional floating download button on video elements. A companion panel page can trigger downloads and display progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js",
+      "page": "/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html",
+      "installUrl": "/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.user.js",
+      "files": [
+        "panel.html",
+        "xload-aea2123f38d9.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-aea2123f38d9/panel.html",
+      "tags": [
+        "youtube.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "youtube.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 30653,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for YouTube is a userscript that adds quick download controls to YouTube. It injects a download button into the video player's control bar and, on Shorts pages, shows a floating download button when you hover a video. A companion panel page lets you turn the floating button on or off, choose its position, size, icon size and edge offset, and trigger downloads for the current page.",
+          "problem": "YouTube does not provide a built-in way to save videos or Shorts. This script gives you a fast, in-page shortcut: instead of copying the URL by hand and pasting it into a download service, you click or hover a download button that hands the current page URL to an external downloader.",
+          "audience": "People who watch YouTube videos or Shorts and occasionally want to download them, and who already run a userscript manager (such as one that provides GM_openInTab / GM_setValue grants) in a desktop browser.",
+          "highlights": [
+            "Adds a download button to the YouTube player control bar that acts on the current page.",
+            "On Shorts pages, shows a floating download button when you hover over a visible, ready video element.",
+            "Floating button can be positioned in 12 screen locations (top/bottom/left/right center and quarter positions).",
+            "Configurable button size, icon size and edge offset.",
+            "A companion panel page can enable or disable the floating button and apply configuration changes live.",
+            "Panel actions let you download the current video or open the download service directly.",
+            "Settings persist across sessions using userscript storage, with a localStorage fallback.",
+            "The current browser language is used to pick the language path of the download service."
+          ],
+          "usage": [
+            "Install the userscript in a userscript-manager-enabled browser and visit a YouTube page.",
+            "On a video page, click the download icon in the player's control bar to send the current page to the download service.",
+            "On a Shorts page, move the mouse over the video to reveal the floating download button, then click it.",
+            "Open the companion panel page to access the Download Controls section.",
+            "Toggle 'Enable floating download button' and pick a button position from the available options.",
+            "Adjust button size, icon size and edge offset if the default appearance does not suit you.",
+            "Use the panel actions 'Download current video' or 'Open download service' to trigger a download from the panel."
+          ],
+          "limitations": [
+            "Only runs on youtube.com pages and only acts on the current page URL; it does not process playlists, channels or batches.",
+            "It does not download files itself: it opens an external download service with the current URL, so the actual download depends on that service.",
+            "The floating hover button is only enabled on pages whose URL contains '/shorts/'; on other pages it is disabled.",
+            "The floating button only appears for video elements that are large enough, visible, and have loaded enough data to be ready.",
+            "The companion panel is opened once and only from the first page load that has not already connected; a stored flag prevents repeat opens.",
+            "In-memory logs are capped at 200 entries and are cleared on refresh; they are not persisted."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download the video file by itself?",
+              "a": "No. It adds download buttons that forward the current page URL to an external download service; the actual download is handled by that service."
+            },
+            {
+              "q": "Why don't I see the floating button on a regular video page?",
+              "a": "The floating hover button is enabled only on pages whose URL contains '/shorts/'. On regular video pages you use the download button in the player's control bar instead."
+            },
+            {
+              "q": "Where do I change the button's position or size?",
+              "a": "Open the companion panel page. In the Download Controls section you can toggle the floating button and set its position, button size, icon size and edge offset."
+            },
+            {
+              "q": "Are my settings saved?",
+              "a": "Yes. Configuration values are stored through userscript storage when available, with a localStorage fallback, so they persist across sessions."
+            },
+            {
+              "q": "Can I disable the floating button?",
+              "a": "Yes. Use the 'Enable floating download button' switch in the companion panel to turn it off, and it can be re-enabled at any time."
+            }
+          ],
+          "safety": "Permissions requested are limited to opening tabs, adding styles, and reading/writing userscript storage. When you trigger a download, the current page URL (including its language path selection based on your browser language) is sent to the external download service; nothing is sent otherwise. The panel communication channel validates messages by expected origin and source window and suppresses duplicates, and the script does not access your YouTube account or credentials. Running logs are kept only in an in-memory buffer (capped at 200 entries, cleared on refresh) and are not desensitized or persisted, so they may contain page error details during the session."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for YouTube 是一款为 YouTube 增加快捷下载入口的用户脚本。它会在视频播放器控制栏中注入一个下载按钮，并在 Shorts 页面中于鼠标悬停视频时显示悬浮下载按钮。配套面板页可开关悬浮按钮，设置其位置、按钮尺寸、图标尺寸与边缘偏移，并可针对当前页面触发下载。",
+          "problem": "YouTube 本身没有提供保存视频或 Shorts 的便捷方式。本脚本提供页面内的快速入口：无需手动复制网址再粘贴到下载服务，只需点击或悬停下载按钮，即可把当前页面网址交给外部下载器。",
+          "audience": "适合经常观看 YouTube 视频或 Shorts、偶尔需要下载的桌面浏览器用户，且已安装支持 GM_openInTab / GM_setValue 等授权的用户脚本管理器。",
+          "highlights": [
+            "在 YouTube 播放器控制栏中注入下载按钮，作用于当前页面。",
+            "在 Shorts 页面中，鼠标悬停于可见且已就绪的视频元素时显示悬浮下载按钮。",
+            "悬浮按钮支持 12 个屏幕位置（上下左右居中及四分之一位置）。",
+            "可配置按钮尺寸、图标尺寸与边缘偏移。",
+            "配套面板页可开关悬浮按钮，并实时应用配置更改。",
+            "面板动作支持下载当前视频或直接打开下载服务。",
+            "配置通过用户脚本存储持久保存，回退使用 localStorage。",
+            "根据浏览器语言选择下载服务的语言路径。"
+          ],
+          "usage": [
+            "在支持用户脚本管理器的浏览器中安装脚本，然后访问 YouTube 页面。",
+            "在视频页面中，点击播放器控制栏中的下载图标，将当前页面发送到下载服务。",
+            "在 Shorts 页面中，把鼠标移动到视频上以显示悬浮下载按钮，然后点击它。",
+            "打开配套面板页，进入 Download Controls（下载控制）区域。",
+            "切换“Enable floating download button”开关，并从可用选项中选择按钮位置。",
+            "如默认外观不合适，可调整按钮尺寸、图标尺寸与边缘偏移。",
+            "使用面板动作“Download current video”或“Open download service”从面板触发下载。"
+          ],
+          "limitations": [
+            "仅在 youtube.com 页面运行，且只处理当前页面网址，不处理播放列表、频道或批量下载。",
+            "脚本本身不下载文件：它会携带当前网址打开外部下载服务，实际下载取决于该服务。",
+            "悬浮悬停按钮仅在网址包含“/shorts/”的页面启用，其它页面会被禁用。",
+            "悬浮按钮仅对足够大、可见且已加载足够数据就绪的视频元素显示。",
+            "配套面板只会在首次尚未连接过的页面加载时自动打开一次，存储标记会阻止重复打开。",
+            "内存日志上限为 200 条，刷新即清空，不做持久化。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会自己下载视频文件吗？",
+              "a": "不会。它只是添加下载按钮，将当前页面网址转发给外部下载服务，实际下载由该服务完成。"
+            },
+            {
+              "q": "为什么普通视频页看不到悬浮按钮？",
+              "a": "悬浮悬停按钮仅在网址包含“/shorts/”的页面启用。普通视频页请使用播放器控制栏中的下载按钮。"
+            },
+            {
+              "q": "在哪里修改按钮位置或尺寸？",
+              "a": "打开配套面板页，在 Download Controls 区域可以开关悬浮按钮，并设置位置、按钮尺寸、图标尺寸与边缘偏移。"
+            },
+            {
+              "q": "我的设置会被保存吗？",
+              "a": "会。可用时通过用户脚本存储保存配置，并回退使用 localStorage，因此设置可跨会话保留。"
+            },
+            {
+              "q": "可以关闭悬浮按钮吗？",
+              "a": "可以。使用面板中的“Enable floating download button”开关即可关闭，之后也可随时重新启用。"
+            }
+          ],
+          "safety": "脚本申请的权限仅限于打开标签页、添加样式以及读写用户脚本存储。当你触发下载时，当前页面网址（以及依据浏览器语言选择的语言路径）会被发送到外部下载服务；除此之外不会发送任何内容。面板通信通道会按预期的来源（origin）与来源窗口校验消息并去重；脚本不会访问你的 YouTube 账号或凭据。运行日志仅保存在内存缓冲区中（上限 200 条，刷新即清空），既不脱敏也不持久化，因此会话期间可能包含页面错误信息。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for YouTube 是一款為 YouTube 增加快速下載入口的使用者腳本。它會在影片播放器控制列中注入一個下載按鈕，並在 Shorts 頁面中於滑鼠懸停影片時顯示浮動下載按鈕。配套面板頁可開關浮動按鈕，設定其位置、按鈕尺寸、圖示尺寸與邊緣偏移，並可針對目前頁面觸發下載。",
+          "problem": "YouTube 本身並未提供儲存影片或 Shorts 的便利方式。本腳本提供頁面內的快速入口：不需手動複製網址再貼到下载服務，只要點擊或懸停下载按鈕，即可將目前頁面網址交給外部下載器。",
+          "audience": "適合經常觀看 YouTube 影片或 Shorts、偶爾需要下載的桌面瀏覽器使用者，且已安裝支援 GM_openInTab / GM_setValue 等授權的使用者腳本管理器。",
+          "highlights": [
+            "在 YouTube 播放器控制列中注入下載按鈕，作用於目前頁面。",
+            "在 Shorts 頁面中，滑鼠懸停於可見且已就緒的影片元素時顯示浮動下載按鈕。",
+            "浮動按鈕支援 12 個螢幕位置（上下左右置中及四分之一位置）。",
+            "可設定按鈕尺寸、圖示尺寸與邊緣偏移。",
+            "配套面板頁可開關浮動按鈕，並即時套用設定變更。",
+            "面板動作支援下載目前影片或直接開啟下載服務。",
+            "設定透過使用者腳本儲存持久保存，並回退使用 localStorage。",
+            "依瀏覽器語言選擇下载服務的語言路徑。"
+          ],
+          "usage": [
+            "在支援使用者腳本管理器的瀏覽器中安裝腳本，然後前往 YouTube 頁面。",
+            "在影片頁面中，點擊播放器控制列中的下載圖示，將目前頁面送往下载服務。",
+            "在 Shorts 頁面中，把滑鼠移到影片上以顯示浮動下載按鈕，然後點擊它。",
+            "開啟配套面板頁，進入 Download Controls（下載控制）區域。",
+            "切換「Enable floating download button」開關，並從可用選項中選擇按鈕位置。",
+            "若預設外觀不適合，可調整按鈕尺寸、圖示尺寸與邊緣偏移。",
+            "使用面板動作「Download current video」或「Open download service」從面板觸發下載。"
+          ],
+          "limitations": [
+            "僅在 youtube.com 頁面執行，且只處理目前頁面網址，不處理播放清單、頻道或批次下載。",
+            "腳本本身不下載檔案：它會帶上目前網址開啟外部下载服務，實際下載取決於該服務。",
+            "浮動懸停按鈕僅在網址包含「/shorts/」的頁面啟用，其他頁面會被停用。",
+            "浮動按鈕僅對足夠大、可見且已載入足夠資料就緒的影片元素顯示。",
+            "配套面板只會在首次尚未連線過的頁面載入時自動開啟一次，儲存標記會阻止重複開啟。",
+            "記憶體日誌上限為 200 筆，重新整理即清空，不做持久化。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會自己下載影片檔案嗎？",
+              "a": "不會。它只是新增下载按鈕，將目前頁面網址轉送給外部下载服務，實際下載由該服務完成。"
+            },
+            {
+              "q": "為什麼一般影片頁看不到浮動按鈕？",
+              "a": "浮動懸停按鈕僅在網址包含「/shorts/」的頁面啟用。一般影片頁請使用播放器控制列中的下載按鈕。"
+            },
+            {
+              "q": "在哪裡修改按鈕位置或尺寸？",
+              "a": "開啟配套面板頁，在 Download Controls 區域可以開關浮動按鈕，並設定位置、按鈕尺寸、圖示尺寸與邊緣偏移。"
+            },
+            {
+              "q": "我的設定會被保存嗎？",
+              "a": "會。可用時透過使用者腳本儲存保存設定，並回退使用 localStorage，因此設定可跨工作階段保留。"
+            },
+            {
+              "q": "可以關閉浮動按鈕嗎？",
+              "a": "可以。使用面板中的「Enable floating download button」開關即可關閉，之後也可隨時重新啟用。"
+            }
+          ],
+          "safety": "腳本申請的權限僅限於開啟分頁、加入樣式以及讀寫使用者腳本儲存。當你觸發下載時，目前頁面網址（以及依瀏覽器語言選擇的語言路徑）會被送往外部下载服務；除此之外不會傳送任何內容。面板通訊通道會依預期的來源（origin）與來源視窗驗證訊息並去除重複；腳本不會存取你的 YouTube 帳號或憑證。執行日誌僅保存在記憶體緩衝區中（上限 200 筆，重新整理即清空），既不脫敏也不持久化，因此工作階段期間可能包含頁面錯誤資訊。"
+        }
+      }
+    },
+    {
+      "id": "xload-6bea7028d046",
+      "type": "script",
+      "title": "ClipSaver for TikTok",
+      "short": "Adds a floating download button over TikTok video players that opens a download",
+      "description": "Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for TikTok",
+          "short": "Adds a floating download button over TikTok video players that opens a download",
+          "description": "Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for TikTok",
+          "short": "Adds a floating download button over TikTok video players that opens a download",
+          "description": "Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for TikTok",
+          "short": "Adds a floating download button over TikTok video players that opens a download",
+          "description": "Adds a floating download button over TikTok video players that opens a download launcher for the current clip. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js",
+      "page": "/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html",
+      "installUrl": "/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.user.js",
+      "files": [
+        "panel.html",
+        "xload-6bea7028d046.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-6bea7028d046/panel.html",
+      "tags": [
+        "www.tiktok.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.tiktok.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 31893,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for TikTok is a userscript that adds a floating download button over TikTok video players. Hover the pointer over a video to reveal the button, then click it to open an external download service preloaded with the current clip's URL. A companion panel page can control the button's appearance and trigger downloads, reporting progress back to the page.",
+          "problem": "TikTok does not offer a straightforward way to save a clip to disk, and locating the current video's URL or ID by hand is inconvenient. This script surfaces a one-click download entry point directly on the player.",
+          "audience": "TikTok viewers on desktop browsers who use a userscript manager (such as Tampermonkey or Violentmonkey) and want a quick way to hand the current clip to a download service.",
+          "highlights": [
+            "The floating circular download button appears only while the pointer is over a video player, so normal browsing stays unobstructed.",
+            "Works with TikTok's xgplayer containers and falls back to standard video elements.",
+            "Button placement adapts to the page: profile pages use bottom-center, while video pages use top-center or right-three-quarter depending on the layout.",
+            "Button size, icon size, edge offset, and any of twelve preset positions are configurable.",
+            "Resolves the current clip's numeric video ID from the player element and builds a canonical video URL, falling back to the page URL without its query string.",
+            "An optional companion panel page can enable or disable the button, adjust settings, and start downloads, with running/done/error progress reporting.",
+            "Sends the browser language to the download service so its page opens in a matching locale.",
+            "A rainbow ring animation gives visual feedback when hovering the button."
+          ],
+          "usage": [
+            "Install the script in a userscript manager and make sure it is enabled for tiktok.com.",
+            "Open TikTok in the browser; the script runs automatically as the page loads.",
+            "Move the pointer over a playing video to reveal the floating download button.",
+            "Click the button; the external download service opens in a new tab with the current clip's URL.",
+            "Optionally open the companion panel page to change the button position or size, toggle the button on or off, or start a download directly.",
+            "On the first run the script connects to its companion panel page once; the connection is remembered so it is not opened again automatically."
+          ],
+          "limitations": [
+            "It matches tiktok.com pages only; it does not work on other sites or on non-TikTok embedded players.",
+            "The script is declared with @noframes, so it does not run inside iframes.",
+            "The actual download is performed by an external third-party service; the script only launches it and cannot guarantee service availability or the resulting file.",
+            "The button only appears over players that pass its size and visibility checks (for example, video readyState >= 3), so very small or not-yet-ready players may not show it.",
+            "It needs a userscript manager that supports the declared GM_* APIs; without them, opening tabs falls back to window.open and storage falls back to localStorage.",
+            "Panel communication relies on cross-origin postMessage/BroadcastChannel; if the companion page is unavailable, only the on-page button works."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download videos by itself?",
+              "a": "No. It identifies the current clip's URL and opens an external download service in a new tab; the actual download is performed there."
+            },
+            {
+              "q": "Where does the button appear?",
+              "a": "It appears only while the pointer is over a recognized video player, positioned according to the current TikTok page type and your configured position."
+            },
+            {
+              "q": "Can I change the button's size or position?",
+              "a": "Yes, through the companion panel (button size, icon size, edge offset, and twelve preset positions), or by editing the defaults."
+            },
+            {
+              "q": "Does it collect my personal data?",
+              "a": "The script stores only a small flag for the one-time panel connection and keeps runtime logs in memory; it does not read account credentials. The current clip URL is passed to the external download service when you click."
+            },
+            {
+              "q": "Why don't I see the button?",
+              "a": "Make sure the script is enabled for tiktok.com, the video is playing or ready, and the player is large enough; moving the pointer directly over the player should reveal it."
+            },
+            {
+              "q": "Does it work in iframes?",
+              "a": "No, the script is declared @noframes and runs only in the top-level TikTok page."
+            }
+          ],
+          "safety": "The script runs only on tiktok.com and reads the current page and player to determine the clip URL. When you click the button (or trigger a panel download action), that URL is sent to an external download service in a new tab; nothing is downloaded without your click. Runtime logs (errors and message events) are kept only in a 200-entry in-memory buffer, are not redacted, and are cleared on reload; they are not stored persistently. The only persisted value is a one-time flag indicating the companion panel was connected, kept via userscript storage when available and otherwise in localStorage. The panel bridge trusts cross-origin messages only from the companion panel origin and the current page origin, plus a window reference obtained from window.open; no account credentials or passwords are read or transmitted."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for TikTok 是一款用户脚本，会在 TikTok 视频播放器上叠加一个悬浮下载按钮。将鼠标移到视频上即可显示按钮，点击后会打开外部下载服务并自动填入当前视频的链接。配套面板页可控制按钮外观并触发下载，同时回传进度。",
+          "problem": "TikTok 本身没有提供便捷地把视频保存到本地的方式，手动查找当前视频的链接或编号也很麻烦。本脚本在播放器上直接提供一个一键下载入口。",
+          "audience": "在桌面浏览器使用用户脚本管理器（如 Tampermonkey、Violentmonkey），希望快速把当前 TikTok 视频交给下载服务的用户。",
+          "highlights": [
+            "仅在鼠标悬停在视频播放器上时显示悬浮圆形下载按钮，不影响正常浏览。",
+            "支持 TikTok 的 xgplayer 容器，并可回退到标准 video 元素。",
+            "按钮位置随页面自适应：个人主页使用底部居中，视频页根据布局使用顶部居中或右侧四分之三处。",
+            "可配置按钮大小、图标大小、边缘间距，以及十二种预设位置。",
+            "从播放器元素解析出当前视频的数字编号并拼出标准视频链接；无法解析时回退为去掉查询参数的页面地址。",
+            "可选的配套面板页可启用或停用按钮、调整设置并发起下载，并回报运行中/完成/错误进度。",
+            "将浏览器语言发送给下载服务，使其页面以匹配的语言打开。",
+            "按钮悬停时显示彩虹描边动画作为视觉反馈。"
+          ],
+          "usage": [
+            "在用户脚本管理器中安装脚本，并确保其对 tiktok.com 启用。",
+            "在浏览器中打开 TikTok，脚本会随页面加载自动运行。",
+            "将鼠标移到正在播放的视频上，显示悬浮下载按钮。",
+            "点击按钮，外部下载服务会在新标签页打开并带入当前视频链接。",
+            "也可以打开配套面板页，调整按钮位置或大小、开关按钮，或直接发起下载。",
+            "首次运行时会自动连接一次配套面板页，之后不再自动打开。"
+          ],
+          "limitations": [
+            "仅匹配 tiktok.com 页面，不适用于其他网站或非 TikTok 的嵌入式播放器。",
+            "脚本声明了 @noframes，因此不会在 iframe 内运行。",
+            "实际下载由外部第三方服务完成，脚本只负责跳转，无法保证服务可用性或下载结果。",
+            "按钮只在满足尺寸与可见性检查（例如视频 readyState >= 3）的播放器上出现，过小或尚未就绪的播放器可能不显示。",
+            "需要支持所声明 GM_* 接口的用户脚本管理器；缺少时打开标签页会回退为 window.open，存储会回退为 localStorage。",
+            "面板通信依赖跨源 postMessage/BroadcastChannel；若配套页面不可用，仅页面上的按钮可用。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会自行下载视频吗？",
+              "a": "不会。它只识别当前视频链接并在新标签页打开外部下载服务，实际下载由该服务完成。"
+            },
+            {
+              "q": "按钮会出现在哪里？",
+              "a": "仅在鼠标悬停于可识别的视频播放器上时出现，位置取决于当前 TikTok 页面类型以及你配置的位置。"
+            },
+            {
+              "q": "可以修改按钮大小或位置吗？",
+              "a": "可以。通过配套面板可调整按钮大小、图标大小、边缘间距和十二种预设位置，也可修改默认值。"
+            },
+            {
+              "q": "脚本会收集我的个人数据吗？",
+              "a": "脚本仅保存一个用于首次连接面板的标记，并在内存中保留运行日志；不会读取账号凭据。点击按钮时会把当前视频链接传给外部下载服务。"
+            },
+            {
+              "q": "为什么看不到按钮？",
+              "a": "请确认脚本已对 tiktok.com 启用、视频正在播放或已就绪、播放器足够大；将鼠标移到播放器正上方即可显示。"
+            },
+            {
+              "q": "它能在 iframe 中工作吗？",
+              "a": "不能，脚本声明了 @noframes，只在顶层 TikTok 页面运行。"
+            }
+          ],
+          "safety": "脚本仅在 tiktok.com 上运行，读取当前页面与播放器以确定视频链接。当你点击按钮（或从面板触发下载动作）时，该链接会在新标签页中发送给外部下载服务；未经点击不会下载任何内容。运行日志（错误、消息事件）仅保存在最多 200 条的内存缓冲区中，不做脱敏，刷新即清空，不会持久化存储。唯一持久化的值是表示已连接配套面板的一次性标记，优先使用用户脚本存储，否则使用 localStorage。面板通道仅信任来自配套面板来源、当前页面来源的跨源消息，以及 window.open 返回的窗口引用；不会读取或传输任何账号凭据或密码。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for TikTok 是一款使用者腳本，會在 TikTok 影片播放器上疊加一個懸浮下載按鈕。將滑鼠移到影片上即可顯示按鈕，點擊後會開啟外部下載服務並自動填入目前影片的連結。配套面板頁可控制按鈕外觀並觸發下載，同時回報進度。",
+          "problem": "TikTok 本身沒有提供便捷的方式將影片儲存到本機，手動尋找目前影片的連結或編號也很麻煩。本腳本在播放器上直接提供一個一鍵下載入口。",
+          "audience": "在桌面瀏覽器使用使用者腳本管理器（如 Tampermonkey、Violentmonkey），希望快速把目前 TikTok 影片交給下載服務的使用者。",
+          "highlights": [
+            "僅在滑鼠懸浮於影片播放器上時顯示懸浮圓形下載按鈕，不影響正常瀏覽。",
+            "支援 TikTok 的 xgplayer 容器，並可回退到標準 video 元素。",
+            "按鈕位置隨頁面自動調整：個人主頁使用底部置中，影片頁依版面使用頂部置中或右側四分之三處。",
+            "可設定按鈕大小、圖示大小、邊緣間距，以及十二種預設位置。",
+            "從播放器元素解析出目前影片的數字編號並組出標準影片連結；無法解析時回退為移除查詢參數的頁面網址。",
+            "選用的配套面板頁可啟用或停用按鈕、調整設定並發起下載，並回報執行中/完成/錯誤進度。",
+            "將瀏覽器語言傳送給下載服務，使其頁面以相符的語言開啟。",
+            "按鈕懸浮時顯示彩虹描邊動畫作為視覺回饋。"
+          ],
+          "usage": [
+            "在使用者腳本管理器中安裝腳本，並確認其對 tiktok.com 啟用。",
+            "在瀏覽器中開啟 TikTok，腳本會隨頁面載入自動執行。",
+            "將滑鼠移到正在播放的影片上，顯示懸浮下載按鈕。",
+            "點擊按鈕，外部下載服務會在新分頁開啟並帶入目前影片連結。",
+            "也可以開啟配套面板頁，調整按鈕位置或大小、開關按鈕，或直接發起下載。",
+            "首次執行時會自動連接一次配套面板頁，之後不再自動開啟。"
+          ],
+          "limitations": [
+            "僅符合 tiktok.com 頁面，不適用於其他網站或非 TikTok 的嵌入式播放器。",
+            "腳本宣告了 @noframes，因此不會在 iframe 內執行。",
+            "實際下載由外部第三方服務完成，腳本只負責跳轉，無法保證服務可用性或下載結果。",
+            "按鈕只在符合尺寸與可見性檢查（例如影片 readyState >= 3）的播放器上出現，過小或尚未就緒的播放器可能不顯示。",
+            "需要支援所宣告 GM_* 介面的使用者腳本管理器；缺少時開啟分頁會回退為 window.open，儲存會回退為 localStorage。",
+            "面板通訊依賴跨來源 postMessage/BroadcastChannel；若配套頁面無法使用，僅頁面上的按鈕可用。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會自行下載影片嗎？",
+              "a": "不會。它只識別目前影片連結並在新分頁開啟外部下載服務，實際下載由該服務完成。"
+            },
+            {
+              "q": "按鈕會出現在哪裡？",
+              "a": "僅在滑鼠懸浮於可識別的影片播放器上時出現，位置取決於目前 TikTok 頁面類型以及你設定的位置。"
+            },
+            {
+              "q": "可以修改按鈕大小或位置嗎？",
+              "a": "可以。透過配套面板可調整按鈕大小、圖示大小、邊緣間距和十二種預設位置，也可修改預設值。"
+            },
+            {
+              "q": "腳本會蒐集我的個人資料嗎？",
+              "a": "腳本僅儲存一個用於首次連接面板的標記，並在記憶體中保留執行日誌；不會讀取帳號憑證。點擊按鈕時會把目前影片連結傳給外部下載服務。"
+            },
+            {
+              "q": "為什麼看不到按鈕？",
+              "a": "請確認腳本已對 tiktok.com 啟用、影片正在播放或已就緒、播放器足夠大；將滑鼠移到播放器正上方即可顯示。"
+            },
+            {
+              "q": "它能在 iframe 中運作嗎？",
+              "a": "不能，腳本宣告了 @noframes，只在最上層 TikTok 頁面執行。"
+            }
+          ],
+          "safety": "腳本僅在 tiktok.com 上執行，讀取目前頁面與播放器以判斷影片連結。當你點擊按鈕（或從面板觸發下載動作）時，該連結會在新分頁中傳送給外部下載服務；未經點擊不會下載任何內容。執行日誌（錯誤、訊息事件）僅保存在最多 200 條的記憶體緩衝區中，不做去識別化，重新整理即清空，不會持久化儲存。唯一持久化的值是表示已連接配套面板的一次性標記，優先使用使用者腳本儲存，否則使用 localStorage。面板通道僅信任來自配套面板來源、目前頁面來源的跨來源訊息，以及 window.open 傳回的視窗參照；不會讀取或傳輸任何帳號憑證或密碼。"
+        }
+      }
+    },
+    {
+      "id": "xload-36c82a148cdf",
+      "type": "script",
+      "title": "ClipSaver for Douyin",
+      "short": "Adds a download button to the Douyin player control bar that opens a download",
+      "description": "Adds a download button to the Douyin player control bar that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Douyin",
+          "short": "Adds a download button to the Douyin player control bar that opens a download",
+          "description": "Adds a download button to the Douyin player control bar that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Douyin",
+          "short": "Adds a download button to the Douyin player control bar that opens a download",
+          "description": "Adds a download button to the Douyin player control bar that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Douyin",
+          "short": "Adds a download button to the Douyin player control bar that opens a download",
+          "description": "Adds a download button to the Douyin player control bar that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-36c82a148cdf/xload-36c82a148cdf.user.js",
+      "page": "/scripts/userscripts/xload-36c82a148cdf/xload-36c82a148cdf.html",
+      "installUrl": "/scripts/userscripts/xload-36c82a148cdf/xload-36c82a148cdf.user.js",
+      "files": [
+        "panel.html",
+        "xload-36c82a148cdf.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-36c82a148cdf/panel.html",
+      "tags": [
+        "www.douyin.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.douyin.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 17398,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for Douyin adds a download button to the Douyin (douyin.com) video player control bar. Clicking it opens an external download launcher pre-filled with the URL of the current video. A companion control panel page can also trigger a download for the current video and shows the running state of each action.",
+          "problem": "The Douyin web player has no built-in control to save the video you are currently watching. This script adds an in-player download button that forwards the current page URL to an external download service, so you do not have to copy the link manually.",
+          "audience": "Desktop browser users who watch videos on douyin.com, already run a userscript manager, and want a quick one-click way to send the current video to a download service.",
+          "highlights": [
+            "Injects a download button into the Douyin player control bar, styled to blend with the existing controls.",
+            "Clicking the button opens an external downloader page pre-filled with the current video URL.",
+            "Periodically rescans the player DOM so the button is re-added after the page or player re-renders.",
+            "Optional companion control panel can trigger a download of the current video on demand.",
+            "The panel can enable or disable the injected button and change the scan interval.",
+            "Reports each panel action's progress, completion, or error back to the panel.",
+            "Captures uncaught page errors and unhandled promise rejections into an in-memory log for troubleshooting.",
+            "Runs at document-start and only activates on douyin.com pages."
+          ],
+          "usage": [
+            "Install a userscript manager in your browser, then add this script.",
+            "Open any video page on douyin.com.",
+            "Wait for the download button to appear in the player control bar (scanning runs every 777 ms by default).",
+            "Click the download button to open the external downloader for the current video.",
+            "Optionally open the companion panel to toggle the injected button or adjust the scan interval.",
+            "In the panel, use \"Download current video\" to trigger a download, or \"Open download service\" to open the downloader directly."
+          ],
+          "limitations": [
+            "Works only on douyin.com and is disabled inside frames (@noframes).",
+            "It does not download the video itself: the actual download is performed by the external download service, and success depends on that service and on the video being available.",
+            "Because the button is re-injected by periodic scanning, it may briefly disappear and reappear when the player re-renders.",
+            "The companion panel is auto-opened only once (a stored flag prevents automatic reconnection on later visits).",
+            "Logs are kept in memory only (up to 200 entries) and are cleared when the page is refreshed; they are not persisted.",
+            "The button is cloned from the existing fullscreen control, so its placement may not match every player layout."
+          ],
+          "faq": [
+            {
+              "q": "Which sites does this script work on?",
+              "a": "Only Douyin web pages on douyin.com. It checks the host before activating and does nothing elsewhere."
+            },
+            {
+              "q": "Does the script download the video by itself?",
+              "a": "No. It sends the current video's URL to an external download service; the downloading and file handling are done there."
+            },
+            {
+              "q": "Can I turn the injected button off?",
+              "a": "Yes. The companion panel has an on/off switch for the injected download button and a field for the scan interval."
+            },
+            {
+              "q": "Where are my settings and the logs stored?",
+              "a": "Settings and the panel-connection flag are saved through the userscript storage API, falling back to localStorage. Logs live only in memory and are cleared on refresh."
+            }
+          ],
+          "safety": "The script runs only on douyin.com pages and reads the current page URL to pass it to the external download service. It requests the userscript grants GM_openInTab / GM.openInTab / GM_addStyle / GM_setValue / GM_getValue and stores a small panel-connection flag plus panel settings. It communicates with the companion panel over postMessage and BroadcastChannel and accepts messages only from the panel's own origin, ignoring other sources. It does not read or transmit page content beyond the current URL, and its diagnostic log is held in memory only, not persisted or uploaded. The downloader and panel pages are third-party external pages; review their own privacy practices before use."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for Douyin 会在抖音网页版（douyin.com）播放器控制栏中添加一个下载按钮。点击后打开一个外部下载启动页，并自动带入当前视频的地址。配套的控制面板页也可以主动触发当前视频的下载，并显示各操作运行状态。",
+          "problem": "抖音网页版播放器本身没有保存当前观看视频的入口。该脚本在播放器中加入下载按钮，把当前页面地址转发给外部下载服务，免去手动复制链接的麻烦。",
+          "audience": "在电脑浏览器上观看 douyin.com 视频、已使用用户脚本管理器，并希望一键把当前视频发送到下载服务的用户。",
+          "highlights": [
+            "在抖音播放器控制栏注入下载按钮，样式与现有控件保持一致。",
+            "点击按钮会打开外部下载页，并自动填入当前视频地址。",
+            "周期性重新扫描播放器 DOM，在页面或播放器重新渲染后自动补回按钮。",
+            "可选配套控制面板可按需触发当前视频的下载。",
+            "面板可启用或停用注入按钮，并可调整扫描间隔。",
+            "会把面板每个操作的处理中、完成或出错状态回报给面板。",
+            "捕获页面未捕获错误与未处理的 Promise 拒绝，写入内存日志以便排查。",
+            "在 document-start 阶段运行，且仅在 douyin.com 页面生效。"
+          ],
+          "usage": [
+            "在浏览器中安装用户脚本管理器，然后添加本脚本。",
+            "打开 douyin.com 上的任意视频页面。",
+            "等待下载按钮出现在播放器控制栏中（默认每 777 毫秒扫描一次）。",
+            "点击下载按钮，为当前视频打开外部下载页。",
+            "可选：打开配套面板，切换注入按钮或调整扫描间隔。",
+            "在面板中使用“下载当前视频”触发下载，或使用“打开下载服务”直接进入下载页。"
+          ],
+          "limitations": [
+            "仅适用于 douyin.com，且在 iframe 中被禁用（@noframes）。",
+            "脚本本身不下载视频：实际下载由外部下载服务完成，能否成功取决于该服务和视频是否可用。",
+            "按钮依赖周期性扫描注入，播放器重新渲染时可能短暂消失再出现。",
+            "配套面板仅在首次自动打开（存有标记后，之后访问不会再自动连接）。",
+            "日志仅保存在内存中（最多 200 条），刷新页面即清空，不做持久化。",
+            "按钮由现有全屏控件克隆而来，位置未必适配所有播放器布局。"
+          ],
+          "faq": [
+            {
+              "q": "这个脚本适用于哪些网站？",
+              "a": "仅适用于 douyin.com 的抖音网页。脚本会先判断域名再生效，其他网站不做任何操作。"
+            },
+            {
+              "q": "脚本会自己下载视频吗？",
+              "a": "不会。它只是把当前视频地址发送给外部下载服务，下载与文件处理都在该服务中完成。"
+            },
+            {
+              "q": "可以关闭注入的按钮吗？",
+              "a": "可以。配套面板提供注入下载按钮的开关，以及扫描间隔设置。"
+            },
+            {
+              "q": "设置和日志保存在哪里？",
+              "a": "设置与面板连接标记通过用户脚本存储接口保存，回退时使用 localStorage。日志仅存在于内存，刷新后清空。"
+            }
+          ],
+          "safety": "脚本仅在 douyin.com 页面运行，会读取当前页面地址并传给外部下载服务。它申请了 GM_openInTab / GM.openInTab / GM_addStyle / GM_setValue / GM_getValue 等用户脚本权限，并保存一个面板连接标记和面板设置。脚本通过 postMessage 与 BroadcastChannel 与配套面板通信，只接受来自面板自身来源的消息，忽略其他来源。除当前地址外，它不读取也不传输页面内容；诊断日志仅存于内存，不持久化、不上传。下载页与面板页均为第三方外部页面，使用前请了解其自身的隐私做法。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for Douyin 會在抖音網頁版（douyin.com）播放器控制列中加入一個下載按鈕。點擊後會開啟外部下載啟動頁，並自動帶入目前影片的網址。配套的控制面板頁也可主動觸發目前影片的下載，並顯示各操作的執行狀態。",
+          "problem": "抖音網頁版播放器本身沒有儲存目前觀看影片的入口。此腳本在播放器加入下載按鈕，把目前頁面網址轉送給外部下載服務，省去手動複製連結的麻煩。",
+          "audience": "在電腦瀏覽器上觀看 douyin.com 影片、已使用使用者腳本管理器，並希望一鍵把目前影片送到下載服務的使用者。",
+          "highlights": [
+            "在抖音播放器控制列注入下載按鈕，樣式與現有控制項保持一致。",
+            "點擊按鈕會開啟外部下載頁，並自動填入目前影片網址。",
+            "週期性重新掃描播放器 DOM，在頁面或播放器重新渲染後自動補回按鈕。",
+            "可選配套控制面板可依需求觸發目前影片的下載。",
+            "面板可啟用或停用注入按鈕，並可調整掃描間隔。",
+            "會把面板每個操作的處理中、完成或錯誤狀態回報給面板。",
+            "擷取頁面未攔截的錯誤與未處理的 Promise 拒絕，寫入記憶體日誌以便排查。",
+            "在 document-start 階段執行，且僅在 douyin.com 頁面生效。"
+          ],
+          "usage": [
+            "在瀏覽器中安裝使用者腳本管理器，然後加入本腳本。",
+            "開啟 douyin.com 上的任意影片頁面。",
+            "等待下載按鈕出現在播放器控制列中（預設每 777 毫秒掃描一次）。",
+            "點擊下載按鈕，為目前影片開啟外部下載頁。",
+            "可選：開啟配套面板，切換注入按鈕或調整掃描間隔。",
+            "在面板中使用「下載目前影片」觸發下載，或使用「開啟下載服務」直接進入下載頁。"
+          ],
+          "limitations": [
+            "僅適用於 douyin.com，且在 iframe 中被停用（@noframes）。",
+            "腳本本身不下載影片：實際下載由外部下載服務完成，能否成功取決於該服務與影片是否可用。",
+            "按鈕依賴週期性掃描注入，播放器重新渲染時可能短暫消失再出現。",
+            "配套面板僅在首次自動開啟（存有標記後，之後造訪不會再自動連線）。",
+            "日誌僅保存在記憶體中（最多 200 筆），重新整理頁面即清空，不做持久化。",
+            "按鈕由現有全螢幕控制項複製而來，位置未必適配所有播放器版面。"
+          ],
+          "faq": [
+            {
+              "q": "這個腳本適用於哪些網站？",
+              "a": "僅適用於 douyin.com 的抖音網頁。腳本會先判斷網域再生效，其他網站不做任何操作。"
+            },
+            {
+              "q": "腳本會自己下載影片嗎？",
+              "a": "不會。它只是把目前影片網址傳送給外部下載服務，下載與檔案處理都在該服務中完成。"
+            },
+            {
+              "q": "可以關閉注入的按鈕嗎？",
+              "a": "可以。配套面板提供注入下載按鈕的開關，以及掃描間隔設定。"
+            },
+            {
+              "q": "設定和日誌保存在哪裡？",
+              "a": "設定與面板連線標記透過使用者腳本儲存介面保存，退回時使用 localStorage。日誌僅存在記憶體，重新整理後清空。"
+            }
+          ],
+          "safety": "腳本僅在 douyin.com 頁面執行，會讀取目前頁面網址並傳給外部下載服務。它申請了 GM_openInTab / GM.openInTab / GM_addStyle / GM_setValue / GM_getValue 等使用者腳本權限，並保存一個面板連線標記與面板設定。腳本透過 postMessage 與 BroadcastChannel 與配套面板通訊，只接受來自面板自身來源的訊息，忽略其他來源。除目前網址外，它不讀取也不傳輸頁面內容；診斷日誌僅存於記憶體，不持久化、不上傳。下載頁與面板頁均為第三方外部頁面，使用前請了解其自身的隱私做法。"
+        }
+      }
+    },
+    {
+      "id": "xload-acec4a250e94",
+      "type": "script",
+      "title": "ClipSaver for Threads",
+      "short": "Adds a download button to Threads posts that contain video, opening a download",
+      "description": "Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Threads",
+          "short": "Adds a download button to Threads posts that contain video, opening a download",
+          "description": "Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Threads",
+          "short": "Adds a download button to Threads posts that contain video, opening a download",
+          "description": "Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Threads",
+          "short": "Adds a download button to Threads posts that contain video, opening a download",
+          "description": "Adds a download button to Threads posts that contain video, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js",
+      "page": "/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html",
+      "installUrl": "/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.user.js",
+      "files": [
+        "panel.html",
+        "xload-acec4a250e94.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-acec4a250e94/panel.html",
+      "tags": [
+        "www.threads.com",
+        "www.threads.net"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.threads.com",
+        "www.threads.net"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 18352,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for Threads is a userscript that adds a download button to Threads posts containing video. Clicking it opens a companion download launcher for the selected post, and an optional panel page can trigger downloads and display progress.",
+          "problem": "Threads offers no convenient built-in way to save videos from posts, so users must copy a post link and open an external service by hand. This script places a download entry point directly on each video post.",
+          "audience": "Threads users on desktop browsers who run a userscript manager and want a fast way to hand video posts to an external download service.",
+          "highlights": [
+            "Injects a download button beside the action buttons of Threads posts that contain video.",
+            "Resolves the canonical post link and opens a language-aware download launcher for it.",
+            "Provides an optional companion panel page that can trigger downloads and show running/done/failed progress.",
+            "Panel controls expose a scan interval for how often the page is re-scanned for new posts.",
+            "Falls back gracefully between GM storage and localStorage for saved settings.",
+            "Includes an in-memory runtime log that the panel can pull for diagnostics.",
+            "Connects the panel once per browser profile to avoid repeatedly opening tabs."
+          ],
+          "usage": [
+            "Install a userscript manager and add the script.",
+            "Open threads.com or threads.net and browse posts that contain video.",
+            "Click the download icon added beside the post's action buttons.",
+            "The script opens the download launcher for that post in a new tab.",
+            "Optionally open the companion panel page to trigger a download for the current post or adjust the scan interval."
+          ],
+          "limitations": [
+            "Only posts that contain a video element receive the download button; text- or image-only posts are skipped.",
+            "The script does not download or store videos itself; it hands the post URL to an external download service.",
+            "Only works on threads.com and threads.net.",
+            "Requires a userscript manager that supports GM_openInTab/GM.openInTab; the panel connection is attempted once and remembered per profile."
+          ],
+          "faq": [
+            {
+              "q": "Where does the video actually get downloaded?",
+              "a": "The script opens an external download service in a new tab and passes it the post URL; the actual retrieval happens there, not inside the script."
+            },
+            {
+              "q": "Why don't I see a button on some posts?",
+              "a": "The button is only added to posts that contain video. Posts without a video element are ignored."
+            },
+            {
+              "q": "Do I need to log in or give the script an account?",
+              "a": "No. The script only adds the button and opens the launcher; it does not collect accounts or credentials."
+            },
+            {
+              "q": "What does the panel page do?",
+              "a": "It can request a download for the current post and shows progress states such as running, done and failed."
+            }
+          ],
+          "safety": "The script requests the userscript manager permissions GM_openInTab/GM.openInTab, GM_addStyle, GM_setValue and GM_getValue. When a download is triggered, the URL of the current post is sent to the external download service so it can process the request. Runtime logs are held only in an in-memory ring buffer (maximum 200 entries) and are cleared on reload; they are not persisted or uploaded. Panel messages are origin-checked and accepted only from the trusted panel origin and the script's own page. Saved settings use GM storage with a localStorage fallback."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for Threads 是一款用户脚本，会为包含视频的 Threads 帖子添加一个下载按钮。点击后会针对该帖子打开配套的下载启动器，可选的配套面板页也可以触发下载并显示进度。",
+          "problem": "Threads 本身没有便捷的一键保存帖子视频的方式，用户只能手动复制帖子链接再打开外部服务。本脚本把下载入口直接放在每个视频帖子上。",
+          "audience": "在桌面浏览器上使用用户脚本管理器、希望快速把视频帖子交给外部下载服务的 Threads 用户。",
+          "highlights": [
+            "为包含视频的 Threads 帖子在操作按钮旁注入下载按钮。",
+            "解析帖子的规范链接，并按界面语言打开对应的下载启动器。",
+            "提供可选的配套面板页，可触发下载并显示运行中/完成/失败进度。",
+            "面板控件可调整重新扫描页面的间隔时间。",
+            "保存设置时在 GM 存储与 localStorage 之间自动回退。",
+            "内置内存运行日志，面板可按需拉取用于排查。",
+            "每个浏览器配置文件只连接一次面板，避免重复打开标签页。"
+          ],
+          "usage": [
+            "安装用户脚本管理器并添加本脚本。",
+            "打开 threads.com 或 threads.net，浏览包含视频的帖子。",
+            "点击帖子操作按钮旁新增的下载图标。",
+            "脚本会在新标签页中为该帖子打开下载启动器。",
+            "（可选）打开配套面板页，为当前帖子触发下载或调整扫描间隔。"
+          ],
+          "limitations": [
+            "只有包含 video 元素的帖子才会出现下载按钮，纯文字或纯图片帖子会被跳过。",
+            "脚本本身不下载或保存视频，而是把帖子链接交给外部下载服务处理。",
+            "仅支持 threads.com 与 threads.net。",
+            "需要支持 GM_openInTab/GM.openInTab 的用户脚本管理器；面板连接每个配置文件只尝试并记录一次。"
+          ],
+          "faq": [
+            {
+              "q": "视频最终在哪里下载？",
+              "a": "脚本会在新标签页中打开外部下载服务并传入帖子链接，实际下载由该服务完成，而非脚本内部。"
+            },
+            {
+              "q": "为什么有些帖子没有按钮？",
+              "a": "按钮只添加到包含视频的帖子；没有 video 元素的帖子会被忽略。"
+            },
+            {
+              "q": "需要登录或向脚本提供账号吗？",
+              "a": "不需要。脚本只添加按钮并打开启动器，不会收集账号或凭据。"
+            },
+            {
+              "q": "配套面板页有什么作用？",
+              "a": "它可以为当前帖子请求下载，并显示运行中、完成、失败等进度状态。"
+            }
+          ],
+          "safety": "脚本会申请用户脚本管理器的 GM_openInTab/GM.openInTab、GM_addStyle、GM_setValue 与 GM_getValue 权限。触发下载时，当前帖子的链接会发送给外部下载服务以便处理请求。运行日志仅保存在内存环形缓冲中（最多 200 条），刷新即清空，不会持久化或上传。面板消息会校验来源，仅接受可信面板来源与脚本所在页面。保存的设置使用 GM 存储，并以 localStorage 作为回退。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for Threads 是一款使用者腳本，會為包含影片的 Threads 貼文加上一個下載按鈕。點擊後會針對該貼文開啟搭配的下載啟動器，選用的搭配面板頁也能觸發下載並顯示進度。",
+          "problem": "Threads 本身沒有方便的一鍵保存貼文影片方式，使用者只能手動複製貼文連結再開啟外部服務。本腳本把下載入口直接放在每個影片貼文上。",
+          "audience": "在桌面瀏覽器上使用使用者腳本管理器、希望快速把影片貼文交給外部下載服務的 Threads 使用者。",
+          "highlights": [
+            "為包含影片的 Threads 貼文在操作按鈕旁注入下載按鈕。",
+            "解析貼文的標準連結，並依介面語言開啟對應的下載啟動器。",
+            "提供選用的搭配面板頁，可觸發下載並顯示執行中/完成/失敗進度。",
+            "面板控制項可調整重新掃描頁面的間隔時間。",
+            "儲存設定時會自動在 GM 儲存與 localStorage 之間回退。",
+            "內建記憶體執行日誌，面板可依需求拉取以利排查。",
+            "每個瀏覽器設定檔只連接面板一次，避免重複開啟分頁。"
+          ],
+          "usage": [
+            "安裝使用者腳本管理器並加入本腳本。",
+            "開啟 threads.com 或 threads.net，瀏覽包含影片的貼文。",
+            "點擊貼文操作按鈕旁新增的下載圖示。",
+            "腳本會在新分頁中為該貼文開啟下載啟動器。",
+            "（選用）開啟搭配面板頁，為目前貼文觸發下載或調整掃描間隔。"
+          ],
+          "limitations": [
+            "只有包含 video 元素的貼文才會出現下載按鈕，純文字或純圖片貼文會被略過。",
+            "腳本本身不下載或儲存影片，而是把貼文連結交給外部下載服務處理。",
+            "僅支援 threads.com 與 threads.net。",
+            "需要支援 GM_openInTab/GM.openInTab 的使用者腳本管理器；面板連線每個設定檔只嘗試並記錄一次。"
+          ],
+          "faq": [
+            {
+              "q": "影片最後在哪裡下載？",
+              "a": "腳本會在新分頁開啟外部下載服務並傳入貼文連結，實際下載由該服務完成，而非腳本內部。"
+            },
+            {
+              "q": "為什麼有些貼文沒有按鈕？",
+              "a": "按鈕只會加到包含影片的貼文；沒有 video 元素的貼文會被忽略。"
+            },
+            {
+              "q": "需要登入或向腳本提供帳號嗎？",
+              "a": "不需要。腳本只會加入按鈕並開啟啟動器，不會蒐集帳號或憑證。"
+            },
+            {
+              "q": "搭配面板頁有什麼作用？",
+              "a": "它可以為目前貼文要求下載，並顯示執行中、完成、失敗等進度狀態。"
+            }
+          ],
+          "safety": "腳本會申請使用者腳本管理器的 GM_openInTab/GM.openInTab、GM_addStyle、GM_setValue 與 GM_getValue 權限。觸發下載時，目前貼文的連結會傳送給外部下載服務以處理請求。執行日誌僅保存在記憶體環形緩衝中（最多 200 筆），重新整理即清空，不會持久化或上傳。面板訊息會檢查來源，僅接受可信任的面板來源與腳本所在頁面。儲存的設定使用 GM 儲存，並以 localStorage 作為回退。"
+        }
+      }
+    },
+    {
+      "id": "xload-90867ea645e8",
+      "type": "script",
+      "title": "ClipSaver for X",
+      "short": "Adds a download control to X (Twitter) posts and media grids, opening a",
+      "description": "Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for X",
+          "short": "Adds a download control to X (Twitter) posts and media grids, opening a",
+          "description": "Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for X",
+          "short": "Adds a download control to X (Twitter) posts and media grids, opening a",
+          "description": "Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for X",
+          "short": "Adds a download control to X (Twitter) posts and media grids, opening a",
+          "description": "Adds a download control to X (Twitter) posts and media grids, opening a download launcher for the post. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js",
+      "page": "/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html",
+      "installUrl": "/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.user.js",
+      "files": [
+        "panel.html",
+        "xload-90867ea645e8.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-90867ea645e8/panel.html",
+      "tags": [
+        "x.com",
+        "twitter.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "x.com",
+        "twitter.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 21609,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for X adds a one-click download control to posts and media grids on X (formerly Twitter). Each control passes the selected post link to an external download launcher opened in a new tab, and a companion panel page can trigger downloads and show progress. Panel switches let you enable or disable the injected control and automatically reveal sensitive media.",
+          "problem": "Downloading media from an X post normally means copying the post link by hand and switching to a separate download tool. ClipSaver for X places a download button directly in the post action bar and on media grid tiles, so the post link reaches a download launcher in a single click.",
+          "audience": "X / Twitter users who frequently save images or videos and want a quick in-feed download shortcut, including people on the standard web timeline or TweetDeck-style layouts.",
+          "highlights": [
+            "Adds a download control to the action bar of every post that contains media.",
+            "Adds a compact download button to media grid tiles, such as profile or search grids.",
+            "Opens a download launcher for the specific post in a new browser tab.",
+            "Companion panel page with switches to enable/disable the injected control and auto-reveal sensitive media.",
+            "Panel actions to download the current post or open the download service.",
+            "Optional automatic reveal of sensitive or age-restricted media before download.",
+            "Selects the downloader language from your browser language.",
+            "Lightweight companion-panel messaging with heartbeat, request/response and de-duplication."
+          ],
+          "usage": [
+            "Install the userscript; it runs automatically on x.com and twitter.com.",
+            "Open a post that contains media, or a media grid.",
+            "Click the download control that appears next to the post actions or on the media tile.",
+            "The script opens the download launcher for that post in a new tab.",
+            "On first run a companion panel page opens; use its switches to enable/disable the injected control and toggle sensitive-media reveal.",
+            "Use the panel's Download current post / Open download service actions when needed."
+          ],
+          "limitations": [
+            "The script does not download files itself; it hands the post link to an external download service opened in a new tab.",
+            "It depends on X's current page structure, so interface changes can temporarily break button injection.",
+            "The download control is only added to posts that contain media.",
+            "The companion panel and its live progress/log features require network access to the panel service.",
+            "In-page run logs exist only in memory, are cleared on refresh, and are not desensitized.",
+            "Media whose post link cannot be detected, such as some TweetDeck items, may not receive a button."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download the media itself?",
+              "a": "No. It opens an external download launcher with the post link; the actual download is performed by that service."
+            },
+            {
+              "q": "Which sites does it work on?",
+              "a": "It matches x.com and twitter.com and runs in the top frame only."
+            },
+            {
+              "q": "Can I turn the injected button off?",
+              "a": "Yes. The companion panel provides an 'Enable injected download control' switch."
+            },
+            {
+              "q": "Why did a panel page open?",
+              "a": "On first run the script opens its companion panel once and records that it has connected; the panel hosts the switches and download actions."
+            },
+            {
+              "q": "Will it reveal sensitive media?",
+              "a": "Only if the 'Auto reveal sensitive media' switch is on (on by default); you can disable it."
+            },
+            {
+              "q": "Where are settings and logs stored?",
+              "a": "Settings use the userscript manager's GM storage with a localStorage fallback; run logs stay in memory and clear on refresh."
+            }
+          ],
+          "safety": "The script requests GM_openInTab, GM_setValue/GM_getValue and GM_addStyle. It stores only a small connection flag and your panel preferences via GM storage, falling back to localStorage; no credentials are collected. In-page run logs are kept in memory only, are not persisted and are not desensitized, and are shared only with the companion panel. Panel communication is restricted to the panel's own origin and the opener window reference, with message de-duplication. The external download service receives the URL of the post you choose to download, so only trigger downloads for content you intend to fetch."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for X 为 X（原 Twitter）的帖子和媒体网格添加一键下载控件。点击控件会为该帖子在新标签页中打开外部下载启动页，配套面板页也可触发下载并显示进度。面板中的开关可启用或停用注入的控件，并自动展开敏感媒体。",
+          "problem": "在 X 上下载媒体通常需要手动复制帖子链接，再切换到单独的下载工具。ClipSaver for X 把下载按钮直接放进帖子的操作栏和媒体网格单元，一次点击即可把帖子链接交给下载启动页。",
+          "audience": "经常保存图片或视频、希望在信息流内快速下载的 X / Twitter 用户，包括使用标准网页时间线或 TweetDeck 式布局的人。",
+          "highlights": [
+            "为每条含媒体的帖子操作栏添加下载控件。",
+            "在媒体网格单元（如个人主页或搜索网格）添加紧凑的下载按钮。",
+            "在新标签页中为该帖子打开下载启动页。",
+            "配套面板页提供启用/停用注入控件、自动展开敏感媒体的开关。",
+            "面板操作可下载当前帖子或打开下载服务。",
+            "可在下载前自动展开敏感或年龄受限媒体。",
+            "根据浏览器语言选择下载器的语言。",
+            "轻量的面板通信机制，含心跳、请求-响应与去重。"
+          ],
+          "usage": [
+            "安装该用户脚本，它会在 x.com 与 twitter.com 上自动运行。",
+            "打开一条含媒体的帖子或媒体网格。",
+            "点击出现在帖子操作栏旁或媒体单元上的下载控件。",
+            "脚本会在新标签页中为该帖子打开下载启动页。",
+            "首次运行会打开配套面板页，可用其中的开关启用/停用控件、切换敏感媒体展开。",
+            "需要时使用面板的“下载当前帖子”/“打开下载服务”操作。"
+          ],
+          "limitations": [
+            "脚本本身不下载文件，而是把帖子链接交给在新标签页打开的外部下载服务。",
+            "依赖 X 当前的页面结构，界面更新可能暂时导致按钮注入失效。",
+            "仅对含媒体的帖子添加下载控件。",
+            "配套面板及其进度/日志功能需要能访问面板服务。",
+            "页面内运行日志仅存于内存，刷新即清，且未脱敏。",
+            "无法检测到帖子链接的媒体（如部分 TweetDeck 条目）可能不会出现按钮。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会直接下载媒体吗？",
+              "a": "不会。它只把帖子链接交给外部下载启动页，实际下载由该服务完成。"
+            },
+            {
+              "q": "支持哪些站点？",
+              "a": "匹配 x.com 与 twitter.com，且只在顶层框架运行。"
+            },
+            {
+              "q": "可以关闭注入的按钮吗？",
+              "a": "可以。配套面板提供“启用注入的下载控件”开关。"
+            },
+            {
+              "q": "为什么打开了一个面板页？",
+              "a": "首次运行时脚本会打开一次配套面板并记录已连接；面板承载开关和下载操作。"
+            },
+            {
+              "q": "它会展开敏感媒体吗？",
+              "a": "仅在“自动展开敏感媒体”开关开启时（默认开启），你可以关闭它。"
+            },
+            {
+              "q": "设置和日志保存在哪里？",
+              "a": "设置使用用户脚本管理器的 GM 存储，并以 localStorage 作为回退；运行日志只留在内存中，刷新即清。"
+            }
+          ],
+          "safety": "脚本申请 GM_openInTab、GM_setValue/GM_getValue 与 GM_addStyle 权限，仅保存一个连接标记和你的面板偏好（通过 GM 存储，回退到 localStorage），不收集任何凭据。页面内运行日志仅存于内存、不持久化且未脱敏，只会共享给配套面板。面板通信限定于面板自身来源与打开窗口引用，并对消息去重。外部下载服务会收到你所选择下载的帖子 URL，因此请只对你打算获取的内容触发下载。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for X 為 X（原 Twitter）的貼文與媒體格線加入一鍵下載控制項。點擊控制項會為該貼文在新分頁中開啟外部下載啟動頁，配套面板頁也可觸發下載並顯示進度。面板中的開關可啟用或停用注入的控制項，並自動展開敏感媒體。",
+          "problem": "在 X 上下載媒體通常需要手動複製貼文連結，再切換到個別的下載工具。ClipSaver for X 把下載按鈕直接放進貼文的操作列與媒體格線項目，一次點擊即可把貼文連結交給下載啟動頁。",
+          "audience": "經常儲存圖片或影片、希望在動態牆內快速下載的 X / Twitter 使用者，包括使用標準網頁時間軸或 TweetDeck 式版面的人。",
+          "highlights": [
+            "為每則含媒體的貼文操作列加入下載控制項。",
+            "在媒體格線項目（如個人頁或搜尋格線）加入精簡的下載按鈕。",
+            "在新分頁中為該貼文開啟下載啟動頁。",
+            "配套面板頁提供啟用/停用注入控制項、自動展開敏感媒體的開關。",
+            "面板操作可下載目前貼文或開啟下載服務。",
+            "可在下載前自動展開敏感或年齡限制媒體。",
+            "依瀏覽器語言選擇下載器的語言。",
+            "輕量的面板通訊機制，含心跳、請求-回應與去重。"
+          ],
+          "usage": [
+            "安裝此使用者腳本，它會在 x.com 與 twitter.com 上自動執行。",
+            "開啟一則含媒體的貼文或媒體格線。",
+            "點擊出現在貼文操作列旁或媒體項目上的下載控制項。",
+            "腳本會在新分頁中為該貼文開啟下載啟動頁。",
+            "首次執行會開啟配套面板頁，可用其中的開關啟用/停用控制項、切換敏感媒體展開。",
+            "需要時使用面板的「下載目前貼文」/「開啟下載服務」操作。"
+          ],
+          "limitations": [
+            "腳本本身不下載檔案，而是把貼文連結交給在新分頁開啟的外部下載服務。",
+            "依賴 X 目前的頁面結構，介面更新可能暫時導致按鈕注入失效。",
+            "僅對含媒體的貼文加入下載控制項。",
+            "配套面板及其進度/日誌功能需要能存取面板服務。",
+            "頁面內執行日誌僅存於記憶體，重新整理即清除，且未去識別化。",
+            "無法偵測到貼文連結的媒體（如部分 TweetDeck 項目）可能不會出現按鈕。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會直接下載媒體嗎？",
+              "a": "不會。它只把貼文連結交給外部下載啟動頁，實際下載由該服務完成。"
+            },
+            {
+              "q": "支援哪些網站？",
+              "a": "符合 x.com 與 twitter.com，且只在最上層框架執行。"
+            },
+            {
+              "q": "可以關閉注入的按鈕嗎？",
+              "a": "可以。配套面板提供「啟用注入的下載控制項」開關。"
+            },
+            {
+              "q": "為什麼開啟了一個面板頁？",
+              "a": "首次執行時腳本會開啟一次配套面板並記錄已連線；面板承載開關和下載操作。"
+            },
+            {
+              "q": "它會展開敏感媒體嗎？",
+              "a": "僅在「自動展開敏感媒體」開關開啟時（預設開啟），你可以關閉它。"
+            },
+            {
+              "q": "設定和日誌儲存在哪裡？",
+              "a": "設定使用使用者腳本管理器的 GM 儲存，並以 localStorage 作為後備；執行日誌只留在記憶體中，重新整理即清除。"
+            }
+          ],
+          "safety": "腳本要求 GM_openInTab、GM_setValue/GM_getValue 與 GM_addStyle 權限，僅儲存一個連線標記和你的面板偏好（透過 GM 儲存，後備為 localStorage），不蒐集任何憑證。頁面內執行日誌僅存於記憶體、不持久化且未去識別化，只會分享給配套面板。面板通訊限定於面板自身來源與開啟視窗參照，並對訊息去重。外部下載服務會收到你所選擇下載的貼文 URL，因此請只對你打算取得的內容觸發下載。"
+        }
+      }
+    },
+    {
+      "id": "xload-7d879054b2be",
+      "type": "script",
+      "title": "ClipSaver for Instagram",
+      "short": "Adds a floating download button over Instagram videos, reels and posts that",
+      "description": "Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Instagram",
+          "short": "Adds a floating download button over Instagram videos, reels and posts that",
+          "description": "Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Instagram",
+          "short": "Adds a floating download button over Instagram videos, reels and posts that",
+          "description": "Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Instagram",
+          "short": "Adds a floating download button over Instagram videos, reels and posts that",
+          "description": "Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js",
+      "page": "/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html",
+      "installUrl": "/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js",
+      "files": [
+        "panel.html",
+        "xload-7d879054b2be.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-7d879054b2be/panel.html",
+      "tags": [
+        "www.instagram.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.instagram.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 29482,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for Instagram is a userscript that adds a floating, circular download button over Instagram videos, reels and posts. When you hover the mouse over a media element, the button appears and clicking it opens a download launcher for the current media in a new tab. A companion panel page can adjust the button and trigger downloads directly.",
+          "problem": "Instagram does not provide a convenient, built-in way to save a video, reel or post while you are browsing it. ClipSaver puts a one-click download control right on top of the media you are already looking at, so you do not have to copy links or look for a separate tool.",
+          "audience": "Instagram users who regularly view or keep videos, reels and posts and want a fast way to send the current media to a download service. It is intended for personal, everyday browsing on desktop browsers that support userscripts.",
+          "highlights": [
+            "A floating circular download button appears automatically when you hover a video, reel or post, and hides when you move away from media.",
+            "Works across the Instagram feed, reel pages and post pages on instagram.com.",
+            "Resolves the media link from the post's own /p/, /reels/ or /reel/ link and falls back to the current page URL.",
+            "Opens the download launcher in a new tab, with the interface language matched to your browser (including English, Simplified Chinese and Traditional Chinese, among many others).",
+            "A companion control panel can enable or disable the button and adjust its position (12 presets), button size, icon size and edge offset.",
+            "The panel can also trigger \"download current media\" and \"open download service\" actions and reports running, done and error progress.",
+            "Panel communication runs over both postMessage and BroadcastChannel with message deduplication and a ping/pong heartbeat.",
+            "Built-in diagnostic log keeps the most recent events (including uncaught errors) for the panel to pull, while settings are saved via userscript storage with a localStorage fallback."
+          ],
+          "usage": [
+            "Install the script with a userscript manager.",
+            "Open instagram.com, such as the feed, a reel or a post page.",
+            "Move the mouse over a video, reel or post; a circular download button appears over the media.",
+            "Click the button to open the download launcher for that media in a new tab.",
+            "Open the companion panel page to change the button position, size, icon size and edge offset, or to disable the button entirely.",
+            "Use the panel's action buttons to download the current media or to open the download service."
+          ],
+          "limitations": [
+            "The script only runs on instagram.com; other websites are not affected.",
+            "The button appears only when the mouse hovers a sufficiently large, visible media element, and a video must already be loaded before it is detected.",
+            "The script does not download files itself; it passes the media URL to an external download service, so results and availability depend on that service.",
+            "The companion panel is a separate page opened as a popup, which browsers or popup blockers may block.",
+            "The panel connection is attempted once per installation rather than on every visit.",
+            "Diagnostic logs are kept in memory only, are cleared on refresh and are not redacted."
+          ],
+          "faq": [
+            {
+              "q": "Why doesn't the download button appear?",
+              "a": "The button is intentionally shown only while the mouse hovers a media element that is large enough and visible, and a video must have loaded first. Make sure you are on instagram.com and hover directly over a video, reel or post."
+            },
+            {
+              "q": "Does the script download the file by itself?",
+              "a": "No. It detects the current media URL and opens an external download launcher in a new tab; the actual download is handled by that service."
+            },
+            {
+              "q": "Where are my button settings stored?",
+              "a": "Settings such as enabled state, position, size and offsets are saved through the userscript manager's storage, with the browser's localStorage used as a fallback."
+            },
+            {
+              "q": "Does it work on websites other than Instagram?",
+              "a": "No. The script is scoped to instagram.com and does nothing elsewhere."
+            },
+            {
+              "q": "What language will the download launcher use?",
+              "a": "It follows your browser language and supports English, Simplified Chinese, Traditional Chinese and many other languages, defaulting to English when the language is not recognized."
+            },
+            {
+              "q": "Nothing happens when I click the button or open the panel.",
+              "a": "A popup blocker may be preventing the new tab from opening, or the external download service may be temporarily unavailable. Allow popups for the site and try again."
+            }
+          ],
+          "safety": "The script requests GM_openInTab, GM.openInTab, GM_addStyle, GM_setValue and GM_getValue, reads navigator.language and the current media URL, and stores only its own button settings locally through userscript storage with a localStorage fallback. Panel messages are accepted only from the trusted panel origin and from the panel or opener window, and duplicate messages are discarded. Diagnostic logs may include page URLs and error details but stay in memory only, are never persisted and are not redacted; the only data sent externally is the media URL handed to the download service. It does not modify Instagram content and does not access your account credentials."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for Instagram 是一款用户脚本，会在 Instagram 的视频、Reels 和帖子上浮出一个圆形下载按钮。当鼠标悬停在媒体元素上时按钮出现，点击后会在新标签页中打开针对当前媒体的下载启动页。配套面板页可调整按钮并直接触发下载。",
+          "problem": "Instagram 没有提供在浏览时顺手保存视频、Reels 或帖子的便捷内置入口。ClipSaver 在你正在观看的媒体上方直接提供一个一键下载控件，无需复制链接或另找工具。",
+          "audience": "经常浏览或收藏 Instagram 视频、Reels 和帖子，并希望快速将当前媒体发送到下载服务的用户。它面向支持用户脚本的桌面浏览器上的个人日常浏览场景。",
+          "highlights": [
+            "鼠标悬停视频、Reels 或帖子时自动出现圆形下载按钮，离开媒体后自动隐藏。",
+            "适用于 instagram.com 上的信息流、Reels 页面和帖子页面。",
+            "从帖子自身的 /p/、/reels/ 或 /reel/ 链接解析媒体地址，解析不到时回退为当前页面地址。",
+            "在新标签页中打开下载启动页，界面语言与浏览器语言匹配（包含英文、简体中文和繁体中文等多种语言）。",
+            "配套控制面板可启用或禁用按钮，并调整按钮位置（12 种预设）、按钮尺寸、图标尺寸和边距。",
+            "面板还能触发“下载当前媒体”和“打开下载服务”操作，并反馈运行中、完成和出错进度。",
+            "面板通信同时使用 postMessage 与 BroadcastChannel，带消息去重和 ping/pong 心跳。",
+            "内置诊断日志保留最近事件（包括未捕获错误）供面板拉取；设置通过用户脚本存储保存，并以 localStorage 作为回退。"
+          ],
+          "usage": [
+            "使用用户脚本管理器安装本脚本。",
+            "打开 instagram.com，例如信息流、某个 Reels 或帖子页面。",
+            "将鼠标移到视频、Reels 或帖子上，媒体上方会出现圆形下载按钮。",
+            "点击该按钮，在新标签页中打开针对该媒体的下载启动页。",
+            "打开配套面板页，调整按钮位置、尺寸、图标尺寸和边距，或直接禁用按钮。",
+            "使用面板的操作按钮下载当前媒体或直接打开下载服务。"
+          ],
+          "limitations": [
+            "脚本仅在 instagram.com 上运行，其他网站不受影响。",
+            "只有当鼠标悬停在足够大且可见的媒体元素上时按钮才会出现，且视频需已先行加载才能被识别。",
+            "脚本本身不下载文件，而是把媒体地址交给外部下载服务，因此结果和可用性取决于该服务。",
+            "配套面板是以弹窗形式打开的独立页面，可能被浏览器或弹窗拦截器阻止。",
+            "面板连接每次安装只尝试一次，而非每次访问都连接。",
+            "诊断日志仅保存在内存中，刷新即清空且不做脱敏。"
+          ],
+          "faq": [
+            {
+              "q": "为什么下载按钮没有出现？",
+              "a": "按钮只会在鼠标悬停于足够大且可见的媒体元素时显示，且视频需先加载完成。请确认你在 instagram.com 上并直接把鼠标悬停在视频、Reels 或帖子上。"
+            },
+            {
+              "q": "脚本会自己下载文件吗？",
+              "a": "不会。它只识别当前媒体地址并在新标签页中打开外部下载启动页，实际下载由该服务完成。"
+            },
+            {
+              "q": "按钮设置保存在哪里？",
+              "a": "启用状态、位置、尺寸和边距等设置通过用户脚本管理器的存储保存，并以浏览器的 localStorage 作为回退。"
+            },
+            {
+              "q": "能在 Instagram 以外的网站使用吗？",
+              "a": "不能。脚本仅限 instagram.com，在其他网站不执行任何操作。"
+            },
+            {
+              "q": "下载启动页会使用什么语言？",
+              "a": "它会跟随浏览器语言，支持英文、简体中文、繁体中文等多种语言；无法识别时默认使用英文。"
+            },
+            {
+              "q": "点击按钮或打开面板没有反应。",
+              "a": "可能是弹窗拦截器阻止了新标签页，或外部下载服务暂时不可用。请允许该网站弹出窗口后重试。"
+            }
+          ],
+          "safety": "脚本申请 GM_openInTab、GM.openInTab、GM_addStyle、GM_setValue 和 GM_getValue 权限，读取 navigator.language 和当前媒体地址，并且只通过用户脚本存储（以 localStorage 作为回退）在本地保存自身的按钮设置。面板消息仅接受来自受信任面板来源以及面板或开启者窗口的消息，并会丢弃重复消息。诊断日志可能包含页面地址和错误详情，但只保存在内存中，绝不持久化且不做脱敏；对外发送的唯一数据是交给下载服务的媒体地址。脚本不会修改 Instagram 内容，也不会访问你的账号凭据。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for Instagram 是一款使用者腳本，會在 Instagram 的影片、Reels 和貼文上浮出一個圓形下載按鈕。當滑鼠停留在媒體元素上時按鈕會出現，點擊後會在新分頁中開啟針對目前媒體的下載啟動頁。搭配的面板頁可調整按鈕並直接觸發下載。",
+          "problem": "Instagram 沒有提供在瀏覽時順手儲存影片、Reels 或貼文的便捷內建入口。ClipSaver 在你正在觀看的媒體上方直接提供一鍵下載控制項，無須複製連結或另找工具。",
+          "audience": "經常瀏覽或收藏 Instagram 影片、Reels 和貼文，並希望快速將目前媒體送往下載服務的使用者。它面向支援使用者腳本的桌面瀏覽器上的個人日常瀏覽情境。",
+          "highlights": [
+            "滑鼠停留在影片、Reels 或貼文時自動出現圓形下載按鈕，離開媒體後自動隱藏。",
+            "適用於 instagram.com 上的動態牆、Reels 頁面和貼文頁面。",
+            "從貼文本身的 /p/、/reels/ 或 /reel/ 連結解析媒體位址，解析不到時回退為目前頁面位址。",
+            "在新分頁中開啟下載啟動頁，介面語言與瀏覽器語言相符（包含英文、簡體中文和繁體中文等多種語言）。",
+            "搭配的控制面板可啟用或停用按鈕，並調整按鈕位置（12 種預設）、按鈕尺寸、圖示尺寸和邊距。",
+            "面板還能觸發「下載目前媒體」和「開啟下載服務」操作，並回報執行中、完成和錯誤進度。",
+            "面板通訊同時使用 postMessage 與 BroadcastChannel，具備訊息去重和 ping/pong 心跳。",
+            "內建診斷記錄保留最近事件（包括未捕捉錯誤）供面板擷取；設定透過使用者腳本儲存保存，並以 localStorage 作為回退。"
+          ],
+          "usage": [
+            "使用使用者腳本管理員安裝本腳本。",
+            "開啟 instagram.com，例如動態牆、某個 Reels 或貼文頁面。",
+            "將滑鼠移到影片、Reels 或貼文上，媒體上方會出現圓形下載按鈕。",
+            "點擊該按鈕，在新分頁中開啟針對該媒體的下載啟動頁。",
+            "開啟搭配的面板頁，調整按鈕位置、尺寸、圖示尺寸和邊距，或直接停用按鈕。",
+            "使用面板的操作按鈕下載目前媒體或直接開啟下載服務。"
+          ],
+          "limitations": [
+            "腳本僅在 instagram.com 上執行，其他網站不受影響。",
+            "只有當滑鼠停留在足夠大且可見的媒體元素上時按鈕才會出現，且影片需已先行載入才能被辨識。",
+            "腳本本身不下載檔案，而是把媒體位址交給外部下載服務，因此結果和可用性取決於該服務。",
+            "搭配的面板是以彈出視窗形式開啟的獨立頁面，可能被瀏覽器或彈出視窗攔截器阻擋。",
+            "面板連線每次安裝只嘗試一次，而非每次造訪都連線。",
+            "診斷記錄僅保存在記憶體中，重新整理即清空且不做去識別化處理。"
+          ],
+          "faq": [
+            {
+              "q": "為什麼下載按鈕沒有出現？",
+              "a": "按鈕只會在滑鼠停留於足夠大且可見的媒體元素時顯示，且影片需先載入完成。請確認你在 instagram.com 上並直接把滑鼠停留在影片、Reels 或貼文上。"
+            },
+            {
+              "q": "腳本會自己下載檔案嗎？",
+              "a": "不會。它只辨識目前媒體位址並在新分頁中開啟外部下載啟動頁，實際下載由該服務完成。"
+            },
+            {
+              "q": "按鈕設定保存在哪裡？",
+              "a": "啟用狀態、位置、尺寸和邊距等設定透過使用者腳本管理員的儲存保存，並以瀏覽器的 localStorage 作為回退。"
+            },
+            {
+              "q": "能在 Instagram 以外的網站使用嗎？",
+              "a": "不能。腳本僅限 instagram.com，在其他網站不執行任何操作。"
+            },
+            {
+              "q": "下載啟動頁會使用什麼語言？",
+              "a": "它會跟隨瀏覽器語言，支援英文、簡體中文、繁體中文等多種語言；無法辨識時預設使用英文。"
+            },
+            {
+              "q": "點擊按鈕或開啟面板沒有反應。",
+              "a": "可能是彈出視窗攔截器阻止了新分頁，或外部下載服務暫時無法使用。請允許該網站彈出視窗後再試。"
+            }
+          ],
+          "safety": "腳本申請 GM_openInTab、GM.openInTab、GM_addStyle、GM_setValue 和 GM_getValue 權限，讀取 navigator.language 和目前媒體位址，並且只透過使用者腳本儲存（以 localStorage 作為回退）在本機保存自身的按鈕設定。面板訊息僅接受來自受信任面板來源以及面板或開啟者視窗的訊息，並會捨棄重複訊息。診斷記錄可能包含頁面位址和錯誤詳情，但只保存在記憶體中，絕不持久化且不做去識別化處理；對外傳送的唯一資料是交給下載服務的媒體位址。腳本不會修改 Instagram 內容，也不會存取你的帳號憑證。"
+        }
+      }
+    },
+    {
+      "id": "xload-cefbfd8f0444",
+      "type": "script",
+      "title": "ClipSaver for Facebook",
+      "short": "Adds a floating download button over Facebook videos and reels that opens a",
+      "description": "Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Facebook",
+          "short": "Adds a floating download button over Facebook videos and reels that opens a",
+          "description": "Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Facebook",
+          "short": "Adds a floating download button over Facebook videos and reels that opens a",
+          "description": "Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Facebook",
+          "short": "Adds a floating download button over Facebook videos and reels that opens a",
+          "description": "Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js",
+      "page": "/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html",
+      "installUrl": "/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js",
+      "files": [
+        "panel.html",
+        "xload-cefbfd8f0444.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-cefbfd8f0444/panel.html",
+      "tags": [
+        "www.facebook.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.facebook.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 29436,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for Facebook adds a floating download button that appears when you hover over a Facebook video or reel. Clicking the button opens an external download launcher pre-filled with the current video's address. A companion panel page can also trigger downloads, adjust the button's appearance and position, and report progress.",
+          "problem": "Facebook does not offer a built-in way to download videos or reels from the watch page. Users who want to keep a clip must copy links manually or look for third-party tools. This script surfaces a one-click download entry directly on the video and wires it to an external download service.",
+          "audience": "Facebook users who watch videos or reels in a desktop browser and want a quick download shortcut, and who already use a userscript manager. It is also useful for users who want to control the button's position, size, and behavior from a companion panel.",
+          "highlights": [
+            "Floating download button appears only while hovering a qualifying video or reel.",
+            "Button is clamped to the viewport and follows the video while scrolling.",
+            "Twelve preset button positions, plus adjustable button size, icon size, and edge offset.",
+            "Works on /reel/, /reels/, and /videos/ pages and is automatically disabled elsewhere.",
+            "Opens the download launcher in the page language when a supported locale is detected.",
+            "Companion panel can enable/disable the button, change its position, and trigger a download.",
+            "Action status (running / done / error) is reported back to the panel.",
+            "Settings persist through userscript storage with a localStorage fallback."
+          ],
+          "usage": [
+            "Install the script in a userscript manager and open facebook.com.",
+            "Open a video, a reel, or the videos section.",
+            "Hover the pointer over the video until the circular download button appears.",
+            "Click the button to open the external download launcher for the current video.",
+            "Optionally open the companion panel to toggle the button, change its position or size, or start a download.",
+            "Watch the panel status area for running, done, or failed feedback."
+          ],
+          "limitations": [
+            "The script does not download the video itself; it hands the current page address to an external download service.",
+            "The button is available only on Facebook video, reel, and videos pages, and only over visible video elements large enough to hover.",
+            "The panel connection is attempted once and remembered; clearing that stored flag is needed to reconnect after it is dismissed.",
+            "It does not bypass privacy settings, login walls, or access restrictions.",
+            "Network access to the download service and the panel site is required for downloading and panel features."
+          ],
+          "faq": [
+            {
+              "q": "Does the script save videos to my device directly?",
+              "a": "No. It opens an external download launcher with the current video address; the final download is handled by that service."
+            },
+            {
+              "q": "Where is the button?",
+              "a": "It appears after you hover over a video or reel. If it does not show, the page may not be a supported video page or the video may still be loading."
+            },
+            {
+              "q": "Can I move or resize the button?",
+              "a": "Yes. The companion panel offers position presets plus button size, icon size, and edge offset settings."
+            },
+            {
+              "q": "Does it work outside Facebook?",
+              "a": "No. It runs only on facebook.com and is effectively inactive on non-video pages."
+            }
+          ],
+          "safety": "The script requests the userscript-manager privileges needed to open tabs, inject styles, and store settings. When you click download or use the panel, it reads the current Facebook page address and passes it to an external download service, and it communicates with the companion panel origin over postMessage/BroadcastChannel. Runtime logs are kept only in memory and cleared on refresh; settings are stored via the manager's storage, or localStorage as a fallback. No Facebook credentials or account data are collected or transmitted."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for Facebook 会在你悬停于 Facebook 视频或 Reel 上时显示一个悬浮下载按钮。点击该按钮会打开一个外部下载启动器，并自动填入当前视频地址。配套面板页还可以触发下载、调整按钮外观与位置，并反馈执行进度。",
+          "problem": "Facebook 在观看页没有提供内置的视频或 Reel 下载方式。想保存片段的用户只能手动复制链接或寻找第三方工具。本脚本在视频上直接提供一个一键下载入口，并把它接到外部下载服务上。",
+          "audience": "在桌面浏览器上观看 Facebook 视频或 Reel、希望获得快捷下载入口，并且已经使用用户脚本管理器的用户。也适合希望从配套面板控制按钮位置、尺寸与行为的用户。",
+          "highlights": [
+            "仅在悬停于符合条件的视频或 Reel 上时显示悬浮下载按钮。",
+            "按钮被限制在视口内，并在滚动时跟随视频。",
+            "提供 12 种预设按钮位置，并可调整按钮尺寸、图标尺寸与边距。",
+            "在 /reel/、/reels/ 与 /videos/ 页面上生效，其他页面自动禁用。",
+            "检测到受支持语言时，以页面语言打开下载启动器。",
+            "配套面板可启用/禁用按钮、更改位置并触发下载。",
+            "执行状态（running / done / error）会回传到面板。",
+            "设置通过用户脚本存储持久化，并以 localStorage 作为回退。"
+          ],
+          "usage": [
+            "在用户脚本管理器中安装脚本，然后打开 facebook.com。",
+            "打开一个视频、Reel 或视频列表页面。",
+            "将指针悬停在视频上，直到出现圆形下载按钮。",
+            "点击按钮，为当前视频打开外部下载启动器。",
+            "可选：打开配套面板切换按钮、更改位置或尺寸，或直接开始下载。",
+            "在面板状态区查看 running、done 或 failed 反馈。"
+          ],
+          "limitations": [
+            "脚本本身不下载视频，只是把当前页面地址交给外部下载服务。",
+            "按钮仅在 Facebook 的视频、Reel 与 videos 页面，且仅在足够大、可见的视频元素上可用。",
+            "面板连接只尝试一次并被记住；若被关闭，需要清除已存储标记后才能重新连接。",
+            "它不会绕过隐私设置、登录墙或访问限制。",
+            "下载与面板功能需要能够访问下载服务与面板站点。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会直接把视频保存到我的设备吗？",
+              "a": "不会。它会带着当前视频地址打开外部下载启动器，最终下载由该服务完成。"
+            },
+            {
+              "q": "按钮在哪里？",
+              "a": "悬停在视频或 Reel 上后才会出现。如果没出现，可能当前页面不是受支持的视频页，或视频仍在加载。"
+            },
+            {
+              "q": "可以移动或调整按钮大小吗？",
+              "a": "可以。配套面板提供位置预设，以及按钮尺寸、图标尺寸与边距设置。"
+            },
+            {
+              "q": "在 Facebook 之外能用吗？",
+              "a": "不能。它只在 facebook.com 上运行，在非视频页面实际处于禁用状态。"
+            }
+          ],
+          "safety": "脚本会申请打开标签页、注入样式与存储设置所需的用户脚本管理器权限。当你点击下载或使用面板时，它会读取当前 Facebook 页面地址并将其交给外部下载服务，同时通过 postMessage/BroadcastChannel 与配套面板来源通信。运行日志仅保存在内存中，刷新即清空；设置通过管理器的存储（或 localStorage 作为回退）保存。脚本不会收集或传输 Facebook 凭据或账号数据。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for Facebook 會在你將游標停留在 Facebook 影片或 Reel 上時顯示一個懸浮下載按鈕。點擊該按鈕會開啟外部下載啟動器，並自動填入目前影片網址。搭配的面板頁面還可觸發下載、調整按鈕外觀與位置，並回報執行進度。",
+          "problem": "Facebook 在觀看頁面並未提供內建的影片或 Reel 下載方式。想保存片段的使用者只能手動複製連結或尋找第三方工具。本腳本在影片上直接提供一鍵下載入口，並將其接到外部下載服務。",
+          "audience": "在桌面瀏覽器觀看 Facebook 影片或 Reel、希望有快速下載入口，且已使用使用者腳本管理器的使用者。也適合想從搭配面板控制按鈕位置、尺寸與行為的使用者。",
+          "highlights": [
+            "僅在游標停留於符合條件的影片或 Reel 上時顯示懸浮下載按鈕。",
+            "按鈕會被限制在視窗內，並在捲動時跟隨影片。",
+            "提供 12 種預設按鈕位置，並可調整按鈕尺寸、圖示尺寸與邊距。",
+            "在 /reel/、/reels/ 與 /videos/ 頁面生效，其他頁面自動停用。",
+            "偵測到支援的語言時，以頁面語言開啟下載啟動器。",
+            "搭配面板可啟用/停用按鈕、變更位置並觸發下載。",
+            "執行狀態（running / done / error）會回傳到面板。",
+            "設定透過使用者腳本儲存持久化，並以 localStorage 作為後備。"
+          ],
+          "usage": [
+            "在使用者腳本管理器中安裝腳本，然後開啟 facebook.com。",
+            "開啟一個影片、Reel 或影片列表頁面。",
+            "將游標停留在影片上，直到出現圓形下載按鈕。",
+            "點擊按鈕，為目前影片開啟外部下載啟動器。",
+            "可選：開啟搭配面板切換按鈕、變更位置或尺寸，或直接開始下載。",
+            "在面板狀態區查看 running、done 或 failed 回饋。"
+          ],
+          "limitations": [
+            "腳本本身不下載影片，只是把目前頁面網址交給外部下載服務。",
+            "按鈕僅在 Facebook 的影片、Reel 與 videos 頁面，且僅在足夠大、可見的影片元素上可用。",
+            "面板連線只嘗試一次並會被記住；若被關閉，需清除已儲存旗標後才能重新連線。",
+            "它不會略過隱私設定、登入牆或存取限制。",
+            "下載與面板功能需要能夠連線到下載服務與面板網站。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會直接把影片存到我的裝置嗎？",
+              "a": "不會。它會帶著目前影片網址開啟外部下載啟動器，最終下載由該服務完成。"
+            },
+            {
+              "q": "按鈕在哪裡？",
+              "a": "將游標停留在影片或 Reel 上後才會出現。若未出現，可能目前頁面不是支援的影片頁，或影片仍在載入。"
+            },
+            {
+              "q": "可以移動或調整按鈕大小嗎？",
+              "a": "可以。搭配面板提供位置預設，以及按鈕尺寸、圖示尺寸與邊距設定。"
+            },
+            {
+              "q": "在 Facebook 以外能用嗎？",
+              "a": "不能。它只在 facebook.com 上執行，在非影片頁面實際上處於停用狀態。"
+            }
+          ],
+          "safety": "腳本會要求開啟分頁、注入樣式與儲存設定所需的使用者腳本管理器權限。當你點擊下載或使用面板時，它會讀取目前 Facebook 頁面網址並交給外部下載服務，同時透過 postMessage/BroadcastChannel 與搭配面板來源通訊。執行日誌僅保存在記憶體中，重新整理即清空；設定透過管理器的儲存（或 localStorage 作為後備）保存。腳本不會蒐集或傳輸 Facebook 認證資訊或帳號資料。"
+        }
+      }
+    },
+    {
+      "id": "xload-d70a33fd5f53",
+      "type": "script",
+      "title": "ClipSaver for XiaoHongShu",
+      "short": "Adds a download button to XiaoHongShu note media that opens a download launcher",
+      "description": "Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for XiaoHongShu",
+          "short": "Adds a download button to XiaoHongShu note media that opens a download launcher",
+          "description": "Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for XiaoHongShu",
+          "short": "Adds a download button to XiaoHongShu note media that opens a download launcher",
+          "description": "Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for XiaoHongShu",
+          "short": "Adds a download button to XiaoHongShu note media that opens a download launcher",
+          "description": "Adds a download button to XiaoHongShu note media that opens a download launcher for the current note. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js",
+      "page": "/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html",
+      "installUrl": "/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.user.js",
+      "files": [
+        "panel.html",
+        "xload-d70a33fd5f53.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-d70a33fd5f53/panel.html",
+      "tags": [
+        "www.xiaohongshu.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.xiaohongshu.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 18570,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for XiaoHongShu is a userscript that overlays a download button on the media area of a XiaoHongShu note and hands the current note to an online download service. A companion panel page can trigger a download and display progress and runtime logs. It runs only on xiaohongshu.com.",
+          "problem": "XiaoHongShu note pages do not provide a built-in way to save a note's media. This script puts a one-click download control on the note and connects it to an external download service, so you no longer have to copy the note URL and hunt for a downloader yourself.",
+          "audience": "Users who browse notes on xiaohongshu.com and want a convenient way to hand the current note to a download service, and who are comfortable installing a userscript and letting it open the companion panel and download pages.",
+          "highlights": [
+            "Adds a floating download button directly over the note's media container.",
+            "Downloads the note you are currently viewing without copying its URL.",
+            "Shows an animated rainbow hover ring with a built-in download icon; styling is injected only once.",
+            "Companion panel page with a scan-interval setting and download actions.",
+            "Panel actions report running / done / error status back to the panel.",
+            "Uses GM storage when available and falls back to localStorage.",
+            "Runs only on xiaohongshu.com and injects only on /explore/ note pages."
+          ],
+          "usage": [
+            "Install the userscript in a userscript manager that supports GM_openInTab, GM_addStyle, GM_setValue and GM_getValue.",
+            "Open a XiaoHongShu note page under the /explore/ path.",
+            "Wait for the round download button to appear over the note media.",
+            "Click the button (or use \"Download current note\" in the panel) to open the download service for that note.",
+            "Open the companion panel to adjust the scan interval or trigger a download.",
+            "Check the panel status line to see running, done, or failed results."
+          ],
+          "limitations": [
+            "Only operates on xiaohongshu.com; other sites are untouched.",
+            "Button injection depends on specific selectors (#noteContainer and .media-container) and on /explore/ note pages; layout or DOM changes may stop it working.",
+            "Actual downloading is performed by an external online service, so it requires network access and can fail if that service is unavailable.",
+            "The panel is opened with window.open on first run, which a popup blocker may prevent.",
+            "The panel's enable switch is written into the script config, but the script still injects the button whenever a note media container is found.",
+            "The injected button scans the page repeatedly at the configured interval (default 777 ms)."
+          ],
+          "faq": [
+            {
+              "q": "Where does the button appear?",
+              "a": "It is injected into the media container of a XiaoHongShu note page, near the top-right of the media area."
+            },
+            {
+              "q": "Does the script download the file itself?",
+              "a": "No. It passes the current note URL to an external download service, which performs the download."
+            },
+            {
+              "q": "Can I close the button?",
+              "a": "You can adjust the scan interval in the companion panel; the panel's enable switch does not currently stop the button from being injected."
+            },
+            {
+              "q": "What settings are stored?",
+              "a": "Only a one-time \"panel connected\" flag is persisted, using GM storage when available or localStorage otherwise."
+            }
+          ],
+          "safety": "The script runs only on xiaohongshu.com and is marked @noframes, so it does not execute inside embedded frames. It requests GM_openInTab, GM_addStyle, GM_setValue and GM_getValue: opening tabs is used only to open the download service and the companion panel, styling is injected into the local page, and storage keeps only a one-time connection flag (falling back to localStorage). To complete a download, the current note URL is sent to the external download service. Panel messaging is scoped to a task channel, cross-origin messages are accepted only from the panel origin, and duplicate messages are de-duplicated. Runtime logs are kept in a small in-memory ring buffer (up to 200 entries) that is cleared on reload and is neither persisted nor redacted. The script does not read or transmit account credentials."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for XiaoHongShu 是一款用户脚本，会在小红书笔记的媒体区域上叠加一个下载按钮，把当前笔记交给在线下载服务处理。配套的面板页可以触发下载，并显示进度与运行日志。脚本仅在 xiaohongshu.com 上运行。",
+          "problem": "小红书笔记页面本身没有直接保存笔记媒体的入口。该脚本在笔记上提供一个一键下载控件，并把它连接到外部下载服务，免去手动复制笔记链接再寻找下载工具的麻烦。",
+          "audience": "经常在 xiaohongshu.com 浏览笔记、希望方便地把当前笔记交给下载服务的用户；需要愿意安装用户脚本，并允许脚本打开配套面板页与下载页。",
+          "highlights": [
+            "在笔记媒体区域直接叠加一个悬浮下载按钮。",
+            "无需复制链接即可下载当前正在浏览的笔记。",
+            "悬停时显示流动的彩虹描边，并内置下载图标，样式只注入一次。",
+            "配套面板页提供扫描间隔设置与下载操作。",
+            "面板操作会把运行中 / 已完成 / 出错状态回报给面板。",
+            "优先使用 GM 存储，不可用时回退到 localStorage。",
+            "仅在 xiaohongshu.com 运行，且只在 /explore/ 笔记页注入按钮。"
+          ],
+          "usage": [
+            "在支持 GM_openInTab、GM_addStyle、GM_setValue 和 GM_getValue 的用户脚本管理器中安装该脚本。",
+            "打开 /explore/ 路径下的小红书笔记页面。",
+            "等待笔记媒体上出现圆形下载按钮。",
+            "点击该按钮（或在面板中点击“下载当前笔记”）为该笔记打开下载服务。",
+            "打开配套面板，可调整扫描间隔或触发下载。",
+            "查看面板状态行了解运行中、已完成或失败的结果。"
+          ],
+          "limitations": [
+            "仅在 xiaohongshu.com 上工作，不影响其他站点。",
+            "按钮注入依赖特定选择器（#noteContainer 与 .media-container）以及 /explore/ 笔记页；页面结构变化可能导致注入失效。",
+            "实际下载由外部在线服务完成，需要网络连接，该服务不可用时下载会失败。",
+            "面板在首次运行时通过 window.open 打开，可能被浏览器拦截弹窗。",
+            "面板中的“启用”开关会写入脚本配置，但脚本在找到笔记媒体容器时仍会注入按钮。",
+            "注入按钮会按设定的间隔（默认 777 毫秒）反复扫描页面。"
+          ],
+          "faq": [
+            {
+              "q": "按钮会出现在哪里？",
+              "a": "它会被注入到小红书笔记页的媒体容器内，位于媒体区域右上角附近。"
+            },
+            {
+              "q": "脚本会自己下载文件吗？",
+              "a": "不会。它把当前笔记链接交给外部下载服务，由该服务完成下载。"
+            },
+            {
+              "q": "可以关闭按钮吗？",
+              "a": "可以在配套面板中调整扫描间隔；面板上的“启用”开关目前不会阻止按钮注入。"
+            },
+            {
+              "q": "脚本会保存哪些设置？",
+              "a": "只持久化一次性写入的“面板已连接”标记，优先使用 GM 存储，否则使用 localStorage。"
+            }
+          ],
+          "safety": "脚本仅在 xiaohongshu.com 上运行，并设置了 @noframes，因此不会在嵌入框架中执行。它申请 GM_openInTab、GM_addStyle、GM_setValue 与 GM_getValue 权限：打开标签页仅用于打开下载服务和配套面板，样式仅注入到本地页面，存储仅保存一次性的连接标记（不可用时回退到 localStorage）。为完成下载，当前笔记链接会被发送到外部下载服务。面板消息按任务通道隔离，跨源消息只接受来自面板来源的消息，重复消息会被去重。运行日志保存在内存中的小型环形缓冲里（上限 200 条），刷新即清空、不持久化也不脱敏。脚本不会读取或传输账号凭据。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for XiaoHongShu 是一款使用者腳本，會在小紅書筆記的媒體區域上疊加一個下載按鈕，並把目前筆記交給線上下載服務處理。配套的面板頁可觸發下載，並顯示進度與執行日誌。腳本僅在 xiaohongshu.com 上執行。",
+          "problem": "小紅書筆記頁面本身沒有直接儲存筆記媒體的入口。此腳本在筆記上提供一個一鍵下載控制項，並將它連接到外部下載服務，免去手動複製筆記連結再尋找下載工具的麻煩。",
+          "audience": "經常在 xiaohongshu.com 瀏覽筆記、希望能方便地把目前筆記交給下載服務的使用者；需要願意安裝使用者腳本，並允許腳本開啟配套面板頁與下載頁。",
+          "highlights": [
+            "直接在筆記媒體區域疊加一個懸浮下載按鈕。",
+            "無需複製連結即可下載目前正在瀏覽的筆記。",
+            "滑鼠移入時顯示流動的彩虹描邊，並內建下載圖示，樣式只注入一次。",
+            "配套面板頁提供掃描間隔設定與下載操作。",
+            "面板操作會把執行中 / 已完成 / 發生錯誤狀態回報給面板。",
+            "優先使用 GM 儲存，無法使用時回退到 localStorage。",
+            "僅在 xiaohongshu.com 執行，且只在 /explore/ 筆記頁注入按鈕。"
+          ],
+          "usage": [
+            "在支援 GM_openInTab、GM_addStyle、GM_setValue 與 GM_getValue 的使用者腳本管理器中安裝此腳本。",
+            "開啟 /explore/ 路徑下的小紅書筆記頁面。",
+            "等待筆記媒體上出現圓形下載按鈕。",
+            "點擊該按鈕（或在面板中點擊「下載目前筆記」）為該筆記開啟下載服務。",
+            "開啟配套面板，可調整掃描間隔或觸發下載。",
+            "查看面板狀態列以了解執行中、已完成或失敗的結果。"
+          ],
+          "limitations": [
+            "僅在 xiaohongshu.com 上運作，不影響其他網站。",
+            "按鈕注入依賴特定選擇器（#noteContainer 與 .media-container）以及 /explore/ 筆記頁；頁面結構變更可能導致注入失效。",
+            "實際下載由外部線上服務完成，需要網路連線，該服務無法使用時下載會失敗。",
+            "面板在首次執行時透過 window.open 開啟，可能被瀏覽器封鎖彈出視窗。",
+            "面板中的「啟用」開關會寫入腳本設定，但腳本在找到筆記媒體容器時仍會注入按鈕。",
+            "注入按鈕會依設定的間隔（預設 777 毫秒）反覆掃描頁面。"
+          ],
+          "faq": [
+            {
+              "q": "按鈕會出現在哪裡？",
+              "a": "它會被注入到小紅書筆記頁的媒體容器內，位於媒體區域右上角附近。"
+            },
+            {
+              "q": "腳本會自己下載檔案嗎？",
+              "a": "不會。它把目前筆記連結交給外部下載服務，由該服務完成下載。"
+            },
+            {
+              "q": "可以關閉按鈕嗎？",
+              "a": "可以在配套面板中調整掃描間隔；面板上的「啟用」開關目前不會阻止按鈕注入。"
+            },
+            {
+              "q": "腳本會儲存哪些設定？",
+              "a": "只會持久化一次性寫入的「面板已連線」標記，優先使用 GM 儲存，否則使用 localStorage。"
+            }
+          ],
+          "safety": "腳本僅在 xiaohongshu.com 上執行，並設定了 @noframes，因此不會在嵌入框架中執行。它申請 GM_openInTab、GM_addStyle、GM_setValue 與 GM_getValue 權限：開啟分頁僅用於開啟下載服務與配套面板，樣式僅注入到本機頁面，儲存僅保存一次性的連線標記（無法使用時回退到 localStorage）。為完成下載，目前筆記連結會被傳送到外部下載服務。面板訊息依任務通道隔離，跨來源訊息只接受來自面板來源的訊息，重複訊息會被去重。執行日誌保存在記憶體中的小型環形緩衝（上限 200 條），重新整理即清空、不持久化也不去識別化。腳本不會讀取或傳輸帳號憑證。"
+        }
+      }
+    },
+    {
+      "id": "xload-7fbc64722d0d",
+      "type": "script",
+      "title": "ClipSaver for TED",
+      "short": "Adds a download button to TED talk pages that opens a download launcher for the",
+      "description": "Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for TED",
+          "short": "Adds a download button to TED talk pages that opens a download launcher for the",
+          "description": "Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for TED",
+          "short": "Adds a download button to TED talk pages that opens a download launcher for the",
+          "description": "Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for TED",
+          "short": "Adds a download button to TED talk pages that opens a download launcher for the",
+          "description": "Adds a download button to TED talk pages that opens a download launcher for the talk. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js",
+      "page": "/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html",
+      "installUrl": "/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.user.js",
+      "files": [
+        "panel.html",
+        "xload-7fbc64722d0d.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-7fbc64722d0d/panel.html",
+      "tags": [
+        "www.ted.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.ted.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 20821,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for TED is a userscript that adds a circular download button to TED talk pages. Clicking the button hands the current talk's URL to a web-based download service, opened in a new tab. A companion control panel can turn the injected button on or off, trigger a download, and show progress.",
+          "problem": "TED talk pages do not offer a built-in way to save a talk for offline use. This script adds a single, always-available download entry point to the talk page so you do not have to copy the URL and manually feed it to a download service.",
+          "audience": "TED viewers who want a quick, one-click way to send the talk they are watching to a download service, and users who prefer managing this from a small control panel.",
+          "highlights": [
+            "Injects a single circular download button into the action row of a TED talk page.",
+            "Opens a web-based download service for the current talk URL in a new tab.",
+            "Picks the download-service language path from the browser language.",
+            "Companion panel can enable or disable the injected button and trigger downloads.",
+            "Panel reports action status as connecting, running, done, or failed.",
+            "Re-injects the button automatically during in-page (SPA) navigation and on page load.",
+            "Keeps an in-memory runtime log and captures uncaught errors and promise rejections for troubleshooting.",
+            "Adds a rainbow hover ring effect to the button using injected styles."
+          ],
+          "usage": [
+            "Install the userscript and open any talk page on www.ted.com/talks/.",
+            "Wait for the page to load; a circular download button appears in the talk's action row near the title.",
+            "Click the button to open the download service for the current talk in a new tab.",
+            "Optionally open the companion control panel to toggle the injected button or start a download from there.",
+            "Watch the panel status line for connecting, running, done, or failed feedback.",
+            "Navigate between talks normally; the button is re-injected automatically without a full reload."
+          ],
+          "limitations": [
+            "Only runs on TED talk pages that match www.ted.com/talks/; other pages are unaffected.",
+            "Button injection depends on TED's current page structure (the talk title's action container), so a site redesign could break it.",
+            "The script itself does not download media; it delegates to an external web download service.",
+            "Only the current talk can be triggered; there is no bulk or playlist downloading.",
+            "The runtime log is kept in memory only and is cleared when the page is refreshed.",
+            "The companion panel is hosted on an external site and opens in a separate tab/window."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download the video by itself?",
+              "a": "No. It sends the current talk URL to an external web-based download service, which handles the actual download in a separate tab."
+            },
+            {
+              "q": "Which pages does the button appear on?",
+              "a": "Only talk pages matching www.ted.com/talks/. It does not run on other TED pages or other sites."
+            },
+            {
+              "q": "Can I hide the button?",
+              "a": "Yes. The companion control panel provides an enable switch for the injected download button; turning it off stops the button from being inserted."
+            },
+            {
+              "q": "Why does a panel page open?",
+              "a": "The script connects to a companion control panel the first time it runs so you can toggle the button and trigger downloads with status feedback. Connection is remembered via stored state."
+            },
+            {
+              "q": "What is the runtime log for?",
+              "a": "It records script events, uncaught errors, and promise rejections in a small in-memory buffer to help diagnose problems. It is not persisted and clears on refresh."
+            }
+          ],
+          "safety": "The script requests permissions to open tabs (GM_openInTab), inject styles (GM_addStyle), and read/write stored values (GM_getValue, GM_setValue). It stores only small state such as whether the panel connection has been made, falling back to localStorage if userscript storage is unavailable. Runtime logs are kept in memory only (a bounded ring buffer) and are not uploaded or persisted by the script. Clicking the download button passes the current page URL to an external download service, and the companion panel is loaded from an external site; communication with it is restricted to a trusted origin. The script does not access credentials or transmit personal data."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for TED 是一款用户脚本，会在 TED 演讲页面注入一个圆形下载按钮。点击后会把当前演讲的网址交给一个网页版下载服务，并在新标签页中打开。配套的控制面板可以开启或关闭注入的按钮、触发下载并显示进度。",
+          "problem": "TED 演讲页面本身没有提供离线保存的方式。本脚本在演讲页面上增加一个始终可用的下载入口，免去手动复制网址再交给下载服务的麻烦。",
+          "audience": "希望一键把正在观看的演讲发送到下载服务的 TED 观众，以及偏好用一个小控制面板来管理此功能的用户。",
+          "highlights": [
+            "在 TED 演讲页面的操作区注入一个圆形下载按钮。",
+            "为新标签页中的当前演讲网址打开网页版下载服务。",
+            "根据浏览器语言选择下载服务的语言路径。",
+            "配套面板可开启或关闭注入按钮并触发下载。",
+            "面板以 connecting、running、done、failed 状态反馈动作进度。",
+            "在页面内（SPA）跳转与页面加载时自动重新注入按钮。",
+            "保留内存中的运行日志，并捕获未处理错误与 Promise 拒绝，便于排查问题。",
+            "通过注入样式为按钮添加彩虹描边悬停效果。"
+          ],
+          "usage": [
+            "安装该用户脚本，并打开 www.ted.com/talks/ 下的任意演讲页面。",
+            "等待页面加载，标题附近的演讲操作区会出现一个圆形下载按钮。",
+            "点击按钮，在新标签页中为当前演讲打开下载服务。",
+            "可选：打开配套控制面板，从那里切换注入按钮或启动下载。",
+            "查看面板状态行，获取 connecting、running、done 或 failed 反馈。",
+            "正常在演讲之间跳转，按钮会自动重新注入，无需整页刷新。"
+          ],
+          "limitations": [
+            "仅在匹配 www.ted.com/talks/ 的 TED 演讲页面运行，其他页面不受影响。",
+            "按钮注入依赖 TED 当前的页面结构（演讲标题的操作容器），站点改版可能导致失效。",
+            "脚本本身不下载媒体文件，而是交给外部网页下载服务完成。",
+            "只能触发当前演讲，不支持批量或播放列表下载。",
+            "运行日志仅保存在内存中，页面刷新后会被清空。",
+            "配套面板由外部站点托管，会在单独的标签页或窗口中打开。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会自己下载视频吗？",
+              "a": "不会。它把当前演讲网址发送给一个外部网页下载服务，由该服务在单独的标签页中完成实际下载。"
+            },
+            {
+              "q": "按钮会出现在哪些页面？",
+              "a": "只会出现在匹配 www.ted.com/talks/ 的演讲页面，不会在其他 TED 页面或站点运行。"
+            },
+            {
+              "q": "我可以隐藏这个按钮吗？",
+              "a": "可以。配套控制面板提供注入下载按钮的启用开关，关闭后按钮将不再被插入。"
+            },
+            {
+              "q": "为什么会自动打开一个面板页面？",
+              "a": "脚本首次运行时会连接一个配套控制面板，便于切换按钮并带状态反馈地触发下载。连接状态会被记住。"
+            },
+            {
+              "q": "运行日志有什么用？",
+              "a": "它在一个小的内存缓冲区中记录脚本事件、未处理错误与 Promise 拒绝，用于帮助诊断问题。日志不会被持久化，刷新即清空。"
+            }
+          ],
+          "safety": "脚本申请了打开标签页（GM_openInTab）、注入样式（GM_addStyle）以及读写存储值（GM_getValue、GM_setValue）的权限。它只保存少量状态（例如是否已建立面板连接），在用户脚本存储不可用时回退到 localStorage。运行日志仅保存在内存中（有上限的环形缓冲），脚本不会上传或持久化这些日志。点击下载按钮会把当前页面网址交给外部下载服务，配套面板也从外部站点加载；与其通信仅限受信任来源。脚本不会访问凭据，也不会传输个人数据。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for TED 是一款使用者腳本，會在 TED 演講頁面注入一個圓形下載按鈕。點擊後會把目前演講的網址交給一個網頁版下載服務，並在新分頁中開啟。配套的控制面板可以開啟或關閉注入的按鈕、觸發下載並顯示進度。",
+          "problem": "TED 演講頁面本身沒有提供離線儲存的方式。本腳本在演講頁面上增加一個隨時可用的下載入口，省去手動複製網址再交給下載服務的麻煩。",
+          "audience": "希望一鍵把正在觀看的演講傳送到下載服務的 TED 觀眾，以及偏好用一個小控制面板來管理此功能的使用者。",
+          "highlights": [
+            "在 TED 演講頁面的操作區注入一個圓形下載按鈕。",
+            "為新分頁中的目前演講網址開啟網頁版下載服務。",
+            "依瀏覽器語言選擇下載服務的語言路徑。",
+            "配套面板可開啟或關閉注入按鈕並觸發下載。",
+            "面板以 connecting、running、done、failed 狀態回報動作進度。",
+            "在頁面內（SPA）跳轉與頁面載入時自動重新注入按鈕。",
+            "保留記憶體中的執行紀錄，並擷取未處理錯誤與 Promise 拒絕，方便排查問題。",
+            "透過注入樣式為按鈕加入彩虹描邊懸停效果。"
+          ],
+          "usage": [
+            "安裝此使用者腳本，並開啟 www.ted.com/talks/ 下的任一演講頁面。",
+            "等待頁面載入，標題附近的演講操作區會出現一個圓形下載按鈕。",
+            "點擊按鈕，在新分頁中為目前演講開啟下載服務。",
+            "選用：開啟配套控制面板，從那裡切換注入按鈕或啟動下載。",
+            "查看面板狀態列，取得 connecting、running、done 或 failed 回報。",
+            "正常在演講之間跳轉，按鈕會自動重新注入，無需整頁重新整理。"
+          ],
+          "limitations": [
+            "僅在符合 www.ted.com/talks/ 的 TED 演講頁面執行，其他頁面不受影響。",
+            "按鈕注入依賴 TED 目前的頁面結構（演講標題的操作容器），網站改版可能導致失效。",
+            "腳本本身不下載媒體檔案，而是交給外部網頁下載服務完成。",
+            "只能觸發目前演講，不支援批次或播放清單下載。",
+            "執行紀錄僅保存在記憶體中，頁面重新整理後會被清空。",
+            "配套面板由外部網站託管，會在單獨的分頁或視窗中開啟。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會自己下載影片嗎？",
+              "a": "不會。它把目前演講網址傳送給一個外部網頁下載服務，由該服務在單獨的分頁中完成實際下載。"
+            },
+            {
+              "q": "按鈕會出現在哪些頁面？",
+              "a": "只會出現在符合 www.ted.com/talks/ 的演講頁面，不會在其他 TED 頁面或網站執行。"
+            },
+            {
+              "q": "我可以隱藏這個按鈕嗎？",
+              "a": "可以。配套控制面板提供注入下載按鈕的啟用開關，關閉後按鈕將不再被插入。"
+            },
+            {
+              "q": "為什麼會自動開啟一個面板頁面？",
+              "a": "腳本首次執行時會連接一個配套控制面板，方便切換按鈕並帶狀態回報地觸發下載。連線狀態會被記住。"
+            },
+            {
+              "q": "執行紀錄有什麼用？",
+              "a": "它在一個小的記憶體緩衝區中記錄腳本事件、未處理錯誤與 Promise 拒絕，用於協助診斷問題。紀錄不會被持久化，重新整理即清空。"
+            }
+          ],
+          "safety": "腳本申請了開啟分頁（GM_openInTab）、注入樣式（GM_addStyle）以及讀寫儲存值（GM_getValue、GM_setValue）的權限。它只保存少量狀態（例如是否已建立面板連線），在使用者腳本儲存不可用時回退到 localStorage。執行紀錄僅保存在記憶體中（有上限的環形緩衝），腳本不會上傳或持久化這些紀錄。點擊下載按鈕會把目前頁面網址交給外部下載服務，配套面板也從外部網站載入；與其通訊僅限受信任來源。腳本不會存取憑證，也不會傳輸個人資料。"
+        }
+      }
+    },
+    {
+      "id": "xload-78b8cd513417",
+      "type": "script",
+      "title": "ClipSaver for Pinterest & Snapchat",
+      "short": "Adds a floating download button over Pinterest and Snapchat video content that",
+      "description": "Adds a floating download button over Pinterest and Snapchat video content that opens a download launcher for the current item. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Pinterest & Snapchat",
+          "short": "Adds a floating download button over Pinterest and Snapchat video content that",
+          "description": "Adds a floating download button over Pinterest and Snapchat video content that opens a download launcher for the current item. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Pinterest & Snapchat",
+          "short": "Adds a floating download button over Pinterest and Snapchat video content that",
+          "description": "Adds a floating download button over Pinterest and Snapchat video content that opens a download launcher for the current item. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Pinterest & Snapchat",
+          "short": "Adds a floating download button over Pinterest and Snapchat video content that",
+          "description": "Adds a floating download button over Pinterest and Snapchat video content that opens a download launcher for the current item. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-78b8cd513417/xload-78b8cd513417.user.js",
+      "page": "/scripts/userscripts/xload-78b8cd513417/xload-78b8cd513417.html",
+      "installUrl": "/scripts/userscripts/xload-78b8cd513417/xload-78b8cd513417.user.js",
+      "files": [
+        "panel.html",
+        "xload-78b8cd513417.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-78b8cd513417/panel.html",
+      "tags": [
+        "www.pinterest.com",
+        "www.snapchat.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "www.pinterest.com",
+        "www.snapchat.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 31905,
+      "content": {
+        "en": {
+          "summary": "ClipSaver adds a floating circular download button that appears when you hover over a video on Pinterest or Snapchat. Clicking it forwards the current item's page URL to an external download launcher. A companion panel page can also toggle the button, trigger downloads and show progress.",
+          "problem": "Saving a Pinterest pin or Snapchat video normally means finding the media source, copying its URL and pasting it into a separate downloader site. This script puts a one-click button directly over the video you are watching and passes the current item's URL to a download service for you.",
+          "audience": "Desktop-browser users who often save videos from Pinterest or Snapchat and want a faster, one-click path to a downloader. Suitable for users who already use a userscript manager such as Tampermonkey.",
+          "highlights": [
+            "Adds a floating circular download button that appears on hover over playable videos on Pinterest and Snapchat.",
+            "One click sends the current item's page URL (or its pin link on Pinterest) to an external download launcher.",
+            "On Snapchat the button stays active only on supported story, Spotlight and /p/ item URLs while you navigate.",
+            "Configurable button position (12 presets), button size, icon size and edge offset.",
+            "A companion panel page can enable/disable the button and trigger \"download current item\" or \"open download service\".",
+            "The panel reports running, done and error status while the script streams its in-memory logs to it.",
+            "Follows Pinterest and Snapchat single-page navigation by watching history and hash changes."
+          ],
+          "usage": [
+            "Install a userscript manager, then install this script so its @match rules apply to pinterest.com and snapchat.com.",
+            "Open a Pinterest pin or a Snapchat story, Spotlight or /p/ item that contains a video.",
+            "Hover the mouse over the video; a circular download button appears over the player.",
+            "Click the button to open the external download service with the current item pre-filled.",
+            "Optionally open the companion panel page to control the button and trigger downloads remotely.",
+            "In the panel, adjust enable/disable, button position, button size, icon size and edge offset, then run \"download current item\" or \"open download service\"."
+          ],
+          "limitations": [
+            "The actual download is handled by a third-party external service; the script only forwards the item URL and does not download the media itself.",
+            "Only Pinterest and Snapchat are supported, and the button targets <video> elements above a minimum size, so images and unsupported media are ignored.",
+            "The button appears only when the pointer is over a visible, sufficiently loaded video.",
+            "The companion panel is opened only once per browser profile; a stored flag suppresses later automatic openings.",
+            "If the userscript manager's storage is unavailable, configuration falls back to localStorage on each matching site.",
+            "The downloader address is built from the detected browser language, and only a fixed set of languages is mapped."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download the video by itself?",
+              "a": "No. It shows a button that forwards the current item's URL to an external download service, which performs the actual download."
+            },
+            {
+              "q": "Why doesn't the button appear?",
+              "a": "It appears only when the pointer is over a visible video of at least the minimum size that is loaded enough; on Snapchat it also requires a supported story, Spotlight or item URL."
+            },
+            {
+              "q": "What does the companion panel page do?",
+              "a": "It lets you enable or disable the button, change its position, button size, icon size and edge offset, and trigger \"download current item\" or \"open download service\", while showing running, done or error progress."
+            },
+            {
+              "q": "Is anything stored on my computer?",
+              "a": "Only your button/panel preferences and a one-time \"panel opened\" flag, saved through the userscript manager's storage with localStorage as a fallback."
+            }
+          ],
+          "safety": "On click or via a panel action, the script reads the current page URL and opens an external download service with that URL encoded in the query string, so the address of the item you are viewing is shared with that third party. It also loads a companion panel page from an external origin and exchanges messages with it, ignoring messages whose origin is neither the panel origin nor the current page. Preferences are stored through the userscript manager's storage, falling back to localStorage. A running log is kept only in memory, is not persisted and is cleared on refresh; it is not sanitized and may contain page URLs and error details. The script does not collect credentials and does not modify page content beyond adding its own button."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver 会在 Pinterest 和 Snapchat 的视频上显示一个悬浮的圆形下载按钮，鼠标悬停时出现。点击后会把当前条目的页面地址发送到外部下载启动器。配套面板页还可以开关按钮、触发下载并显示进度。",
+          "problem": "保存 Pinterest 的 Pin 或 Snapchat 视频通常需要先找到媒体源、复制地址，再粘贴到单独的下载站点。本脚本在你正在观看的视频上直接放置一键按钮，并自动把当前条目的地址交给下载服务。",
+          "audience": "经常在桌面浏览器上保存 Pinterest 或 Snapchat 视频、希望一键跳转到下载器的用户。适合已经使用 Tampermonkey 等用户脚本管理器的用户。",
+          "highlights": [
+            "在 Pinterest 和 Snapchat 的可播放视频上，悬停时显示悬浮的圆形下载按钮。",
+            "点击一次即可把当前条目的页面地址（Pinterest 上优先取其 Pin 链接）发送到外部下载启动器。",
+            "在 Snapchat 上，按钮只在受支持的故事、Spotlight 和 /p/ 条目地址中随导航保持可用。",
+            "可配置按钮位置（12 种预设）、按钮尺寸、图标尺寸和边缘间距。",
+            "配套面板页可开关按钮，并触发“下载当前条目”或“打开下载服务”。",
+            "面板可显示运行中、已完成和错误状态，脚本会向其推送内存中的运行日志。",
+            "通过监听 history 与 hash 变化，适配 Pinterest 和 Snapchat 的单页导航。"
+          ],
+          "usage": [
+            "先安装用户脚本管理器，再安装本脚本，使其 @match 规则作用于 pinterest.com 和 snapchat.com。",
+            "打开包含视频的 Pinterest Pin，或 Snapchat 故事、Spotlight、/p/ 条目。",
+            "将鼠标悬停在视频上，播放器上会出现一个圆形下载按钮。",
+            "点击该按钮，外部下载服务会带着当前条目信息打开。",
+            "可选：打开配套面板页，远程控制按钮并触发下载。",
+            "在面板中调整开关、按钮位置、按钮尺寸、图标尺寸和边缘间距，然后执行“下载当前条目”或“打开下载服务”。"
+          ],
+          "limitations": [
+            "实际下载由第三方外部服务完成；脚本只转发条目地址，本身不下载媒体。",
+            "仅支持 Pinterest 和 Snapchat，且按钮只针对超过最小尺寸的 <video> 元素，图片和不受支持的媒体会被忽略。",
+            "只有指针位于可见且已充分加载的视频上时，按钮才会出现。",
+            "配套面板在每个浏览器配置中只会自动打开一次；已存储的标记会阻止后续自动打开。",
+            "若用户脚本管理器的存储不可用，配置会在各匹配站点回退到 localStorage。",
+            "下载器地址根据检测到的浏览器语言拼接，且只映射了固定的一组语言。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会自己下载视频吗？",
+              "a": "不会。它显示一个按钮，把当前条目的地址转发给外部下载服务，由该服务完成实际下载。"
+            },
+            {
+              "q": "为什么按钮不出现？",
+              "a": "只有当指针位于可见、尺寸达标且已充分加载的视频上时才会出现；在 Snapchat 上还需要处于受支持的故事、Spotlight 或条目地址。"
+            },
+            {
+              "q": "配套面板页有什么作用？",
+              "a": "可开关按钮，调整其位置、按钮尺寸、图标尺寸和边缘间距，并触发“下载当前条目”或“打开下载服务”，同时显示运行中、已完成或错误进度。"
+            },
+            {
+              "q": "我的数据会被保存在哪里？",
+              "a": "只保存你的按钮/面板偏好以及一次性的“面板已打开”标记，通过用户脚本管理器的存储保存，回退方案为 localStorage。"
+            }
+          ],
+          "safety": "在点击按钮或通过面板操作时，脚本会读取当前页面地址，并以查询参数形式（经编码）打开外部下载服务，因此你正在查看的条目地址会分享给该第三方。脚本还会从外部来源加载配套面板页并与其交换消息，只接受来自面板来源或当前页面来源的消息，忽略其它来源。偏好设置通过用户脚本管理器的存储保存，回退方案为 localStorage。运行日志仅保存在内存中，不会持久化，刷新即清空；日志未经脱敏，可能包含页面地址与错误信息。脚本不收集账号凭据，除添加自身按钮外不修改页面内容。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver 會在 Pinterest 與 Snapchat 的影片上顯示一個懸浮的圓形下載按鈕，滑鼠懸停時出現。點擊後會把目前項目的頁面位址送往外部下載啟動器。搭配的面板頁還可開關按鈕、觸發下載並顯示進度。",
+          "problem": "儲存 Pinterest 的 Pin 或 Snapchat 影片，通常得先找到媒體來源、複製位址，再貼到另一個下載網站。本腳本會在你正在觀看的影片上直接放置一鍵按鈕，並自動把目前項目的位址交給下載服務。",
+          "audience": "經常在桌面瀏覽器上儲存 Pinterest 或 Snapchat 影片、希望一鍵跳轉到下載器的使用者。適合已使用 Tampermonkey 等使用者腳本管理員的使用者。",
+          "highlights": [
+            "在 Pinterest 與 Snapchat 的可播放影片上，懸停時顯示懸浮的圓形下載按鈕。",
+            "點擊一次即可把目前項目的頁面位址（Pinterest 上優先取其 Pin 連結）送往外部下載啟動器。",
+            "在 Snapchat 上，按鈕只在支援的限時動態、Spotlight 與 /p/ 項目位址中隨導覽保持可用。",
+            "可設定按鈕位置（12 種預設）、按鈕尺寸、圖示尺寸與邊緣間距。",
+            "搭配的面板頁可開關按鈕，並觸發「下載目前項目」或「開啟下載服務」。",
+            "面板可顯示執行中、已完成與錯誤狀態，腳本會向其推送記憶體中的執行紀錄。",
+            "透過監聽 history 與 hash 變化，相容 Pinterest 與 Snapchat 的單頁導覽。"
+          ],
+          "usage": [
+            "先安裝使用者腳本管理員，再安裝本腳本，使其 @match 規則作用於 pinterest.com 與 snapchat.com。",
+            "開啟包含影片的 Pinterest Pin，或 Snapchat 限時動態、Spotlight、/p/ 項目。",
+            "將滑鼠懸停在影片上，播放器上會出現一個圓形下載按鈕。",
+            "點擊該按鈕，外部下載服務會帶著目前項目資訊開啟。",
+            "可選：開啟搭配的面板頁，遠端控制按鈕並觸發下載。",
+            "在面板中調整開關、按鈕位置、按鈕尺寸、圖示尺寸與邊緣間距，然後執行「下載目前項目」或「開啟下載服務」。"
+          ],
+          "limitations": [
+            "實際下載由第三方外部服務完成；腳本只轉送項目位址，本身不下載媒體。",
+            "僅支援 Pinterest 與 Snapchat，且按鈕只針對超過最小尺寸的 <video> 元素，圖片與不受支援的媒體會被忽略。",
+            "只有指標位於可見且已充分載入的影片上時，按鈕才會出現。",
+            "搭配的面板在每個瀏覽器設定中只會自動開啟一次；已儲存的標記會阻止後續自動開啟。",
+            "若使用者腳本管理員的儲存空間無法使用，設定會在各符合的網站回退到 localStorage。",
+            "下載器位址依偵測到的瀏覽器語言拼接，且只對應了固定的一組語言。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會自己下載影片嗎？",
+              "a": "不會。它顯示一個按鈕，把目前項目的位址轉送給外部下載服務，由該服務完成實際下載。"
+            },
+            {
+              "q": "為什麼按鈕不出現？",
+              "a": "只有當指標位於可見、尺寸達標且已充分載入的影片上時才會出現；在 Snapchat 上還需要處於支援的限時動態、Spotlight 或項目位址。"
+            },
+            {
+              "q": "搭配的面板頁有什麼作用？",
+              "a": "可開關按鈕，調整其位置、按鈕尺寸、圖示尺寸與邊緣間距，並觸發「下載目前項目」或「開啟下載服務」，同時顯示執行中、已完成或錯誤進度。"
+            },
+            {
+              "q": "我的資料會被儲存在哪裡？",
+              "a": "只儲存你的按鈕/面板偏好以及一次性的「面板已開啟」標記，透過使用者腳本管理員的儲存空間儲存，回退方案為 localStorage。"
+            }
+          ],
+          "safety": "在點擊按鈕或透過面板操作時，腳本會讀取目前頁面位址，並以查詢參數形式（經編碼）開啟外部下載服務，因此你正在檢視的項目位址會分享給該第三方。腳本也會從外部來源載入搭配的面板頁並與其交換訊息，只接受來自面板來源或目前頁面來源的訊息，忽略其它來源。偏好設定透過使用者腳本管理員的儲存空間儲存，回退方案為 localStorage。執行紀錄僅保存在記憶體中，不會持久化，重新整理即清空；紀錄未經去識別化處理，可能包含頁面位址與錯誤資訊。腳本不蒐集帳號憑證，除加入自身按鈕外不修改頁面內容。"
+        }
+      }
+    },
+    {
+      "id": "xload-062133666a93",
+      "type": "script",
+      "title": "ClipSaver for Spotify",
+      "short": "Adds a download button to the Spotify player and track lists that opens an",
+      "description": "Adds a download button to the Spotify player and track lists that opens an audio download link for the current track. A companion panel page can trigger downloads and show progress.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver for Spotify",
+          "short": "Adds a download button to the Spotify player and track lists that opens an",
+          "description": "Adds a download button to the Spotify player and track lists that opens an audio download link for the current track. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-CN": {
+          "title": "ClipSaver for Spotify",
+          "short": "Adds a download button to the Spotify player and track lists that opens an",
+          "description": "Adds a download button to the Spotify player and track lists that opens an audio download link for the current track. A companion panel page can trigger downloads and show progress."
+        },
+        "zh-TW": {
+          "title": "ClipSaver for Spotify",
+          "short": "Adds a download button to the Spotify player and track lists that opens an",
+          "description": "Adds a download button to the Spotify player and track lists that opens an audio download link for the current track. A companion panel page can trigger downloads and show progress."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-062133666a93/xload-062133666a93.user.js",
+      "page": "/scripts/userscripts/xload-062133666a93/xload-062133666a93.html",
+      "installUrl": "/scripts/userscripts/xload-062133666a93/xload-062133666a93.user.js",
+      "files": [
+        "panel.html",
+        "xload-062133666a93.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-062133666a93/panel.html",
+      "tags": [
+        "open.spotify.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "open.spotify.com"
+      ],
+      "grants": [
+        "GM_openInTab",
+        "GM.openInTab",
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 22153,
+      "content": {
+        "en": {
+          "summary": "ClipSaver for Spotify is a userscript that adds a download button to the Spotify web player and to tracks in track lists. Clicking a button opens an external audio download service for that track in a new tab. An optional companion panel page can toggle the buttons and trigger a download for the current track.",
+          "problem": "On the Spotify web player there is no convenient way to jump from the track you are viewing to an audio download service. This script adds a one-click button on the player and on each track row so you do not have to copy the track link and paste it into another site manually.",
+          "audience": "Spotify web player users who frequently want to fetch an audio file for the track they are playing or browsing and prefer a single-click shortcut over manually copying links.",
+          "highlights": [
+            "Injects a download button into the Spotify web player next to the existing player controls.",
+            "Adds a matching download button to each row in track lists.",
+            "Clicking a button opens an external audio download service for that specific track in a new tab.",
+            "Detects the track automatically from the page or the clicked row, so no manual link copy is needed.",
+            "Companion panel page can enable or disable the injected buttons and set the track list icon size.",
+            "Panel page can also trigger a download for the current track and shows running/done/failed status.",
+            "Re-scans the page automatically so buttons appear on dynamically loaded content.",
+            "Remembers the connection state so the panel is not reopened on every page load."
+          ],
+          "usage": [
+            "Install the userscript in a userscript manager and open https://open.spotify.com in your browser.",
+            "Start playing or browsing a track; a download button appears in the player controls.",
+            "Click the player button to open the audio download service for the current track in a new tab.",
+            "For a specific track in a list, click the download button on that track row.",
+            "Open the companion panel page (shown once on first run) to adjust settings.",
+            "In the panel, toggle 'Enable injected track buttons' or change the track list icon size as needed.",
+            "Use the panel actions to download the current track or open the download service directly."
+          ],
+          "limitations": [
+            "Only runs on open.spotify.com; other Spotify pages or apps are not supported.",
+            "It relies on the Spotify web player's page structure, which can change and may temporarily break button injection.",
+            "The script only opens an external download service page; it does not download, decrypt, or store audio files itself.",
+            "Available audio formats and quality depend entirely on the external service, not on this script.",
+            "The panel is opened automatically only on the first run; afterwards it must be opened again through the script's own mechanism.",
+            "Very long or unusual track lists may take a moment to receive buttons while the page is rescanned."
+          ],
+          "faq": [
+            {
+              "q": "Does the script download the audio file itself?",
+              "a": "No. It only opens an external download service page for the track you selected; the actual download is handled by that service."
+            },
+            {
+              "q": "Why don't I see the download button?",
+              "a": "The button is injected based on the web player's current layout. If Spotify changes its interface, or the player controls are not visible yet, the button may not appear until the page updates again."
+            },
+            {
+              "q": "Can I turn the buttons off?",
+              "a": "Yes. The companion panel page has an 'Enable injected track buttons' switch that disables the injected buttons."
+            },
+            {
+              "q": "Which pages are supported?",
+              "a": "Only the Spotify web player at open.spotify.com."
+            },
+            {
+              "q": "How is my track selected?",
+              "a": "For the player button the script reads the currently displayed track; for track lists it reads the track from the row whose button you clicked."
+            }
+          ],
+          "safety": "The script requests only the permissions it needs: opening a new tab (GM_openInTab), storing a small amount of settings data (GM_setValue/GM_getValue), and nothing else beyond the normal page context. It stores only a flag marking that the panel was already connected and the user's panel settings; no account credentials or personal data are collected or transmitted. Runtime logs are kept in an in-memory ring buffer only, are cleared on page reload, and are never persisted. When you click a download button, the track's public URL is sent to the external audio download service that opens in a new tab, so review that service's own privacy practices before using it."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver for Spotify 是一款用户脚本，会在 Spotify 网页播放器和曲目列表中为每条曲目添加下载按钮。点击按钮会在新标签页中打开该曲目的外部音频下载服务。可选的配套面板页可以开关这些按钮，并为当前曲目触发下载。",
+          "problem": "Spotify 网页播放器没有便捷的方式从正在浏览的曲目直接跳到音频下载服务。本脚本在播放器和每条曲目行上添加一键按钮，免去手动复制曲目链接再粘贴到其他网站的操作。",
+          "audience": "经常需要为正在播放或浏览的曲目获取音频文件、希望用一次点击代替手动复制链接的 Spotify 网页播放器用户。",
+          "highlights": [
+            "在 Spotify 网页播放器的播放控制区注入下载按钮。",
+            "为曲目列表中的每一行添加对应的下载按钮。",
+            "点击按钮会在新标签页中打开该曲目的外部音频下载服务。",
+            "自动从页面或所点击的行识别曲目，无需手动复制链接。",
+            "配套面板页可启用或禁用注入按钮，并设置曲目列表图标尺寸。",
+            "面板页还能为当前曲目触发下载，并显示运行中/完成/失败状态。",
+            "自动重新扫描页面，使动态加载的内容也能出现按钮。",
+            "记住连接状态，避免每次加载页面都重新打开面板。"
+          ],
+          "usage": [
+            "在用户脚本管理器中安装该脚本，并在浏览器中打开 https://open.spotify.com。",
+            "开始播放或浏览曲目，播放控制区会出现下载按钮。",
+            "点击播放器按钮，在新标签页中为当前曲目打开音频下载服务。",
+            "若要下载列表中的指定曲目，点击该曲目行上的下载按钮。",
+            "打开配套面板页（首次运行时会自动显示一次）以调整设置。",
+            "在面板中按需切换“启用注入的曲目按钮”或修改曲目列表图标尺寸。",
+            "使用面板操作直接下载当前曲目或打开下载服务。"
+          ],
+          "limitations": [
+            "仅在 open.spotify.com 上运行，其他 Spotify 页面或应用不受支持。",
+            "依赖 Spotify 网页播放器的页面结构，若其改版，按钮注入可能暂时失效。",
+            "脚本只打开外部下载服务页面，本身不下载、不解密、也不存储音频文件。",
+            "可用的音频格式与音质完全取决于外部服务，而非本脚本。",
+            "面板仅在首次运行时自动打开，之后需通过脚本自身的机制再次打开。",
+            "特别长或结构异常的曲目列表在页面重新扫描时可能需要稍等片刻才会出现按钮。"
+          ],
+          "faq": [
+            {
+              "q": "脚本会自己下载音频文件吗？",
+              "a": "不会。它只会为你选中的曲目打开外部下载服务页面，实际下载由该服务完成。"
+            },
+            {
+              "q": "为什么看不到下载按钮？",
+              "a": "按钮的注入依赖网页播放器当前的布局。若 Spotify 更改了界面，或播放控制尚未可见，按钮可能要到页面再次更新时才出现。"
+            },
+            {
+              "q": "可以关闭这些按钮吗？",
+              "a": "可以。配套面板页中有“启用注入的曲目按钮”开关，可禁用注入的按钮。"
+            },
+            {
+              "q": "支持哪些页面？",
+              "a": "仅支持 open.spotify.com 上的 Spotify 网页播放器。"
+            },
+            {
+              "q": "脚本如何确定要下载的曲目？",
+              "a": "播放器按钮读取当前显示的曲目；曲目列表则读取你点击按钮所在行对应的曲目。"
+            }
+          ],
+          "safety": "脚本只申请所需权限：打开新标签页（GM_openInTab）、保存少量设置数据（GM_setValue/GM_getValue），除此之外不使用超出正常页面上下文的能力。它仅保存一个标记面板已连接的状态位以及用户的面板设置，不收集也不传输账号凭据或个人数据。运行日志只保存在内存环形缓冲区中，页面刷新即清空，且从不持久化。当你点击下载按钮时，该曲目的公开 URL 会被发送到在新标签页中打开的外部音频下载服务，因此使用前请了解该服务自身的隐私做法。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver for Spotify 是一款使用者腳本，會在 Spotify 網頁播放器與曲目清單中為每首曲目加入下載按鈕。點擊按鈕會在新分頁中開啟該曲目的外部音訊下載服務。可選的搭配面板頁可以開關這些按鈕，並為目前曲目觸發下載。",
+          "problem": "Spotify 網頁播放器沒有便利的方式，能從正在瀏覽的曲目直接前往音訊下載服務。本腳本在播放器與每個曲目列上加入一鍵按鈕，省去手動複製曲目連結再貼到其他網站的步驟。",
+          "audience": "經常需要為正在播放或瀏覽的曲目取得音訊檔、希望以一次點擊取代手動複製連結的 Spotify 網頁播放器使用者。",
+          "highlights": [
+            "在 Spotify 網頁播放器的播放控制區注入下載按鈕。",
+            "為曲目清單中的每一列加入對應的下載按鈕。",
+            "點擊按鈕會在新分頁中開啟該曲目的外部音訊下載服務。",
+            "自動從頁面或所點擊的列辨識曲目，無需手動複製連結。",
+            "搭配面板頁可啟用或停用注入按鈕，並設定曲目清單圖示大小。",
+            "面板頁還能為目前曲目觸發下載，並顯示執行中／完成／失敗狀態。",
+            "自動重新掃描頁面，讓動態載入的內容也能出現按鈕。",
+            "記住連線狀態，避免每次載入頁面都重新開啟面板。"
+          ],
+          "usage": [
+            "在使用者腳本管理員中安裝此腳本，並在瀏覽器中開啟 https://open.spotify.com。",
+            "開始播放或瀏覽曲目，播放控制區會出現下載按鈕。",
+            "點擊播放器按鈕，在新分頁中為目前曲目開啟音訊下載服務。",
+            "若要下載清單中的指定曲目，點擊該曲目列上的下載按鈕。",
+            "開啟搭配面板頁（首次執行時會自動顯示一次）以調整設定。",
+            "在面板中視需要切換「啟用注入的曲目按鈕」或修改曲目清單圖示大小。",
+            "使用面板操作直接下載目前曲目或開啟下載服務。"
+          ],
+          "limitations": [
+            "僅在 open.spotify.com 上執行，其他 Spotify 頁面或應用程式不受支援。",
+            "依賴 Spotify 網頁播放器的頁面結構，若其改版，按鈕注入可能暫時失效。",
+            "腳本只會開啟外部下載服務頁面，本身不下載、不解密，也不儲存音訊檔。",
+            "可用的音訊格式與音質完全取決於外部服務，而非本腳本。",
+            "面板僅在首次執行時自動開啟，之後需透過腳本本身的機制再次開啟。",
+            "特別長或結構異常的曲目清單在頁面重新掃描時，可能需要稍候才會出現按鈕。"
+          ],
+          "faq": [
+            {
+              "q": "腳本會自行下載音訊檔嗎？",
+              "a": "不會。它只會為你選取的曲目開啟外部下載服務頁面，實際下載由該服務完成。"
+            },
+            {
+              "q": "為什麼看不到下載按鈕？",
+              "a": "按鈕的注入取決於網頁播放器目前的版面。若 Spotify 變更了介面，或播放控制尚未可見，按鈕可能要到頁面再次更新時才會出現。"
+            },
+            {
+              "q": "可以關閉這些按鈕嗎？",
+              "a": "可以。搭配面板頁中有「啟用注入的曲目按鈕」開關，可停用注入的按鈕。"
+            },
+            {
+              "q": "支援哪些頁面？",
+              "a": "僅支援 open.spotify.com 上的 Spotify 網頁播放器。"
+            },
+            {
+              "q": "腳本如何決定要下載的曲目？",
+              "a": "播放器按鈕讀取目前顯示的曲目；曲目清單則讀取你點擊按鈕所在列所對應的曲目。"
+            }
+          ],
+          "safety": "腳本只申請所需權限：開啟新分頁（GM_openInTab）、儲存少量設定資料（GM_setValue/GM_getValue），除此之外不使用超出正常頁面內容的能力。它僅儲存一個標記面板已連線的狀態位以及使用者的面板設定，不蒐集也不傳輸帳號憑證或個人資料。執行日誌只保存在記憶體環形緩衝區中，頁面重新整理即清空，且從不持久化。當你點擊下載按鈕時，該曲目的公開 URL 會被傳送到在新分頁中開啟的外部音訊下載服務，因此使用前請了解該服務本身的隱私做法。"
+        }
+      }
+    },
+    {
+      "id": "xload-1c61e103fd8b",
+      "type": "script",
+      "title": "ClipSaver Media File Downloader",
+      "short": "Direct download helper for media URLs: shows a small progress panel on video,",
+      "description": "Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads.",
+      "i18n": {
+        "en": {
+          "title": "ClipSaver Media File Downloader",
+          "short": "Direct download helper for media URLs: shows a small progress panel on video,",
+          "description": "Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads."
+        },
+        "zh-CN": {
+          "title": "ClipSaver Media File Downloader",
+          "short": "Direct download helper for media URLs: shows a small progress panel on video,",
+          "description": "Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads."
+        },
+        "zh-TW": {
+          "title": "ClipSaver Media File Downloader",
+          "short": "Direct download helper for media URLs: shows a small progress panel on video,",
+          "description": "Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js",
+      "page": "/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html",
+      "installUrl": "/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js",
+      "files": [
+        "panel.html",
+        "xload-1c61e103fd8b.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-1c61e103fd8b/panel.html",
+      "tags": [
+        "googlevideo.com",
+        "tiktokcdn.com",
+        "douyinvod.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable",
+      "sites": [
+        "googlevideo.com",
+        "tiktokcdn.com",
+        "douyinvod.com",
+        "fbcdn.net",
+        "video.twimg.com",
+        "zjcdn.com",
+        "snssdk.com",
+        "tiktokv.com",
+        "douyinstatic.com",
+        "xhscdn.com",
+        "amemv.com",
+        "tikwm.com"
+      ],
+      "grants": [
+        "GM_addStyle",
+        "GM_setValue",
+        "GM_getValue",
+        "GM_xmlhttpRequest"
+      ],
+      "fileSize": 42233,
+      "content": {
+        "en": {
+          "summary": "ClipSaver Media File Downloader is a userscript that adds a one-click direct download panel to media file pages served from supported content CDNs. On video, audio and image pages it shows a small floating panel with Start Download and Cancel Download controls and a live progress bar. It fetches the current media URL as a blob and saves it locally, and a companion panel page can start or cancel downloads and toggle the on-page panel.",
+          "problem": "Media served directly from CDN hosts often plays in the browser but gives you no obvious way to save the file, and right-click saving is unreliable or missing on such pages. This script adds a dedicated download panel so the current media file can be fetched and saved in one click, with visible progress and a cancel option.",
+          "audience": "Users who regularly view video, audio or image files hosted on the supported media CDN domains and want a simple, repeatable way to save them, without needing separate downloader tools for each site.",
+          "highlights": [
+            "Injects a floating download panel on supported media pages served from the covered CDN hosts.",
+            "One-click download of the current media file directly from its URL.",
+            "Live progress bar with percentage and downloaded/total size in bytes.",
+            "Cancel Download button to abort an in-progress download.",
+            "Toast notifications for completed, failed and canceled downloads.",
+            "On-page interface text follows the browser language, with 22 supported languages and English fallback.",
+            "A companion panel page can remotely start or cancel downloads and toggle whether the on-page panel appears.",
+            "Panel visibility setting is persisted, so the preference is remembered across visits."
+          ],
+          "usage": [
+            "Install the userscript in a userscript manager that supports GM_xmlhttpRequest and the granted storage APIs.",
+            "Open a supported media file URL (video, audio or image) hosted on one of the covered CDN domains.",
+            "A small panel appears at the top-right of the page showing Start Download.",
+            "Click Start Download to begin; a progress bar shows percentage and transferred/total size.",
+            "Click Cancel Download at any time to stop the transfer.",
+            "After a download finishes, use Download Again to fetch it a second time.",
+            "Optionally use the companion panel page to start or cancel the download and to turn the on-page panel on or off."
+          ],
+          "limitations": [
+            "Only runs on the explicitly listed media CDN host patterns and only when the page content type is not text/html; normal website pages are not covered.",
+            "The download is a single GET request of the current page URL, so it does not merge segmented HLS/DASH streams, and very large files may be better saved manually as noted in the on-panel tip.",
+            "If the on-page panel is turned off in the companion panel, no download controls are injected.",
+            "The script may open the companion panel page once on first connection; if the browser blocks pop-ups, that connection may not appear.",
+            "There is no pause/resume: canceling aborts the request and a new download starts from the beginning.",
+            "Downloaded files are named with a timestamp plus the detected extension, not the original title."
+          ],
+          "faq": [
+            {
+              "q": "Which pages does the download panel appear on?",
+              "a": "Only pages whose host matches the supported media CDN domains and whose content type is not text/html, such as a direct video, audio or image file URL."
+            },
+            {
+              "q": "Where is the downloaded file saved?",
+              "a": "It is saved through the browser's normal download flow, so it goes to your browser's default download location with a generated filename."
+            },
+            {
+              "q": "Can I pause and resume a download?",
+              "a": "No. Cancel Download aborts the request, and starting again re-downloads the file from the beginning."
+            },
+            {
+              "q": "How is the file extension chosen?",
+              "a": "The script first checks an extension hint in the URL, then the MIME type of the page's video source or a type/URL match, and falls back to mp4."
+            },
+            {
+              "q": "Can I hide the panel on media pages?",
+              "a": "Yes. The companion panel page provides a switch to show or hide the on-page download panel, and the setting is remembered."
+            },
+            {
+              "q": "Does the script send my data anywhere?",
+              "a": "No. The download request goes to the current media URL itself, and runtime logs are kept only in memory for the panel view."
+            }
+          ],
+          "safety": "The script requests the media file from the same URL you are already viewing, using the userscript manager's cross-origin request capability limited to the declared @connect hosts. It does not upload your files or browsing data to any third party. On-page and panel communication is restricted to the panel's own origin and the current page's origin. Runtime logs are held in a small in-memory ring buffer and are not persisted; only the panel visibility preference and connection flag are stored, via GM storage with a localStorage fallback. Downloading media may still be subject to the source site's terms, so use the script only where you have the right to save the content."
+        },
+        "zh-CN": {
+          "summary": "ClipSaver Media File Downloader 是一款用户脚本，可在受支持的媒体 CDN 页面上一键直链下载媒体文件。在视频、音频和图片页面上，它会显示一个悬浮小面板，包含“开始下载”和“取消下载”按钮以及实时进度条。脚本会以 blob 方式抓取当前媒体地址并保存到本地，同时配套面板页可以启动或取消下载，并开关页面上的下载面板。",
+          "problem": "由 CDN 直接提供的媒体文件通常能在浏览器中播放，但页面上没有明显的保存入口，右键保存也往往不可用或不可靠。本脚本提供一个专用下载面板，让当前媒体文件可以一键抓取并保存，同时显示进度并支持取消。",
+          "audience": "经常在受支持的媒体 CDN 域名上查看视频、音频或图片文件，并希望用简单、可重复的方式保存这些文件的用户，无需为每个站点单独寻找下载工具。",
+          "highlights": [
+            "在受支持的媒体 CDN 页面上注入悬浮下载面板。",
+            "一键下载当前媒体文件，直接使用其地址抓取。",
+            "实时进度条，显示百分比以及已下载/总大小。",
+            "提供“取消下载”按钮，可中止进行中的下载。",
+            "下载完成、失败、取消时均有提示气泡。",
+            "页面文案跟随浏览器语言，支持 22 种语言，未支持语言回退到英文。",
+            "配套面板页可远程启动或取消下载，并开关页面上是否显示面板。",
+            "面板显示开关会被持久化保存，偏好可在后续访问中保留。"
+          ],
+          "usage": [
+            "在支持 GM_xmlhttpRequest 及所声明存储接口的用户脚本管理器中安装本脚本。",
+            "打开受支持媒体 CDN 域名上的媒体文件地址（视频、音频或图片）。",
+            "页面右上角会出现小面板，显示“开始下载”按钮。",
+            "点击“开始下载”开始抓取，进度条会显示百分比以及已传输/总大小。",
+            "随时点击“取消下载”可停止传输。",
+            "下载完成后可用“重新下载”再次抓取。",
+            "可选：使用配套面板页启动或取消下载，并开启或关闭页面上的下载面板。"
+          ],
+          "limitations": [
+            "仅在明确列出的媒体 CDN 主机规则下运行，且页面内容类型不能是 text/html；普通网页不在此范围内。",
+            "下载是对当前页面地址的一次 GET 请求，不会合并 HLS/DASH 分片流，且如面板提示所述，文件过大时更适合手动保存。",
+            "若在配套面板中关闭了页面面板，则不会注入任何下载控件。",
+            "首次连接时脚本可能会打开配套面板页；若浏览器拦截弹窗，可能看不到该连接。",
+            "没有暂停/续传：取消会中止请求，再次下载会从头开始。",
+            "保存的文件名由时间戳加检测到的扩展名组成，而非原始标题。"
+          ],
+          "faq": [
+            {
+              "q": "下载面板会出现在哪些页面上？",
+              "a": "仅出现在主机匹配受支持媒体 CDN 域名、且内容类型不是 text/html 的页面上，例如直接的视频、音频或图片文件地址。"
+            },
+            {
+              "q": "下载的文件保存在哪里？",
+              "a": "文件通过浏览器常规下载流程保存，会存到你浏览器的默认下载位置，并使用生成的文件名。"
+            },
+            {
+              "q": "可以暂停并续传吗？",
+              "a": "不能。“取消下载”会中止请求，再次开始会从头重新下载。"
+            },
+            {
+              "q": "文件扩展名是如何确定的？",
+              "a": "脚本会先检查地址中的扩展名提示，其次检查页面视频源的 MIME 类型或类型/地址匹配，最后回退为 mp4。"
+            },
+            {
+              "q": "可以隐藏页面上的面板吗？",
+              "a": "可以。配套面板页提供开关，可显示或隐藏页面上的下载面板，且该设置会被记住。"
+            },
+            {
+              "q": "脚本会把我的数据发送到别处吗？",
+              "a": "不会。下载请求只发往当前媒体地址本身，运行日志仅保存在内存中供面板查看。"
+            }
+          ],
+          "safety": "脚本仅使用用户脚本管理器受限的跨域请求能力，向你正在查看的同一媒体地址请求文件，并且只限访问脚本声明的 @connect 主机。它不会把你的文件或浏览数据上传给任何第三方。页面与面板之间的通信仅限面板自身的来源和当前页面的来源。运行日志保存在一个较小的内存环形缓冲中，不做持久化；只有面板显示偏好和连接标记会被保存，通过 GM 存储并在不可用时回退到 localStorage。下载媒体仍可能受来源站点条款约束，请仅在你有权保存内容时使用本脚本。"
+        },
+        "zh-TW": {
+          "summary": "ClipSaver Media File Downloader 是一款使用者腳本，可在受支援的媒體 CDN 頁面上以一鍵直連方式下載媒體檔案。在影片、音訊與圖片頁面上，它會顯示一個懸浮小面板，包含「開始下載」與「取消下載」按鈕以及即時進度條。腳本會以 blob 方式抓取目前媒體網址並儲存到本機，同時配套面板頁可以啟動或取消下載，並開關頁面上的下載面板。",
+          "problem": "由 CDN 直接提供的媒體檔案通常可在瀏覽器中播放，但頁面上沒有明顯的儲存入口，右鍵儲存也往往不可用或不可靠。本腳本提供專用下載面板，讓目前媒體檔案可以一鍵抓取並儲存，同時顯示進度並支援取消。",
+          "audience": "經常在受支援的媒體 CDN 網域上檢視影片、音訊或圖片檔案，並希望用簡單、可重複的方式儲存這些檔案的使用者，無需為每個網站單獨尋找下載工具。",
+          "highlights": [
+            "在受支援的媒體 CDN 頁面上注入懸浮下載面板。",
+            "一鍵下載目前媒體檔案，直接使用其網址抓取。",
+            "即時進度條，顯示百分比以及已下載/總大小。",
+            "提供「取消下載」按鈕，可中止進行中的下載。",
+            "下載完成、失敗、取消時均有提示氣泡。",
+            "頁面文案跟隨瀏覽器語言，支援 22 種語言，未支援語言回退為英文。",
+            "配套面板頁可遠端啟動或取消下載，並開關頁面上是否顯示面板。",
+            "面板顯示開關會被持久化保存，偏好可在後續造訪中保留。"
+          ],
+          "usage": [
+            "在支援 GM_xmlhttpRequest 及所宣告儲存介面的使用者腳本管理器中安裝本腳本。",
+            "開啟受支援媒體 CDN 網域上的媒體檔案網址（影片、音訊或圖片）。",
+            "頁面右上角會出現小面板，顯示「開始下載」按鈕。",
+            "點擊「開始下載」開始抓取，進度條會顯示百分比以及已傳輸/總大小。",
+            "隨時點擊「取消下載」可停止傳輸。",
+            "下載完成後可用「重新下載」再次抓取。",
+            "選用：使用配套面板頁啟動或取消下載，並開啟或關閉頁面上的下載面板。"
+          ],
+          "limitations": [
+            "僅在明確列出的媒體 CDN 主機規則下執行，且頁面內容類型不能是 text/html；一般網頁不在此範圍內。",
+            "下載是對目前頁面網址的一次 GET 請求，不會合併 HLS/DASH 分段串流，且如面板提示所述，檔案過大時更適合手動儲存。",
+            "若在配套面板中關閉了頁面面板，則不會注入任何下載控制項。",
+            "首次連線時腳本可能會開啟配套面板頁；若瀏覽器攔截彈出視窗，可能看不到該連線。",
+            "沒有暫停/續傳：取消會中止請求，再次下載會從頭開始。",
+            "儲存的檔案名稱由時間戳加偵測到的副檔名組成，而非原始標題。"
+          ],
+          "faq": [
+            {
+              "q": "下載面板會出現在哪些頁面上？",
+              "a": "僅出現在主機符合受支援媒體 CDN 網域、且內容類型不是 text/html 的頁面上，例如直接的影片、音訊或圖片檔案網址。"
+            },
+            {
+              "q": "下載的檔案儲存在哪裡？",
+              "a": "檔案透過瀏覽器一般下載流程儲存，會存到你瀏覽器的預設下載位置，並使用產生的檔案名稱。"
+            },
+            {
+              "q": "可以暫停並續傳嗎？",
+              "a": "不能。「取消下載」會中止請求，再次開始會從頭重新下載。"
+            },
+            {
+              "q": "檔案副檔名是如何決定的？",
+              "a": "腳本會先檢查網址中的副檔名提示，其次檢查頁面影片來源的 MIME 類型或類型/網址比對，最後回退為 mp4。"
+            },
+            {
+              "q": "可以隱藏頁面上的面板嗎？",
+              "a": "可以。配套面板頁提供開關，可顯示或隱藏頁面上的下載面板，且該設定會被記住。"
+            },
+            {
+              "q": "腳本會把我的資料傳送到別處嗎？",
+              "a": "不會。下載請求只會送往目前媒體網址本身，執行記錄僅保存在記憶體中供面板檢視。"
+            }
+          ],
+          "safety": "腳本僅使用使用者腳本管理器受限的跨來源請求能力，向你正在檢視的同一媒體網址請求檔案，並且只限存取腳本宣告的 @connect 主機。它不會把你的檔案或瀏覽資料上傳給任何第三方。頁面與面板之間的通訊僅限面板自身的來源與目前頁面的來源。執行記錄保存在一個較小的記憶體環形緩衝中，不做持久化；只有面板顯示偏好與連線標記會被保存，透過 GM 儲存並在不可用時回退到 localStorage。下載媒體仍可能受來源網站條款約束，請僅在你擁有儲存內容的權利時使用本腳本。"
+        }
+      }
+    },
+    {
       "id": "xload-39668868585d",
       "type": "script",
       "title": "XenForo Ignore Members & Content Toolkit",

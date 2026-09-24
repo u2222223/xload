@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for Instagram — xload</title>
+  <meta name="description" content="Adds a floating download button over Instagram videos, reels and posts that">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for Instagram","description":"Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html","installUrl":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Instagram","description":"Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html","installUrl":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Instagram","description":"Adds a floating download button over Instagram videos, reels and posts that opens a download launcher for the current media. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html","installUrl":"https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-7d879054b2be">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for Instagram</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for Instagram</h1>
+              <p class="lead">Adds a floating download button over Instagram videos, reels and posts that</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for Instagram is a userscript that adds a floating, circular download button over Instagram videos, reels and posts. When you hover the mouse over a media element, the button appears and clicking it opens a download launcher for the current media in a new tab. A companion panel page can adjust the button and trigger downloads directly.</p>
+            <p data-content="problem">Instagram does not provide a convenient, built-in way to save a video, reel or post while you are browsing it. ClipSaver puts a one-click download control right on top of the media you are already looking at, so you do not have to copy links or look for a separate tool.</p>
+            <p data-content="audience">Instagram users who regularly view or keep videos, reels and posts and want a fast way to send the current media to a download service. It is intended for personal, everyday browsing on desktop browsers that support userscripts.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>A floating circular download button appears automatically when you hover a video, reel or post, and hides when you move away from media.</li><li>Works across the Instagram feed, reel pages and post pages on instagram.com.</li><li>Resolves the media link from the post&#39;s own /p/, /reels/ or /reel/ link and falls back to the current page URL.</li><li>Opens the download launcher in a new tab, with the interface language matched to your browser (including English, Simplified Chinese and Traditional Chinese, among many others).</li><li>A companion control panel can enable or disable the button and adjust its position (12 presets), button size, icon size and edge offset.</li><li>The panel can also trigger &#34;download current media&#34; and &#34;open download service&#34; actions and reports running, done and error progress.</li><li>Panel communication runs over both postMessage and BroadcastChannel with message deduplication and a ping/pong heartbeat.</li><li>Built-in diagnostic log keeps the most recent events (including uncaught errors) for the panel to pull, while settings are saved via userscript storage with a localStorage fallback.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.instagram.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the script with a userscript manager.</li><li>Open instagram.com, such as the feed, a reel or a post page.</li><li>Move the mouse over a video, reel or post; a circular download button appears over the media.</li><li>Click the button to open the download launcher for that media in a new tab.</li><li>Open the companion panel page to change the button position, size, icon size and edge offset, or to disable the button entirely.</li><li>Use the panel&#39;s action buttons to download the current media or to open the download service.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>The script only runs on instagram.com; other websites are not affected.</li><li>The button appears only when the mouse hovers a sufficiently large, visible media element, and a video must already be loaded before it is detected.</li><li>The script does not download files itself; it passes the media URL to an external download service, so results and availability depend on that service.</li><li>The companion panel is a separate page opened as a popup, which browsers or popup blockers may block.</li><li>The panel connection is attempted once per installation rather than on every visit.</li><li>Diagnostic logs are kept in memory only, are cleared on refresh and are not redacted.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Why doesn&#39;t the download button appear?</summary><p>The button is intentionally shown only while the mouse hovers a media element that is large enough and visible, and a video must have loaded first. Make sure you are on instagram.com and hover directly over a video, reel or post.</p></details>
+                
+                <details><summary>Does the script download the file by itself?</summary><p>No. It detects the current media URL and opens an external download launcher in a new tab; the actual download is handled by that service.</p></details>
+                
+                <details><summary>Where are my button settings stored?</summary><p>Settings such as enabled state, position, size and offsets are saved through the userscript manager&#39;s storage, with the browser&#39;s localStorage used as a fallback.</p></details>
+                
+                <details><summary>Does it work on websites other than Instagram?</summary><p>No. The script is scoped to instagram.com and does nothing elsewhere.</p></details>
+                
+                <details><summary>What language will the download launcher use?</summary><p>It follows your browser language and supports English, Simplified Chinese, Traditional Chinese and many other languages, defaulting to English when the language is not recognized.</p></details>
+                
+                <details><summary>Nothing happens when I click the button or open the panel.</summary><p>A popup blocker may be preventing the new tab from opening, or the external download service may be temporarily unavailable. Allow popups for the site and try again.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests GM_openInTab, GM.openInTab, GM_addStyle, GM_setValue and GM_getValue, reads navigator.language and the current media URL, and stores only its own button settings locally through userscript storage with a localStorage fallback. Panel messages are accepted only from the trusted panel origin and from the panel or opener window, and duplicate messages are discarded. Diagnostic logs may include page URLs and error details but stay in memory only, are never persisted and are not redacted; the only data sent externally is the media URL handed to the download service. It does not modify Instagram content and does not access your account credentials.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">28.8 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

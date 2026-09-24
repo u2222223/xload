@@ -13,19 +13,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>页面阅读增强 - 功能面板</title>
-  <meta name="description" content="为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。">
+  <title>ClipSaver for Threads - 功能面板</title>
+  <meta name="description" content="Adds a download button to Threads posts that contain video, opening a download">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/panel/panel.css">
 </head>
-<body data-panel-task="xload-c93d9b5d8b47">
+<body data-panel-task="xload-acec4a250e94">
   <div class="panel-layout">
     <header class="panel-header">
       <div class="panel-header-inner">
-        <h1>页面阅读增强</h1>
-        <p class="panel-subtitle">为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。</p>
+        <h1>ClipSaver for Threads</h1>
+        <p class="panel-subtitle">Adds a download button to Threads posts that contain video, opening a download</p>
       </div>
     </header>
 
@@ -34,7 +34,7 @@
         <section class="panel-status" id="panel-status" data-state="waiting">
           <div class="panel-status-inner">
             <span class="panel-status-dot"></span>
-            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+            <span class="panel-status-text" id="panel-status-text">Waiting for the script to connect…</span>
           </div>
           <div class="panel-progress" id="panel-progress" hidden>
             <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
@@ -43,11 +43,11 @@
 
 
 
-        <section class="pui-card panel-section" data-section="display-mode">
+        <section class="pui-card panel-section" data-section="downloader">
           <div class="pui-card-head">
-            <div class="pui-card-title">显示模式</div>
+            <div class="pui-card-title">Download Controls</div>
 
-            <div class="pui-card-desc">切换页面显示效果，可随时还原。</div>
+            <div class="pui-card-desc">Configure the injected post button and trigger a download for the current Threads post.</div>
 
           </div>
 
@@ -55,15 +55,15 @@
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-dark_mode">夜间模式</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-dark_mode" data-control="dark_mode" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-enabled">Enable injected download button</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-enabled" data-control="enabled" data-type="switch" checked><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-eye_protect">护眼模式</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-eye_protect" data-control="eye_protect" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-pollInterval">Scan interval (ms)</label>
+              <input class="pui-input" id="ctl-pollInterval" data-control="pollInterval" data-type="number" type="number" value="777">
             </div>
 
 
@@ -72,32 +72,9 @@
 
           <div class="panel-actions">
 
-            <button class="pui-btn pui-btn-primary" type="button" data-action="toggle_dark">应用夜间模式</button>
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download_current">Download current post</button>
 
-            <button class="pui-btn pui-btn-primary" type="button" data-action="toggle_eye">应用护眼模式</button>
-
-          </div>
-
-        </section>
-
-        <section class="pui-card panel-section" data-section="page-actions">
-          <div class="pui-card-head">
-            <div class="pui-card-title">页面操作</div>
-
-            <div class="pui-card-desc">针对当前页面执行一次性阅读辅助操作。</div>
-
-          </div>
-
-
-          <div class="panel-actions">
-
-            <button class="pui-btn pui-btn-primary" type="button" data-action="show_passwords">明文显示密码</button>
-
-            <button class="pui-btn pui-btn-primary" type="button" data-action="toggle_edit">切换网页编辑</button>
-
-            <button class="pui-btn pui-btn-primary" type="button" data-action="unlock_copy">解除复制限制</button>
-
-            <button class="pui-btn pui-btn-primary" type="button" data-action="pick_color">屏幕取色</button>
+            <button class="pui-btn pui-btn-primary" type="button" data-action="open_downloader">Open download service</button>
 
           </div>
 
@@ -122,7 +99,7 @@
     <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
   </div>
 
-  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"执行完成","failed":"执行失败"}</script>
+  <script type="application/json" id="panel-loading">{"connecting":"Waiting for the script to connect…","running":"Running…","done":"Done","failed":"Failed"}</script>
   <script src="/assets/panel/panel.js"></script>
   <script>
     if (window.PanelPage) window.PanelPage.init();

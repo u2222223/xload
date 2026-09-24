@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver Media File Downloader — xload</title>
+  <meta name="description" content="Direct download helper for media URLs: shows a small progress panel on video,">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver Media File Downloader","description":"Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html","installUrl":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver Media File Downloader","description":"Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html","installUrl":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver Media File Downloader","description":"Direct download helper for media URLs: shows a small progress panel on video, audio and image pages served from media CDNs and saves the file locally. A companion panel page can start and cancel downloads.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html","installUrl":"https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-1c61e103fd8b">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver Media File Downloader</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver Media File Downloader</h1>
+              <p class="lead">Direct download helper for media URLs: shows a small progress panel on video,</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver Media File Downloader is a userscript that adds a one-click direct download panel to media file pages served from supported content CDNs. On video, audio and image pages it shows a small floating panel with Start Download and Cancel Download controls and a live progress bar. It fetches the current media URL as a blob and saves it locally, and a companion panel page can start or cancel downloads and toggle the on-page panel.</p>
+            <p data-content="problem">Media served directly from CDN hosts often plays in the browser but gives you no obvious way to save the file, and right-click saving is unreliable or missing on such pages. This script adds a dedicated download panel so the current media file can be fetched and saved in one click, with visible progress and a cancel option.</p>
+            <p data-content="audience">Users who regularly view video, audio or image files hosted on the supported media CDN domains and want a simple, repeatable way to save them, without needing separate downloader tools for each site.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Injects a floating download panel on supported media pages served from the covered CDN hosts.</li><li>One-click download of the current media file directly from its URL.</li><li>Live progress bar with percentage and downloaded/total size in bytes.</li><li>Cancel Download button to abort an in-progress download.</li><li>Toast notifications for completed, failed and canceled downloads.</li><li>On-page interface text follows the browser language, with 22 supported languages and English fallback.</li><li>A companion panel page can remotely start or cancel downloads and toggle whether the on-page panel appears.</li><li>Panel visibility setting is persisted, so the preference is remembered across visits.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>googlevideo.com</li><li>tiktokcdn.com</li><li>douyinvod.com</li><li>fbcdn.net</li><li>video.twimg.com</li><li>zjcdn.com</li><li>snssdk.com</li><li>tiktokv.com</li><li>douyinstatic.com</li><li>xhscdn.com</li><li>amemv.com</li><li>tikwm.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li><li><code>GM_xmlhttpRequest</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the userscript in a userscript manager that supports GM_xmlhttpRequest and the granted storage APIs.</li><li>Open a supported media file URL (video, audio or image) hosted on one of the covered CDN domains.</li><li>A small panel appears at the top-right of the page showing Start Download.</li><li>Click Start Download to begin; a progress bar shows percentage and transferred/total size.</li><li>Click Cancel Download at any time to stop the transfer.</li><li>After a download finishes, use Download Again to fetch it a second time.</li><li>Optionally use the companion panel page to start or cancel the download and to turn the on-page panel on or off.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>Only runs on the explicitly listed media CDN host patterns and only when the page content type is not text/html; normal website pages are not covered.</li><li>The download is a single GET request of the current page URL, so it does not merge segmented HLS/DASH streams, and very large files may be better saved manually as noted in the on-panel tip.</li><li>If the on-page panel is turned off in the companion panel, no download controls are injected.</li><li>The script may open the companion panel page once on first connection; if the browser blocks pop-ups, that connection may not appear.</li><li>There is no pause/resume: canceling aborts the request and a new download starts from the beginning.</li><li>Downloaded files are named with a timestamp plus the detected extension, not the original title.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Which pages does the download panel appear on?</summary><p>Only pages whose host matches the supported media CDN domains and whose content type is not text/html, such as a direct video, audio or image file URL.</p></details>
+                
+                <details><summary>Where is the downloaded file saved?</summary><p>It is saved through the browser&#39;s normal download flow, so it goes to your browser&#39;s default download location with a generated filename.</p></details>
+                
+                <details><summary>Can I pause and resume a download?</summary><p>No. Cancel Download aborts the request, and starting again re-downloads the file from the beginning.</p></details>
+                
+                <details><summary>How is the file extension chosen?</summary><p>The script first checks an extension hint in the URL, then the MIME type of the page&#39;s video source or a type/URL match, and falls back to mp4.</p></details>
+                
+                <details><summary>Can I hide the panel on media pages?</summary><p>Yes. The companion panel page provides a switch to show or hide the on-page download panel, and the setting is remembered.</p></details>
+                
+                <details><summary>Does the script send my data anywhere?</summary><p>No. The download request goes to the current media URL itself, and runtime logs are kept only in memory for the panel view.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests the media file from the same URL you are already viewing, using the userscript manager&#39;s cross-origin request capability limited to the declared @connect hosts. It does not upload your files or browsing data to any third party. On-page and panel communication is restricted to the panel&#39;s own origin and the current page&#39;s origin. Runtime logs are held in a small in-memory ring buffer and are not persisted; only the panel visibility preference and connection flag are stored, via GM storage with a localStorage fallback. Downloading media may still be subject to the source site&#39;s terms, so use the script only where you have the right to save the content.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">41.2 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>

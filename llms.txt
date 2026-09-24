@@ -9,6 +9,18 @@ Catalog: https://xload.net/
 ## Userscripts
 
 <!-- XLOAD:LLMS:ENTRIES:START -->
+- [ClipSaver for YouTube](https://xload.net/scripts/userscripts/xload-aea2123f38d9/xload-aea2123f38d9.html): Adds a download launcher to YouTube video pages and Shorts, plus an optional
+- [ClipSaver for TikTok](https://xload.net/scripts/userscripts/xload-6bea7028d046/xload-6bea7028d046.html): Adds a floating download button over TikTok video players that opens a download
+- [ClipSaver for Douyin](https://xload.net/scripts/userscripts/xload-36c82a148cdf/xload-36c82a148cdf.html): Adds a download button to the Douyin player control bar that opens a download
+- [ClipSaver for Threads](https://xload.net/scripts/userscripts/xload-acec4a250e94/xload-acec4a250e94.html): Adds a download button to Threads posts that contain video, opening a download
+- [ClipSaver for X](https://xload.net/scripts/userscripts/xload-90867ea645e8/xload-90867ea645e8.html): Adds a download control to X (Twitter) posts and media grids, opening a
+- [ClipSaver for Instagram](https://xload.net/scripts/userscripts/xload-7d879054b2be/xload-7d879054b2be.html): Adds a floating download button over Instagram videos, reels and posts that
+- [ClipSaver for Facebook](https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html): Adds a floating download button over Facebook videos and reels that opens a
+- [ClipSaver for XiaoHongShu](https://xload.net/scripts/userscripts/xload-d70a33fd5f53/xload-d70a33fd5f53.html): Adds a download button to XiaoHongShu note media that opens a download launcher
+- [ClipSaver for TED](https://xload.net/scripts/userscripts/xload-7fbc64722d0d/xload-7fbc64722d0d.html): Adds a download button to TED talk pages that opens a download launcher for the
+- [ClipSaver for Pinterest & Snapchat](https://xload.net/scripts/userscripts/xload-78b8cd513417/xload-78b8cd513417.html): Adds a floating download button over Pinterest and Snapchat video content that
+- [ClipSaver for Spotify](https://xload.net/scripts/userscripts/xload-062133666a93/xload-062133666a93.html): Adds a download button to the Spotify player and track lists that opens an
+- [ClipSaver Media File Downloader](https://xload.net/scripts/userscripts/xload-1c61e103fd8b/xload-1c61e103fd8b.html): Direct download helper for media URLs: shows a small progress panel on video,
 - [XenForo Ignore Members & Content Toolkit](https://xload.net/scripts/userscripts/xload-39668868585d/xload-39668868585d.html): Hide ignored members, reactions, tags, ranks, badges and signatures across
 - [多引擎翻译助手](https://xload.net/scripts/userscripts/xload-1c9e7dbfe0ae/xload-1c9e7dbfe0ae.html): 选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。
 - [自定义搜索增强](https://xload.net/scripts/userscripts/xload-4ea75cfc1263/xload-4ea75cfc1263.html): 使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。

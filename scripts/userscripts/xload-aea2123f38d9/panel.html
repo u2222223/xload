@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ClipSaver for YouTube - 功能面板</title>
+  <meta name="description" content="Adds a download launcher to YouTube video pages and Shorts, plus an optional">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-aea2123f38d9">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>ClipSaver for YouTube</h1>
+        <p class="panel-subtitle">Adds a download launcher to YouTube video pages and Shorts, plus an optional</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">Waiting for the script to connect…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="downloader">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Download Controls</div>
+
+            <div class="pui-card-desc">Configure the on-page download button and trigger downloads for the current YouTube page.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-enabled">Enable floating download button</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-enabled" data-control="enabled" data-type="switch" checked><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-buttonPosition">Button position</label>
+              <select class="pui-input" id="ctl-buttonPosition" data-control="buttonPosition" data-type="select">
+
+                <option value="top-center" selected>top-center</option>
+
+                <option value="bottom-center">bottom-center</option>
+
+                <option value="left-center">left-center</option>
+
+                <option value="right-center">right-center</option>
+
+                <option value="top-left-quarter">top-left-quarter</option>
+
+                <option value="top-three-quarter">top-three-quarter</option>
+
+                <option value="bottom-left-quarter">bottom-left-quarter</option>
+
+                <option value="bottom-three-quarter">bottom-three-quarter</option>
+
+                <option value="right-top-quarter">right-top-quarter</option>
+
+                <option value="right-three-quarter">right-three-quarter</option>
+
+                <option value="left-top-quarter">left-top-quarter</option>
+
+                <option value="left-three-quarter">left-three-quarter</option>
+
+              </select>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-buttonSize">Button size (px)</label>
+              <input class="pui-input" id="ctl-buttonSize" data-control="buttonSize" data-type="number" type="number" value="48">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-iconSize">Icon size (px)</label>
+              <input class="pui-input" id="ctl-iconSize" data-control="iconSize" data-type="number" type="number" value="25">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-edgeOffset">Edge offset (px)</label>
+              <input class="pui-input" id="ctl-edgeOffset" data-control="edgeOffset" data-type="number" type="number" value="15">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download_current">Download current video</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="open_downloader">Open download service</button>
+
+          </div>
+
+        </section>
+
+
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"Waiting for the script to connect…","running":"Running…","done":"Done","failed":"Failed"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClipSaver for Facebook — xload</title>
+  <meta name="description" content="Adds a floating download button over Facebook videos and reels that opens a">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","name":"ClipSaver for Facebook","description":"Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress.","inLanguage":"en","url":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html","installUrl":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Facebook","description":"Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-CN","url":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html","installUrl":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"},{"@type":"SoftwareApplication","name":"ClipSaver for Facebook","description":"Adds a floating download button over Facebook videos and reels that opens a download launcher for the current video. A companion panel page can trigger downloads and show progress.","inLanguage":"zh-TW","url":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.html","installUrl":"https://xload.net/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js","operatingSystem":"Any","applicationCategory":"BrowserApplication"}]}</script>
+
+  <!-- Google AdSense consent + auto ads -->
+  <script>
+    window.xloadInit = window.xloadInit || [];
+    window.googleToken = "xloadInit";
+    window.xloadInit.push(["consent", "default", { ad_user_data: "denied", ad_personalization: "denied", ad_storage: "denied", analytics_storage: "denied" }]);
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084" crossorigin="anonymous"></script>
+  <!-- End Google AdSense -->
+
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260917.1">
+</head>
+<body data-nav="script" data-script-id="xload-cefbfd8f0444">
+
+  <div id="chrome-header"></div>
+
+  <main>
+    <div class="container page">
+      <nav class="crumb"><a href="/" data-site-ui="home">Home</a> &rsaquo; <span>ClipSaver for Facebook</span></nav>
+
+      <div class="detail-grid">
+        <div>
+          <div class="detail-hero">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor" aria-hidden="true"><path d="M12 3v4l2 1-2 1v3h3l-1-2 1-2h4v4h-2v1h2v4h-2l1 2-1 2H9l2-4h-3V8l1-2-1-2h4zM5 5h4l-1 1v1H6v3h2v2H5l-1-1v-3l1-1V5z"/></svg>
+            </span>
+            <div>
+              <h1>ClipSaver for Facebook</h1>
+              <p class="lead">Adds a floating download button over Facebook videos and reels that opens a</p>
+            </div>
+          </div>
+
+          <div class="prose">
+            <h2 data-site-ui="detailOverview">Overview</h2>
+            
+            <p data-content="summary">ClipSaver for Facebook adds a floating download button that appears when you hover over a Facebook video or reel. Clicking the button opens an external download launcher pre-filled with the current video&#39;s address. A companion panel page can also trigger downloads, adjust the button&#39;s appearance and position, and report progress.</p>
+            <p data-content="problem">Facebook does not offer a built-in way to download videos or reels from the watch page. Users who want to keep a clip must copy links manually or look for third-party tools. This script surfaces a one-click download entry directly on the video and wires it to an external download service.</p>
+            <p data-content="audience">Facebook users who watch videos or reels in a desktop browser and want a quick download shortcut, and who already use a userscript manager. It is also useful for users who want to control the button&#39;s position, size, and behavior from a companion panel.</p>
+            
+
+            
+            <section data-content-section="highlights">
+              <h2 data-site-ui="detailFeatures">Key features</h2>
+              <ul data-content-list="highlights">
+                <li>Floating download button appears only while hovering a qualifying video or reel.</li><li>Button is clamped to the viewport and follows the video while scrolling.</li><li>Twelve preset button positions, plus adjustable button size, icon size, and edge offset.</li><li>Works on /reel/, /reels/, and /videos/ pages and is automatically disabled elsewhere.</li><li>Opens the download launcher in the page language when a supported locale is detected.</li><li>Companion panel can enable/disable the button, change its position, and trigger a download.</li><li>Action status (running / done / error) is reported back to the panel.</li><li>Settings persist through userscript storage with a localStorage fallback.</li>
+              </ul>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSites">Supported sites</h2>
+            <ul class="site-list">
+              <li>www.facebook.com</li>
+            </ul>
+            
+
+            
+            <h2 data-site-ui="detailPermissions">Permissions</h2>
+            <p data-site-ui="detailPermissionsIntro">This script requests the following userscript-manager permissions. Review them before installing.</p>
+            <ul class="perm-list">
+              <li><code>GM_openInTab</code></li><li><code>GM.openInTab</code></li><li><code>GM_addStyle</code></li><li><code>GM_setValue</code></li><li><code>GM_getValue</code></li>
+            </ul>
+            
+
+            <h2 data-site-ui="detailInstallHeading">How to install &amp; use</h2>
+            <ol>
+              <li data-site-ui="detailInstallStep1">Install a userscript manager such as Tampermonkey or Violentmonkey for your browser.</li>
+              <li data-site-ui="detailInstallStep2">Click the "Download / install" button to open the script source on GitHub and install it with your userscript manager.</li>
+              <li data-site-ui="detailInstallStep3">Open the target site and use the script as documented.</li>
+            </ol>
+
+            
+            <section data-content-section="usage">
+              <h2 data-site-ui="detailUsage">How to use</h2>
+              <ol data-content-list="usage">
+                <li>Install the script in a userscript manager and open facebook.com.</li><li>Open a video, a reel, or the videos section.</li><li>Hover the pointer over the video until the circular download button appears.</li><li>Click the button to open the external download launcher for the current video.</li><li>Optionally open the companion panel to toggle the button, change its position or size, or start a download.</li><li>Watch the panel status area for running, done, or failed feedback.</li>
+              </ol>
+            </section>
+
+            <section data-content-section="limitations">
+              <h2 data-site-ui="detailLimitations">Limitations</h2>
+              <ul data-content-list="limitations">
+                <li>The script does not download the video itself; it hands the current page address to an external download service.</li><li>The button is available only on Facebook video, reel, and videos pages, and only over visible video elements large enough to hover.</li><li>The panel connection is attempted once and remembered; clearing that stored flag is needed to reconnect after it is dismissed.</li><li>It does not bypass privacy settings, login walls, or access restrictions.</li><li>Network access to the download service and the panel site is required for downloading and panel features.</li>
+              </ul>
+            </section>
+
+            <section data-content-section="faq">
+              <h2 data-site-ui="detailFaq">FAQ</h2>
+              <div data-content-faq>
+                
+                <details><summary>Does the script save videos to my device directly?</summary><p>No. It opens an external download launcher with the current video address; the final download is handled by that service.</p></details>
+                
+                <details><summary>Where is the button?</summary><p>It appears after you hover over a video or reel. If it does not show, the page may not be a supported video page or the video may still be loading.</p></details>
+                
+                <details><summary>Can I move or resize the button?</summary><p>Yes. The companion panel offers position presets plus button size, icon size, and edge offset settings.</p></details>
+                
+                <details><summary>Does it work outside Facebook?</summary><p>No. It runs only on facebook.com and is effectively inactive on non-video pages.</p></details>
+                
+              </div>
+            </section>
+            
+
+            
+            <h2 data-site-ui="detailSafety">Safety &amp; privacy</h2>
+            <p data-content="safety">The script requests the userscript-manager privileges needed to open tabs, inject styles, and store settings. When you click download or use the panel, it reads the current Facebook page address and passes it to an external download service, and it communicates with the companion panel origin over postMessage/BroadcastChannel. Runtime logs are kept only in memory and cleared on refresh; settings are stored via the manager&#39;s storage, or localStorage as a fallback. No Facebook credentials or account data are collected or transmitted.</p>
+            
+          </div>
+        </div>
+
+        <aside>
+          <div class="sidebar-card">
+            <a class="btn btn-block" href="https://github.com/u2222223/xload/raw/refs/heads/main/scripts/userscripts/xload-cefbfd8f0444/xload-cefbfd8f0444.user.js" target="_blank" rel="noopener" data-site-ui="detailDownloadButton">
+              Download / install
+            </a>
+          </div>
+
+          <div class="sidebar-card">
+            <h3 data-site-ui="detailDetailsHeading">Details</h3>
+            <div class="meta-list">
+              <div class="row"><span class="k" data-site-ui="detailType">Type</span><span class="v" data-site-ui="detailTypeValue">Userscript</span></div>
+              <div class="row"><span class="k" data-site-ui="detailVersion">Version</span><span class="v">1.0.0</span></div>
+              <div class="row"><span class="k" data-site-ui="detailLastUpdated">Last updated</span><span class="v">2026-09-24</span></div>
+              <div class="row"><span class="k" data-site-ui="detailFileSize">File size</span><span class="v">28.7 KB</span></div>
+              <div class="row"><span class="k" data-site-ui="detailDownloads">Downloads</span><span class="v">0</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="chrome-footer"></div>
+
+  <script src="/assets/js/main.js?v=20260917.1"></script>
+</body>
+</html>
