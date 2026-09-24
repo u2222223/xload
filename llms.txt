@@ -9,6 +9,13 @@ Catalog: https://xload.net/
 ## Userscripts
 
 <!-- XLOAD:LLMS:ENTRIES:START -->
+- [Web AutoClicker with Target & Interval](https://xload.net/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.html): Tampermonkey autoclicker with crosshair target picker, interval adjustment, and
+- [x-hide-bars](https://xload.net/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.html): X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down
+- [网盘直链下载助手](https://xload.net/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.html): 支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。
+- [Bypass All Shortlinks](https://xload.net/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.html): Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go
+- [GitHub 代码搜索 Star & 更新时间排序助手](https://xload.net/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.html): 在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行
+- [Shell Shockers | Show HP](https://xload.net/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.html): Shows players HP above their name
+- [客優雲出入庫-更新蝦皮庫存](https://xload.net/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.html): 客優雲出入庫-更新蝦皮庫存 功能
 - [Generate Metersphere Test Report](https://xload.net/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.html): 生成 Metersphere 测试计划报告
 - [Raumschüsse Fix für CaveRenderPro](https://xload.net/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.html): Berechnet die Richtung der Raumschüsse neu
 - [Inline SVG Replacer](https://xload.net/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.html): Replace all img tags with src as an SVG file into inline SVG tags

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shell Shockers | Show HP - 功能面板</title>
+  <meta name="description" content="Shows players HP above their name">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-2c3bec3b6d74">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>Shell Shockers HP Display</h1>
+        <p class="panel-subtitle">Shows players HP above their name</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">Waiting for script connection...</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="display">
+          <div class="pui-card-head">
+            <div class="pui-card-title">HP Display</div>
+
+            <div class="pui-card-desc">Configure health text update behavior and colors.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-update">Update every</label>
+              <input class="pui-input" id="ctl-update" data-control="update" data-type="number" type="number" value="5">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-low">Low HP color</label>
+              <input class="pui-input" id="ctl-low" data-control="low" data-type="text" type="text" value="#ff0000">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-medium">Medium HP color</label>
+              <input class="pui-input" id="ctl-medium" data-control="medium" data-type="text" type="text" value="#c8ff00">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-high">High HP color</label>
+              <input class="pui-input" id="ctl-high" data-control="high" data-type="text" type="text" value="#22ff00">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-settings">Apply Settings</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-settings">Reset Settings</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="panel">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Panel Controls</div>
+
+            <div class="pui-card-desc">Configure and trigger local panel shortcuts.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-hidePanel">Hide panel key</label>
+              <input class="pui-input" id="ctl-hidePanel" data-control="hidePanel" data-type="text" type="text" value="H">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-tabout">Tabout key</label>
+              <input class="pui-input" id="ctl-tabout" data-control="tabout" data-type="text" type="text" value="`">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-width">Panel width</label>
+              <input class="pui-input" id="ctl-width" data-control="width" data-type="number" type="number" value="300">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="toggle-panel">Toggle Panel</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="toggle-pointer-lock">Toggle Pointer Lock</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"Waiting for script connection...","running":"Running...","done":"Done","failed":"Failed"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

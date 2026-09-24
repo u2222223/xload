@@ -262,6 +262,10 @@
       channel.on('hello', function () {
         setState('ready', null);
         if (statusText) statusText.textContent = '脚本已连接';
+        // 脚本连接后拉取历史运行日志（旧脚本无日志层时静默失败）
+        channel.request('logs', {}, 3000).then(function (res) {
+          if (res && Array.isArray(res.logs)) mergeLogs(res.logs);
+        }).catch(function () {});
       });
       channel.on('progress', function (data) {
         var d = data || {};
@@ -299,6 +303,154 @@
           });
         })(buttons[j]);
       }
+      // ---------- 运行日志区（默认隐藏，Ctrl+` 切换；仅内存，不脱敏） ----------
+      var LOG_RENDER_MAX = 200;
+      var logs = [];
+      var logDrawer = document.getElementById('panel-log');
+      var logList = document.getElementById('panel-log-list');
+      var logEmpty = document.getElementById('panel-log-empty');
+
+      function formatEntry(entry) {
+        var e = entry || {};
+        var t = '';
+        try { t = new Date(e.ts || 0).toISOString(); } catch (err) { t = String(e.ts || ''); }
+        var data = '';
+        try { data = e.data == null ? '' : ' ' + JSON.stringify(e.data); } catch (err) { data = ''; }
+        return t + ' ' + String(e.event || '') + data;
+      }
+
+      function renderLogs() {
+        if (!logList) return;
+        while (logList.children.length > 0) logList.removeChild(logList.children[0]);
+        for (var i = 0; i < logs.length; i++) {
+          var entry = logs[i] || {};
+          var row = document.createElement('div');
+          row.className = 'panel-log-entry';
+          row.setAttribute('data-level', String(entry.level || 'info'));
+          var level = document.createElement('span');
+          level.className = 'panel-log-level';
+          level.textContent = '[' + String(entry.level || 'info') + ']';
+          row.appendChild(level);
+          var text = document.createElement('span');
+          text.textContent = formatEntry(entry);
+          row.appendChild(text);
+          logList.appendChild(row);
+        }
+        if (logEmpty) logEmpty.hidden = logs.length > 0;
+      }
+
+      function logsText() {
+        var lines = [];
+        for (var i = 0; i < logs.length; i++) {
+          try { lines.push(JSON.stringify(logs[i])); } catch (err) {}
+        }
+        return lines.join('\n');
+      }
+
+      function addLog(entry) {
+        if (!entry || typeof entry !== 'object') return;
+        logs.push(entry);
+        if (logs.length > LOG_RENDER_MAX) logs.splice(0, logs.length - LOG_RENDER_MAX);
+        renderLogs();
+      }
+
+      // 合并历史快照与已收到的实时条目，按 ts+event 去重，避免拉取覆盖实时日志
+      function mergeLogs(snapshot) {
+        var seen = {};
+        var merged = [];
+        var all = snapshot.concat(logs);
+        for (var i = 0; i < all.length; i++) {
+          var e = all[i] || {};
+          var key = String(e.ts) + '|' + String(e.event);
+          if (seen[key]) continue;
+          seen[key] = true;
+          merged.push(e);
+        }
+        merged.sort(function (a, b) { return (a.ts || 0) - (b.ts || 0); });
+        logs = merged.slice(-LOG_RENDER_MAX);
+        renderLogs();
+      }
+
+      function toggleLog() {
+        if (!logDrawer) return;
+        logDrawer.hidden = !logDrawer.hidden;
+        if (!logDrawer.hidden) renderLogs();
+      }
+
+      function fallbackCopy(text) {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', 'readonly');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          PUI.toast('日志已复制', 'success');
+        } catch (err2) { PUI.toast('复制失败', 'error'); }
+      }
+
+      function copyLogs() {
+        if (logs.length === 0) { PUI.toast('暂无日志', 'warn'); return; }
+        var text = logsText();
+        try {
+          if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              PUI.toast('日志已复制', 'success');
+            }).catch(function () {
+              fallbackCopy(text);
+            });
+            return;
+          }
+        } catch (err) {}
+        fallbackCopy(text);
+      }
+
+      function downloadLogs() {
+        if (logs.length === 0) { PUI.toast('暂无日志', 'warn'); return; }
+        try {
+          var blob = new Blob([logsText()], { type: 'application/jsonl' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'xload-log-' + (taskId || 'panel') + '-' + Date.now() + '.jsonl';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(function () { try { URL.revokeObjectURL(url); } catch (err) {} }, 1000);
+        } catch (err) { PUI.toast('下载失败', 'error'); }
+      }
+
+      function clearLogs() {
+        logs = [];
+        renderLogs();
+      }
+
+      channel.on('log', function (data) { addLog(data); });
+
+      if (logDrawer) {
+        logDrawer.hidden = true;
+        var clearBtn = document.getElementById('panel-log-clear');
+        var copyBtn = document.getElementById('panel-log-copy');
+        var downloadBtn = document.getElementById('panel-log-download');
+        var closeBtn = document.getElementById('panel-log-close');
+        if (clearBtn) clearBtn.addEventListener('click', clearLogs);
+        if (copyBtn) copyBtn.addEventListener('click', copyLogs);
+        if (downloadBtn) downloadBtn.addEventListener('click', downloadLogs);
+        if (closeBtn) closeBtn.addEventListener('click', toggleLog);
+      }
+      window.addEventListener('keydown', function (ev) {
+        if (!ev || !ev.ctrlKey || (ev.key !== '`' && ev.key !== '~')) return;
+        var target = ev.target;
+        var tag = target && target.tagName ? String(target.tagName).toUpperCase() : '';
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (target && target.isContentEditable)) return;
+        if (typeof ev.preventDefault === 'function') ev.preventDefault();
+        toggleLog();
+      });
+      renderLogs();
+
       setState('waiting', copy.connecting);
       return channel;
     }

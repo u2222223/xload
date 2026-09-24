@@ -107,6 +107,20 @@
     </main>
   </div>
 
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
   <script type="application/json" id="panel-loading">{"connecting":"스크립트 연결 대기 중…","running":"실행 중…","done":"완료","failed":"실행 실패"}</script>
   <script src="/assets/panel/panel.js"></script>
   <script>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web AutoClicker with Target &amp; Interval - 功能面板</title>
+  <meta name="description" content="Tampermonkey autoclicker with crosshair target picker, interval adjustment, and">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-eefd73fd016d">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>Web AutoClicker 控制面板</h1>
+        <p class="panel-subtitle">Tampermonkey autoclicker with crosshair target picker, interval adjustment, and</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="autoclick">
+          <div class="pui-card-head">
+            <div class="pui-card-title">自动点击</div>
+
+            <div class="pui-card-desc">设置点击间隔并控制自动点击的开始与停止。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-intervalSec">点击间隔（秒）</label>
+              <input class="pui-input" id="ctl-intervalSec" data-control="intervalSec" data-type="number" type="number" value="1">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="start">开始</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="stop">停止</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="click-once">点击一次</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="target">
+          <div class="pui-card-head">
+            <div class="pui-card-title">点击目标</div>
+
+            <div class="pui-card-desc">指定点击坐标，或使用拾取功能在页面上选择目标位置；未指定时点击页面中心。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-x">目标 X 坐标</label>
+              <input class="pui-input" id="ctl-x" data-control="x" data-type="number" type="number" value="0">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-y">目标 Y 坐标</label>
+              <input class="pui-input" id="ctl-y" data-control="y" data-type="number" type="number" value="0">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="pick">拾取坐标</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-target">应用坐标</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="clear-target">清除目标</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="display">
+          <div class="pui-card-head">
+            <div class="pui-card-title">悬浮面板</div>
+
+            <div class="pui-card-desc">控制页面内悬浮控制面板的显示与位置。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-visible">显示悬浮面板</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-visible" data-control="visible" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="set-visible">应用显示设置</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-position">重置面板位置</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"已完成","failed":"执行失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

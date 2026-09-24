@@ -6,19 +6,19 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovelAI Disable Backward - 功能面板</title>
-  <meta name="description" content="Disable Backward on NovelAI&#39;s image generation screen. This prevents the">
+  <title>网盘直链下载助手 - 功能面板</title>
+  <meta name="description" content="支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/panel/panel.css">
 </head>
-<body data-panel-task="xload-b0084dee695d">
+<body data-panel-task="xload-525e0f90dd46">
   <div class="panel-layout">
     <header class="panel-header">
       <div class="panel-header-inner">
-        <h1>NovelAI Disable Backward</h1>
-        <p class="panel-subtitle">Disable Backward on NovelAI&#39;s image generation screen. This prevents the</p>
+        <h1>网盘直链下载助手</h1>
+        <p class="panel-subtitle">支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。</p>
       </div>
     </header>
 
@@ -37,12 +37,81 @@
         </section>
 
 
-        <section class="pui-card panel-guide">
+
+        <section class="pui-card panel-section" data-section="download">
           <div class="pui-card-head">
-            <div class="pui-card-title">安装后即可使用功能面板</div>
-            <div class="pui-card-desc">安装该脚本后，在目标网页上打开功能面板即可进行操作；本页面用于展示面板功能与状态。</div>
+            <div class="pui-card-title">下载操作</div>
+
+            <div class="pui-card-desc">先在网盘页面选择文件，再选择下载协议。</div>
+
           </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-protocol">默认协议</label>
+              <select class="pui-input" id="ctl-protocol" data-control="protocol" data-type="select">
+
+                <option value="api" selected>api</option>
+
+                <option value="aria">aria</option>
+
+                <option value="rpc">rpc</option>
+
+                <option value="curl">curl</option>
+
+                <option value="bc">bc</option>
+
+              </select>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download-api">API 下载</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download-aria">Aria 下载</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download-rpc">RPC 下载</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download-curl">cURL 下载</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="download-bc">BC 下载</button>
+
+          </div>
+
         </section>
+
+        <section class="pui-card panel-section" data-section="settings">
+          <div class="pui-card-head">
+            <div class="pui-card-title">助手设置</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-remember-settings">记住下载器设置</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-remember-settings" data-control="remember-settings" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="open-settings">打开设置</button>
+
+          </div>
+
+        </section>
+
 
 
         <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>

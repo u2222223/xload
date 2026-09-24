@@ -678,6 +678,95 @@ input[type="range"] {
   color: #fff;
 }
 
+/* ---------- 运行日志抽屉（默认隐藏，Ctrl+` 切换） ---------- */
+.panel-log {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  max-height: 60vh;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.panel-log[hidden] {
+  display: none;
+}
+
+.panel-log-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #ececec;
+  background: #111;
+  color: #fff;
+}
+
+.panel-log-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.panel-log-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.panel-log-tools .pui-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.panel-log-list {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 12px;
+  font: 12px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+  background: #111;
+  color: #eee;
+}
+
+.panel-log-entry {
+  padding: 4px 0;
+  border-bottom: 1px solid #222;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.panel-log-entry .panel-log-level {
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.panel-log-entry[data-level="error"] {
+  color: #ff9c9c;
+}
+
+.panel-log-entry[data-level="warn"] {
+  color: #ffd479;
+}
+
+.panel-log-entry[data-level="debug"] {
+  color: #9a9a9a;
+}
+
+.panel-log-empty {
+  padding: 14px;
+  color: #888;
+  font-size: 12px;
+  text-align: center;
+}
+
 /* ---------- 响应式 ---------- */
 @media (max-width: 640px) {
   .panel-header-inner {

@@ -6,19 +6,19 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovelAI Disable Backward - 功能面板</title>
-  <meta name="description" content="Disable Backward on NovelAI&#39;s image generation screen. This prevents the">
+  <title>客優雲出入庫-更新蝦皮庫存 - 功能面板</title>
+  <meta name="description" content="客優雲出入庫-更新蝦皮庫存 功能">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/panel/panel.css">
 </head>
-<body data-panel-task="xload-b0084dee695d">
+<body data-panel-task="xload-cad67e2d2cdc">
   <div class="panel-layout">
     <header class="panel-header">
       <div class="panel-header-inner">
-        <h1>NovelAI Disable Backward</h1>
-        <p class="panel-subtitle">Disable Backward on NovelAI&#39;s image generation screen. This prevents the</p>
+        <h1>客優雲出入庫庫存工具</h1>
+        <p class="panel-subtitle">客優雲出入庫-更新蝦皮庫存 功能</p>
       </div>
     </header>
 
@@ -29,7 +29,7 @@
         <section class="panel-status" id="panel-status" data-state="waiting">
           <div class="panel-status-inner">
             <span class="panel-status-dot"></span>
-            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+            <span class="panel-status-text" id="panel-status-text">等待腳本連接…</span>
           </div>
           <div class="panel-progress" id="panel-progress" hidden>
             <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
@@ -37,12 +37,52 @@
         </section>
 
 
-        <section class="pui-card panel-guide">
+
+        <section class="pui-card panel-section" data-section="stock">
           <div class="pui-card-head">
-            <div class="pui-card-title">安装后即可使用功能面板</div>
-            <div class="pui-card-desc">安装该脚本后，在目标网页上打开功能面板即可进行操作；本页面用于展示面板功能与状态。</div>
+            <div class="pui-card-title">蝦皮庫存</div>
+
+            <div class="pui-card-desc">依目前列表中的 SKU 更新蝦皮庫存並開啟防超賣</div>
+
           </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="update-shopee-stock">更新蝦皮庫存</button>
+
+          </div>
+
         </section>
+
+        <section class="pui-card panel-section" data-section="transfer">
+          <div class="pui-card-head">
+            <div class="pui-card-title">調撥入庫</div>
+
+            <div class="pui-card-desc">依已勾選出庫單建立調撥入庫單</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-warehouseName">調撥入庫倉庫名稱</label>
+              <input class="pui-input" id="ctl-warehouseName" data-control="warehouseName" data-type="text" type="text" value="">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="transfer-inbound">出庫單調撥入庫</button>
+
+          </div>
+
+        </section>
+
 
 
         <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
@@ -64,7 +104,7 @@
     <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
   </div>
 
-  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"已完成","failed":"执行失败"}</script>
+  <script type="application/json" id="panel-loading">{"connecting":"等待腳本連接…","running":"正在執行…","done":"已完成","failed":"執行失敗"}</script>
   <script src="/assets/panel/panel.js"></script>
   <script>
     if (window.PanelPage) window.PanelPage.init();

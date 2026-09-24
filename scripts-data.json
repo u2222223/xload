@@ -54,6 +54,335 @@
   ],
   "scripts": [
     {
+      "id": "xload-eefd73fd016d",
+      "type": "script",
+      "title": "Web AutoClicker with Target & Interval",
+      "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
+      "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls.",
+      "i18n": {
+        "en": {
+          "title": "Web AutoClicker with Target & Interval",
+          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
+          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+        },
+        "zh-CN": {
+          "title": "Web AutoClicker with Target & Interval",
+          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
+          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+        },
+        "zh-TW": {
+          "title": "Web AutoClicker with Target & Interval",
+          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
+          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.user.js",
+      "page": "/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.html",
+      "installUrl": "/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.user.js",
+      "files": [
+        "panel.html",
+        "xload-eefd73fd016d.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-eefd73fd016d/panel.html",
+      "tags": [
+        "flip.gg"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "1.2",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-dfedaca73e17",
+      "type": "script",
+      "title": "x-hide-bars",
+      "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
+      "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names.",
+      "i18n": {
+        "en": {
+          "title": "x-hide-bars",
+          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
+          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+        },
+        "zh-CN": {
+          "title": "x-hide-bars",
+          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
+          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+        },
+        "zh-TW": {
+          "title": "x-hide-bars",
+          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
+          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.user.js",
+      "page": "/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.html",
+      "installUrl": "/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.user.js",
+      "files": [
+        "panel.html",
+        "xload-dfedaca73e17.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-dfedaca73e17/panel.html",
+      "tags": [
+        "x.com",
+        "twitter.com",
+        "mobile.twitter.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "1.0.3",
+      "license": "AGPL",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-525e0f90dd46",
+      "type": "script",
+      "title": "网盘直链下载助手",
+      "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
+      "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。",
+      "i18n": {
+        "en": {
+          "title": "网盘直链下载助手",
+          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
+          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+        },
+        "zh-CN": {
+          "title": "网盘直链下载助手",
+          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
+          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+        },
+        "zh-TW": {
+          "title": "网盘直链下载助手",
+          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
+          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.user.js",
+      "page": "/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.html",
+      "installUrl": "/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.user.js",
+      "files": [
+        "panel.html",
+        "xload-525e0f90dd46.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-525e0f90dd46/panel.html",
+      "tags": [
+        "pan.baidu.com",
+        "yun.baidu.com",
+        "openapi.baidu.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "1.1.1",
+      "license": "GPL-3.0",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-01859a28d74d",
+      "type": "script",
+      "title": "Bypass All Shortlinks",
+      "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
+      "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More",
+      "i18n": {
+        "en": {
+          "title": "Bypass All Shortlinks",
+          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
+          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+        },
+        "zh-CN": {
+          "title": "Bypass All Shortlinks",
+          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
+          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+        },
+        "zh-TW": {
+          "title": "Bypass All Shortlinks",
+          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
+          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.user.js",
+      "page": "/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.html",
+      "installUrl": "/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.user.js",
+      "files": [
+        "panel.html",
+        "xload-01859a28d74d.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-01859a28d74d/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "96.8",
+      "license": "",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-ba1d2f42d833",
+      "type": "script",
+      "title": "GitHub 代码搜索 Star & 更新时间排序助手",
+      "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+      "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+      "i18n": {
+        "en": {
+          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
+          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+        },
+        "zh-CN": {
+          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
+          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+        },
+        "zh-TW": {
+          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
+          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.user.js",
+      "page": "/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.html",
+      "installUrl": "/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.user.js",
+      "files": [
+        "panel.html",
+        "xload-ba1d2f42d833.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-ba1d2f42d833/panel.html",
+      "tags": [
+        "github.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "2.1.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-2c3bec3b6d74",
+      "type": "script",
+      "title": "Shell Shockers | Show HP",
+      "short": "Shows players HP above their name",
+      "description": "Shows players HP above their name",
+      "i18n": {
+        "en": {
+          "title": "Shell Shockers | Show HP",
+          "short": "Shows players HP above their name",
+          "description": "Shows players HP above their name"
+        },
+        "zh-CN": {
+          "title": "Shell Shockers | Show HP",
+          "short": "Shows players HP above their name",
+          "description": "Shows players HP above their name"
+        },
+        "zh-TW": {
+          "title": "Shell Shockers | Show HP",
+          "short": "Shows players HP above their name",
+          "description": "Shows players HP above their name"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.user.js",
+      "page": "/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.html",
+      "installUrl": "/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.user.js",
+      "files": [
+        "panel.html",
+        "xload-2c3bec3b6d74.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-2c3bec3b6d74/panel.html",
+      "tags": [
+        "shellshock.io",
+        "shell.onlypuppy7.online",
+        "algebra.best"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "1.0",
+      "license": "MIT",
+      "featured": false,
+      "status": "stable"
+    },
+    {
+      "id": "xload-cad67e2d2cdc",
+      "type": "script",
+      "title": "客優雲出入庫-更新蝦皮庫存",
+      "short": "客優雲出入庫-更新蝦皮庫存 功能",
+      "description": "客優雲出入庫-更新蝦皮庫存 功能",
+      "i18n": {
+        "en": {
+          "title": "客優雲出入庫-更新蝦皮庫存",
+          "short": "客優雲出入庫-更新蝦皮庫存 功能",
+          "description": "客優雲出入庫-更新蝦皮庫存 功能"
+        },
+        "zh-CN": {
+          "title": "客優雲出入庫-更新蝦皮庫存",
+          "short": "客優雲出入庫-更新蝦皮庫存 功能",
+          "description": "客優雲出入庫-更新蝦皮庫存 功能"
+        },
+        "zh-TW": {
+          "title": "客優雲出入庫-更新蝦皮庫存",
+          "short": "客優雲出入庫-更新蝦皮庫存 功能",
+          "description": "客優雲出入庫-更新蝦皮庫存 功能"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.user.js",
+      "page": "/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.html",
+      "installUrl": "/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.user.js",
+      "files": [
+        "panel.html",
+        "xload-cad67e2d2cdc.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-cad67e2d2cdc/panel.html",
+      "tags": [
+        "erp.keyouyun.com",
+        "world.keyouyun.com"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-23",
+      "version": "2026-01-19--1",
+      "license": "",
+      "featured": false,
+      "status": "stable"
+    },
+    {
       "id": "xload-fe250f0d6465",
       "type": "script",
       "title": "Generate Metersphere Test Report",
