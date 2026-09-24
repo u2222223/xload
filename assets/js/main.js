@@ -44,7 +44,16 @@
       detailDetailsHeading: "Details",
       detailType: "Type", detailTypeValue: "Userscript",
       detailVersion: "Version", detailLastUpdated: "Last updated", detailDownloads: "Downloads",
-      detailDownloadButton: "Download / install"
+      detailDownloadButton: "Download / install",
+      detailFeatures: "Key features",
+      detailSites: "Supported sites",
+      detailPermissions: "Permissions",
+      detailPermissionsIntro: "This script requests the following userscript-manager permissions. Review them before installing.",
+      detailUsage: "How to use",
+      detailLimitations: "Limitations",
+      detailFaq: "FAQ",
+      detailSafety: "Safety & privacy",
+      detailFileSize: "File size"
     },
     "zh-CN": {
       home: "首页", about: "关于", language: "语言", auto: "自动（浏览器）",
@@ -86,7 +95,16 @@
       detailDetailsHeading: "详细信息",
       detailType: "类型", detailTypeValue: "用户脚本",
       detailVersion: "版本", detailLastUpdated: "更新时间", detailDownloads: "下载次数",
-      detailDownloadButton: "下载 / 安装"
+      detailDownloadButton: "下载 / 安装",
+      detailFeatures: "主要功能",
+      detailSites: "支持的网站",
+      detailPermissions: "权限",
+      detailPermissionsIntro: "该脚本请求以下用户脚本管理器权限，安装前请自行确认。",
+      detailUsage: "使用方法",
+      detailLimitations: "已知限制",
+      detailFaq: "常见问题",
+      detailSafety: "安全与隐私",
+      detailFileSize: "文件大小"
     },
     "zh-TW": {
       home: "首頁", about: "關於", language: "語言", auto: "自動（瀏覽器）",
@@ -128,7 +146,16 @@
       detailDetailsHeading: "詳細資訊",
       detailType: "類型", detailTypeValue: "使用者腳本",
       detailVersion: "版本", detailLastUpdated: "更新時間", detailDownloads: "下載次數",
-      detailDownloadButton: "下載 / 安裝"
+      detailDownloadButton: "下載 / 安裝",
+      detailFeatures: "主要功能",
+      detailSites: "支援的網站",
+      detailPermissions: "權限",
+      detailPermissionsIntro: "此腳本請求以下使用者腳本管理員權限，安裝前請自行確認。",
+      detailUsage: "使用方法",
+      detailLimitations: "已知限制",
+      detailFaq: "常見問題",
+      detailSafety: "安全與隱私",
+      detailFileSize: "檔案大小"
     }
   };
   var activeSiteLocale = "en";
@@ -228,6 +255,39 @@
   }
 
   /* ---------------- script detail page ---------------- */
+  function setContentText(field, value) {
+    var el = document.querySelector('[data-content="' + field + '"]');
+    if (el && typeof value === "string") el.textContent = value;
+  }
+
+  function renderContentList(field, items) {
+    var el = document.querySelector('[data-content-list="' + field + '"]');
+    if (!el) return;
+    var list = Array.isArray(items) ? items : [];
+    if (list.length === 0) {
+      el.style.display = "none";
+      el.innerHTML = "";
+      return;
+    }
+    el.style.display = "";
+    el.innerHTML = list.map(function (item) { return "<li>" + esc(item) + "</li>"; }).join("");
+  }
+
+  function renderContentFaq(items) {
+    var el = document.querySelector("[data-content-faq]");
+    if (!el) return;
+    var list = Array.isArray(items) ? items : [];
+    if (list.length === 0) {
+      el.style.display = "none";
+      el.innerHTML = "";
+      return;
+    }
+    el.style.display = "";
+    el.innerHTML = list.map(function (item) {
+      return "<details><summary>" + esc(item.q) + "</summary><p>" + esc(item.a) + "</p></details>";
+    }).join("");
+  }
+
   function applyDetailLocale(value) {
     var id = document.body.getAttribute("data-script-id");
     if (!id) return;
@@ -252,8 +312,20 @@
     if (h1) h1.textContent = title;
     var lead = document.querySelector(".detail-hero .lead");
     if (lead) lead.textContent = short;
-    var overview = document.querySelector(".prose h2 + p");
-    if (overview) overview.textContent = description;
+    var content = (item.content && (item.content[locale] || item.content.en)) || null;
+    if (content) {
+      setContentText("summary", content.summary);
+      setContentText("problem", content.problem);
+      setContentText("audience", content.audience);
+      setContentText("safety", content.safety);
+      renderContentList("highlights", content.highlights);
+      renderContentList("usage", content.usage);
+      renderContentList("limitations", content.limitations);
+      renderContentFaq(content.faq);
+    } else {
+      var overview = document.querySelector(".prose h2 + p");
+      if (overview) overview.textContent = description;
+    }
   }
   window.xloadApplyReleaseLocale = applyDetailLocale;
 

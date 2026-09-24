@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
      crossorigin="anonymous"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bypass All Shortlinks - 功能面板</title>
-  <meta name="description" content="Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go">
+  <title>Link Shortener Bypass Toolkit - 功能面板</title>
+  <meta name="description" content="Skips link shorteners and ad-gate pages to reach the final destination">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
@@ -17,8 +26,8 @@
   <div class="panel-layout">
     <header class="panel-header">
       <div class="panel-header-inner">
-        <h1>Bypass All Shortlinks</h1>
-        <p class="panel-subtitle">Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go</p>
+        <h1>Link Shortener Bypass Control Panel</h1>
+        <p class="panel-subtitle">Skips link shorteners and ad-gate pages to reach the final destination</p>
       </div>
     </header>
 
@@ -29,7 +38,7 @@
         <section class="panel-status" id="panel-status" data-state="waiting">
           <div class="panel-status-inner">
             <span class="panel-status-dot"></span>
-            <span class="panel-status-text" id="panel-status-text">Waiting for script connection...</span>
+            <span class="panel-status-text" id="panel-status-text">Waiting for the script to connect…</span>
           </div>
           <div class="panel-progress" id="panel-progress" hidden>
             <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
@@ -38,11 +47,11 @@
 
 
 
-        <section class="pui-card panel-section" data-section="page-tools">
+        <section class="pui-card panel-section" data-section="features">
           <div class="pui-card-head">
-            <div class="pui-card-title">Page Tools</div>
+            <div class="pui-card-title">Bypass Features</div>
 
-            <div class="pui-card-desc">Choose the helpers to run on the current page and apply them.</div>
+            <div class="pui-card-desc">Turn individual bypass and cleanup features on or off, then apply them to the current page.</div>
 
           </div>
 
@@ -50,64 +59,71 @@
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-enable-adblock">Block adblock detection</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-enable-adblock" data-control="enable-adblock" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-same-tab">Open links in the same tab</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-same-tab" data-control="same-tab" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-disable-prompts">Disable prompts and notifications</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-disable-prompts" data-control="disable-prompts" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-context-menu">Restore right-click and copy</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-context-menu" data-control="context-menu" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-force-same-tab">Open links in the same tab</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-force-same-tab" data-control="force-same-tab" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-always-ready">Keep page focused and visible</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-always-ready" data-control="always-ready" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-popup-blocker">Block popups</label>
+              <label class="pui-label" for="ctl-popup-blocker">Block automatic popups</label>
               <label class="pui-switch"><input type="checkbox" id="ctl-popup-blocker" data-control="popup-blocker" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-keep-page-active">Keep page active</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-keep-page-active" data-control="keep-page-active" data-type="switch"><i></i></label>
-            </div>
-
-
-
-            <div class="pui-field">
-              <label class="pui-label" for="ctl-enable-context-menu">Enable context menu</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-enable-context-menu" data-control="enable-context-menu" data-type="switch"><i></i></label>
-            </div>
-
-
-
-            <div class="pui-field">
-              <label class="pui-label" for="ctl-anti-debug">Anti debug</label>
+              <label class="pui-label" for="ctl-anti-debug">Anti-debug and console protection</label>
               <label class="pui-switch"><input type="checkbox" id="ctl-anti-debug" data-control="anti-debug" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-fast-timer">Fast timer</label>
-              <label class="pui-switch"><input type="checkbox" id="ctl-fast-timer" data-control="fast-timer" data-type="switch"><i></i></label>
+              <label class="pui-label" for="ctl-youtube-short">Redirect YouTube Shorts to the normal player</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-youtube-short" data-control="youtube-short" data-type="switch"><i></i></label>
             </div>
 
 
 
             <div class="pui-field">
-              <label class="pui-label" for="ctl-timer-delay">Timer threshold (ms)</label>
-              <input class="pui-input" id="ctl-timer-delay" data-control="timer-delay" data-type="number" type="number" value="1000">
+              <label class="pui-label" for="ctl-adblock-detection">Disable ad-block detection</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-adblock-detection" data-control="adblock-detection" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-prompts">Disable prompts and notifications</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-prompts" data-control="prompts" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-flickr">Auto-save Flickr images</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-flickr" data-control="flickr" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-youtube-download">Show media download helper</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-youtube-download" data-control="youtube-download" data-type="switch"><i></i></label>
             </div>
 
 
@@ -116,28 +132,97 @@
 
           <div class="panel-actions">
 
-            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-page-helpers">Apply Helpers</button>
-
-            <button class="pui-btn pui-btn-primary" type="button" data-action="refresh-status">Refresh Status</button>
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-settings">Apply and Reload</button>
 
           </div>
 
         </section>
 
-        <section class="pui-card panel-section" data-section="current-page">
+        <section class="pui-card panel-section" data-section="timing">
           <div class="pui-card-head">
-            <div class="pui-card-title">Current Page</div>
+            <div class="pui-card-title">Timing</div>
 
-            <div class="pui-card-desc">Use the URL of the page where the script is running.</div>
+            <div class="pui-card-desc">Control redirect countdowns and long timer acceleration.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-set-delay">Redirect delay (seconds)</label>
+              <input class="pui-input" id="ctl-set-delay" data-control="set-delay" data-type="number" type="number" value="5">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-timer-delay">Timer acceleration threshold (ms)</label>
+              <input class="pui-input" id="ctl-timer-delay" data-control="timer-delay" data-type="number" type="number" value="1000">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-fast-timer">Accelerate long countdown timers</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-fast-timer" data-control="fast-timer" data-type="switch"><i></i></label>
+            </div>
+
 
           </div>
 
 
           <div class="panel-actions">
 
-            <button class="pui-btn pui-btn-primary" type="button" data-action="copy-current-url">Copy URL</button>
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-settings">Reset to Defaults</button>
 
-            <button class="pui-btn pui-btn-primary" type="button" data-action="open-current-url">Open URL</button>
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="endpoints">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Optional Endpoints</div>
+
+            <div class="pui-card-desc">Leave a field blank to redirect straight to the destination without an intermediate page.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-delay-page-url">Intermediate delay page URL</label>
+              <input class="pui-input" id="ctl-delay-page-url" data-control="delay-page-url" data-type="text" type="text" value="">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-media-endpoint">Media download endpoint base URL</label>
+              <input class="pui-input" id="ctl-media-endpoint" data-control="media-endpoint" data-type="text" type="text" value="">
+            </div>
+
+
+          </div>
+
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="runtime">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Runtime Actions</div>
+
+            <div class="pui-card-desc">Apply settings to the current page or reload it.</div>
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="run-features">Apply Enabled Features Now</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reload-page">Reload Current Page</button>
 
           </div>
 
@@ -164,7 +249,7 @@
     <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
   </div>
 
-  <script type="application/json" id="panel-loading">{"connecting":"Waiting for script connection...","running":"Running...","done":"Done","failed":"Failed"}</script>
+  <script type="application/json" id="panel-loading">{"connecting":"Waiting for the script to connect…","running":"Running…","done":"Done","failed":"Failed"}</script>
   <script src="/assets/panel/panel.js"></script>
   <script>
     if (window.PanelPage) window.PanelPage.init();

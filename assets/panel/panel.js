@@ -5,6 +5,10 @@
   'use strict';
 
   var PREFIX = 'xload-panel:';
+  // 心跳探活：面板发起 _ping，脚本内建回应 _pong（下划线前缀避免与 action.id 冲突）
+  var PING = '_ping';
+  var PONG = '_pong';
+  var CONNECT_TIMEOUT = 8000;
 
   // ---------- PanelChannel：BroadcastChannel + 跨源 postMessage 封装 ----------
   // 同源（面板与页面同域）用 BroadcastChannel；跨源（面板在 xload 站点、脚本在目标站点）
@@ -19,8 +23,14 @@
     this._pending = {};
     this._bc = null;
     this._opener = null;
+    this._openerOrigin = null;
     this._onMsg = null;
     this._closed = false;
+    // 双通道会重复投递同一消息，用实例唯一 nonce + 序号标记 _mid 去重
+    this._nonce = 'p' + Math.random().toString(36).slice(2, 10);
+    this._msgSeq = 0;
+    this._seen = {};
+    this._seenCount = 0;
     var self = this;
 
     // 优先跨源通道：面板由脚本 window.open 打开时 window.opener 指向目标页面
@@ -34,6 +44,8 @@
       if (ev.source === window) return;
       if (self._opener && ev.source !== self._opener) return;
       if (ev.data._from !== self._id) return;
+      // 捕获 opener 来源，回包时限定 targetOrigin，避免使用 '*'
+      if (ev.origin) self._openerOrigin = ev.origin;
       self._dispatch(ev.data);
     };
     window.addEventListener('message', this._onMsg);
@@ -47,14 +59,25 @@
 
   // 统一投递：跨源走 opener.postMessage，同源走 BroadcastChannel，双通道都发
   PanelChannel.prototype._post = function (msg) {
-    if (this._opener) { try { this._opener.postMessage(msg, '*'); } catch (e) { /* ignore */ } }
+    if (msg._mid == null) msg._mid = this._nonce + ':' + (++this._msgSeq);
+    if (this._opener) {
+      // 已捕获 opener 来源时限定 targetOrigin；未知时退化为 '*'（首条消息到达前）
+      try { this._opener.postMessage(msg, this._openerOrigin || '*'); } catch (e) { /* ignore */ }
+    }
     if (this._bc) { try { this._bc.postMessage(msg); } catch (e) { /* ignore */ } }
   };
 
   PanelChannel.prototype._dispatch = function (msg) {
     if (!msg || typeof msg !== 'object' || !msg.type) return;
-    // 请求-响应关联：带 _id 的消息若在等待表中，视为响应回包
-    if (msg._id != null && Object.prototype.hasOwnProperty.call(this._pending, msg._id)) {
+    // 双通道可能重复投递同一消息，按 _mid 去重
+    if (msg._mid != null) {
+      if (this._seen[msg._mid]) return;
+      this._seen[msg._mid] = 1;
+      if (++this._seenCount > 500) { this._seen = {}; this._seenCount = 0; }
+    }
+    // 请求-响应关联：带 _id 的消息若在等待表中，视为响应回包。
+    // 必须排除 _request（对方发起的请求也可能撞上同号 _id），否则会误把请求当响应。
+    if (msg._id != null && !msg._request && Object.prototype.hasOwnProperty.call(this._pending, msg._id)) {
       var p = this._pending[msg._id];
       delete this._pending[msg._id];
       if (p._timer) clearTimeout(p._timer);
@@ -131,6 +154,8 @@
     this._opener = null;
     this._handlers = {};
     this._pending = {};
+    this._seen = {};
+    this._seenCount = 0;
   };
 
   // ---------- PUI：面板 UI 组件 ----------
@@ -259,13 +284,36 @@
       }
 
       var channel = new PanelChannel(taskId);
-      channel.on('hello', function () {
+
+      // 连接超时提示：迟迟等不到 hello/pong 时给出可操作提示（保持 waiting 状态）
+      var connectTimer = setTimeout(function () {
+        if (statusSection && statusSection.getAttribute('data-state') === 'waiting' && statusText) {
+          statusText.textContent = '未检测到脚本连接：请确认脚本已安装，并从目标页面打开本面板';
+        }
+      }, CONNECT_TIMEOUT);
+
+      function markReady() {
+        if (connectTimer) { clearTimeout(connectTimer); connectTimer = null; }
         setState('ready', null);
         if (statusText) statusText.textContent = '脚本已连接';
+      }
+      function isWaiting() {
+        var state = statusSection ? statusSection.getAttribute('data-state') : '';
+        return state === 'waiting' || state === 'failed';
+      }
+      function ping() { channel.send(PING, {}); }
+
+      channel.on('hello', function () {
+        markReady();
         // 脚本连接后拉取历史运行日志（旧脚本无日志层时静默失败）
         channel.request('logs', {}, 3000).then(function (res) {
           if (res && Array.isArray(res.logs)) mergeLogs(res.logs);
         }).catch(function () {});
+      });
+      // 心跳回应：脚本重载后新通道可借此被面板重新发现并恢复 ready
+      channel.on(PONG, function () {
+        if (connectTimer) { clearTimeout(connectTimer); connectTimer = null; }
+        if (isWaiting()) markReady();
       });
       channel.on('progress', function (data) {
         var d = data || {};
@@ -319,22 +367,26 @@
         return t + ' ' + String(e.event || '') + data;
       }
 
+      function buildLogRow(entry) {
+        var e = entry || {};
+        var row = document.createElement('div');
+        row.className = 'panel-log-entry';
+        row.setAttribute('data-level', String(e.level || 'info'));
+        var level = document.createElement('span');
+        level.className = 'panel-log-level';
+        level.textContent = '[' + String(e.level || 'info') + ']';
+        row.appendChild(level);
+        var text = document.createElement('span');
+        text.textContent = formatEntry(e);
+        row.appendChild(text);
+        return row;
+      }
+
       function renderLogs() {
         if (!logList) return;
         while (logList.children.length > 0) logList.removeChild(logList.children[0]);
         for (var i = 0; i < logs.length; i++) {
-          var entry = logs[i] || {};
-          var row = document.createElement('div');
-          row.className = 'panel-log-entry';
-          row.setAttribute('data-level', String(entry.level || 'info'));
-          var level = document.createElement('span');
-          level.className = 'panel-log-level';
-          level.textContent = '[' + String(entry.level || 'info') + ']';
-          row.appendChild(level);
-          var text = document.createElement('span');
-          text.textContent = formatEntry(entry);
-          row.appendChild(text);
-          logList.appendChild(row);
+          logList.appendChild(buildLogRow(logs[i]));
         }
         if (logEmpty) logEmpty.hidden = logs.length > 0;
       }
@@ -347,11 +399,18 @@
         return lines.join('\n');
       }
 
+      // 实时日志增量追加单行，避免每条都全量重建 DOM
       function addLog(entry) {
         if (!entry || typeof entry !== 'object') return;
         logs.push(entry);
         if (logs.length > LOG_RENDER_MAX) logs.splice(0, logs.length - LOG_RENDER_MAX);
-        renderLogs();
+        if (logList) {
+          logList.appendChild(buildLogRow(entry));
+          while (logList.children.length > LOG_RENDER_MAX) {
+            logList.removeChild(logList.children[0]);
+          }
+        }
+        if (logEmpty) logEmpty.hidden = logs.length > 0;
       }
 
       // 合并历史快照与已收到的实时条目，按 ts+event 去重，避免拉取覆盖实时日志
@@ -452,6 +511,11 @@
       renderLogs();
 
       setState('waiting', copy.connecting);
+      // 主动探活一次（脚本可能在面板打开前已连接），并在窗口重新获得焦点时重探，支持脚本重载后重连
+      ping();
+      window.addEventListener('focus', function () {
+        if (isWaiting()) ping();
+      });
       return channel;
     }
   };

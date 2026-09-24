@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XenForo Ignore Members &amp; Content Toolkit - 功能面板</title>
+  <meta name="description" content="Hide ignored members, reactions, tags, ranks, badges and signatures across">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-39668868585d">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>XenForo Ignore Members &amp; Content Toolkit</h1>
+        <p class="panel-subtitle">Hide ignored members, reactions, tags, ranks, badges and signatures across</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="ignore-lists">
+          <div class="pui-card-head">
+            <div class="pui-card-title">忽略名单</div>
+
+            <div class="pui-card-desc">以英文逗号分隔多个条目；留空表示不忽略该类内容。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-members">忽略用户（帖子）</label>
+              <input class="pui-input" id="ctl-ignore-members" data-control="ignore-members" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-reactions">忽略反应的用户</label>
+              <input class="pui-input" id="ctl-ignore-reactions" data-control="ignore-reactions" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-tags">忽略标签</label>
+              <input class="pui-input" id="ctl-ignore-tags" data-control="ignore-tags" data-type="text" type="text" value="VN, DAZ, Hand Drawn, Ren&#39;Py, Complete, AI, RPGM, ports, Hiatus, Abondened, Loli, animated, 2d game, sleep sex, RPG, Patreon, Active">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-dm-members">忽略私信用户</label>
+              <input class="pui-input" id="ctl-ignore-dm-members" data-control="ignore-dm-members" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-dm-reactions">忽略私信反应的用户</label>
+              <input class="pui-input" id="ctl-ignore-dm-reactions" data-control="ignore-dm-reactions" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-signature-members">隐藏签名的用户</label>
+              <input class="pui-input" id="ctl-ignore-signature-members" data-control="ignore-signature-members" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-signature-dm-members">隐藏私信签名的用户</label>
+              <input class="pui-input" id="ctl-ignore-signature-dm-members" data-control="ignore-signature-dm-members" data-type="text" type="text" value="user1, user2, user3">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-ranks">忽略用户等级（徽章 class）</label>
+              <input class="pui-input" id="ctl-ignore-ranks" data-control="ignore-ranks" data-type="text" type="text" value="">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-lists">应用忽略名单</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-lists">恢复默认名单</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="display-options">
+          <div class="pui-card-head">
+            <div class="pui-card-title">显示与隐藏</div>
+
+            <div class="pui-card-desc">控制页面元素的隐藏行为，应用后刷新当前页面生效。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-members-all">隐藏所有帖子用户</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-members-all" data-control="ignore-members-all" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-reactions-all">隐藏所有反应栏</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-reactions-all" data-control="ignore-reactions-all" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-dm-members-all">隐藏所有私信用户</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-dm-members-all" data-control="ignore-dm-members-all" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-dm-reactions-all">隐藏所有私信反应栏</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-dm-reactions-all" data-control="ignore-dm-reactions-all" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-signatures-all">隐藏所有签名</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-signatures-all" data-control="ignore-signatures-all" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-badges">隐藏精选徽章</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-badges" data-control="ignore-badges" data-type="switch" checked><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-ignore-donation-banners">隐藏捐赠横幅</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-ignore-donation-banners" data-control="ignore-donation-banners" data-type="switch" checked><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-hide-white-space">压缩多余留白</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-hide-white-space" data-control="hide-white-space" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-add-ignore-button">显示页内忽略按钮</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-add-ignore-button" data-control="add-ignore-button" data-type="switch" checked><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-hide-users-permanent">永久保存忽略用户</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-hide-users-permanent" data-control="hide-users-permanent" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="apply-options">应用显示选项</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="quick-actions">
+          <div class="pui-card-head">
+            <div class="pui-card-title">快捷操作</div>
+
+            <div class="pui-card-desc">将对应名单恢复为内置默认值。</div>
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-users">重置忽略用户</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-tags">重置忽略标签</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-reactions">重置忽略反应</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset-ranks">重置忽略等级</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"已完成","failed":"执行失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多引擎翻译助手 - 功能面板</title>
+  <meta name="description" content="选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-1c9e7dbfe0ae">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>多引擎翻译助手</h1>
+        <p class="panel-subtitle">选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="translate-settings">
+          <div class="pui-card-head">
+            <div class="pui-card-title">翻译设置</div>
+
+            <div class="pui-card-desc">配置目标语言与请求行为，未填写文本时默认使用页面选中内容。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-use_selection">优先使用页面选中文本</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-use_selection" data-control="use_selection" data-type="switch" checked><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-target_lang">目标语言</label>
+              <select class="pui-input" id="ctl-target_lang" data-control="target_lang" data-type="select">
+
+                <option value="zh-CN" selected>zh-CN</option>
+
+                <option value="zh-TW">zh-TW</option>
+
+                <option value="en">en</option>
+
+                <option value="ja">ja</option>
+
+                <option value="ko">ko</option>
+
+                <option value="fr">fr</option>
+
+                <option value="de">de</option>
+
+              </select>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-timeout_ms">请求超时（毫秒）</label>
+              <input class="pui-input" id="ctl-timeout_ms" data-control="timeout_ms" data-type="number" type="number" value="10000">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-batch_size">整页翻译并发数</label>
+              <input class="pui-input" id="ctl-batch_size" data-control="batch_size" data-type="number" type="number" value="10">
+            </div>
+
+
+          </div>
+
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="text-translate">
+          <div class="pui-card-head">
+            <div class="pui-card-title">文本翻译</div>
+
+            <div class="pui-card-desc">输入待翻译文本，或留空使用页面选中内容。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-text">待处理文本</label>
+              <input class="pui-input" id="ctl-text" data-control="text" data-type="text" type="text" value="">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="translate_text">谷歌翻译</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="youdao_lookup">有道词典</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="wechat_translate">微信翻译</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="page-translate">
+          <div class="pui-card-head">
+            <div class="pui-card-title">整页翻译</div>
+
+            <div class="pui-card-desc">扫描页面文本并调用谷歌翻译，结果直接替换原文本。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-skip_cjk">跳过已含中文的段落</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-skip_cjk" data-control="skip_cjk" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="translate_page">翻译整页</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在翻译…","done":"翻译完成","failed":"翻译失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive Journey Stats - 功能面板</title>
+  <meta name="description" content="Build per-year creator and reader statistics from your works, inbox and reading">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-f1e07d282871">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>Archive Journey Stats Panel</h1>
+        <p class="panel-subtitle">Build per-year creator and reader statistics from your works, inbox and reading</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="scan">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Data Scan</div>
+
+            <div class="pui-card-desc">Configure how the yearly statistics scan collects your works, inbox and reading history.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-request-delay">Request interval (ms)</label>
+              <input class="pui-input" id="ctl-request-delay" data-control="request-delay" data-type="number" type="number" value="1300">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-max-inbox-pages">Max inbox pages</label>
+              <input class="pui-input" id="ctl-max-inbox-pages" data-control="max-inbox-pages" data-type="number" type="number" value="100">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-force-full-scan">Ignore cache and rescan everything</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-force-full-scan" data-control="force-full-scan" data-type="switch"><i></i></label>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-debug-mode">Verbose debug logging</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-debug-mode" data-control="debug-mode" data-type="switch"><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="start-scan">Start scan</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="clear-cache">Clear cached data</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="report">
+          <div class="pui-card-head">
+            <div class="pui-card-title">Report &amp; Export</div>
+
+            <div class="pui-card-desc">Open the in-page journey overlay or export the currently visible report as an image.</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-export-format">Export image format</label>
+              <select class="pui-input" id="ctl-export-format" data-control="export-format" data-type="select">
+
+                <option value="png" selected>png</option>
+
+                <option value="jpeg">jpeg</option>
+
+              </select>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="open-overlay">Open journey overlay</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="export-image">Export current view</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在执行…","done":"已完成","failed":"执行失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>

@@ -9,30 +9,13 @@ Catalog: https://xload.net/
 ## Userscripts
 
 <!-- XLOAD:LLMS:ENTRIES:START -->
-- [Web AutoClicker with Target & Interval](https://xload.net/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.html): Tampermonkey autoclicker with crosshair target picker, interval adjustment, and
-- [x-hide-bars](https://xload.net/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.html): X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down
-- [网盘直链下载助手](https://xload.net/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.html): 支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。
-- [Bypass All Shortlinks](https://xload.net/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.html): Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go
-- [GitHub 代码搜索 Star & 更新时间排序助手](https://xload.net/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.html): 在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行
-- [Shell Shockers | Show HP](https://xload.net/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.html): Shows players HP above their name
-- [客優雲出入庫-更新蝦皮庫存](https://xload.net/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.html): 客優雲出入庫-更新蝦皮庫存 功能
-- [Generate Metersphere Test Report](https://xload.net/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.html): 生成 Metersphere 测试计划报告
-- [Raumschüsse Fix für CaveRenderPro](https://xload.net/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.html): Berechnet die Richtung der Raumschüsse neu
-- [Inline SVG Replacer](https://xload.net/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.html): Replace all img tags with src as an SVG file into inline SVG tags
-- [客優雲庫存清單-功能](https://xload.net/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.html): 客優雲庫存清單 功能
-- [客優雲自動更新安全庫存 on 採購建議](https://xload.net/scripts/userscripts/xload-222085578d29/xload-222085578d29.html): 客優雲自動更新安全庫存 on 採購建議 功能
-- [Telegra.ph 图片打包下载](https://xload.net/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html): 获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。
-- [rbxsnipe](https://xload.net/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html): roblox private server sniper
-- [유튜브 팟 플레이어로 보기 버튼 추가](https://xload.net/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html): 유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.
-- [Bilibili-banned-contents-hider](https://xload.net/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html): Hide banned users' contents on Bilibili. Bilibili may push content created by
-- [RuTracker Full-Text Search in Topics](https://xload.net/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.html): Allows to search for text on all pages of RuTracker topics
-- [更换背景色](https://xload.net/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.html): 如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。
-- [ServiceNow - Update Ticket Number](https://xload.net/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.html): Replace the number input field with a link to the current ticket
-- [查看当前BUFF账号信息插件](https://xload.net/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.html): 查看当前BUFF账号信息插件。
-- [Ed Commerz Dietmar Glage](https://xload.net/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.html): Insert multiple transactions with specified details
-- [Req Commerz Dietmar Glage](https://xload.net/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.html): Insert multiple transactions with specified details and update balance
-- [YouTube: Audio Only](https://xload.net/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.html): No Video Streaming
-- [Bux auto claim](https://xload.net/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.html): Renda Extra
-- [NovelAI Disable Backward](https://xload.net/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.html): Disable Backward on NovelAI's image generation screen. This prevents the
-- [change text](https://xload.net/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.html): меняет выделенный текст на странице
+- [XenForo Ignore Members & Content Toolkit](https://xload.net/scripts/userscripts/xload-39668868585d/xload-39668868585d.html): Hide ignored members, reactions, tags, ranks, badges and signatures across
+- [多引擎翻译助手](https://xload.net/scripts/userscripts/xload-1c9e7dbfe0ae/xload-1c9e7dbfe0ae.html): 选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。
+- [自定义搜索增强](https://xload.net/scripts/userscripts/xload-4ea75cfc1263/xload-4ea75cfc1263.html): 使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。
+- [二维码生成器](https://xload.net/scripts/userscripts/xload-1a308d5fa609/xload-1a308d5fa609.html): 将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。
+- [文本朗读助手](https://xload.net/scripts/userscripts/xload-b52c81e0639f/xload-b52c81e0639f.html): 使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。
+- [页面阅读增强](https://xload.net/scripts/userscripts/xload-c93d9b5d8b47/xload-c93d9b5d8b47.html): 为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。
+- [页面调试助手](https://xload.net/scripts/userscripts/xload-90417d328263/xload-90417d328263.html): 在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。
+- [Link Shortener Bypass Toolkit](https://xload.net/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.html): Skips link shorteners and ad-gate pages to reach the final destination
+- [Archive Journey Stats](https://xload.net/scripts/userscripts/xload-f1e07d282871/xload-f1e07d282871.html): Build per-year creator and reader statistics from your works, inbox and reading
 <!-- XLOAD:LLMS:ENTRIES:END -->

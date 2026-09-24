@@ -54,38 +54,40 @@
   ],
   "scripts": [
     {
-      "id": "xload-eefd73fd016d",
+      "id": "xload-39668868585d",
       "type": "script",
-      "title": "Web AutoClicker with Target & Interval",
-      "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
-      "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls.",
+      "title": "XenForo Ignore Members & Content Toolkit",
+      "short": "Hide ignored members, reactions, tags, ranks, badges and signatures across",
+      "description": "Hide ignored members, reactions, tags, ranks, badges and signatures across XenForo forums",
       "i18n": {
         "en": {
-          "title": "Web AutoClicker with Target & Interval",
-          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
-          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+          "title": "XenForo Ignore Members & Content Toolkit",
+          "short": "Hide ignored members, reactions, tags, ranks, badges and signatures across",
+          "description": "Hide ignored members, reactions, tags, ranks, badges and signatures across XenForo forums"
         },
         "zh-CN": {
-          "title": "Web AutoClicker with Target & Interval",
-          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
-          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+          "title": "XenForo Ignore Members & Content Toolkit",
+          "short": "Hide ignored members, reactions, tags, ranks, badges and signatures across",
+          "description": "Hide ignored members, reactions, tags, ranks, badges and signatures across XenForo forums"
         },
         "zh-TW": {
-          "title": "Web AutoClicker with Target & Interval",
-          "short": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and",
-          "description": "Tampermonkey autoclicker with crosshair target picker, interval adjustment, and start/stop controls."
+          "title": "XenForo Ignore Members & Content Toolkit",
+          "short": "Hide ignored members, reactions, tags, ranks, badges and signatures across",
+          "description": "Hide ignored members, reactions, tags, ranks, badges and signatures across XenForo forums"
         }
       },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.user.js",
-      "page": "/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.html",
-      "installUrl": "/scripts/userscripts/xload-eefd73fd016d/xload-eefd73fd016d.user.js",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-39668868585d/xload-39668868585d.user.js",
+      "page": "/scripts/userscripts/xload-39668868585d/xload-39668868585d.html",
+      "installUrl": "/scripts/userscripts/xload-39668868585d/xload-39668868585d.user.js",
       "files": [
         "panel.html",
-        "xload-eefd73fd016d.user.js"
+        "xload-39668868585d.user.js"
       ],
-      "panelEntry": "/scripts/userscripts/xload-eefd73fd016d/panel.html",
+      "panelEntry": "/scripts/userscripts/xload-39668868585d/panel.html",
       "tags": [
-        "flip.gg"
+        "lewdcorner.com",
+        "azkoselscorner.com",
+        "f95zone.to"
       ],
       "categories": [
         "Userscripts"
@@ -93,47 +95,57 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "1.2",
-      "license": "MIT",
+      "lastUpdated": "2026-09-24",
+      "version": "7.0.0",
+      "license": "",
       "featured": false,
-      "status": "stable"
+      "status": "stable",
+      "sites": [
+        "lewdcorner.com",
+        "azkoselscorner.com",
+        "f95zone.to",
+        "ulmf.org",
+        "allthefallen.moe"
+      ],
+      "grants": [
+        "GM_setValue",
+        "GM_getValue"
+      ],
+      "fileSize": 46547
     },
     {
-      "id": "xload-dfedaca73e17",
+      "id": "xload-1c9e7dbfe0ae",
       "type": "script",
-      "title": "x-hide-bars",
-      "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
-      "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names.",
+      "title": "多引擎翻译助手",
+      "short": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。",
+      "description": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。",
       "i18n": {
         "en": {
-          "title": "x-hide-bars",
-          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
-          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+          "title": "多引擎翻译助手",
+          "short": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。",
+          "description": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。"
         },
         "zh-CN": {
-          "title": "x-hide-bars",
-          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
-          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+          "title": "多引擎翻译助手",
+          "short": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。",
+          "description": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。"
         },
         "zh-TW": {
-          "title": "x-hide-bars",
-          "short": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down",
-          "description": "X mobile: swipe up hides top/bottom bars, stays hidden on stop, swipe down restores. PageUp key does not restore. Compose FAB always hidden. Semantic selectors only, no class names."
+          "title": "多引擎翻译助手",
+          "short": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。",
+          "description": "选中或输入文本后，调用谷歌、有道、微信等多种引擎完成文本翻译与整页翻译。"
         }
       },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.user.js",
-      "page": "/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.html",
-      "installUrl": "/scripts/userscripts/xload-dfedaca73e17/xload-dfedaca73e17.user.js",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-1c9e7dbfe0ae/xload-1c9e7dbfe0ae.user.js",
+      "page": "/scripts/userscripts/xload-1c9e7dbfe0ae/xload-1c9e7dbfe0ae.html",
+      "installUrl": "/scripts/userscripts/xload-1c9e7dbfe0ae/xload-1c9e7dbfe0ae.user.js",
       "files": [
         "panel.html",
-        "xload-dfedaca73e17.user.js"
+        "xload-1c9e7dbfe0ae.user.js"
       ],
-      "panelEntry": "/scripts/userscripts/xload-dfedaca73e17/panel.html",
+      "panelEntry": "/scripts/userscripts/xload-1c9e7dbfe0ae/panel.html",
       "tags": [
-        "x.com",
-        "twitter.com",
-        "mobile.twitter.com"
+        "general"
       ],
       "categories": [
         "Userscripts"
@@ -141,47 +153,53 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "1.0.3",
-      "license": "AGPL",
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
       "featured": false,
-      "status": "stable"
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand",
+        "GM_xmlhttpRequest"
+      ],
+      "fileSize": 23999
     },
     {
-      "id": "xload-525e0f90dd46",
+      "id": "xload-4ea75cfc1263",
       "type": "script",
-      "title": "网盘直链下载助手",
-      "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
-      "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。",
+      "title": "自定义搜索增强",
+      "short": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。",
+      "description": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。",
       "i18n": {
         "en": {
-          "title": "网盘直链下载助手",
-          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
-          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+          "title": "自定义搜索增强",
+          "short": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。",
+          "description": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。"
         },
         "zh-CN": {
-          "title": "网盘直链下载助手",
-          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
-          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+          "title": "自定义搜索增强",
+          "short": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。",
+          "description": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。"
         },
         "zh-TW": {
-          "title": "网盘直链下载助手",
-          "short": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。",
-          "description": "支持百度/阿里/天翼/迅雷/夸克/移动六大网盘直链下载。支持多种下载协议：HTTP/JSON-RPC/cURL。支持多种下载器：IDM/XDown/Aria2/NDM/Motrix/终端。基于油小猴(youxiaohou.com)的网盘直链下载助手修改。"
+          "title": "自定义搜索增强",
+          "short": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。",
+          "description": "使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。"
         }
       },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.user.js",
-      "page": "/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.html",
-      "installUrl": "/scripts/userscripts/xload-525e0f90dd46/xload-525e0f90dd46.user.js",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-4ea75cfc1263/xload-4ea75cfc1263.user.js",
+      "page": "/scripts/userscripts/xload-4ea75cfc1263/xload-4ea75cfc1263.html",
+      "installUrl": "/scripts/userscripts/xload-4ea75cfc1263/xload-4ea75cfc1263.user.js",
       "files": [
         "panel.html",
-        "xload-525e0f90dd46.user.js"
+        "xload-4ea75cfc1263.user.js"
       ],
-      "panelEntry": "/scripts/userscripts/xload-525e0f90dd46/panel.html",
+      "panelEntry": "/scripts/userscripts/xload-4ea75cfc1263/panel.html",
       "tags": [
-        "pan.baidu.com",
-        "yun.baidu.com",
-        "openapi.baidu.com"
+        "general"
       ],
       "categories": [
         "Userscripts"
@@ -189,33 +207,253 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "1.1.1",
-      "license": "GPL-3.0",
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
       "featured": false,
-      "status": "stable"
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand"
+      ],
+      "fileSize": 18319
+    },
+    {
+      "id": "xload-1a308d5fa609",
+      "type": "script",
+      "title": "二维码生成器",
+      "short": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。",
+      "description": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。",
+      "i18n": {
+        "en": {
+          "title": "二维码生成器",
+          "short": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。",
+          "description": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。"
+        },
+        "zh-CN": {
+          "title": "二维码生成器",
+          "short": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。",
+          "description": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。"
+        },
+        "zh-TW": {
+          "title": "二维码生成器",
+          "short": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。",
+          "description": "将选中文本或输入的网址、文字一键生成二维码，支持尺寸与容错级别设置。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-1a308d5fa609/xload-1a308d5fa609.user.js",
+      "page": "/scripts/userscripts/xload-1a308d5fa609/xload-1a308d5fa609.html",
+      "installUrl": "/scripts/userscripts/xload-1a308d5fa609/xload-1a308d5fa609.user.js",
+      "files": [
+        "panel.html",
+        "xload-1a308d5fa609.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-1a308d5fa609/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
+      "featured": false,
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand"
+      ],
+      "fileSize": 16839
+    },
+    {
+      "id": "xload-b52c81e0639f",
+      "type": "script",
+      "title": "文本朗读助手",
+      "short": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。",
+      "description": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。",
+      "i18n": {
+        "en": {
+          "title": "文本朗读助手",
+          "short": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。",
+          "description": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。"
+        },
+        "zh-CN": {
+          "title": "文本朗读助手",
+          "short": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。",
+          "description": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。"
+        },
+        "zh-TW": {
+          "title": "文本朗读助手",
+          "short": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。",
+          "description": "使用浏览器语音合成朗读选中或输入的文本，可调节语速、音调、音量与语言。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b52c81e0639f/xload-b52c81e0639f.user.js",
+      "page": "/scripts/userscripts/xload-b52c81e0639f/xload-b52c81e0639f.html",
+      "installUrl": "/scripts/userscripts/xload-b52c81e0639f/xload-b52c81e0639f.user.js",
+      "files": [
+        "panel.html",
+        "xload-b52c81e0639f.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-b52c81e0639f/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
+      "featured": false,
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand"
+      ],
+      "fileSize": 17309
+    },
+    {
+      "id": "xload-c93d9b5d8b47",
+      "type": "script",
+      "title": "页面阅读增强",
+      "short": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。",
+      "description": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。",
+      "i18n": {
+        "en": {
+          "title": "页面阅读增强",
+          "short": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。",
+          "description": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。"
+        },
+        "zh-CN": {
+          "title": "页面阅读增强",
+          "short": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。",
+          "description": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。"
+        },
+        "zh-TW": {
+          "title": "页面阅读增强",
+          "short": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。",
+          "description": "为任意网页提供暗黑模式、护眼遮罩、解除复制限制、明文显示密码、网页编辑与屏幕取色等阅读辅助功能。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-c93d9b5d8b47/xload-c93d9b5d8b47.user.js",
+      "page": "/scripts/userscripts/xload-c93d9b5d8b47/xload-c93d9b5d8b47.html",
+      "installUrl": "/scripts/userscripts/xload-c93d9b5d8b47/xload-c93d9b5d8b47.user.js",
+      "files": [
+        "panel.html",
+        "xload-c93d9b5d8b47.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-c93d9b5d8b47/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
+      "featured": false,
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand",
+        "GM_setClipboard"
+      ],
+      "fileSize": 18615
+    },
+    {
+      "id": "xload-90417d328263",
+      "type": "script",
+      "title": "页面调试助手",
+      "short": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。",
+      "description": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。",
+      "i18n": {
+        "en": {
+          "title": "页面调试助手",
+          "short": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。",
+          "description": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。"
+        },
+        "zh-CN": {
+          "title": "页面调试助手",
+          "short": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。",
+          "description": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。"
+        },
+        "zh-TW": {
+          "title": "页面调试助手",
+          "short": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。",
+          "description": "在页面上屏蔽指定元素、加载元素间距标注工具、执行自定义脚本并查看页面调试信息。"
+        }
+      },
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-90417d328263/xload-90417d328263.user.js",
+      "page": "/scripts/userscripts/xload-90417d328263/xload-90417d328263.html",
+      "installUrl": "/scripts/userscripts/xload-90417d328263/xload-90417d328263.user.js",
+      "files": [
+        "panel.html",
+        "xload-90417d328263.user.js"
+      ],
+      "panelEntry": "/scripts/userscripts/xload-90417d328263/panel.html",
+      "tags": [
+        "general"
+      ],
+      "categories": [
+        "Userscripts"
+      ],
+      "rating": 0,
+      "downloads": 0,
+      "stars": 0,
+      "lastUpdated": "2026-09-24",
+      "version": "1.0.0",
+      "license": "",
+      "featured": false,
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_getValue",
+        "GM_setValue",
+        "GM_registerMenuCommand"
+      ],
+      "fileSize": 17249
     },
     {
       "id": "xload-01859a28d74d",
       "type": "script",
-      "title": "Bypass All Shortlinks",
-      "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
-      "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More",
+      "title": "Link Shortener Bypass Toolkit",
+      "short": "Skips link shorteners and ad-gate pages to reach the final destination",
+      "description": "Skips link shorteners and ad-gate pages to reach the final destination automatically, blocks ad-block detection and intrusive popups or prompts, neutralizes focus and context-menu tricks, accelerates long countdown timers, and offers optional media download helpers.",
       "i18n": {
         "en": {
-          "title": "Bypass All Shortlinks",
-          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
-          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+          "title": "Link Shortener Bypass Toolkit",
+          "short": "Skips link shorteners and ad-gate pages to reach the final destination",
+          "description": "Skips link shorteners and ad-gate pages to reach the final destination automatically, blocks ad-block detection and intrusive popups or prompts, neutralizes focus and context-menu tricks, accelerates long countdown timers, and offers optional media download helpers."
         },
         "zh-CN": {
-          "title": "Bypass All Shortlinks",
-          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
-          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+          "title": "Link Shortener Bypass Toolkit",
+          "short": "Skips link shorteners and ad-gate pages to reach the final destination",
+          "description": "Skips link shorteners and ad-gate pages to reach the final destination automatically, blocks ad-block detection and intrusive popups or prompts, neutralizes focus and context-menu tricks, accelerates long countdown timers, and offers optional media download helpers."
         },
         "zh-TW": {
-          "title": "Bypass All Shortlinks",
-          "short": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go",
-          "description": "Bypass All Shortlinks Sites Automatically Skips Annoying Link Shorteners, Go Directly to Your Destination , Skip AdFly , Skip Annoying Ads, Block Adblock Detection , Block Annoying Popup And Prompts , Automatically Downloading Files , Flickr Images And Youtube Video And Much More"
+          "title": "Link Shortener Bypass Toolkit",
+          "short": "Skips link shorteners and ad-gate pages to reach the final destination",
+          "description": "Skips link shorteners and ad-gate pages to reach the final destination automatically, blocks ad-block detection and intrusive popups or prompts, neutralizes focus and context-menu tricks, accelerates long countdown timers, and offers optional media download helpers."
         }
       },
       "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-01859a28d74d/xload-01859a28d74d.user.js",
@@ -235,45 +473,58 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "96.8",
+      "lastUpdated": "2026-09-24",
+      "version": "97.0",
       "license": "",
       "featured": false,
-      "status": "stable"
+      "status": "stable",
+      "sites": [],
+      "grants": [
+        "GM_setValue",
+        "GM_getValue",
+        "GM_addStyle",
+        "GM_openInTab",
+        "GM_setClipboard",
+        "GM_xmlhttpRequest",
+        "window.onurlchange",
+        "GM_registerMenuCommand"
+      ],
+      "fileSize": 74536
     },
     {
-      "id": "xload-ba1d2f42d833",
+      "id": "xload-f1e07d282871",
       "type": "script",
-      "title": "GitHub 代码搜索 Star & 更新时间排序助手",
-      "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
-      "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
+      "title": "Archive Journey Stats",
+      "short": "Build per-year creator and reader statistics from your works, inbox and reading",
+      "description": "Build per-year creator and reader statistics from your works, inbox and reading history on Archive of Our Own, with an annual report carousel and one-click image export.",
       "i18n": {
         "en": {
-          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
-          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
-          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+          "title": "Archive Journey Stats",
+          "short": "Build per-year creator and reader statistics from your works, inbox and reading",
+          "description": "Build per-year creator and reader statistics from your works, inbox and reading history on Archive of Our Own, with an annual report carousel and one-click image export."
         },
         "zh-CN": {
-          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
-          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
-          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+          "title": "Archive Journey Stats",
+          "short": "Build per-year creator and reader statistics from your works, inbox and reading",
+          "description": "Build per-year creator and reader statistics from your works, inbox and reading history on Archive of Our Own, with an annual report carousel and one-click image export."
         },
         "zh-TW": {
-          "title": "GitHub 代码搜索 Star & 更新时间排序助手",
-          "short": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行",
-          "description": "在 GitHub 代码搜索结果中显示仓库 Star 数和文件/仓库更新时间（数据到达即实时渲染），支持双日期排序、恢复默认、跨页扫描汇总，点击可跳转到对应文件行"
+          "title": "Archive Journey Stats",
+          "short": "Build per-year creator and reader statistics from your works, inbox and reading",
+          "description": "Build per-year creator and reader statistics from your works, inbox and reading history on Archive of Our Own, with an annual report carousel and one-click image export."
         }
       },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.user.js",
-      "page": "/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.html",
-      "installUrl": "/scripts/userscripts/xload-ba1d2f42d833/xload-ba1d2f42d833.user.js",
+      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-f1e07d282871/xload-f1e07d282871.user.js",
+      "page": "/scripts/userscripts/xload-f1e07d282871/xload-f1e07d282871.html",
+      "installUrl": "/scripts/userscripts/xload-f1e07d282871/xload-f1e07d282871.user.js",
       "files": [
         "panel.html",
-        "xload-ba1d2f42d833.user.js"
+        "xload-f1e07d282871.user.js"
       ],
-      "panelEntry": "/scripts/userscripts/xload-ba1d2f42d833/panel.html",
+      "panelEntry": "/scripts/userscripts/xload-f1e07d282871/panel.html",
       "tags": [
-        "github.com"
+        "archiveofourown.org",
+        "www.archiveofourown.org"
       ],
       "categories": [
         "Userscripts"
@@ -281,991 +532,17 @@
       "rating": 0,
       "downloads": 0,
       "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "2.1.0",
+      "lastUpdated": "2026-09-24",
+      "version": "2.0.0",
       "license": "MIT",
       "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-2c3bec3b6d74",
-      "type": "script",
-      "title": "Shell Shockers | Show HP",
-      "short": "Shows players HP above their name",
-      "description": "Shows players HP above their name",
-      "i18n": {
-        "en": {
-          "title": "Shell Shockers | Show HP",
-          "short": "Shows players HP above their name",
-          "description": "Shows players HP above their name"
-        },
-        "zh-CN": {
-          "title": "Shell Shockers | Show HP",
-          "short": "Shows players HP above their name",
-          "description": "Shows players HP above their name"
-        },
-        "zh-TW": {
-          "title": "Shell Shockers | Show HP",
-          "short": "Shows players HP above their name",
-          "description": "Shows players HP above their name"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.user.js",
-      "page": "/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.html",
-      "installUrl": "/scripts/userscripts/xload-2c3bec3b6d74/xload-2c3bec3b6d74.user.js",
-      "files": [
-        "panel.html",
-        "xload-2c3bec3b6d74.user.js"
+      "status": "stable",
+      "sites": [
+        "archiveofourown.org",
+        "www.archiveofourown.org"
       ],
-      "panelEntry": "/scripts/userscripts/xload-2c3bec3b6d74/panel.html",
-      "tags": [
-        "shellshock.io",
-        "shell.onlypuppy7.online",
-        "algebra.best"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "1.0",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-cad67e2d2cdc",
-      "type": "script",
-      "title": "客優雲出入庫-更新蝦皮庫存",
-      "short": "客優雲出入庫-更新蝦皮庫存 功能",
-      "description": "客優雲出入庫-更新蝦皮庫存 功能",
-      "i18n": {
-        "en": {
-          "title": "客優雲出入庫-更新蝦皮庫存",
-          "short": "客優雲出入庫-更新蝦皮庫存 功能",
-          "description": "客優雲出入庫-更新蝦皮庫存 功能"
-        },
-        "zh-CN": {
-          "title": "客優雲出入庫-更新蝦皮庫存",
-          "short": "客優雲出入庫-更新蝦皮庫存 功能",
-          "description": "客優雲出入庫-更新蝦皮庫存 功能"
-        },
-        "zh-TW": {
-          "title": "客優雲出入庫-更新蝦皮庫存",
-          "short": "客優雲出入庫-更新蝦皮庫存 功能",
-          "description": "客優雲出入庫-更新蝦皮庫存 功能"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.user.js",
-      "page": "/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.html",
-      "installUrl": "/scripts/userscripts/xload-cad67e2d2cdc/xload-cad67e2d2cdc.user.js",
-      "files": [
-        "panel.html",
-        "xload-cad67e2d2cdc.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-cad67e2d2cdc/panel.html",
-      "tags": [
-        "erp.keyouyun.com",
-        "world.keyouyun.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-23",
-      "version": "2026-01-19--1",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-fe250f0d6465",
-      "type": "script",
-      "title": "Generate Metersphere Test Report",
-      "short": "生成 Metersphere 测试计划报告",
-      "description": "生成 Metersphere 测试计划报告",
-      "i18n": {
-        "en": {
-          "title": "Generate Metersphere Test Report",
-          "short": "生成 Metersphere 测试计划报告",
-          "description": "生成 Metersphere 测试计划报告"
-        },
-        "zh-CN": {
-          "title": "Generate Metersphere Test Report",
-          "short": "生成 Metersphere 测试计划报告",
-          "description": "生成 Metersphere 测试计划报告"
-        },
-        "zh-TW": {
-          "title": "Generate Metersphere Test Report",
-          "short": "生成 Metersphere 测试计划报告",
-          "description": "生成 Metersphere 测试计划报告"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.user.js",
-      "page": "/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.html",
-      "installUrl": "/scripts/userscripts/xload-fe250f0d6465/xload-fe250f0d6465.user.js",
-      "files": [
-        "panel.html",
-        "xload-fe250f0d6465.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-fe250f0d6465/panel.html",
-      "tags": [
-        "metersphere.gyenno.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-22",
-      "version": "0.0.5",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-e1eb2726c720",
-      "type": "script",
-      "title": "Raumschüsse Fix für CaveRenderPro",
-      "short": "Berechnet die Richtung der Raumschüsse neu",
-      "description": "Berechnet die Richtung der Raumschüsse neu",
-      "i18n": {
-        "en": {
-          "title": "Raumschüsse Fix für CaveRenderPro",
-          "short": "Berechnet die Richtung der Raumschüsse neu",
-          "description": "Berechnet die Richtung der Raumschüsse neu"
-        },
-        "zh-CN": {
-          "title": "Raumschüsse Fix für CaveRenderPro",
-          "short": "Berechnet die Richtung der Raumschüsse neu",
-          "description": "Berechnet die Richtung der Raumschüsse neu"
-        },
-        "zh-TW": {
-          "title": "Raumschüsse Fix für CaveRenderPro",
-          "short": "Berechnet die Richtung der Raumschüsse neu",
-          "description": "Berechnet die Richtung der Raumschüsse neu"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.user.js",
-      "page": "/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.html",
-      "installUrl": "/scripts/userscripts/xload-e1eb2726c720/xload-e1eb2726c720.user.js",
-      "files": [
-        "panel.html",
-        "xload-e1eb2726c720.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-e1eb2726c720/panel.html",
-      "tags": [
-        "www.google.com",
-        "www.google.de",
-        "www.google.fr"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-22",
-      "version": "2.0",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-634f7674248e",
-      "type": "script",
-      "title": "Inline SVG Replacer",
-      "short": "Replace all img tags with src as an SVG file into inline SVG tags",
-      "description": "Replace all img tags with src as an SVG file into inline SVG tags",
-      "i18n": {
-        "en": {
-          "title": "Inline SVG Replacer",
-          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
-          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
-        },
-        "zh-CN": {
-          "title": "Inline SVG Replacer",
-          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
-          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
-        },
-        "zh-TW": {
-          "title": "Inline SVG Replacer",
-          "short": "Replace all img tags with src as an SVG file into inline SVG tags",
-          "description": "Replace all img tags with src as an SVG file into inline SVG tags"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.user.js",
-      "page": "/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.html",
-      "installUrl": "/scripts/userscripts/xload-634f7674248e/xload-634f7674248e.user.js",
-      "files": [
-        "panel.html",
-        "xload-634f7674248e.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-634f7674248e/panel.html",
-      "tags": [
-        "general"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-22",
-      "version": "0.1.1",
-      "license": "CC0",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-760c495cb1f0",
-      "type": "script",
-      "title": "客優雲庫存清單-功能",
-      "short": "客優雲庫存清單 功能",
-      "description": "客優雲庫存清單 功能",
-      "i18n": {
-        "en": {
-          "title": "客優雲庫存清單-功能",
-          "short": "客優雲庫存清單 功能",
-          "description": "客優雲庫存清單 功能"
-        },
-        "zh-CN": {
-          "title": "客優雲庫存清單-功能",
-          "short": "客優雲庫存清單 功能",
-          "description": "客優雲庫存清單 功能"
-        },
-        "zh-TW": {
-          "title": "客優雲庫存清單-功能",
-          "short": "客優雲庫存清單 功能",
-          "description": "客優雲庫存清單 功能"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.user.js",
-      "page": "/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.html",
-      "installUrl": "/scripts/userscripts/xload-760c495cb1f0/xload-760c495cb1f0.user.js",
-      "files": [
-        "panel.html",
-        "xload-760c495cb1f0.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-760c495cb1f0/panel.html",
-      "tags": [
-        "erp.keyouyun.com",
-        "world.keyouyun.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-22",
-      "version": "0.2",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-222085578d29",
-      "type": "script",
-      "title": "客優雲自動更新安全庫存 on 採購建議",
-      "short": "客優雲自動更新安全庫存 on 採購建議 功能",
-      "description": "客優雲自動更新安全庫存 on 採購建議 功能",
-      "i18n": {
-        "en": {
-          "title": "客優雲自動更新安全庫存 on 採購建議",
-          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
-          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
-        },
-        "zh-CN": {
-          "title": "客優雲自動更新安全庫存 on 採購建議",
-          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
-          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
-        },
-        "zh-TW": {
-          "title": "客優雲自動更新安全庫存 on 採購建議",
-          "short": "客優雲自動更新安全庫存 on 採購建議 功能",
-          "description": "客優雲自動更新安全庫存 on 採購建議 功能"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-222085578d29/xload-222085578d29.user.js",
-      "page": "/scripts/userscripts/xload-222085578d29/xload-222085578d29.html",
-      "installUrl": "/scripts/userscripts/xload-222085578d29/xload-222085578d29.user.js",
-      "files": [
-        "panel.html",
-        "xload-222085578d29.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-222085578d29/panel.html",
-      "tags": [
-        "erp.keyouyun.com",
-        "world.keyouyun.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-22",
-      "version": "0.2",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-ce926c298c3a",
-      "type": "script",
-      "title": "Telegra.ph 图片打包下载",
-      "short": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
-      "description": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
-      "i18n": {
-        "en": {
-          "title": "Telegra.ph Image Bulk Downloader",
-          "short": "Grab all image links on a page, save them to a text file and download everything as a local ZIP archive in one click.",
-          "description": "Grab all image links on a page, save them to a text file and download everything as a local ZIP archive in one click."
-        },
-        "zh-CN": {
-          "title": "Telegra.ph 图片打包下载",
-          "short": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。",
-          "description": "获取网页所有图片链接，保存到文本文件并一键下载到本地压缩包。"
-        },
-        "zh-TW": {
-          "title": "Telegra.ph 圖片打包下載",
-          "short": "取得網頁所有圖片連結，儲存到文字檔並一鍵下載到本機壓縮包。",
-          "description": "取得網頁所有圖片連結，儲存到文字檔並一鍵下載到本機壓縮包。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
-      "page": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.html",
-      "installUrl": "/scripts/userscripts/xload-ce926c298c3a/xload-ce926c298c3a.user.js",
-      "files": [
-        "panel.html",
-        "xload-ce926c298c3a.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-ce926c298c3a/panel.html",
-      "tags": [
-        "telegra.ph"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "2.1",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-0f99761c63ab",
-      "type": "script",
-      "title": "rbxsnipe",
-      "short": "roblox private server sniper",
-      "description": "roblox private server sniper",
-      "i18n": {
-        "en": {
-          "title": "rbxsnipe",
-          "short": "roblox private server sniper",
-          "description": "roblox private server sniper"
-        },
-        "zh-CN": {
-          "title": "rbxsnipe",
-          "short": "Roblox 私人服务器狙击工具。",
-          "description": "Roblox 私人服务器狙击工具。"
-        },
-        "zh-TW": {
-          "title": "rbxsnipe",
-          "short": "Roblox 私人伺服器狙擊工具。",
-          "description": "Roblox 私人伺服器狙擊工具。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
-      "page": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.html",
-      "installUrl": "/scripts/userscripts/xload-0f99761c63ab/xload-0f99761c63ab.user.js",
-      "files": [
-        "panel.html",
-        "xload-0f99761c63ab.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-0f99761c63ab/panel.html",
-      "tags": [
-        "www.roblox.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "2.6",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-7cd63676e4c7",
-      "type": "script",
-      "title": "유튜브 팟 플레이어로 보기 버튼 추가",
-      "short": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
-      "description": "유튜브 동영상을 팟 플레이어로 열 수 있는 버튼을 추가합니다. 기존 영상은 일시 정지 됩니다.",
-      "i18n": {
-        "en": {
-          "title": "YouTube: Open in PotPlayer Button",
-          "short": "Adds a button to open YouTube videos in PotPlayer. The current video pauses automatically.",
-          "description": "Adds a button to open YouTube videos in PotPlayer. The current video pauses automatically."
-        },
-        "zh-CN": {
-          "title": "YouTube 一键用 PotPlayer 打开",
-          "short": "在 YouTube 添加用 PotPlayer 打开视频的按钮，原视频自动暂停。",
-          "description": "在 YouTube 添加用 PotPlayer 打开视频的按钮，原视频自动暂停。"
-        },
-        "zh-TW": {
-          "title": "YouTube 一鍵用 PotPlayer 開啟",
-          "short": "在 YouTube 新增用 PotPlayer 開啟影片的按鈕，原影片自動暫停。",
-          "description": "在 YouTube 新增用 PotPlayer 開啟影片的按鈕，原影片自動暫停。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
-      "page": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.html",
-      "installUrl": "/scripts/userscripts/xload-7cd63676e4c7/xload-7cd63676e4c7.user.js",
-      "files": [
-        "panel.html",
-        "xload-7cd63676e4c7.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-7cd63676e4c7/panel.html",
-      "tags": [
-        "youtube.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "0.5",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-b630f1284939",
-      "type": "script",
-      "title": "Bilibili-banned-contents-hider",
-      "short": "Hide banned users' contents on Bilibili. Bilibili may push content created by",
-      "description": "Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed",
-      "i18n": {
-        "en": {
-          "title": "Bilibili-banned-contents-hider",
-          "short": "Hide banned users' contents on Bilibili. Bilibili may push content created by",
-          "description": "Hide banned users' contents on Bilibili. Bilibili may push content created by users from your blacklist. This script is used to remove those contents. Promotions and advertisements will also be removed"
-        },
-        "zh-CN": {
-          "title": "B站拉黑内容隐藏",
-          "short": "隐藏 B 站拉黑用户发布的内容，并移除推广与广告。",
-          "description": "隐藏 B 站拉黑用户发布的内容。B 站可能推送你已拉黑用户创建的内容，本脚本用于移除这些内容，同时移除推广与广告。"
-        },
-        "zh-TW": {
-          "title": "B站封鎖內容隱藏",
-          "short": "隱藏 B 站封鎖使用者發布的內容，並移除推廣與廣告。",
-          "description": "隱藏 B 站封鎖使用者發布的內容。B 站可能推送你已封鎖使用者建立的內容，本腳本用於移除這些內容，同時移除推廣與廣告。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
-      "page": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.html",
-      "installUrl": "/scripts/userscripts/xload-b630f1284939/xload-b630f1284939.user.js",
-      "files": [
-        "panel.html",
-        "xload-b630f1284939.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-b630f1284939/panel.html",
-      "tags": [
-        "bilibili.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "V0.6.1",
-      "license": "GPL-3.0",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-d17c20bbffaa",
-      "type": "script",
-      "title": "RuTracker Full-Text Search in Topics",
-      "short": "Allows to search for text on all pages of RuTracker topics",
-      "description": "Allows to search for text on all pages of RuTracker topics",
-      "i18n": {
-        "en": {
-          "title": "RuTracker Full-Text Search in Topics",
-          "short": "Allows to search for text on all pages of RuTracker topics",
-          "description": "Allows to search for text on all pages of RuTracker topics"
-        },
-        "zh-CN": {
-          "title": "RuTracker 主题全文搜索",
-          "short": "在 RuTracker 主题的全部页面内搜索文本。",
-          "description": "在 RuTracker 主题的全部页面内搜索文本。"
-        },
-        "zh-TW": {
-          "title": "RuTracker 主題全文搜尋",
-          "short": "在 RuTracker 主題的全部頁面內搜尋文字。",
-          "description": "在 RuTracker 主題的全部頁面內搜尋文字。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
-      "page": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.html",
-      "installUrl": "/scripts/userscripts/xload-d17c20bbffaa/xload-d17c20bbffaa.user.js",
-      "files": [
-        "panel.html",
-        "xload-d17c20bbffaa.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-d17c20bbffaa/panel.html",
-      "tags": [
-        "rutracker.org",
-        "rutracker.net",
-        "rutracker.nl"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "1.4",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-a4a5b91f20da",
-      "type": "script",
-      "title": "更换背景色",
-      "short": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。",
-      "description": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。默认颜色 #e8e2d6，现支持通过功能面板动态设置颜色与自动应用开关，无需再修改代码。",
-      "i18n": {
-        "en": {
-          "title": "Background Color Changer",
-          "short": "Replaces a site's default body background color when none is set; unsuitable sites can be excluded via the context menu.",
-          "description": "Replaces a site's default body background color when none is set; sites that do not suit a changed background can be excluded from the context menu. Default color #e8e2d6. The color and an auto-apply toggle can now be set dynamically from the feature panel without editing code."
-        },
-        "zh-CN": {
-          "title": "更换背景色",
-          "short": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。",
-          "description": "如果网站body没有设置默认颜色就更换它；有的网站并不适合更换背景色，可在右键菜单中将该网站设为排除。默认颜色 #e8e2d6，现支持通过功能面板动态设置颜色与自动应用开关，无需再修改代码。"
-        },
-        "zh-TW": {
-          "title": "變更背景色",
-          "short": "若網站 body 未設定預設顏色就變更它；有的網站並不適合變更背景色，可在右鍵選單中將該網站設為排除。",
-          "description": "若網站 body 未設定預設顏色就變更它；有的網站並不適合變更背景色，可在右鍵選單中將該網站設為排除。預設顏色 #e8e2d6，現支援透過功能面板動態設定顏色與自動套用開關，無需再修改程式碼。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
-      "page": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.html",
-      "installUrl": "/scripts/userscripts/xload-a4a5b91f20da/xload-a4a5b91f20da.user.js",
-      "files": [
-        "panel.html",
-        "xload-a4a5b91f20da.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-a4a5b91f20da/panel.html",
-      "tags": [
-        "general"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "0.1.0",
-      "license": "GPL-3.0 License",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-499c6be05d3b",
-      "type": "script",
-      "title": "ServiceNow - Update Ticket Number",
-      "short": "Replace the number input field with a link to the current ticket",
-      "description": "Replace the number input field with a link to the current ticket",
-      "i18n": {
-        "en": {
-          "title": "ServiceNow - Update Ticket Number",
-          "short": "Replace the number input field with a link to the current ticket",
-          "description": "Replace the number input field with a link to the current ticket"
-        },
-        "zh-CN": {
-          "title": "ServiceNow 工单号转链接",
-          "short": "将编号输入框替换为指向当前工单的链接。",
-          "description": "将编号输入框替换为指向当前工单的链接。"
-        },
-        "zh-TW": {
-          "title": "ServiceNow 工單號轉連結",
-          "short": "將編號輸入框替換為指向目前工單的連結。",
-          "description": "將編號輸入框替換為指向目前工單的連結。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
-      "page": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.html",
-      "installUrl": "/scripts/userscripts/xload-499c6be05d3b/xload-499c6be05d3b.user.js",
-      "files": [
-        "panel.html",
-        "xload-499c6be05d3b.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-499c6be05d3b/panel.html",
-      "tags": [
-        "service-now.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-21",
-      "version": "0.0.5",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-4c25bb553d6f",
-      "type": "script",
-      "title": "查看当前BUFF账号信息插件",
-      "short": "查看当前BUFF账号信息插件。",
-      "description": "查看当前BUFF账号信息插件。",
-      "i18n": {
-        "en": {
-          "title": "BUFF Account Info Viewer",
-          "short": "View the current BUFF account information.",
-          "description": "View the current BUFF account information."
-        },
-        "zh-CN": {
-          "title": "查看当前BUFF账号信息插件",
-          "short": "查看当前BUFF账号信息插件。",
-          "description": "查看当前BUFF账号信息插件。"
-        },
-        "zh-TW": {
-          "title": "查看目前 BUFF 帳號資訊外掛",
-          "short": "查看目前 BUFF 帳號資訊外掛。",
-          "description": "查看目前 BUFF 帳號資訊外掛。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
-      "page": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.html",
-      "installUrl": "/scripts/userscripts/xload-4c25bb553d6f/xload-4c25bb553d6f.user.js",
-      "files": [
-        "panel.html",
-        "xload-4c25bb553d6f.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-4c25bb553d6f/panel.html",
-      "tags": [
-        "buff.163.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "1.23",
-      "license": "AGPL-3.0",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-f06166f11cb3",
-      "type": "script",
-      "title": "Ed Commerz Dietmar Glage",
-      "short": "Insert multiple transactions with specified details",
-      "description": "Insert multiple transactions with specified details",
-      "i18n": {
-        "en": {
-          "title": "Ed Commerz Dietmar Glage",
-          "short": "Insert multiple transactions with specified details",
-          "description": "Insert multiple transactions with specified details"
-        },
-        "zh-CN": {
-          "title": "Ed Commerz Dietmar Glage 批量录入",
-          "short": "按指定明细批量插入多笔交易。",
-          "description": "按指定明细批量插入多笔交易。"
-        },
-        "zh-TW": {
-          "title": "Ed Commerz Dietmar Glage 大量錄入",
-          "short": "按指定明細大量插入多筆交易。",
-          "description": "按指定明細大量插入多筆交易。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
-      "page": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.html",
-      "installUrl": "/scripts/userscripts/xload-f06166f11cb3/xload-f06166f11cb3.user.js",
-      "files": [
-        "panel.html",
-        "xload-f06166f11cb3.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-f06166f11cb3/panel.html",
-      "tags": [
-        "www.drivehq.com",
-        "kunden.commerzbank.de"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "0.1",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-6e3e9dc13bc3",
-      "type": "script",
-      "title": "Req Commerz Dietmar Glage",
-      "short": "Insert multiple transactions with specified details and update balance",
-      "description": "Insert multiple transactions with specified details and update balance",
-      "i18n": {
-        "en": {
-          "title": "Req Commerz Dietmar Glage",
-          "short": "Insert multiple transactions with specified details and update balance",
-          "description": "Insert multiple transactions with specified details and update balance"
-        },
-        "zh-CN": {
-          "title": "Ed Commerz Dietmar Glage 批量录入并更新余额",
-          "short": "按指定明细批量插入多笔交易并更新余额。",
-          "description": "按指定明细批量插入多笔交易并更新余额。"
-        },
-        "zh-TW": {
-          "title": "Ed Commerz Dietmar Glage 大量錄入並更新餘額",
-          "short": "按指定明細大量插入多筆交易並更新餘額。",
-          "description": "按指定明細大量插入多筆交易並更新餘額。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
-      "page": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.html",
-      "installUrl": "/scripts/userscripts/xload-6e3e9dc13bc3/xload-6e3e9dc13bc3.user.js",
-      "files": [
-        "panel.html",
-        "xload-6e3e9dc13bc3.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-6e3e9dc13bc3/panel.html",
-      "tags": [
-        "general"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "0.1",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-21a85c45f02d",
-      "type": "script",
-      "title": "YouTube: Audio Only",
-      "short": "No Video Streaming",
-      "description": "No Video Streaming",
-      "i18n": {
-        "en": {
-          "title": "YouTube: Audio Only",
-          "short": "No Video Streaming",
-          "description": "No Video Streaming"
-        },
-        "zh-CN": {
-          "title": "YouTube 仅播放音频",
-          "short": "不加载视频流，仅播放音频。",
-          "description": "不加载视频流，仅播放音频。"
-        },
-        "zh-TW": {
-          "title": "YouTube 僅播放音訊",
-          "short": "不載入影片串流，僅播放音訊。",
-          "description": "不載入影片串流，僅播放音訊。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
-      "page": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.html",
-      "installUrl": "/scripts/userscripts/xload-21a85c45f02d/xload-21a85c45f02d.user.js",
-      "files": [
-        "panel.html",
-        "xload-21a85c45f02d.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-21a85c45f02d/panel.html",
-      "tags": [
-        "www.youtube.com",
-        "www.youtube-nocookie.com",
-        "m.youtube.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "2.3.11",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-e7e9e0c2051c",
-      "type": "script",
-      "title": "Bux auto claim",
-      "short": "Renda Extra",
-      "description": "Renda Extra",
-      "i18n": {
-        "en": {
-          "title": "Bux Auto Claim",
-          "short": "Automatically claims on Bux sites for extra income.",
-          "description": "Automatically claims on Bux sites for extra income."
-        },
-        "zh-CN": {
-          "title": "Bux 自动领取",
-          "short": "自动完成 Bux 站点的领取任务，赚取额外收入。",
-          "description": "自动完成 Bux 站点的领取任务，赚取额外收入。"
-        },
-        "zh-TW": {
-          "title": "Bux 自動領取",
-          "short": "自動完成 Bux 站點的領取任務，賺取額外收入。",
-          "description": "自動完成 Bux 站點的領取任務，賺取額外收入。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
-      "page": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.html",
-      "installUrl": "/scripts/userscripts/xload-e7e9e0c2051c/xload-e7e9e0c2051c.user.js",
-      "files": [
-        "panel.html",
-        "xload-e7e9e0c2051c.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-e7e9e0c2051c/panel.html",
-      "tags": [
-        "seoclub.su",
-        "videoblog.su",
-        "www.youtube.com"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "1",
-      "license": "",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-b0084dee695d",
-      "type": "script",
-      "title": "NovelAI Disable Backward",
-      "short": "Disable Backward on NovelAI's image generation screen. This prevents the",
-      "description": "Disable Backward on NovelAI's image generation screen. This prevents the deletion of generated images due to browser backward operations.",
-      "i18n": {
-        "en": {
-          "title": "NovelAI Disable Backward",
-          "short": "Disable Backward on NovelAI's image generation screen. This prevents the",
-          "description": "Disable Backward on NovelAI's image generation screen. This prevents the deletion of generated images due to browser backward operations."
-        },
-        "zh-CN": {
-          "title": "NovelAI 禁用后退",
-          "short": "在 NovelAI 图像生成界面禁用后退，防止误删已生成图像。",
-          "description": "在 NovelAI 图像生成界面禁用后退操作，防止因浏览器后退而删除已生成的图像。"
-        },
-        "zh-TW": {
-          "title": "NovelAI 停用後退",
-          "short": "在 NovelAI 圖像生成介面停用後退，防止誤刪已生成圖像。",
-          "description": "在 NovelAI 圖像生成介面停用後退操作，防止因瀏覽器後退而刪除已生成的圖像。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
-      "page": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.html",
-      "installUrl": "/scripts/userscripts/xload-b0084dee695d/xload-b0084dee695d.user.js",
-      "files": [
-        "panel.html",
-        "xload-b0084dee695d.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-b0084dee695d/panel.html",
-      "tags": [
-        "novelai.net"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "1.0.0",
-      "license": "MIT",
-      "featured": false,
-      "status": "stable"
-    },
-    {
-      "id": "xload-c29c7db9a286",
-      "type": "script",
-      "title": "change text",
-      "short": "меняет выделенный текст на странице",
-      "description": "меняет выделенный текст на странице",
-      "i18n": {
-        "en": {
-          "title": "Change Selected Text",
-          "short": "Replaces the selected text on the page.",
-          "description": "Replaces the selected text on the page."
-        },
-        "zh-CN": {
-          "title": "页面选中文本替换",
-          "short": "将页面上选中的文本替换为指定内容。",
-          "description": "将页面上选中的文本替换为指定内容。"
-        },
-        "zh-TW": {
-          "title": "頁面選取文字替換",
-          "short": "將頁面上選取的文字替換為指定內容。",
-          "description": "將頁面上選取的文字替換為指定內容。"
-        }
-      },
-      "github": "https://github.com/u2222223/xload/blob/main/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
-      "page": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.html",
-      "installUrl": "/scripts/userscripts/xload-c29c7db9a286/xload-c29c7db9a286.user.js",
-      "files": [
-        "panel.html",
-        "xload-c29c7db9a286.user.js"
-      ],
-      "panelEntry": "/scripts/userscripts/xload-c29c7db9a286/panel.html",
-      "tags": [
-        "general"
-      ],
-      "categories": [
-        "Userscripts"
-      ],
-      "rating": 0,
-      "downloads": 0,
-      "stars": 0,
-      "lastUpdated": "2026-09-20",
-      "version": "0.1",
-      "license": "",
-      "featured": false,
-      "status": "stable"
+      "grants": [],
+      "fileSize": 192491
     }
   ]
 }

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DTNNMN4ZX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0DTNNMN4ZX');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8681634724543084"
+     crossorigin="anonymous"></script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义搜索增强 - 功能面板</title>
+  <meta name="description" content="使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/panel/panel.css">
+</head>
+<body data-panel-task="xload-4ea75cfc1263">
+  <div class="panel-layout">
+    <header class="panel-header">
+      <div class="panel-header-inner">
+        <h1>自定义搜索增强</h1>
+        <p class="panel-subtitle">使用可自定义的搜索引擎列表快速搜索选中文本，支持站点限定与整页地址等占位符。</p>
+      </div>
+    </header>
+
+    <main class="panel-main">
+      <div class="panel-content">
+        <div class="ad-slot ad-slot-top" aria-hidden="true"></div>
+
+        <section class="panel-status" id="panel-status" data-state="waiting">
+          <div class="panel-status-inner">
+            <span class="panel-status-dot"></span>
+            <span class="panel-status-text" id="panel-status-text">等待脚本连接…</span>
+          </div>
+          <div class="panel-progress" id="panel-progress" hidden>
+            <div class="panel-progress-track"><div class="panel-progress-fill" id="panel-progress-fill"></div></div>
+          </div>
+        </section>
+
+
+
+        <section class="pui-card panel-section" data-section="search">
+          <div class="pui-card-head">
+            <div class="pui-card-title">快速搜索</div>
+
+            <div class="pui-card-desc">输入搜索内容或留空使用页面选中文本。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-engine">搜索引擎</label>
+              <select class="pui-input" id="ctl-engine" data-control="engine" data-type="select">
+
+                <option value="谷歌搜索" selected>谷歌搜索</option>
+
+                <option value="百度搜索">百度搜索</option>
+
+                <option value="搜中文(谷歌)">搜中文(谷歌)</option>
+
+                <option value="站内搜索(谷歌)">站内搜索(谷歌)</option>
+
+                <option value="维基百科">维基百科</option>
+
+                <option value="GitHub">GitHub</option>
+
+                <option value="有道词典">有道词典</option>
+
+                <option value="页面快照(谷歌)">页面快照(谷歌)</option>
+
+                <option value="网页时光机">网页时光机</option>
+
+                <option value="翻译页面(谷歌)">翻译页面(谷歌)</option>
+
+              </select>
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-query">搜索内容</label>
+              <input class="pui-input" id="ctl-query" data-control="query" data-type="text" type="text" value="">
+            </div>
+
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-use_selection">优先使用页面选中文本</label>
+              <label class="pui-switch"><input type="checkbox" id="ctl-use_selection" data-control="use_selection" data-type="switch" checked><i></i></label>
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="search">开始搜索</button>
+
+          </div>
+
+        </section>
+
+        <section class="pui-card panel-section" data-section="engines">
+          <div class="pui-card-head">
+            <div class="pui-card-title">搜索引擎配置</div>
+
+            <div class="pui-card-desc">以 JSON 数组配置搜索引擎，支持 %s（关键词）、%host%（当前域名）、%url%（当前页面地址）占位符。</div>
+
+          </div>
+
+          <div class="pui-form-grid">
+
+
+            <div class="pui-field">
+              <label class="pui-label" for="ctl-engines_json">搜索引擎列表（JSON）</label>
+              <input class="pui-input" id="ctl-engines_json" data-control="engines_json" data-type="text" type="text" value="[{&#34;name&#34;:&#34;谷歌搜索&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://www.google.com/search?q=%s&#34;},{&#34;name&#34;:&#34;百度搜索&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://www.baidu.com/s?wd=%s&#34;},{&#34;name&#34;:&#34;站内搜索(谷歌)&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://www.google.com/search?q=site:%host%+%22%s%22&#34;},{&#34;name&#34;:&#34;维基百科&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://zh.wikipedia.org/wiki/%s&#34;},{&#34;name&#34;:&#34;GitHub&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://github.com/search?q=%s&#34;},{&#34;name&#34;:&#34;有道词典&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;http://dict.youdao.com/w/eng/%s&#34;},{&#34;name&#34;:&#34;页面快照(谷歌)&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;http://www.google.com/search?q=cache:%url%&#34;},{&#34;name&#34;:&#34;网页时光机&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;http://web.archive.org/%url%&#34;},{&#34;name&#34;:&#34;翻译页面(谷歌)&#34;,&#34;icon&#34;:&#34;&#34;,&#34;url&#34;:&#34;https://translate.google.com/translate?sl=auto&amp;tl=zh-CN&amp;u=%url%&#34;}]">
+            </div>
+
+
+          </div>
+
+
+          <div class="panel-actions">
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="save_engines">保存列表</button>
+
+            <button class="pui-btn pui-btn-primary" type="button" data-action="reset_engines">恢复默认</button>
+
+          </div>
+
+        </section>
+
+
+
+        <div class="ad-slot ad-slot-bottom" aria-hidden="true"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel-log" id="panel-log" hidden>
+    <div class="panel-log-head">
+      <span class="panel-log-title">运行日志</span>
+      <div class="panel-log-tools">
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-clear">清空</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-copy">复制</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-download">下载</button>
+        <button type="button" class="pui-btn pui-btn-default" id="panel-log-close">关闭</button>
+      </div>
+    </div>
+    <div class="panel-log-list" id="panel-log-list"></div>
+    <div class="panel-log-empty" id="panel-log-empty">暂无日志</div>
+  </div>
+
+  <script type="application/json" id="panel-loading">{"connecting":"等待脚本连接…","running":"正在搜索…","done":"已打开搜索结果","failed":"搜索失败"}</script>
+  <script src="/assets/panel/panel.js"></script>
+  <script>
+    if (window.PanelPage) window.PanelPage.init();
+  </script>
+</body>
+</html>
